@@ -1,0 +1,13 @@
+nbproject/*
+tmp/*
+var/*
+app/etc/local.xml
+media/*
+.htaccess
+.htpasswd
+.settings
+.buildpath
+.project
+.idea/*
+robots.txt
+sitemap.xml
