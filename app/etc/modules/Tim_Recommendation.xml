@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+-->
+<config>
+    <modules>
+        <Tim_Recommendation>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Tim_Recommendation>
+    </modules>
+</config>

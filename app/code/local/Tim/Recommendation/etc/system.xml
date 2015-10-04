@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+-->
+<config>
+    <tabs>
+        <tim_recommendation translate="label">
+            <label>TIM SA</label>
+            <sort_order>100500</sort_order>
+        </tim_recommendation>
+    </tabs>
+    <sections>
+        <tim_calc translate="label" >
+            <label>Energy Price</label>
+            <tab>tim_tab</tab>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <default translate="label" >
+                    <label>Energy price</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <energy_price translate="label">
+                            <label>Price kWh</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </energy_price>
+                    </fields>
+                </default>
+            </groups>
+        </tim_calc>
+    </sections>
+</config>
+

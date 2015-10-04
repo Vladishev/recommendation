@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+-->
+<config>
+    <modules>
+        <Tim_Recommendation>
+            <version>0.0.1</version>
+        </Tim_Recommendation>
+    </modules>
+    <global>
+        <models>
+            <tim_recommendation>
+                <class>Tim_Recommendation_Model</class>
+                <resourceModel>tim_recommendation_resource</resourceModel>
+            </tim_recommendation>
+            <tim_recommendation_resource>
+                <class>Tim_Recommendation_Model_Resource</class>
+                <entities>
+                    <recommendation>
+                        <table>tim_recommendation</table>
+                    </recommendation>
+                    <user>
+                        <table>tim_recom_user</table>
+                    </user>
+                </entities>
+            </tim_recommendation_resource>
+        </models>
+        <resources>
+            <tim_recommendation_setup>
+                <setup>
+                    <module>Tim_Recommendation</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tim_recommendation_setup>
+            <tim_recommendation_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </tim_recommendation_write>
+            <tim_recommendation_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </tim_recommendation_read>
+        </resources>
+        <blocks>
+            <tim_recommendation>
+                <class>Tim_Recommendation_Block</class>
+            </tim_recommendation>
+        </blocks>
+        <helpers>
+            <tim_recommendation>
+                <class>Tim_Recommendation_Helper</class>
+            </tim_recommendation>
+        </helpers>
+    </global>
+    <frontend>
+        <routers>
+            <tim_recommendation>
+                <use>standard</use>
+                <args>
+                    <module>Tim_Recommendation</module>
+                    <frontName>recommendation</frontName>
+                </args>
+            </tim_recommendation>
+        </routers>
+        <layout>
+            <updates>
+                <tim_recommendation>
+                    <file>tim/recommendation.xml</file>
+                </tim_recommendation>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Tim_Recommendation>
+                    <files>
+                        <default>Tim_Recommendation.csv</default>
+                    </files>
+                </Tim_Recommendation>
+            </modules>
+        </translate>
+    </frontend>
+</config>
