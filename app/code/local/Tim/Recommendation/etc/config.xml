@@ -66,13 +66,13 @@
     </global>
     <frontend>
         <routers>
-            <tim_recommendation>
+            <recommendation>
                 <use>standard</use>
                 <args>
                     <module>Tim_Recommendation</module>
                     <frontName>recommendation</frontName>
                 </args>
-            </tim_recommendation>
+            </recommendation>
         </routers>
         <layout>
             <updates>

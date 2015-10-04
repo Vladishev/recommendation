@@ -10,4 +10,23 @@
             <!--<block type="core/template" name="arithmetic_integer_multiply" template="arithmetic/integer/multiply.phtml"></block>-->
         <!--</reference>-->
     <!--</arithmetic_integer_multiply>-->
+    <recommendation_index_opinion>
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+        </reference>
+        <reference name="header">
+            <block type="page/header" name="header">
+                <action method="setTemplate"><template>tim/opinion/header.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="tim_recommendation/opinion" name="left.opinion" template="tim/opinion/left.phtml" />
+        </reference>
+        <reference name="right">
+            <block type="tim_recommendation/opinion" name="right.opinion" template="tim/opinion/right.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/opinion" name="center.opinion" template="tim/opinion/center.phtml" />
+        </reference>
+    </recommendation_index_opinion>
 </layout>
