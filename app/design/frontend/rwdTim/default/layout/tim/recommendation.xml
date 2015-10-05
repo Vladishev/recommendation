@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
-    <!--<arithmetic_integer_multiply>-->
-        <!--<reference name="root">-->
-            <!--<action method="setTemplate">-->
-                <!--<template>page/1column.phtml</template>-->
-            <!--</action>-->
-        <!--</reference>-->
-        <!--<reference name="content">-->
-            <!--<block type="core/template" name="arithmetic_integer_multiply" template="arithmetic/integer/multiply.phtml"></block>-->
-        <!--</reference>-->
-    <!--</arithmetic_integer_multiply>-->
+    <recommendation_index_opinion>
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+        </reference>
+        <reference name="header">
+            <block type="page/header" name="header">
+                <action method="setTemplate"><template>tim/recommendation/view/header.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="tim_recommendation/recommendation" name="left.opinion" template="tim/recommendation/view/left.phtml" />
+        </reference>
+        <reference name="right">
+            <block type="tim_recommendation/recommendation" name="right.opinion" template="tim/recommendation/view/right.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="center.opinion" template="tim/recommendation/view/center.phtml" />
+        </reference>
+    </recommendation_index_opinion>
 </layout>

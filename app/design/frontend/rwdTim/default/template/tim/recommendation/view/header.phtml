@@ -1,0 +1,20 @@
+<div class="tim-comm-header">
+    <div class="tim-comm-header-left">
+        <div class="tim-comm-header-title">Lorem epsilum...</div>
+        <div class="tim-comm-header-subtitle">Lorem epsilum lorem...</div>
+    </div>
+    <div class="tim-comm-header-right">
+        <div class="tim-comm-addopinion">
+            <button type="button" class="tim-comm-button-addopinion"><?php echo $this->__("Add your own opinion"); ?></button> <!-- button for adding totaly new opinion -->
+        </div>
+        <div class="tim-comm-sorting">
+            <span><?php echo $this->__("Criterion sorting"); ?></span>
+            <select class="tim-comm-sortingselect">
+                <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
+                <option value=""><?php echo $this->__("Latest"); ?></option>
+                <option value=""><?php echo $this->__("Top rated"); ?></option>
+                <option value=""><?php echo $this->__("The lowest assessment"); ?></option>
+            </select>
+        </div>
+    </div>
+</div>
