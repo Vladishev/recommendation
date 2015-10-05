@@ -31,7 +31,7 @@ $staticBlocks = array(
 );
 
 foreach ($staticBlocks as $data) {
-    Mage::getModel('cms/page')->setData($data)->save();
+    Mage::getModel('cms/block')->setData($data)->save();
 }
 
 $installer->endSetup();
