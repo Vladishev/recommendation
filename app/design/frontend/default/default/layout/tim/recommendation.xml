@@ -20,6 +20,11 @@
         </reference>
     </recommendation_index_add>
     <recommendation_index_view>
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+        </reference>
+        <reference name="header">
+            <block type="page/header" name="header">
                 <action method="setTemplate"><template>tim/recommendation/view/header.phtml</template></action>
             </block>
         </reference>
@@ -33,4 +38,20 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
         </reference>
     </recommendation_index_view>
+    <recommendation_user_profile>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="header">
+            <block type="page/header" name="header">
+                <action method="setTemplate"><template>tim/recommendation/profile/header.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="tim_recommendation/recommendation" name="left.recommendation.profile" template="tim/recommendation/profile/left.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="center.recommendation.profile" template="tim/recommendation/profile/content.phtml" />
+        </reference>
+    </recommendation_user_profile>
 </layout>
