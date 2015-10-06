@@ -17,7 +17,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     public function addAction()
     {
-
+        $this->loadLayout();
+        $this->renderLayout();
     }
 
     public function listAction()
