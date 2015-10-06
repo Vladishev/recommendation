@@ -10,13 +10,13 @@
             </block>
         </reference>
         <reference name="left">
-            <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/landing/left.phtml" />
+            <block type="tim_recommendation/recommendation" name="left.recommendation.landing" template="tim/recommendation/landing/left.phtml" />
         </reference>
         <reference name="right">
-            <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/landing/right.phtml" />
+            <block type="tim_recommendation/recommendation" name="right.recommendation.landing" template="tim/recommendation/landing/right.phtml" />
         </reference>
         <reference name="content">
-            <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/landing/content.phtml" />
+            <block type="tim_recommendation/recommendation" name="content.recommendation.landing" template="tim/recommendation/landing/content.phtml" />
         </reference>
     </recommendation_index_landing>
 </layout>
