@@ -1,52 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
-    <recommendation_index_add>
-        <reference name="root">
-            <action method="setTemplate"><template>page/3columns.phtml</template></action>
-        </reference>
-        <reference name="header">
-            <block type="page/header" name="header">
-                <action method="setTemplate"><template>tim/recommendation/add/header.phtml</template></action>
+    <catalog_product_view>
+        <reference name="product.info">
+            <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
+                <block type="tim_recommendation/recommendation" name="left.recommendation.add" template="tim/recommendation/add/left.phtml" />
+                <block type="tim_recommendation/recommendation" name="right.recommendation.add" template="tim/recommendation/add/right.phtml" />
+                <block type="tim_recommendation/recommendation" name="content.recommendation.add" template="tim/recommendation/add/content.phtml" />
+            </block>
+            <block type="tim_recommendation/recommendation" name="recommendation.view" template="tim/recommendation/view.phtml">
+                <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/view/left.phtml" />
+                <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/view/right.phtml" />
+                <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
             </block>
         </reference>
-        <reference name="left">
-            <block type="tim_recommendation/recommendation" name="left.recommendation.add" template="tim/recommendation/add/left.phtml" />
-        </reference>
-        <reference name="right">
-            <block type="tim_recommendation/recommendation" name="right.recommendation.add" template="tim/recommendation/add/right.phtml" />
-        </reference>
-        <reference name="content">
-            <block type="tim_recommendation/recommendation" name="content.recommendation.add" template="tim/recommendation/add/content.phtml" />
-        </reference>
-    </recommendation_index_add>
-    <recommendation_index_view>
-        <reference name="root">
-            <action method="setTemplate"><template>page/3columns.phtml</template></action>
-        </reference>
-        <reference name="header">
-            <block type="page/header" name="header">
-                <action method="setTemplate"><template>tim/recommendation/view/header.phtml</template></action>
-            </block>
-        </reference>
-        <reference name="left">
-            <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/view/left.phtml" />
-        </reference>
-        <reference name="right">
-            <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/view/right.phtml" />
-        </reference>
-        <reference name="content">
-            <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
-        </reference>
-    </recommendation_index_view>
+    </catalog_product_view>
     <recommendation_user_profile>
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
+        <!--
         <reference name="header">
             <block type="page/header" name="header">
                 <action method="setTemplate"><template>tim/recommendation/profile/header.phtml</template></action>
             </block>
-        </reference>
+        </reference>-->
         <reference name="left">
             <block type="tim_recommendation/recommendation" name="left.recommendation.profile" template="tim/recommendation/profile/left.phtml" />
         </reference>
@@ -58,11 +35,12 @@
         <reference name="root">
             <action method="setTemplate"><template>page/3columns.phtml</template></action>
         </reference>
+        <!--
         <reference name="header">
             <block type="page/header" name="header">
                 <action method="setTemplate"><template>tim/recommendation/landing/header.phtml</template></action>
             </block>
-        </reference>
+        </reference>-->
         <reference name="left">
             <block type="tim_recommendation/recommendation" name="left.recommendation.landing" template="tim/recommendation/landing/left.phtml" />
         </reference>
