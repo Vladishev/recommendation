@@ -1,0 +1,64 @@
+<!-- Main (middle) column: -->
+
+<div class="tim-comm-main-column">
+
+    <div class="tim-comm-list-bulk">
+        <!-- listing of highest opinion count by company -->
+        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Producenci z największą ilością opinii o produktach') ?></div>
+        <div class="tim-comm-list-titlebar">
+            <div class="tim-list-col1"><?php echo $this->__('Producent') ?></div>
+            <div class="tim-list-col2"><?php echo $this->__('Średnia ocena produktów') ?></div>
+        </div>
+        <!-- for each company -->
+        <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name --> </div>
+        <div class="tim-comm-list-bulk-rating tim-list-col2"> <!-- company rating --> </div>
+        <!-- end for each -->
+        <div class="tim-comment-seemore">
+            <a href"#"><?php echo $this->__('zobacz wszystkich producentów') ?></a> <!-- link to reveal all company's -->
+        </div>
+    </div>
+
+    <div class="tim-comm-list-bulk">
+        <!-- listing of highest scored company's by average rating taken from all products of that company -->
+        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Najwyżej oceniani producenci (średnia ocen wszystkich produktów)') ?></div>
+        <div class="tim-comm-list-titlebar">
+            <div class="tim-list-col1"><?php echo $this->__('Producent') ?></div>
+            <div class="tim-list-col2"><?php echo $this->__('Średnia ocena produktów') ?></div>
+        </div>
+        <!-- for each company -->
+        <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name --> </div>
+        <div class="tim-comm-list-bulk-rating tim-list-col2"> <!-- company rating --> </div>
+        <!-- end for each -->
+        <div class="tim-comment-seemore">
+            <a href"#"><?php echo $this->__('zobacz wszystkich producentów') ?></a> <!-- link to reveal all company's -->
+        </div>
+    </div>
+
+    <div class="tim-comm-list-bulk">
+        <!-- listing of newest opinions -->
+        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Najnowsze opinie o produktach') ?></div>
+        <div class="tim-comm-list-titlebar">
+            <div class="tim-list-col1"><?php echo $this->__('Produkt') ?></div>
+            <div class="tim-list-col2"><?php echo $this->__('Nazwa') ?></div>
+        </div>
+        <!-- for each company -->
+        <div class="tim-comm-list-bulk-name tim-list-col1">
+            <img> <!-- place for item image taken from Magento --> </img> <!-- item name --> </div>
+        <div class="tim-comm-list-bulk-rating tim-list-col2"> <!-- item rating --> </div>
+        <!-- place for button to add own opinion -->
+        <!-- end for each -->
+    </div>
+
+    <div class="tim-comm-list-bulk">
+        <!-- listing of users who added highest count of opinions -->
+        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Użytkownicy, którzy dodali największą ilość opinii') ?></div>
+        <!-- for each user -->
+        <div class="tim-comm-usergrid">
+            <img> <!-- place for user avatar image --> </img>
+            <div class="tim-comm-usergrid-name">  <!-- place for user name --></div>
+            <div class="tim-comm-usergrid-whois">  <!-- place for status of user --></div>
+            <div class="tim-comm-usergrid-count">  <!-- place for user's opinion count --></div>
+        </div>
+        <!-- end for each -->
+    </div>
+</div>
