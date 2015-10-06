@@ -19,4 +19,18 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.add" template="tim/recommendation/add/content.phtml" />
         </reference>
     </recommendation_index_add>
+    <recommendation_index_view>
+                <action method="setTemplate"><template>tim/recommendation/view/header.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/view/left.phtml" />
+        </reference>
+        <reference name="right">
+            <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/view/right.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
+        </reference>
+    </recommendation_index_view>
 </layout>

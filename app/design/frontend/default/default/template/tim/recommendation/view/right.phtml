@@ -1,0 +1,52 @@
+<div class="tim-comm-right-column">
+    <div class="tim-rating"> <!-- main container for rating part of opinion -->
+        <div class="tim-rating-title"><?php echo $this->__("EVALUATION OF PRODUCT"); ?>:</div>
+        <div class="tim-rating-score-main">
+            <!-- score taken from average partial scores from user input -->
+		<span>/6<span>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Value for money"); ?>:
+            <div class="tim-chart tim-pricequality">
+                <!-- horizontal graphic bar that will display partial score (user input) -->
+            </div>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Product durability"); ?>:
+            <div class="tim-chart tim-durability">
+                <!-- horizontal graphic bar that will display partial score (user input) -->
+            </div>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Product failure"); ?>:
+            <div class="tim-chart tim-failure">
+                <!-- horizontal graphic bar that will display partial score (user input) -->
+            </div>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Easy to install"); ?>:
+            <div class="tim-chart tim-assembly">
+                <!-- horizontal graphic bar that will display partial score (user input) -->
+            </div>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Average product"); ?>:
+            <div class="tim-chart tim-average">
+                <!-- horizontal graphic bar that will display score as average score from all comments regarding that item -->
+            </div>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Do you purchased this product"); ?>:
+            <div class="tim-chart-boolean">
+                <!-- highlight one field from two possible (YES/NO) if user bought that product -->
+                {Magento: check - did user bought that item/product - BOOLEAN}
+            </div>
+        </div>
+        <div class="tim-rating-score-part">
+            <?php echo $this->__("Do you recommend this product"); ?>:
+            <div class="tim-chart-boolean">
+                <!-- highlight one field from two possible (YES/NO) from user input -->
+            </div>
+        </div>
+    </div>
+</div>
