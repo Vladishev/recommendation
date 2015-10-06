@@ -16,7 +16,7 @@
             <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/add/right.phtml" />
         </reference>
         <reference name="content">
-            <block type="tim_recommendation/recommendation" name="center.recommendation.view" template="tim/recommendation/add/center.phtml" />
+            <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/add/content.phtml" />
         </reference>
     </recommendation_index_add>
 </layout>
