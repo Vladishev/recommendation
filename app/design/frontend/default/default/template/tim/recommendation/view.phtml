@@ -1,0 +1,36 @@
+<div>
+    <!-- Header -->
+
+    <div class="tim-comm-header">
+        <div class="tim-comm-header-left">
+            <div class="tim-comm-header-title">Lorem epsilum...</div>
+            <div class="tim-comm-header-subtitle">Lorem epsilum lorem...</div>
+        </div>
+        <div class="tim-comm-header-right">
+            <div class="tim-comm-cancel">
+                <button type="button" class="tim-comm-button-cancel">Rozmyśliłem się, nie chcę dodawać opinii.</button> <!-- button if user do not want add new opinion -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Left column: -->
+
+    <div class="tim-comm-left-column">
+        <?php echo $this->getChildHtml('left.recommendation.view') ?>
+    </div>
+
+
+    <!-- Main (middle) column: -->
+
+    <div class="tim-comm-main-column-short">
+        <?php echo $this->getChildHtml('content.recommendation.view') ?>
+    </div>
+
+
+    <!-- Right column: -->
+
+    <div class="tim-comm-right-column-wide">
+        <?php echo $this->getChildHtml('right.recommendation.view') ?>
+    </div>
+</div>
