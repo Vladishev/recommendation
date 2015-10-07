@@ -13,8 +13,10 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
     public function profileAction()
     {
         $userId = $this->getRequest()->getParam('id');
-        $model = Mage::getModel('tim_recommendation/user');
-        if ($model->load($userId)->getCustomerId() != NULL) {
+//        $model = Mage::getModel('tim_recommendation/user');
+        $model = Mage::getModel('customer/customer');
+//        if ($model->load($userId)->getCustomerId() != NULL) {
+        if ($model->load($userId)->getEntityId() != NULL) {
             $userData = $model->load($userId);
             Mage::register('user_data', $userData);
             $this->loadLayout();
