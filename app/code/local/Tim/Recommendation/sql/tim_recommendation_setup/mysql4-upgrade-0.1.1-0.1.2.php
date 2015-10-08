@@ -1,13 +1,28 @@
 <?php
-$installer = Mage::getModel('tim_recommendation/user');
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ * @author     Vladislav Verbitskiy
+ */
 
+$installer = $this;
 
 $installer->startSetup();
 
 $installer->getConnection()
     ->addColumn($installer->getTable('tim_recommendation/user'),
-        'banner', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+        'banner',
+        array(
+            'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+            'length' => 255,
             'nullable' => false,
-        ), 'banner');
+            'default' => '',
+            'comment' => 'Banner'
+        )
+    );
+
 
 $installer->endSetup();

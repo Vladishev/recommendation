@@ -99,12 +99,12 @@ if (!$connection->isTableExists($recommendationUserTable)) {
         ->addForeignKey($installer->getFkName('tim_recommendation/user', 'customer_id', 'customer/entity', 'entity_id'),
             'customer_id', $installer->getTable('customer/entity'), 'entity_id',
             Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
-        ->addColumn('site_url', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+        ->addColumn('www', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
             'nullable' => false,
-        ), 'site_url')
-        ->addColumn('photo', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+        ), 'www')
+        ->addColumn('ad', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
             'nullable' => false,
-        ), 'photo')
+        ), 'ad')
         ->addColumn('user_type', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
             'nullable' => false,
         ), 'User type')
