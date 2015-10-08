@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
+    <default>
+        <reference name="top.links">
+            <action method="addLink" translate="label title">
+                <label>My Recommendation Data</label>
+                <url helper="tim_recommendation/getRecommendationDataUrl" />
+                <title>My Recommendation Data</title>
+                <prepare>true</prepare>
+                <position>15</position>
+            </action>
+        </reference>
+    </default>
+    <recommendation_user_data>
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+        </reference>
+        <reference name="content">
+        <block type="tim_recommendation/recommendation" name="content.recommendation.data" template="tim/recommendation/data/content.phtml" />
+        </reference>
+    </recommendation_user_data>
     <recommendation_index_add>
         <reference name="root">
             <action method="setTemplate"><template>page/3columns.phtml</template></action>

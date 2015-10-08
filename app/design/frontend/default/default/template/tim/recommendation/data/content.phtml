@@ -1,0 +1,15 @@
+<form action="<?php echo Mage::getUrl('recommendation/user/save'); ?>" method="post" enctype="multipart/form-data">
+    <?php echo $this->__('Image: '); ?><input type="file" name="image"><br>
+    <?php
+    $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+    $photo = Mage::getModel('tim_recommendation/user')
+        ->load($customerId, 'customer_id')
+        ->getPhoto();
+    if(!empty($photo))
+    {
+        echo $this->__('Delete photo: ') . '<input type="checkbox" name="delete" value="1"><br>';
+    }
+    ?>
+    <?php echo $this->__('Site: '); ?><input type="text" name="url" class="validate-clean-url"><br>
+    <input type="submit" value="Submit">
+</form>
