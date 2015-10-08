@@ -91,29 +91,23 @@
         <h2 class="legend"><?php echo $this->__('Recommendation Information') ?></h2>
         <ul class="form-list">
             <li>
-                <label for="url"><?php echo Mage::helper('tim_recommendation')->__('Site') ?></label>
+                <label for="url"><?php echo Mage::helper('tim_recommendation')->__('WWW') ?></label>
                 <div class="input-box">
-                    <input type="text" name="url" id="tim-form-url" class="input-text validate-clean-url" value="<?php echo Mage::helper('tim_recommendation')->getSiteUrl(); ?>"/>
+                    <input type="text" name="url" id="tim-form-url" class="input-text validate-clean-url" value="<?php echo Mage::helper('tim_recommendation')->getSiteUrl(); ?>" />
                 </div>
             </li>
             <li>
-                <label for="image"><?php echo Mage::helper('tim_recommendation')->__('Image') ?></label>
+                <label for="banner"><?php echo Mage::helper('tim_recommendation')->__('Banner') ?></label>
                 <div class="input-box">
-                    <input type="file" name="image" id="tim-form-image" />
+                    <input type="file" name="banner" id="banner" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" />
                 </div>
             </li>
-            <?php
-            $photo = Mage::helper('tim_recommendation')->getPhotoData();
-            if(!empty($photo))
-            {
-                echo '<li>
-                <label for="tim-form-delete">' . Mage::helper("tim_recommendation")->__("Delete photo") . '</label>
+            <li>
+                <label for="image"><?php echo Mage::helper('tim_recommendation')->__('Avatar') ?></label>
                 <div class="input-box">
-                    <input type="checkbox" name="tim-form-delete" id="tim-form-delete"  value="1" />
+                    <input type="file" name="image" id="tim-form-image" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" />
                 </div>
-            </li>';
-            }
-            ?>
+            </li>
         </ul>
     </div>
 <!-- End of Tim Recommendation form-->

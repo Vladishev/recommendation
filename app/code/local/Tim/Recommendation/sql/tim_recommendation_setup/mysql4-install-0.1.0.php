@@ -105,6 +105,9 @@ if (!$connection->isTableExists($recommendationUserTable)) {
         ->addColumn('photo', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
             'nullable' => false,
         ), 'photo')
+        ->addColumn('banner', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+            'nullable' => false,
+        ), 'banner')
         ->addColumn('user_type', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
             'nullable' => false,
         ), 'User type')

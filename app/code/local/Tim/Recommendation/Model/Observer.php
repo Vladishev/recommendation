@@ -14,49 +14,66 @@ class Tim_Recommendation_Model_Observer
     {
         $controller = $observer->getEvent()->getControllerAction();
 
-        $fname = NULL;
+        $avatar = NULL;
+        $banner = NULL;
         $siteUrl = NULL;
         $postData = $controller->getRequest()->getPost();
         if ($_FILES['image']['name'] != '') {
-            $fname = $_FILES['image']['name'];
+            $avatar = time() . $_FILES['image']['name'];
+        }
+        if ($_FILES['banner']['name'] != '') {
+            $banner = time() . $_FILES['banner']['name'];
         }
         if ($postData['url'] != NULL) {
             $siteUrl = $postData['url'];
         }
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
-        $path = Mage::getBaseDir('media') . '/tim/' . $customerId;
+        $path = Mage::getBaseDir('media') . '/tim/recommendation';
         $model = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $modelData = $model->getData();
-        Mage::log($fname);
 
-        if ($postData['tim-form-delete'] != NULL) {
-            try {
-                $model->setPhoto('');
-                $model->save();
-                $this->clearPath($path);
-            } catch (Exception $e) {
-                Mage::getSingleton('core/session')->addError($e->getMessage());
-            }
-        }
-        if ($fname != NULL) {
+        if ($avatar != NULL) {
             try {
                 if (!is_dir($path)) {
                     mkdir($path, 0777, true);
                 }
-                $this->clearPath($path);
-                $dbPath = '/media/tim/' . $customerId . '/' . $fname;
+                $dbPath = '/media/tim/recommendation/' . $avatar;
                 $uploader = new Varien_File_Uploader('image');
                 $uploader->setAllowedExtensions(array('png', 'gif', 'jpeg', 'jpg'));
                 $uploader->setAllowCreateFolders(true);
                 $uploader->setAllowRenameFiles(false);
                 $uploader->setFilesDispersion(false);
-                $uploader->save($path, $fname);
+                $uploader->save($path, $avatar);
                 if (!empty($modelData)) {
                     $model->setPhoto($dbPath);
                     $model->save();
                 } else {
                     $model->setCustomerId($customerId);
                     $model->setPhoto($dbPath);
+                    $model->save();
+                }
+            } catch (Exception $e) {
+                Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__($e->getMessage()));
+            }
+        }
+        if ($banner != NULL) {
+            try {
+                if (!is_dir($path)) {
+                    mkdir($path, 0777, true);
+                }
+                $dbPath = '/media/tim/recommendation/' . $banner;
+                $uploader = new Varien_File_Uploader('banner');
+                $uploader->setAllowedExtensions(array('png', 'gif', 'jpeg', 'jpg'));
+                $uploader->setAllowCreateFolders(true);
+                $uploader->setAllowRenameFiles(false);
+                $uploader->setFilesDispersion(false);
+                $uploader->save($path, $banner);
+                if (!empty($modelData)) {
+                    $model->setBanner($dbPath);
+                    $model->save();
+                } else {
+                    $model->setCustomerId($customerId);
+                    $model->setBanner($dbPath);
                     $model->save();
                 }
             } catch (Exception $e) {
@@ -76,15 +93,6 @@ class Tim_Recommendation_Model_Observer
                 }
             } catch (Exception $e) {
                 Mage::getSingleton('core/session')->addError($e->getMessage());
-            }
-        }
-    }
-
-    public function clearPath($path)
-    {
-        if (is_dir($path)) {
-            foreach (glob($path . '/*') as $file) {
-                unlink($file);
             }
         }
     }
