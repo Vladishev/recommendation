@@ -11,6 +11,11 @@
             </action>
         </reference>
     </default>
+    <customer_account_edit>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
+        </reference>
+    </customer_account_edit>
     <recommendation_index_add>
         <reference name="root">
             <action method="setTemplate"><template>page/3columns.phtml</template></action>

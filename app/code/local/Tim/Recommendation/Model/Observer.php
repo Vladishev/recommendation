@@ -14,6 +14,7 @@ class Tim_Recommendation_Model_Observer
     {
         $controller = $observer->getEvent()->getControllerAction();
 
+        $description = null;
         $avatar = null;
         $banner = null;
         $siteUrl = null;
@@ -26,6 +27,9 @@ class Tim_Recommendation_Model_Observer
         }
         if (!is_null($postData['url'])) {
             $siteUrl = $postData['url'];
+        }
+        if (!is_null($postData['description'])) {
+            $description = $postData['description'];
         }
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $path = Mage::getBaseDir('media') . '/tim/recommendation';
@@ -65,13 +69,26 @@ class Tim_Recommendation_Model_Observer
                 Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__($e->getMessage()));
             }
         }
-        if (!is_null($siteUrl)) {
+        if (!empty($siteUrl)) {
             try {
                 if (!empty($userData)) {
                     $user->setWww($siteUrl);
                 } else {
                     $user->setCustomerId($customerId);
                     $user->setWww($siteUrl);
+                }
+                $user->save();
+            } catch (Exception $e) {
+                Mage::getSingleton('core/session')->addError($e->getMessage());
+            }
+        }
+        if (!empty($description)) {
+            try {
+                if (!empty($userData)) {
+                    $user->setDescription($description);
+                } else {
+                    $user->setCustomerId($customerId);
+                    $user->setDescription($description);
                 }
                 $user->save();
             } catch (Exception $e) {
