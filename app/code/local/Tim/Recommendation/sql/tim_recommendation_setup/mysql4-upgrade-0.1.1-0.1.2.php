@@ -14,13 +14,24 @@ $installer->startSetup();
 
 $installer->getConnection()
     ->addColumn($installer->getTable('tim_recommendation/user'),
-        'banner',
+        'avatar',
         array(
             'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
             'length' => 255,
             'nullable' => false,
             'default' => '',
-            'comment' => 'Banner'
+            'comment' => 'avatar'
+        )
+    );
+$installer->getConnection()
+    ->addColumn($installer->getTable('tim_recommendation/user'),
+        'description',
+        array(
+            'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+            'length' => 255,
+            'nullable' => false,
+            'default' => '',
+            'comment' => 'description'
         )
     );
 

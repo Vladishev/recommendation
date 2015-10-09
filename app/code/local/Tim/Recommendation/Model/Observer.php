@@ -40,10 +40,10 @@ class Tim_Recommendation_Model_Observer
                 $this->saveImage($avatar, $path, 'image');
                 $dbPath = '/media/tim/recommendation/' . $avatar;
                 if (!empty($userData)) {
-                    $user->setAd($dbPath);
+                    $user->setAvatar($dbPath);
                 } else {
                     $user->setCustomerId($customerId);
-                    $user->setAd($dbPath);
+                    $user->setAvatar($dbPath);
                 }
                 $user->save();
             } catch (Exception $e) {
@@ -55,10 +55,10 @@ class Tim_Recommendation_Model_Observer
                 $this->saveImage($banner, $path, 'banner');
                 $dbPath = '/media/tim/recommendation/' . $banner;
                 if (!empty($userData)) {
-                    $user->setBanner($dbPath);
+                    $user->setAd($dbPath);
                 } else {
                     $user->setCustomerId($customerId);
-                    $user->setBanner($dbPath);
+                    $user->setAd($dbPath);
                 }
                 $user->save();
             } catch (Exception $e) {
