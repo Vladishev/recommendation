@@ -9,5 +9,8 @@
  */
 class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 {
-
+    public function getUserInformation()
+    {
+        return $user = Mage::getModel('tim_recommendation/user')->getCollection();
+    }
 }
