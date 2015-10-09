@@ -46,11 +46,13 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
         }
 
-        Mage::getModel('tim_recommendation/media')
-            ->setRecomId($recomId)
-            ->setName($params['link_to_youtube'])
-            ->setType('url/youtube')
-            ->save();
+        if(!empty($params['link_to_youtube'])){
+            Mage::getModel('tim_recommendation/media')
+                ->setRecomId($recomId)
+                ->setName($params['link_to_youtube'])
+                ->setType('url/youtube')
+                ->save();
+        }
 
         foreach ($files as $file) {
             $mediaModel = Mage::getModel('tim_recommendation/media')
