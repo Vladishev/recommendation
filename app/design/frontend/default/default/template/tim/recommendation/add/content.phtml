@@ -77,7 +77,7 @@ $productId = Mage::registry('current_product')->getId();
                         </li>
                         <li>
                             <label for="recommendation-img"><?php echo $this->__('Czy chcesz dodać zdjęcie') ?></label>
-                            <input type="file" name="tim-recommendation-img" id="recommendation-img" accept="image/*"/>
+                            <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"/>
                             <!-- place for user input - upload photos -->
                         </li>
                         <li>
