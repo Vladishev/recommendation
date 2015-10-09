@@ -76,13 +76,13 @@ $productId = Mage::registry('current_product')->getId();
                             </form>
                         </li>
                         <li>
-                            <label for="recommendation-img" class="required"><em>*</em><?php echo $this->__('Czy chcesz dodać zdjęcie') ?></label>
-                            <input type="file" name="tim-recommendation-img" id="recommendation-img" accept="image/*" class="required-entry"/>
+                            <label for="recommendation-img"><?php echo $this->__('Czy chcesz dodać zdjęcie') ?></label>
+                            <input type="file" name="tim-recommendation-img" id="recommendation-img" accept="image/*"/>
                             <!-- place for user input - upload photos -->
                         </li>
                         <li>
-                            <label for="link_to_youtube" class="required"><em>*</em><?php echo $this->__('Czy chcesz dodać film:') ?></label>
-                            <input type="text" name="link_to_youtube" id="link_to_youtube" class="input-text validate-url required-entry"/>
+                            <label for="link_to_youtube"><?php echo $this->__('Czy chcesz dodać film:') ?></label>
+                            <input type="text" name="link_to_youtube" id="link_to_youtube" class="input-text validate-url"/>
                             <!-- place for user input - add movie - url to youtube -->
                         </li>
                     </div>
@@ -130,8 +130,13 @@ $productId = Mage::registry('current_product')->getId();
         <!-- end of login area if user isn't logged -->
         <div class="tim-comment-add">
             <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+            <?php if($isLoggedIn): ?>
             <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>"
-                    class="button <?php echo ($isLoggedIn ? '' : 'disabled') ?>" <?php echo ($isLoggedIn ? '' : 'disabled') ?>><span><span><?php echo $this->__('Dodaj opinię') ?></span></span></button>
+                    class="button"><span><span><?php echo $this->__('Dodaj opinię') ?></span></span></button>
+            <?php else: ?>
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>"
+                    class="button disabled" onclick="alert('Only logged in customer can add opinion.'); return false;"><span><span><?php echo $this->__('Dodaj opinię') ?></span></span></button>
+            <?php endif; ?>
         </div>
     </fieldset>
 </form>
