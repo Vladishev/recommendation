@@ -30,6 +30,9 @@
                     <user>
                         <table>tim_recom_user</table>
                     </user>
+                    <media>
+                        <table>tim_recom_media</table>
+                    </media>
                 </entities>
             </tim_recommendation_resource>
         </models>
