@@ -54,7 +54,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->save();
         }
 
-        foreach ($files as $file) {
+        foreach ((array)$files as $file) {
             $mediaModel = Mage::getModel('tim_recommendation/media')
                 ->setRecomId($recomId)
                 ->setName('/media/tim/recommendation/' . $file['name'])
