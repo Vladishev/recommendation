@@ -9,7 +9,7 @@
  */
 class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 {
-    /*  */
+    /* Gets user data from tables */
     public function getUserInformation($userId)
     {
         $collection = Mage::getModel('tim_recommendation/user')->getCollection();
@@ -22,8 +22,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             ->where('cev1.attribute_id = 7');
         foreach ($collection as $items)
         {
-            $item = $items->getData();
+            $userData = $items->getData();
         }
-        return $item;
+        return $userData;
     }
 }
