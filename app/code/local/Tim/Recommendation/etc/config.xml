@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Tim_Recommendation>
     </modules>
     <global>
@@ -33,6 +33,9 @@
                     <media>
                         <table>tim_recom_media</table>
                     </media>
+                    <user_type>
+                        <table>tim_user_type</table>
+                    </user_type>
                 </entities>
             </tim_recommendation_resource>
         </models>
@@ -66,6 +69,17 @@
                 <class>Tim_Recommendation_Helper</class>
             </tim_recommendation>
         </helpers>
+        <events>
+            <admin_system_config_changed_section_tim_recommendation>
+                <observers>
+                    <save_user_type>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>saveUserType</method>
+                    </save_user_type>
+                </observers>
+            </admin_system_config_changed_section_tim_recommendation>
+        </events>
     </global>
     <frontend>
         <routers>
