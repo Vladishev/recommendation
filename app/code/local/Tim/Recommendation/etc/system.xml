@@ -11,40 +11,39 @@
 -->
 <config>
     <tabs>
-        <tim_recommendation translate="label">
+        <tim_tab translate="label" module="tim_recommendation">
             <label>TIM SA</label>
             <sort_order>100500</sort_order>
-        </tim_recommendation>
+        </tim_tab>
     </tabs>
     <sections>
-        <tim_calc translate="label" >
-            <label>Energy Price</label>
+        <tim_recommendation translate="label">
+            <label>Recommendation</label>
             <tab>tim_tab</tab>
-            <sort_order>100</sort_order>
+            <sort_order>105</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <default translate="label" >
-                    <label>Energy price</label>
-                    <sort_order>50</sort_order>
+                <user_level translate="label">
+                    <label>User level</label>
+                    <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <fields>
-                        <energy_price translate="label">
-                            <label>Price kWh</label>
-                            <frontend_type>text</frontend_type>
-                            <validate>validate-number</validate>
-                            <sort_order>65</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </energy_price>
-                    </fields>
-                </default>
+                    <!--<fields>-->
+                        <!--<values translate="label">-->
+                            <!--<frontend_model>tim_recommendation/system_config_userType</frontend_model>-->
+                            <!--<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>-->
+                            <!--<sort_order>5</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</values>-->
+                    <!--</fields>-->
+                </user_level>
             </groups>
-        </tim_calc>
+        </tim_recommendation>
     </sections>
 </config>
 
