@@ -55,20 +55,22 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         foreach ((array)$files as $file) {
-            $mediaModel = Mage::getModel('tim_recommendation/media')
-                ->setRecomId($recomId)
-                ->setName('/media/tim/recommendation/' . $file['name'])
-                ->setType($file['type']);
-            try {
-                $saveMedia = $mediaModel->save();
-            } catch (Exception $e) {
-                Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']));
-            }
-            if ($saveMedia) {
-                if (isset($file['name']) && !empty($file['name'])) {
-                    $fileName = time() . $file['name'];
-                    $this->saveImage($fileName, $folderForFiles, $file);
+            if($file['error'] == 0){
+                $mediaModel = Mage::getModel('tim_recommendation/media')
+                    ->setRecomId($recomId)
+                    ->setName('/media/tim/recommendation/' . $file['name'])
+                    ->setType($file['type']);
+                try {
+                    $saveMedia = $mediaModel->save();
+                } catch (Exception $e) {
+                    Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+                    Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']));
+                }
+                if ($saveMedia) {
+                    if (isset($file['name']) && !empty($file['name'])) {
+                        $fileName = time() . $file['name'];
+                        $this->saveImage($fileName, $folderForFiles, $file);
+                    }
                 }
             }
         }
