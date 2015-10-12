@@ -20,10 +20,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             ->where('main_table.customer_id = ' . $userId . '')
             ->where('cev.attribute_id = 5')
             ->where('cev1.attribute_id = 7');
-        foreach ($collection as $items)
-        {
-            $userData = $items->getData();
-        }
+
+        $userData = $collection->getFirstItem()->getData();
         return $userData;
     }
 }
