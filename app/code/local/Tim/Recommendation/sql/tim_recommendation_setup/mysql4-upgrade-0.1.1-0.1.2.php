@@ -14,17 +14,17 @@ if (!$connection->isTableExists($recommendationLevelTable)) {
             'nullable' => false,
             'primary' => true,
         ), 'Recommendation user Id')
+        ->addColumn('system_config_id', Varien_Db_Ddl_Table::TYPE_TEXT, '64k', array(
+            'nullable' => false,
+        ), 'Configuration Id')
         ->addColumn('point', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'unsigned' => true,
-            'nullable' => true,
+            'nullable' => false,
         ), 'Recommendation point')
         ->addColumn('from', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'unsigned' => true,
-            'nullable' => true,
+            'nullable' => false,
         ), 'Recommendation from')
         ->addColumn('to', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'unsigned' => true,
-            'nullable' => true,
+            'nullable' => false,
         ), 'Recommendation to');
 
     $connection->createTable($table);

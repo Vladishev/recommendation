@@ -31,16 +31,16 @@
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <!--<fields>-->
-                        <!--<values translate="label">-->
-                            <!--<frontend_model>tim_recommendation/system_config_userType</frontend_model>-->
-                            <!--<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>-->
-                            <!--<sort_order>5</sort_order>-->
-                            <!--<show_in_default>1</show_in_default>-->
-                            <!--<show_in_website>1</show_in_website>-->
-                            <!--<show_in_store>1</show_in_store>-->
-                        <!--</values>-->
-                    <!--</fields>-->
+                    <fields>
+                        <level_values translate="label">
+                            <frontend_model>tim_recommendation/system_config_userLevel</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </level_values>
+                    </fields>
                 </user_level>
             </groups>
         </tim_recommendation>

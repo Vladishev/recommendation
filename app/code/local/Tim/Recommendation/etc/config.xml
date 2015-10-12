@@ -69,6 +69,17 @@
                 <class>Tim_Recommendation_Helper</class>
             </tim_recommendation>
         </helpers>
+        <events>
+            <admin_system_config_changed_section_tim_recommendation>
+                <observers>
+                    <save_user_level>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>saveUserLevel</method>
+                    </save_user_level>
+                </observers>
+            </admin_system_config_changed_section_tim_recommendation>
+        </events>
     </global>
     <frontend>
         <routers>
