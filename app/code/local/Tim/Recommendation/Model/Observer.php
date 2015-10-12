@@ -38,9 +38,9 @@ class Tim_Recommendation_Model_Observer
                 }
                 $ids = Mage::helper('tim_recommendation')->getUserTypeDiffIds($userTypes);
                 foreach ($ids as $id) {
-                    Mage::getModel('tim_recommendation/userType')->load($id, 'system_config_id')->delete();
+                    $userType = Mage::getModel('tim_recommendation/userType')->load($id, 'system_config_id');
                     try {
-                        $model->save();
+                        $userType->delete();
                     } catch (Exception $e) {
                         Mage::log($e->getMessage(), null, 'tim_recommendation.log');
                     }
