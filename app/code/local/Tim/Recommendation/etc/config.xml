@@ -81,6 +81,36 @@
             </admin_system_config_changed_section_tim_recommendation>
         </events>
     </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Tim_Recommendation>
+                    <files>
+                        <default>Tim_Recommendation.csv</default>
+                    </files>
+                </Tim_Recommendation>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <tim_recommendation>
+                                            <title>Tim Recommendation</title>
+                                        </tim_recommendation>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
     <frontend>
         <routers>
             <recommendation>
