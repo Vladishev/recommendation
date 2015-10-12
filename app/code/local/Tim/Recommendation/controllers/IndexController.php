@@ -36,13 +36,13 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setRatingDurability($params['itemDurability'])
             ->setRatingFailure($params['itemFailure'])
             ->setRatingService($params['itemEaseofinstall'])
-            ->setRecomend($params['itemDoyoureccomend']);
+            ->setRecomend($params['itemDoyourecommend']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
             Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
         } catch (Exception $e) {
-            Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
         }
 
