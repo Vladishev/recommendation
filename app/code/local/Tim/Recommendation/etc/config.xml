@@ -33,6 +33,9 @@
                     <media>
                         <table>tim_recom_media</table>
                     </media>
+                    <user_type>
+                        <table>tim_user_type</table>
+                    </user_type>
                 </entities>
             </tim_recommendation_resource>
         </models>
@@ -67,6 +70,15 @@
             </tim_recommendation>
         </helpers>
         <events>
+            <admin_system_config_changed_section_tim_recommendation>
+                <observers>
+                    <save_user_type>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>saveUserType</method>
+                    </save_user_type>
+                </observers>
+            </admin_system_config_changed_section_tim_recommendation>
             <controller_action_predispatch_customer_account_editPost>
                 <observers>
                     <tim_recommendation_save>
@@ -77,6 +89,36 @@
             </controller_action_predispatch_customer_account_editPost>
         </events>
     </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Tim_Recommendation>
+                    <files>
+                        <default>Tim_Recommendation.csv</default>
+                    </files>
+                </Tim_Recommendation>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <tim_recommendation>
+                                            <title>Tim Recommendation</title>
+                                        </tim_recommendation>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
     <frontend>
         <routers>
             <recommendation>
