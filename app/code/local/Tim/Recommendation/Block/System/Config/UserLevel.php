@@ -15,19 +15,19 @@ class Tim_Recommendation_Block_System_Config_UserLevel extends Mage_Adminhtml_Bl
     {
         $this->addColumn('point', array(
             'label' => Mage::helper('tim_recommendation')->__('Quantity pkt'),
-            'class' => 'required-entry',
+            'class' => 'validate-number',
             'style' => 'width:100px',
         ));
 
         $this->addColumn('from', array(
             'label' => Mage::helper('tim_recommendation')->__('From'),
-            'class' => 'required-entry',
+            'class' => 'validate-number',
             'style' => 'width:100px',
         ));
 
         $this->addColumn('to', array(
             'label' => Mage::helper('tim_recommendation')->__('To'),
-            'class' => 'required-entry',
+            'class' => 'validate-number',
             'style' => 'width:100px',
         ));
 
