@@ -56,9 +56,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
         foreach ((array)$files as $file) {
             if($file['error'] == 0){
+                $fileName = time() . $file['name'];
                 $mediaModel = Mage::getModel('tim_recommendation/media')
                     ->setRecomId($recomId)
-                    ->setName('/media/tim/recommendation/' . $file['name'])
+                    ->setName('/media/tim/recommendation/' . $fileName)
                     ->setType($file['type']);
                 try {
                     $saveMedia = $mediaModel->save();
@@ -67,10 +68,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']));
                 }
                 if ($saveMedia) {
-                    if (isset($file['name']) && !empty($file['name'])) {
-                        $fileName = time() . $file['name'];
                         $this->saveImage($fileName, $folderForFiles, $file);
-                    }
                 }
             }
         }
