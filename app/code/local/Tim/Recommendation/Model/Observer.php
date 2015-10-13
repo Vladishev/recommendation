@@ -112,6 +112,7 @@ class Tim_Recommendation_Model_Observer
     {
         $controller = $observer->getEvent()->getControllerAction();
 
+        $description = null;
         $avatar = null;
         $banner = null;
         $siteUrl = null;
@@ -124,6 +125,9 @@ class Tim_Recommendation_Model_Observer
         }
         if (!is_null($postData['url'])) {
             $siteUrl = $postData['url'];
+        }
+        if (!is_null($postData['description'])) {
+            $description = $postData['description'];
         }
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $path = Mage::getBaseDir('media') . '/tim/recommendation';
@@ -138,10 +142,10 @@ class Tim_Recommendation_Model_Observer
                 $this->saveImage($avatar, $path, 'image');
                 $dbPath = '/media/tim/recommendation/' . $avatar;
                 if (!empty($userData)) {
-                    $user->setAd($dbPath);
+                    $user->setAvatar($dbPath);
                 } else {
                     $user->setCustomerId($customerId);
-                    $user->setAd($dbPath);
+                    $user->setAvatar($dbPath);
                 }
                 $user->save();
             } catch (Exception $e) {
@@ -153,23 +157,36 @@ class Tim_Recommendation_Model_Observer
                 $this->saveImage($banner, $path, 'banner');
                 $dbPath = '/media/tim/recommendation/' . $banner;
                 if (!empty($userData)) {
-                    $user->setBanner($dbPath);
+                    $user->setAd($dbPath);
                 } else {
                     $user->setCustomerId($customerId);
-                    $user->setBanner($dbPath);
+                    $user->setAd($dbPath);
                 }
                 $user->save();
             } catch (Exception $e) {
                 Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__($e->getMessage()));
             }
         }
-        if (!is_null($siteUrl)) {
+        if (!empty($siteUrl)) {
             try {
                 if (!empty($userData)) {
                     $user->setWww($siteUrl);
                 } else {
                     $user->setCustomerId($customerId);
                     $user->setWww($siteUrl);
+                }
+                $user->save();
+            } catch (Exception $e) {
+                Mage::getSingleton('core/session')->addError($e->getMessage());
+            }
+        }
+        if (!empty($description)) {
+            try {
+                if (!empty($userData)) {
+                    $user->setDescription($description);
+                } else {
+                    $user->setCustomerId($customerId);
+                    $user->setDescription($description);
                 }
                 $user->save();
             } catch (Exception $e) {
