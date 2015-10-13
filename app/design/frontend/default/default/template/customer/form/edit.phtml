@@ -99,19 +99,19 @@
             <li>
                 <label for="banner"><?php echo Mage::helper('tim_recommendation')->__('Banner') ?></label>
                 <div class="input-box">
-                    <input type="file" name="banner" id="banner" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" />
+                    <input type="file" name="banner" id="banner" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" accept="image/jpeg,image/png,image/gif"/>
                 </div>
             </li>
             <li>
                 <label for="image"><?php echo Mage::helper('tim_recommendation')->__('Avatar') ?></label>
                 <div class="input-box">
-                    <input type="file" name="image" id="tim-form-image" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" />
+                    <input type="file" name="image" id="tim-form-image" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" accept="image/jpeg,image/png,image/gif"/>
                 </div>
             </li>
             <li>
                 <label for="description"><?php echo Mage::helper('tim_recommendation')->__('Description') ?></label>
                 <div class="input-box">
-                    <textarea name="description" id="tim-form-description" class="input-textarea"></textarea>
+                    <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo Mage::helper('tim_recommendation')->getCustomerDescription(); ?></textarea>
                 </div>
             </li>
         </ul>

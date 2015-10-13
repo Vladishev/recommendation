@@ -36,7 +36,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setRatingDurability($params['itemDurability'])
             ->setRatingFailure($params['itemFailure'])
             ->setRatingService($params['itemEaseofinstall'])
-            ->setRecomend($params['itemDoyourecommend']);
+            ->setRecommend($params['itemDoyourecommend']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
@@ -46,7 +46,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
         }
 
-        if(!empty($params['link_to_youtube'])){
+        if (!empty($params['link_to_youtube'])) {
             Mage::getModel('tim_recommendation/media')
                 ->setRecomId($recomId)
                 ->setName($params['link_to_youtube'])
@@ -55,7 +55,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         foreach ((array)$files as $file) {
-            if($file['error'] == 0){
+            if ($file['error'] == 0) {
                 $fileName = time() . $file['name'];
                 $mediaModel = Mage::getModel('tim_recommendation/media')
                     ->setRecomId($recomId)
@@ -68,7 +68,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']));
                 }
                 if ($saveMedia) {
-                        $this->saveImage($fileName, $folderForFiles, $file);
+                    $this->saveImage($fileName, $folderForFiles, $file);
                 }
             }
         }

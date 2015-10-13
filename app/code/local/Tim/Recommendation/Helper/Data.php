@@ -22,6 +22,13 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         return $siteUrl;
     }
 
+    public function getCustomerDescription()
+    {
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getDescription();
+        return $siteUrl;
+    }
+
     /**
      * Compare values from system configuration (tim_recommendation/user_type/values)
      * and tim_recommendation/userType collection

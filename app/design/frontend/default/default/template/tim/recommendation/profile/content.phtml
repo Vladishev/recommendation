@@ -3,7 +3,7 @@ $userId = $this->getRequest()->getParam('id');
 $userInformation = $this->getUserInformation($userId);
 $site = $userInformation['www'];
 if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
-    $site = 'http://'.$userInformation['www'];
+    $site = 'http://' . $userInformation['www'];
 }
 ?>
 <div class="tim-comm-main-column-wide">
@@ -15,14 +15,16 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         </div>
         <div class="tim-user-picture">
             <!-- graphic provided by user -->
-            <img src="<?php echo $userInformation['ad']; ?>" alt="user-picture" />
+            <img src="<?php echo $userInformation['ad']; ?>" alt="user-picture"/>
         </div>
         <div class="tim-user-wwwpage">
             <?php echo $this->__("Website User"); ?>: <!-- link to user webpage -->
             <?php echo $site; ?>
         </div>
         <div class="tim-user-wwwpage-button">
-            <a href="<?php echo $site; ?>" target="_blank"><button type="button" class="tim-comm-button-smal"><?php echo $this->__("See user page"); ?></button></a>
+            <a href="<?php echo $site; ?>" target="_blank">
+                <button type="button" class="tim-comm-button-smal"><?php echo $this->__("See user page"); ?></button>
+            </a>
         </div>
     </div>
 
@@ -80,7 +82,8 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         <!-- for each comment owned by user (start) -->
         <div class="tim-comment-container">
             <div class="tim-comment-container-title">
-                <?php echo $this->__("Comment added"); ?> <span> <!-- date when comment was added --> </span>, <?php echo $this->__("user"); ?>: <span> <!-- name of user that add comment --> </span>
+                <?php echo $this->__("Comment added"); ?>
+                <span> <!-- date when comment was added --> </span>, <?php echo $this->__("user"); ?>: <span> <!-- name of user that add comment --> </span>
             </div>
             <div class="tim-comment-container-content">
                 <!-- content of comment -->

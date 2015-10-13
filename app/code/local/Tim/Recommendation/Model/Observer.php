@@ -194,11 +194,13 @@ class Tim_Recommendation_Model_Observer
             }
         }
     }
+
     /**
-     * @ string $postName
-     * @ string $path
-     * @ string $varName
-     **/
+     * Save image to folder
+     * @param string $varName
+     * @param string $path
+     * @param string $postName
+     */
     public function saveImage($varName, $path, $postName)
     {
         $uploader = new Varien_File_Uploader($postName);

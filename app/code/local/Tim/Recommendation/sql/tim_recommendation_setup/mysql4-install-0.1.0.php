@@ -14,6 +14,8 @@ $connection = $installer->getConnection();
 $recommendationTable = $installer->getTable('tim_recommendation/recommendation');
 $recommendationUserTable = $installer->getTable('tim_recommendation/user');
 $recommendationMediaTable = $installer->getTable('tim_recommendation/media');
+$recommendationUserTypeTable = $installer->getTable('tim_recommendation/user_type');
+$recommendationLevelTable = $installer->getTable('tim_recommendation/level');
 
 $installer->startSetup();
 
@@ -77,9 +79,9 @@ if (!$connection->isTableExists($recommendationTable)) {
             'nullable' => false,
             'default' => '0',
         ), 'Rating service')
-        ->addColumn('recomend', Varien_Db_Ddl_Table::TYPE_BOOLEAN, null, array(
+        ->addColumn('recommend', Varien_Db_Ddl_Table::TYPE_BOOLEAN, null, array(
             'nullable' => true,
-        ), 'Recomend')
+        ), 'Recommend')
         ->addColumn('by_it', Varien_Db_Ddl_Table::TYPE_BOOLEAN, null, array(
             'nullable' => true,
         ), 'By it');
@@ -106,6 +108,12 @@ if (!$connection->isTableExists($recommendationUserTable)) {
         ->addColumn('ad', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
             'nullable' => false,
         ), 'ad')
+        ->addColumn('avatar', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+            'nullable' => false,
+        ), 'Avatar')
+        ->addColumn('description', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+            'nullable' => false,
+        ), 'Description')
         ->addColumn('user_type', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
             'nullable' => false,
         ), 'User type')
@@ -136,6 +144,49 @@ if (!$connection->isTableExists($recommendationMediaTable)) {
         ->addColumn('type', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
             'nullable' => false,
         ), 'Type');
+
+    $connection->createTable($table);
+}
+
+if (!$connection->isTableExists($recommendationUserTypeTable)) {
+    $table = $connection->newTable($recommendationUserTypeTable)
+        ->addColumn('user_type_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            'identity' => true,
+            'nullable' => false,
+            'primary' => true,
+        ), 'User type Id')
+        ->addColumn('system_config_id', Varien_Db_Ddl_Table::TYPE_TEXT, '64k', array(
+            'nullable' => false,
+        ), 'Configuration Id')
+        ->addColumn('name', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+            'nullable' => false,
+        ), 'Name')
+        ->addColumn('admin', Varien_Db_Ddl_Table::TYPE_BOOLEAN, null, array(
+            'nullable' => true,
+        ), 'Admin');
+
+    $connection->createTable($table);
+}
+
+if (!$connection->isTableExists($recommendationLevelTable)) {
+    $table = $connection->newTable($recommendationLevelTable)
+        ->addColumn('user_level_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            'identity' => true,
+            'nullable' => false,
+            'primary' => true,
+        ), 'Recommendation user Id')
+        ->addColumn('system_config_id', Varien_Db_Ddl_Table::TYPE_TEXT, '64k', array(
+            'nullable' => false,
+        ), 'Configuration Id')
+        ->addColumn('point', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            'nullable' => false,
+        ), 'Recommendation point')
+        ->addColumn('from', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            'nullable' => false,
+        ), 'Recommendation from')
+        ->addColumn('to', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+            'nullable' => false,
+        ), 'Recommendation to');
 
     $connection->createTable($table);
 }
