@@ -36,6 +36,9 @@
                     <user_type>
                         <table>tim_user_type</table>
                     </user_type>
+                    <level>
+                        <table>tim_user_level</table>
+                    </level>
                 </entities>
             </tim_recommendation_resource>
         </models>
@@ -77,6 +80,15 @@
                         <class>tim_recommendation/observer</class>
                         <method>saveUserType</method>
                     </save_user_type>
+                </observers>
+            </admin_system_config_changed_section_tim_recommendation>
+            <admin_system_config_changed_section_tim_recommendation>
+                <observers>
+                    <save_user_level>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>saveUserLevel</method>
+                    </save_user_level>
                 </observers>
             </admin_system_config_changed_section_tim_recommendation>
             <controller_action_predispatch_customer_account_editPost>
