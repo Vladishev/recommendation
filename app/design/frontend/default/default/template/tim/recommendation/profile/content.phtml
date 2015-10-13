@@ -1,17 +1,28 @@
+<?php
+$userId = $this->getRequest()->getParam('id');
+$userInformation = $this->getUserInformation($userId);
+$site = $userInformation['www'];
+if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
+    $site = 'http://'.$userInformation['www'];
+}
+?>
 <div class="tim-comm-main-column-wide">
     <div class="tim-opinion">
         <div class="tim-opinion-content-subtitle"><?php echo $this->__("ABOUT USER"); ?></div>
         <div class="tim-user-about">
             <!-- about user info based on his own input -->
+            <?php echo $userInformation['description']; ?>
         </div>
         <div class="tim-user-picture">
             <!-- graphic provided by user -->
+            <img src="<?php echo $userInformation['ad']; ?>" alt="user-picture" />
         </div>
         <div class="tim-user-wwwpage">
             <?php echo $this->__("Website User"); ?>: <!-- link to user webpage -->
+            <?php echo $site; ?>
         </div>
         <div class="tim-user-wwwpage-button">
-            <button type="button" class="tim-comm-button-smal"><?php echo $this->__("See this user"); ?></button>
+            <a href="<?php echo $site; ?>" target="_blank"><button type="button" class="tim-comm-button-smal"><?php echo $this->__("See user page"); ?></button></a>
         </div>
     </div>
 
