@@ -1,110 +1,147 @@
-<div class="tim-opinion"> <!-- main container for opinion -->
-    <div class="tim-opinion-content-subtitle"><?php echo $this->__('Wpisz tytuł opinii:') ?></div>
-    <div class="tim-opinion-content">
-        <textarea><!-- place for user input - opinion title --></textarea>
+<?php
+$isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
+$customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+$productId = Mage::registry('current_product')->getId();
+?>
+<form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate" autocomplete="off" enctype="multipart/form-data">
+    <fieldset>
+        <div class="tim-opinion">
+            <ul class="form-list">
+                <li>
+                    <label for="tim-opinion-title" class="required"><em>*</em><?php echo $this->__('Wpisz tytuł opinii:') ?></label><br/>
+                    <div class="tim-opinion-title">
+                        <textarea name="opinion-title" id="tim-opinion-title" cols="5" rows="3" class="required-entry"></textarea>
+                    </div>
+                </li>
+                <li>
+                    <label for="tim-opinion-advantages" class="required"><em>*</em><?php echo $this->__('Opisz zalety produktu:') ?></label><br/>
+                    <div class="tim-opinion-advantages">
+                        <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3" class="required-entry"></textarea>
+                    </div>
+                </li>
+                <li>
+                    <label for="tim-opinion-disadvantages" class="required"><em>*</em><?php echo $this->__('Opisz wady produktu:') ?></label><br/>
+                    <div class="tim-opinion-disadvantages">
+                        <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" class="required-entry"></textarea>
+                    </div>
+                </li>
+                <li>
+                    <label for="tim-opinion-summary" class="required"><em>*</em><?php echo $this->__('Podsumowanie / dodatkowe informacje / uwagi:') ?></label><br/>
+                    <div class="tim-opinion-summary">
+                        <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" class="required-entry"></textarea>
+                    </div>
+                </li>
+                <div class="tim-rating-input-container">
+                    <div class="tim-rating-input">
+                        <?php $options = array(1, 2, 3, 4, 5, 6); ?>
+                        <li>
+                            <label for="radio-itemValuetomoney" class="required"><em>*</em><?php echo $this->__('Stosunek jakości do ceny:') ?></label>
+                            <form>
+                                <?php foreach ($options as $option): ?>
+                                    <input type="radio" name="itemValuetomoney" id="radio-itemValuetomoney"
+                                           value="<?php echo $option ?>"
+                                           class="radio validate-one-required-by-name"><?php echo $option ?></input>
+                                <?php endforeach; ?>
+                        </li>
+                        <li>
+                            <label for="radio-itemDurability" class="required"><em>*</em><?php echo $this->__('Trwałość produktu:') ?></label>
+                                <?php foreach ($options as $option): ?>
+                                    <input type="radio" name="itemDurability" id="radio-itemDurability"
+                                           value="<?php echo $option ?>"
+                                           class="radio validate-one-required-by-name"><?php echo $option ?></input>
+                                <?php endforeach; ?>
+                        </li>
+                        <li>
+                            <label for="radio-itemFailure" class="required"><em>*</em><?php echo $this->__('Awaryjność produktu:') ?></label>
+                                <?php foreach ($options as $option): ?>
+                                    <input type="radio" name="itemFailure" id="radio-itemFailure"
+                                           value="<?php echo $option ?>"
+                                           class="radio validate-one-required-by-name"><?php echo $option ?></input>
+                                <?php endforeach; ?>
+                        </li>
+                        <li>
+                            <label for="radio-itemEaseofinstall" class="required"><em>*</em><?php echo $this->__('Łatwość montażu:') ?></label>
+                                <?php foreach ($options as $option): ?>
+                                    <input type="radio" name="itemEaseofinstall" id="radio-itemEaseofinstall"
+                                           value="<?php echo $option ?>"
+                                           class="radio validate-one-required-by-name"><?php echo $option ?></input>
+                                <?php endforeach; ?>
+                        </li>
+                        <li>
+                            <label for="radio-itemDoyourecommend" class="required"><em>*</em><?php echo $this->__('Czy polecasz ten produkt:') ?></label>
+                                <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend" value="1"
+                                       class="radio validate-one-required-by-name"><?php echo $this->__('Yes') ?></input>
+                                <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend" value="0"
+                                       class="radio validate-one-required-by-name"><?php echo $this->__('No') ?></input>
+                            </form>
+                        </li>
+                        <li>
+                            <label for="recommendation-img"><?php echo $this->__('Czy chcesz dodać zdjęcie') ?></label>
+                            <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"/>
+                            <!-- place for user input - upload photos -->
+                        </li>
+                        <li>
+                            <label for="link_to_youtube"><?php echo $this->__('Czy chcesz dodać film:') ?></label>
+                            <input type="text" name="link_to_youtube" id="link_to_youtube" class="input-text validate-url"/>
+                            <!-- place for user input - add movie - url to youtube -->
+                        </li>
+                    </div>
+                </div>
+            </ul>
+        </div>
+        <!-- start of login area if user isn't logged -->
+<?php if (!$isLoggedIn): ?>
+    <div class="tim-userlogin-area">
+        <div class="tim-userlogin-area-info">
+            <?php echo $this->__('Uwag! Nie jesteś zalogowanym użytkownikiem, aby dodać opinię musisz zalogować się lub założyć konto na
+            naszym serwisie. Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
+            loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
+            postępowania otrzymasz w potwierdzającym mailu.') ?>
+        </div>
+        <ul class="form-list">
+            <li>
+                <label for="radio-userHaveaccount"><?php echo $this->__('Czy posiadasz już konto na naszym serwisie?') ?></label>
+                <form>
+                    <input type="radio" name="userHaveaccount" id="radio-userHaveaccount" value="1"
+                           class="radio"><?php echo $this->__('Yes') ?></input>
+                    <input type="radio" name="userHaveaccount" id="radio-userHaveaccount" value="0"
+                           class="radio"><?php echo $this->__('No') ?></input>
+                </form>
+            </li>
+            <li>
+                <label for="tim-email"><?php echo $this->__('e-mail:') ?></label>
+                <input type="text" name="tim-email" id="tim-email" class="input-text"/>
+            </li>
+            <li>
+                <label for="tim-password"><?php echo $this->__('hasło:') ?></label>
+                <input type="text" name="tim-password" id="tim-password" class="input-text"/>
+            </li>
+            <li>
+                <label for="tim-nick"><?php echo $this->__('nick:') ?></label>
+                <input type="text" name="tim-nick" id="tim-nick" class="input-text"/>
+            </li>
+        </ul>
     </div>
-    <div class="tim-opinion-content-subtitle"><?php echo $this->__('Opisz zalety produktu:') ?></div>
-    <div class="tim-opinion-content">
-        <textarea><!-- place for user input - item advantages --></textarea>
-    </div>
-    <div class="tim-opinion-content-subtitle"><?php echo $this->__('Opisz wady produktu:') ?></div>
-    <div class="tim-opinion-content">
-        <textarea><!-- place for user input - item disadvantages --></textarea>
-    </div>
-    <div class="tim-opinion-content-subtitle"><?php echo $this->__('Podsumowanie / dodatkowe informacje / uwagi:') ?></div>
-    <div class="tim-opinion-content">
-        <textarea><!-- place for user input - item summary --></textarea>
-    </div>
+<?php else: ?>
+    <input type="hidden" name="customer_id" value="<?php echo $customerId ?>" />
+<?php endif ?>
+<input type="hidden" name="product_id" value="<?php echo $productId ?>" />
 
-    <div class="tim-rating-input-container">
-        <div class="tim-rating-input">
-            <?php echo $this->__('Stosunek jakości do ceny:') ?>
-            <form>
-                <input type="radio" name="itemValuetomoney" value="1">1</input>
-                <input type="radio" name="itemValuetomoney" value="2">2</input>
-                <input type="radio" name="itemValuetomoney" value="3">3</input>
-                <input type="radio" name="itemValuetomoney" value="4">4</input>
-                <input type="radio" name="itemValuetomoney" value="5">5</input>
-                <input type="radio" name="itemValuetomoney" value="6">6</input>
-            </form>
+        <!-- end of login area if user isn't logged -->
+        <div class="tim-comment-add">
+            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+            <?php if($isLoggedIn): ?>
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>"
+                    class="button"><span><span><?php echo $this->__('Dodaj opinię') ?></span></span></button>
+            <?php else: ?>
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>"
+                    class="button disabled" onclick="alert('Only logged in customer can add opinion.'); return false;"><span><span><?php echo $this->__('Dodaj opinię') ?></span></span></button>
+            <?php endif; ?>
         </div>
-        <div class="tim-rating-input">
-            <?php echo $this->__('Trwałość produktu:') ?>
-            <form>
-                <input type="radio" name="itemDurability" value="1">1</input>
-                <input type="radio" name="itemDurability" value="2">2</input>
-                <input type="radio" name="itemDurability" value="3">3</input>
-                <input type="radio" name="itemDurability" value="4">4</input>
-                <input type="radio" name="itemDurability" value="5">5</input>
-                <input type="radio" name="itemDurability" value="6">6</input>
-            </form>
-        </div>
-        <div class="tim-rating-input">
-            <?php echo $this->__('Awaryjność produktu:') ?>
-            <form>
-                <input type="radio" name="itemFailrue" value="1">1</input>
-                <input type="radio" name="itemFailrue" value="2">2</input>
-                <input type="radio" name="itemFailrue" value="3">3</input>
-                <input type="radio" name="itemFailrue" value="4">4</input>
-                <input type="radio" name="itemFailrue" value="5">5</input>
-                <input type="radio" name="itemFailrue" value="6">6</input>
-            </form>
-        </div>
-        <div class="tim-rating-input">
-            <?php echo $this->__('Łatwość montażu:') ?>
-            <form>
-                <input type="radio" name="itemEaseofinstall" value="1">1</input>
-                <input type="radio" name="itemEaseofinstall" value="2">2</input>
-                <input type="radio" name="itemEaseofinstall" value="3">3</input>
-                <input type="radio" name="itemEaseofinstall" value="4">4</input>
-                <input type="radio" name="itemEaseofinstall" value="5">5</input>
-                <input type="radio" name="itemEaseofinstall" value="6">6</input>
-            </form>
-        </div>
-        <div class="tim-rating-input">
-            <?php echo $this->__('Czy polecasz ten produkt:') ?>
-            <form>
-                <input type="radio" name="itemDoyoureccomend" value="TAK"><?php echo $this->__('Yes') ?></input>
-                <input type="radio" name="itemDoyoureccomend" value="NIE"><?php echo $this->__('No') ?></input>
-            </form>
-        </div>
-        <div class="tim-rating-input">
-            <?php echo $this->__('Czy chcesz dodać zdjęcie:') ?>
-            <input type="button">
-            <!-- place for user input - upload photos -->
-        </div>
-        <div class="tim-rating-input">
-            <?php echo $this->__('Czy chcesz dodać film:') ?>
-            <input type="url">
-            <!-- place for user input - add movie - url to youtube -->
-        </div>
-    </div>
-</div>
-
-<!-- start of login area if user isn't logged -->
-<div class="tim-userlogin-area">
-    <div class="tim-userlogin-area-info">
-        <?php echo $this->__('Uwag! Nie jesteś zalogowanym użytkownikiem, aby dodać opinię musisz zalogować się lub założyć konto na
-        naszym serwisie. Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
-        loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
-        postępowania otrzymasz w potwierdzającym mailu.') ?>
-    </div>
-    <div class="tim-rating-input">
-        <?php echo $this->__('Czy posiadasz już konto na naszym serwisie?') ?>
-        <form>
-            <input type="radio" name="userHaveaccount" value="TAK"><?php echo $this->__('Yes') ?></input>
-            <input type="radio" name="userHaveaccount" value="NIE"><?php echo $this->__('No') ?></input>
-        </form>
-    </div>
-    <div class="tim-userlogin-credentials">
-        <!-- area to input user login as e-mail, password, nick  -->
-        <?php echo $this->__('e-mail:') ?><input type="text">
-        <?php echo $this->__('hasło:') ?><input type="text">
-        <?php echo $this->__('nick:') ?><input type="text">
-        <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zapisz się') ?></button>
-    </div>
-</div>
-<!-- end of login area if user isn't logged -->
-<div class="tim-comment-add">
-    <button type="button" class="tim-comment-button-add"><?php echo $this->__('Dodaj opinię') ?></button>
-</div>
+    </fieldset>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var dataForm = new VarienForm('form-validate');
+    //]]>
+</script>
