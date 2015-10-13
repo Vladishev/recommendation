@@ -1,33 +1,39 @@
 <?php
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ * @author     Vladislav Verbitskiy
+ */
 
 $installer = $this;
-$connection = $installer->getConnection();
-
-$recommendationLevelTable = $installer->getTable('tim_recommendation/level');
 
 $installer->startSetup();
 
-if (!$connection->isTableExists($recommendationLevelTable)) {
-    $table = $connection->newTable($recommendationLevelTable)
-        ->addColumn('user_level_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'identity' => true,
+$installer->getConnection()
+    ->addColumn($installer->getTable('tim_recommendation/user'),
+        'avatar',
+        array(
+            'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+            'length' => 255,
             'nullable' => false,
-            'primary' => true,
-        ), 'Recommendation user Id')
-        ->addColumn('system_config_id', Varien_Db_Ddl_Table::TYPE_TEXT, '64k', array(
+            'default' => '',
+            'comment' => 'avatar'
+        )
+    );
+$installer->getConnection()
+    ->addColumn($installer->getTable('tim_recommendation/user'),
+        'description',
+        array(
+            'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+            'length' => 255,
             'nullable' => false,
-        ), 'Configuration Id')
-        ->addColumn('point', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'nullable' => false,
-        ), 'Recommendation point')
-        ->addColumn('from', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'nullable' => false,
-        ), 'Recommendation from')
-        ->addColumn('to', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'nullable' => false,
-        ), 'Recommendation to');
+            'default' => '',
+            'comment' => 'description'
+        )
+    );
 
-    $connection->createTable($table);
-}
 
 $installer->endSetup();

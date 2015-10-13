@@ -54,4 +54,23 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.landing" template="tim/recommendation/landing/content.phtml" />
         </reference>
     </recommendation_index_landing>
+    <recommendation_index_view>
+        <reference name="root">
+            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+        </reference>
+        <reference name="header">
+            <block type="page/header" name="header">
+                <action method="setTemplate"><template>tim/recommendation/view/header.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/view/left.phtml" />
+        </reference>
+        <reference name="right">
+            <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/view/right.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
+        </reference>
+    </recommendation_index_view>
 </layout>

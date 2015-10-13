@@ -1,29 +1,38 @@
+<?php
+$userId = $this->getRequest()->getParam('id');
+$userInformation = $this->getUserInformation($userId);
+?>
     <div class="tim-user"> <!-- main container for user details -->
         <div class="tim-user-photo">
-             <!-- place for user photo --> <img src="<?php echo $this->getSkinUrl('images/media/usertemp_photo.jpg'); ?>" width="269" height="168" alt="user-photo" />                
+            <img src="<?php echo $userInformation['avatar']; ?>" width="269" height="168" alt="user-photo" />
+            <!-- place for user photo -->
         </div>
         <div class="tim-user-name">
-            <?php echo $this->__('User'); ?>
-            <p>Zyzio Dyzio<!-- place for user name             {Magento: get user name} --></p>
+            <p><?php echo $this->__('User'); ?></p>
+            <!-- place for user name -->
+            <p><?php echo $userInformation['name'] . ' ' . $userInformation['surname']; ?></p>
         </div>
         <div class="tim-user-type">
             <div class="tim-user-type-icon">
-             <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status" />  
+                <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status" />
             </div>
             <?php echo $this->__('User type'); ?>
-            <p>Pracownik TIM<!-- place for user name and icon --></p>
+            <!-- place for user name and icon -->
+            <p><?php echo $userInformation['user_type']; ?></p>
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
-            <p>Profesjonalista<!-- place for user score which will result from the number of entries --></p>
- 
-        <div class="tim-user-scoregraph tim-score-2">
-		 <!-- number of opinons --> 10 opinii</div>
+            <!-- place for user score which will result from the number of entries -->
+            <p><?php echo $userInformation['engage']; ?></p>
+            <div class="tim-user-scoregraph tim-score-2">
+                <!-- number of opinons --> 10 opinii</div>
             <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
-        </div>
+            </div>
         </div>
         <div class="tim-user-about">
             <!-- place for button that will redirect to user's profile page -->
-            <button type="button" class="tim-comm-button-smal"><?php echo $this->__("View user's profile"); ?></button>
+            <a href="<?php echo Mage::getBaseUrl() . 'recommendation/user/profile/id/' . $userId; ?>">
+                <button type="button" class="tim-comm-button-smal"><?php echo $this->__("View user's profile"); ?></button>
+            </a>
         </div>
     </div>
