@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -9,5 +10,23 @@
  */
 class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    public function getRecommendationDataUrl()
+    {
+        $url = "recommendation/user/data";
+        return $url;
+    }
 
+    public function getPhotoData()
+    {
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $photo = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAd();
+        return $photo;
+    }
+
+    public function getSiteUrl()
+    {
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getWww();
+        return $siteUrl;
+    }
 }

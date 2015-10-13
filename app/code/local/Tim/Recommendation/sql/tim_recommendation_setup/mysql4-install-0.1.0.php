@@ -105,7 +105,7 @@ if (!$connection->isTableExists($recommendationUserTable)) {
         ), 'www')
         ->addColumn('ad', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
             'nullable' => false,
-        ), 'Ad')
+        ), 'ad')
         ->addColumn('user_type', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
             'nullable' => false,
         ), 'User type')

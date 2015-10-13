@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Tim_Recommendation>
     </modules>
     <global>
@@ -66,6 +66,16 @@
                 <class>Tim_Recommendation_Helper</class>
             </tim_recommendation>
         </helpers>
+        <events>
+            <controller_action_predispatch_customer_account_editPost>
+                <observers>
+                    <tim_recommendation_save>
+                        <class>Tim_Recommendation_Model_Observer</class>
+                        <method>saveCustomerAction</method>
+                    </tim_recommendation_save>
+                </observers>
+            </controller_action_predispatch_customer_account_editPost>
+        </events>
     </global>
     <frontend>
         <routers>

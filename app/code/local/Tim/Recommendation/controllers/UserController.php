@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -25,5 +26,11 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
             $this->norouteAction();
             return;
         }
+    }
+
+    public function dataAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
     }
 }
