@@ -6,12 +6,13 @@
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="product.info">
-            <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
+	            <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
                 <block type="tim_recommendation/recommendation" name="left.recommendation.add" template="tim/recommendation/add/left.phtml" />
                 <block type="tim_recommendation/recommendation" name="right.recommendation.add" template="tim/recommendation/add/right.phtml" />
                 <block type="tim_recommendation/recommendation" name="content.recommendation.add" template="tim/recommendation/add/content.phtml" />
             </block>
             <block type="tim_recommendation/recommendation" name="recommendation.view" template="tim/recommendation/view.phtml">
+                <block type="tim_recommendation/recommendation" name="header.recommendation.view" template="tim/recommendation/view/header.phtml" />
                 <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/view/left.phtml" />
                 <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/view/right.phtml" />
                 <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
