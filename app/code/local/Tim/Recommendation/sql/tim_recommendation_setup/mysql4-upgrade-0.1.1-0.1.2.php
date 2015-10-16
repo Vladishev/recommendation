@@ -19,10 +19,10 @@ $installer->getConnection()
         'comment' => 'Tim IP'
     ));
 $installer->getConnection()
-    ->addColumn($installer->getTable('tim_recommendation/recommendation'), 'tim_domain', array(
+    ->addColumn($installer->getTable('tim_recommendation/recommendation'), 'tim_host', array(
         'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
         'nullable' => true,
-        'comment' => 'Tim domain'
+        'comment' => 'Tim HOST'
     ));
 
 $installer->endSetup();

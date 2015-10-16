@@ -2,8 +2,8 @@
 $isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
 $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
+$customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
-$currentUrl = Mage::helper('core/url')->getCurrentUrl();
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate" autocomplete="off" enctype="multipart/form-data">
     <fieldset>
@@ -129,7 +129,7 @@ $currentUrl = Mage::helper('core/url')->getCurrentUrl();
 <?php endif ?>
 <input type="hidden" name="product_id" value="<?php echo $productId ?>" />
 <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>" />
-<input type="hidden" name="current_url" value="<?php echo $currentUrl ?>" />
+<input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>" />
 
         <!-- end of login area if user isn't logged -->
         <div class="tim-comment-add">
