@@ -101,6 +101,17 @@
             </controller_action_predispatch_customer_account_editPost>
         </events>
     </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <tim_recommendation before="Mage_Adminhtml">Tim_Recommendation_Adminhtml</tim_recommendation>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <adminhtml>
         <translate>
             <modules>

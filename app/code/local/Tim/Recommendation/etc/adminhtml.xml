@@ -10,6 +10,21 @@
  */
 -->
 <config>
+    <menu>
+        <report>
+            <children>
+                <tim translate="title" module="tim_recommendation">
+                    <title>TIM</title>
+                    <children>
+                        <tim_recommendation translate="title">
+                            <title>Recommendations</title>
+                            <action>adminhtml/opinionReport</action>
+                        </tim_recommendation>
+                    </children>
+                </tim>
+            </children>
+        </report>
+    </menu>
     <acl>
         <resources>
             <admin>
