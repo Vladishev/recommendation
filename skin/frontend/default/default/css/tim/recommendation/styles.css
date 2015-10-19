@@ -63,7 +63,8 @@
 	cursor:pointer;
 }
 
-.tim-comm-button-addopinion::before, .tim-comment-button-add::before, .tim-comm-button-smal::before {
+/*
+.tim-comm-button-addopinion:before, .tim-comment-button-add:before, .tim-comm-button-smal:before {
 	content: "";
 	position: absolute;
 	top: 1px;
@@ -72,7 +73,7 @@
 	height: 1px;
 	background: #7FABDF none repeat scroll 0% 0%;
 }
-
+*/
 
 .tim-comm-button-addopinion::after {
 	content: "";
@@ -81,7 +82,6 @@
 	right: 10px;
 	width: 12px;
 	height: 21px;
-	background: transparent url("../img/ico_arrow-right-08.png") repeat scroll 0% 0%;
 	opacity: 0.7;
 }
 
@@ -120,6 +120,18 @@ a.tim-readmore:hover {
 	line-height:38px;
 	float:left;
 	margin-left:30px;
+}
+
+.tim-secondary-title {
+	background: url(../../../images/tim_triangle.png) top left no-repeat;
+	background-size: 30px 30px;
+	font-size:16px;
+	line-height:100%;
+	font-weight:bold;
+	padding-top: 8px;
+	padding-left: 8px;
+	margin-bottom:15px;
+	min-height:30px;
 }
 
 /* header for opinion page */
@@ -231,6 +243,12 @@ a.tim-readmore:hover {
 	text-align:center;
 }
 
+.tim-user-editprofile {
+	margin-top:15px;
+	text-align:center;
+}
+
+
 .tim-user-type-icon {
 	width:30px;
 	height:30px;
@@ -269,8 +287,14 @@ a.tim-readmore:hover {
 	float:left;
 }
 
+.tim-comm-main-column-short {
+	width:700px;
+	float:left;
+}
+
 .tim-opinion {
 	border-bottom: 1px solid #cdcece;
+    margin-bottom: 15px;
 }
 
 .tim-opinion:after { 
@@ -318,7 +342,7 @@ a.tim-readmore:hover {
 
 .tim-opinion-content {
 	width:100%;	
-	margin-bottom:20px;
+	margin-bottom:10px;
 }
 
 .tim-comment {
@@ -354,6 +378,10 @@ a.tim-readmore:hover {
 
 .tim-comment-add {
 	float:right;
+}
+
+.tim-opinion .form-list label {
+	color:#000;
 }
 
 /* right collumn for opinion page */
@@ -446,3 +474,279 @@ span.tim-chart-boolean-active {
 	border: 1px solid #D7D5D5;
 }
 
+.tim-advert {
+	padding:0;
+}
+
+/* add opinion */
+
+.tim-add-opinion textarea {
+	width:99% !important;
+	max-width:99% !important;
+	min-height: 100px !important;
+}
+.tim-add-opinion textarea:focus {
+	background-color:#eee;
+}
+
+.tim-rating-input-container {
+	padding-left:20px;
+}
+
+.tim-rating-input {
+	margin-bottom:6px;
+	padding-bottom:4px;
+	border-bottom:1px solid #eee;
+	width:58%;
+	min-height: 35px;
+}
+
+.tim-rating-input-url {
+	width:100%;
+	min-height: 35px;
+}
+
+.tim-rating-input button, .tim-rating-input-url input[type=url] {
+	margin-left:30px;
+	margin-top:3px;
+}
+
+.tim-rating-input-url input[type=url] {
+    width: 69%;
+    line-height: 200%;
+    padding-left: 5px;
+}
+
+.tim-rating-input-url input[type=url]:focus {
+	background-color:#eee;	
+	border:1px solid #656565;
+    line-height: 200%;
+	padding: 1px 1px 1px 6px;
+	content:'x';
+}
+
+.tim-rating-input input {
+	min-height: 30px;
+}
+
+.tim-rating-input form {
+	margin-left:30px;
+}
+
+.tim-rating-input p, .tim-rating-input-url p {
+	float:left;
+	width:160px;
+	clear:both;
+	line-height:280%;
+	font-weight:normal;
+}
+
+.tim-rating-choice {
+    overflow: hidden;
+    display: inline-block;
+    font-size: 0;
+    position: relative;
+	top:3px;
+}
+.tim-rating-input-span {
+    float: right;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    margin: 0 5px 0 -25px;
+    opacity: 0;
+}
+
+label.tim-rating-star:hover {
+	cursor:pointer;
+}
+
+.tim-rating-input span:nth-child(2) {
+    font-size: 14px;
+    line-height: 100%;
+    position: relative;
+    top: -8px;
+    left: 4px;
+}
+
+.tim-rating-input button {
+	margin-top:2px;
+}
+
+.tim-rating-choice:hover .tim-rating-star:hover,
+.tim-rating-choice:hover .tim-rating-star:hover ~ .tim-rating-star,
+.tim-rating-input-span:checked ~ .tim-rating-star {
+    background-position: 0 0;
+}
+.tim-rating-star,
+.tim-rating-choice:hover .tim-rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: url(../../../images/tim_stars_rating_input.png) 0 -25px;
+}
+   
+input[type=radio].tim-rating-button-boolean {
+	position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=radio].tim-rating-button-boolean + label.tim-rating-button-boolean-label {
+	padding-left:32px;
+	height:25px; 
+	display:inline-block;
+	line-height:25px;
+	background-repeat:no-repeat;
+	background-position: 0 0;
+	vertical-align:middle;
+	cursor:pointer;
+	margin-right:15px;
+    margin-top: 4px;
+}
+
+input[type=radio].tim-rating-button-boolean:checked + label.tim-rating-button-boolean-label {
+	background-position: 0 -26px;
+}
+
+input[type=radio].tim-rating-button-boolean:hover + label.tim-rating-button-boolean-label {
+	opacity: 0.7;
+}
+
+label.tim-rating-button-boolean-label {
+	background-image:url(../../../images/tim_stars_rating_radio.png);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
+/* popup window when user needs to login */
+.tim-userlogin-popup {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+    display:none; 
+}
+ 
+.tim-userlogin-popup-bg {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    background:#000;
+    opacity: 0.6;
+}
+ 
+.tim-userlogin-popup-container {
+    width:600px;
+    height: auto;
+    position:absolute;
+    z-index:2;
+    top:50%;
+    left:50%;
+    margin-top:-150px; 
+    margin-left:-300px; 
+    background: #fff;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    -moz-box-shadow:0 0 30px #000;
+    -webkit-box-shadow:0 0 30px #000;
+    box-shadow:0 0 30px #000;
+	padding:20px;
+	font-size:14px;
+	color:#000;
+}
+
+.tim-userlogin-area-info span {
+    margin-top: 20px;
+    top: 2px;
+    position: relative;
+    margin-right: 10px;
+    font-weight: bold;
+}
+ 
+.tim-userlogin-popup-bt-close {
+    text-indent: -9999px;
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: transparent url(../../../images/tim_button_close.png)  no-repeat scroll 0px 0px;
+	cursor:pointer;
+	border:0;
+}
+.tim-userlogin-popup-bt-close:hover {
+    background: transparent url(../../../images/tim_button_close.png)  no-repeat scroll -33px 0px;
+}
+	
+.tim-userlogin-existuser, .tim-userlogin-newuser {
+	display:none;
+	margin-top:20px;
+}
+ 
+.tim-userlogin-credentials input {
+	display:block;
+	margin-left:20px;
+	font-size:14px;
+	padding:5px;
+    width: 55%;		
+}
+
+.tim-userlogin-credentials input:focus {
+	background-color:#ccc;
+	border:1px solid #656565;
+}
+
+.tim-userlogin-credentials p {
+	display:block;
+	margin-top:5px;
+    margin-left: 20px;	
+}
+
+.tim-userlogin-credentials p span {
+	float:left;
+    width: 220px;
+	position:relative;
+	top:5px;
+}
+
+.tim-userlogin-credentials button {
+    margin-left: 150px !important;
+    width: 300px;
+    margin-top: 20px;
+}
+
+/* add comment to opinion */
+
+.tim-add-comment {
+	clear:both;
+	padding-top:10px;
+	border-top: 1px solid #cdcece;
+	top: 10px;
+    position: relative;
+	display:none;
+}
+
+.tim-add-comment textarea {
+    width: 99%;
+	min-height: 140px;
+}
+
+.tim-add-comment .tim-opinion-content-subtitle {
+	padding-left:0;
+}
+
+.tim-add-comment .tim-comment-add {
+	margin-bottom:15px;
+}
