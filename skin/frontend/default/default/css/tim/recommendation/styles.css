@@ -303,7 +303,7 @@ a.tim-readmore:hover {
    display: block; 
    height: 0; 
    clear: both;
-   margin-bottom:20px;
+   margin-bottom:10px;
 }
 	
 .tim-opinion-date {
@@ -501,13 +501,28 @@ span.tim-chart-boolean-active {
 	min-height: 35px;
 }
 
+.tim-rating-input input[type=file] {
+display: none;
+}
+
+.tim-rating-input input[type=file] + label {
+	position:relative;
+	top:2px;
+	color:#ECECED;
+ }
+ 
+ .tim-rating-input input[type=file] + label:hover {
+	color:#fff;
+ }
+
+
 .tim-rating-input-url {
 	width:100%;
 	min-height: 35px;
 }
 
 .tim-rating-input button, .tim-rating-input-url input[type=url] {
-	margin-left:30px;
+	margin-left:0px;
 	margin-top:3px;
 }
 
@@ -580,6 +595,7 @@ label.tim-rating-star:hover {
     display: block;
     width: 25px;
     height: 25px;
+	    margin-right: 5px;
     background: url(../../../images/tim_stars_rating_input.png) 0 -25px;
 }
    
@@ -625,6 +641,9 @@ label.tim-rating-button-boolean-label {
 	user-select: none;
 }
 
+.tim-opinion .form-list li {
+	margin:0;
+}
 
 /* popup window when user needs to login */
 .tim-userlogin-popup {
