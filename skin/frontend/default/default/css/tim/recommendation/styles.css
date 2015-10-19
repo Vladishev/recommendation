@@ -537,7 +537,7 @@ span.tim-chart-boolean-active {
 	float:left;
 	width:160px;
 	clear:both;
-	line-height:280%;
+	line-height:290%;
 	font-weight:normal;
 }
 
@@ -561,7 +561,7 @@ label.tim-rating-star:hover {
 	cursor:pointer;
 }
 
-.tim-rating-input span:nth-child(2) {
+.tim-rating-input span:nth-child(3) {
     font-size: 14px;
     line-height: 100%;
     position: relative;
@@ -573,21 +573,23 @@ label.tim-rating-star:hover {
 	margin-top:2px;
 }
 
-.tim-rating-choice:hover .tim-rating-star:hover,
-.tim-rating-choice:hover .tim-rating-star:hover ~ .tim-rating-star,
-.tim-rating-input-span:checked ~ .tim-rating-star {
-    background-position: 0 0;
-}
 .tim-rating-star,
 .tim-rating-choice:hover .tim-rating-star {
     position: relative;
-    float: right;
+    float: left;
     display: block;
     width: 25px;
     height: 25px;
     background: url(../../../images/tim_stars_rating_input.png) 0 -25px;
 }
    
+.tim-rating-choice:hover .tim-rating-star:hover,
+.tim-rating-choice:hover .tim-rating-star:hover ~ .tim-rating-star,
+.tim-rating-input-span:checked ~ .tim-rating-star {
+    background-position: 0 0;
+}
+
+
 input[type=radio].tim-rating-button-boolean {
 	position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
 }
