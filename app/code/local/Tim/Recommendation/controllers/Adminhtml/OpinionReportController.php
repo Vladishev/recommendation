@@ -50,4 +50,9 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $grid       = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
+
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('report/tim/tim_recommendation');
+    }
 }
