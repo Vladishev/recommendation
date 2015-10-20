@@ -32,8 +32,10 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $collection->getSelect()->joinLeft(array('tru' =>'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
             array('user_type','engage'));
+        $collection->getSelect()->joinLeft(array('tut' =>'tim_user_type'),
+            'tru.user_type = tut.user_type_id',
+            array('user_type_name' => 'name'));
         $collection->getSelect()->where('main_table.parent IS NULL');
-
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -94,8 +96,8 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $this->addColumn('user_type', array(
             'header' => Mage::helper('tim_recommendation')->__('User type'),
             'width' => '50',
-            'index' => 'user_type',
-            'filter_index' => 'user_type'
+            'index' => 'user_type_name',
+            'filter_index' => 'tut.name'
         ));
         $this->addColumn('user_level', array(
             'header' => Mage::helper('tim_recommendation')->__('User level'),
