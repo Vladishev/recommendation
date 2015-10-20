@@ -193,6 +193,18 @@ class Tim_Recommendation_Model_Observer
                 Mage::getSingleton('core/session')->addError($e->getMessage());
             }
         }
+        if (!empty($userData)) {
+            $user->setUserType($postData['user_type']);
+        } else {
+            $user->setCustomerId($customerId);
+            $user->setUserType($postData['user_type']);
+        }
+        try {
+            $user->save();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('User type didn\'t save.'));
+        }
     }
 
     /**
