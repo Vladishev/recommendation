@@ -32,6 +32,8 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $collection->getSelect()->joinLeft(array('tru' =>'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
             array('user_type','engage'));
+        $collection->getSelect()->where('main_table.parent IS NULL');
+
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -100,6 +102,18 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'width' => '50',
             'index' => 'engage',
             'filter_index' => 'engage'
+        ));
+        $this->addColumn('tim_ip', array(
+            'header' => Mage::helper('tim_recommendation')->__('IP'),
+            'width' => '50',
+            'index' => 'tim_ip',
+            'filter_index' => 'tim_ip'
+        ));
+        $this->addColumn('tim_host', array(
+            'header' => Mage::helper('tim_recommendation')->__('HOST'),
+            'width' => '50',
+            'index' => 'tim_host',
+            'filter_index' => 'tim_host'
         ));
         $this->addColumn('display_opinion',
             array(
