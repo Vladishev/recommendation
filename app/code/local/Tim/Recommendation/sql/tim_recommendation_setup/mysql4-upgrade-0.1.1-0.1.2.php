@@ -9,8 +9,21 @@
  */
 
 $installer = $this;
-
 $installer->startSetup();
+
+$installer->getConnection()
+    ->addColumn($installer->getTable('tim_recommendation/recommendation'), 'tim_ip', array(
+        'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+        'nullable' => true,
+        'length' => 255,
+        'comment' => 'Tim IP'
+    ));
+$installer->getConnection()
+    ->addColumn($installer->getTable('tim_recommendation/recommendation'), 'tim_host', array(
+        'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+        'nullable' => true,
+        'comment' => 'Tim HOST'
+    ));
 
 $installer->getConnection()->modifyColumn($installer->getTable('tim_recommendation/user'), 'user_type', 'smallint'
 );
