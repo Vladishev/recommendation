@@ -8,6 +8,7 @@
         </reference>
         <reference name="product.info">
 	            <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
+                <block type="tim_recommendation/recommendation" name="header.recommendation.add" template="tim/recommendation/add/header.phtml" />
                 <block type="tim_recommendation/recommendation" name="left.recommendation.add" template="tim/recommendation/add/left.phtml" />
                 <block type="tim_recommendation/recommendation" name="right.recommendation.add" template="tim/recommendation/add/right.phtml" />
                 <block type="tim_recommendation/recommendation" name="content.recommendation.add" template="tim/recommendation/add/content.phtml" />

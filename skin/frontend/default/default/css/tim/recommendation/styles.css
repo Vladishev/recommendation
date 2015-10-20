@@ -320,12 +320,13 @@ a.tim-readmore:hover {
 	font-weight:bold;
 }
 
-.tim-opinion-content-subtitle {
+label.tim-opinion-content-subtitle, .tim-opinion-content-subtitle {
 	font-weight:bold;
 	height:20px;
 	padding-left:25px;
 	line-height: 22px;
 	margin-bottom:5px;
+    display: inline-block;	
 }
 
 .tim-icon-good {
@@ -509,6 +510,7 @@ display: none;
 	position:relative;
 	top:2px;
 	color:#ECECED;
+	padding: 8px 25px;	
  }
  
  .tim-rating-input input[type=file] + label:hover {
@@ -588,21 +590,20 @@ label.tim-rating-star:hover {
 	margin-top:2px;
 }
 
-.tim-rating-star,
-.tim-rating-choice:hover .tim-rating-star {
-    position: relative;
-    float: left;
-    display: block;
-    width: 25px;
-    height: 25px;
-	    margin-right: 5px;
-    background: url(../../../images/tim_stars_rating_input.png) 0 -25px;
-}
-   
 .tim-rating-choice:hover .tim-rating-star:hover,
 .tim-rating-choice:hover .tim-rating-star:hover ~ .tim-rating-star,
 .tim-rating-input-span:checked ~ .tim-rating-star {
     background-position: 0 0;
+padding:0;
+}
+.tim-rating-star,
+.tim-rating-choice:hover .tim-rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: url(../../../images/tim_stars_rating_input.png) 0 -25px;
 }
 
 

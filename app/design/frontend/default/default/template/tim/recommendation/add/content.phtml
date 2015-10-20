@@ -6,38 +6,27 @@ $productId = Mage::registry('current_product')->getId();
     <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate" autocomplete="off" enctype="multipart/form-data">
         <fieldset>
             <div class="tim-opinion">
-                <ul class="form-list">
-                    <li>
-                        <label for="tim-opinion-advantages" class="required tim-opinion-content-subtitle tim-icon-good"><em>*</em>
+                        <label for="tim-opinion-advantages" class="tim-opinion-content-subtitle tim-icon-good">
                             <?php echo $this->__('Opisz zalety produktu:') ?>
                         </label>
-                        <br/>
-                        <div class="tim-opinion-content tim-add-opinion">
-                            <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3" class="required-entry"></textarea>
+                            <div class="tim-opinion-content tim-add-opinion">
+                            <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"></textarea>
                         </div>
-                    </li>
-                    <li>
-                        <label for="tim-opinion-disadvantages" class="required tim-opinion-content-subtitle tim-icon-bad"><em>*</em>
+                        <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad">
                             <?php echo $this->__('Opisz wady produktu:') ?>
                         </label>
-                        <br/>
                         <div class="tim-opinion-content tim-add-opinion">
-                            <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" class="required-entry"></textarea>
+                            <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"></textarea>
                         </div>
-                    </li>
-                    <li>
-                        <label for="tim-opinion-summary" class="required tim-opinion-content-subtitle tim-icon-summary"><em>*</em>
+                        <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary">
                             <?php echo $this->__('Podsumowanie / dodatkowe informacje / uwagi:') ?>
                         </label>
-                        <br/>
                         <div class="tim-opinion-content tim-add-opinion">
-                            <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" class="required-entry"></textarea>
+                            <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"></textarea>
                         </div>
-                    </li>
                     <div class="tim-rating-input-container">
                         <div class="tim-secondary-title">OCEŃ WALORY PRODUKTU</div>
                         <?php $options = array(1, 2, 3, 4, 5); ?>
-                            <li>
                                 <div class="tim-rating-input">
                                     <p>
                                         <?php echo $this->__('Stosunek jakości do ceny:') ?>
@@ -50,9 +39,6 @@ $productId = Mage::registry('current_product')->getId();
                                 </span>
                                     <span><span class="itemValuetomoney">0</span>/5</span>
                                 </div>
-                            </li>
-
-                            <li>
                                 <div class="tim-rating-input">
                                     <p>
                                         <?php echo $this->__('Trwałość produktu:') ?>
@@ -66,8 +52,6 @@ $productId = Mage::registry('current_product')->getId();
                                                                             </span>
                                     <span><span class="itemDurability">0</span>/5</span>
                                 </div>
-                            </li>
-                            <li>
                                 <div class="tim-rating-input">
                                     <p>
                                         <?php echo $this->__('Awaryjność produktu:') ?>
@@ -81,8 +65,6 @@ $productId = Mage::registry('current_product')->getId();
                                                                             </span>
                                     <span><span class="itemFailure">0</span>/5</span>
                                 </div>
-                            </li>
-                            <li>
                                 <div class="tim-rating-input">
             <p><?php echo $this->__('Łatwość montażu:') ?></p>
                                    <span class="tim-rating-choice">
@@ -94,11 +76,6 @@ $productId = Mage::registry('current_product')->getId();
                                                                             </span>
                                     <span><span class="itemEaseofinstall">0</span>/5</span>
                                 </div>
-                            </li>
-                                        
-                                                                                
-                                      
-                            <li>
                                 <div class="tim-rating-input">
     <p><?php echo $this->__('Czy używasz tego produktu:') ?></p>
                                    
@@ -110,8 +87,6 @@ $productId = Mage::registry('current_product')->getId();
                                             
 
     </div>
-    </li>
-    <li>
         <div class="tim-rating-input">
             <p><?php echo $this->__('Czy polecasz ten produkt:') ?></p>
             <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend1" value="1" class="radio validate-one-required-by-name tim-rating-button-boolean">                </input>
@@ -120,25 +95,20 @@ $productId = Mage::registry('current_product')->getId();
 				<label for="radio-itemDoyourecommend2"  class="tim-rating-button-boolean-label">NIE</label>                    
 
         </div>
-    </li>
-    <li>
          <div class="tim-rating-input">
        <p><?php echo $this->__('Tutaj możesz dodać zdjęcia:') ?></p>
         <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"  class="tim-comm-button-smal"/>
 <label for="recommendation-img"  class="tim-comm-button-smal">Wczytaj zdjęcia</label>         
         <!-- place for user input - upload photos -->
         </div>
-        </li>
-    <li>
        <div class="tim-rating-input-url">       
   <p><?php echo $this->__('Tutaj możesz dodać film:') ?></p>
         <input type="url" name="link_to_youtube" id="link_to_youtube" class="input-text validate-url" value="Podaj link z serwisu Youtube" style="color:#949090;" onfocus="{ this.value = ''; }" onblur="if(this.value == '') { this.value = 'Podaj link z serwisu Youtube'; }"/>
         <!-- place for user input - add movie - url to youtube -->
         </div>
-        </li>
 
     </div>
-    </ul>
+
     </div>
     <!-- start of login area if user isn't logged -->
   
