@@ -24,4 +24,24 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $userData = $collection->getFirstItem()->getData();
         return $userData;
     }
+
+    /**
+     * Gets host name by ip
+     * @param string $ip
+     * @return string
+     */
+    public function getHost($ip)
+    {
+        if (strstr($ip, ', ')) {
+            $ips = explode(', ', $ip);
+            $ip = $ips[0];
+        }
+        try {
+            $hostName = gethostbyaddr($ip);
+        } catch (Exception $e) {
+            $hostName = '';
+        }
+
+        return $hostName;
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 $isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
 $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+$customerIp = Mage::helper('core/http')->getRemoteAddr();
+$customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
 ?>
     <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate" autocomplete="off" enctype="multipart/form-data">
@@ -108,6 +110,10 @@ $productId = Mage::registry('current_product')->getId();
         </div>
 
     </div>
+<input type="hidden" name="customer_id" value="<?php echo $customerId ?>" />
+<input type="hidden" name="product_id" value="<?php echo $productId ?>" />
+<input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>" />
+<input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>" />
 
     </div>
     <!-- start of login area if user isn't logged -->

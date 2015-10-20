@@ -36,7 +36,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setRatingDurability($params['itemDurability'])
             ->setRatingFailure($params['itemFailure'])
             ->setRatingService($params['itemEaseofinstall'])
-            ->setRecommend($params['itemDoyourecommend']);
+            ->setRecommend($params['itemDoyourecommend'])
+            ->setTimIp($params['customer_ip_address'])
+            ->setTimHost($params['customer_host_name']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
