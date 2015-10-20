@@ -113,10 +113,11 @@ $productId = Mage::registry('current_product')->getId();
         <!-- end of login area if user isn't logged -->
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add"><span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add">
+                    <span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
                 </button>
             <?php else: ?>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
+                <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
                     <span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
                 </button>
             <?php endif; ?>
