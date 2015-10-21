@@ -209,6 +209,10 @@ a.tim-readmore:hover {
 	border-right:0;
 }
 
+.tim-comm-left-column-landing {
+	width:300px;
+	float:left;
+}
 
 .tim-user-photo {
 	width:269px;
@@ -528,13 +532,13 @@ display: none;
 	margin-top:3px;
 }
 
-.tim-rating-input-url input[type=url] {
+.tim-rating-input-url input[type=text] {
     width: 69%;
     line-height: 200%;
     padding-left: 5px;
 }
 
-.tim-rating-input-url input[type=url]:focus {
+.tim-rating-input-url input[type=text]:focus {
 	background-color:#eee;	
 	border:1px solid #656565;
     line-height: 200%;

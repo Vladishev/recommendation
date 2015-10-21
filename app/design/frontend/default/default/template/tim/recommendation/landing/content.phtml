@@ -1,3 +1,18 @@
+<!-- Left column: -->
+<div class="tim-comm-left-column-landing">
+    <div class="tim-comm-left-column-navi">
+    <p style="text-align:center; font-weight:bold; font-size:20px; margin-top:30px;">PLACE FOR MENU WITH PRODUCT CATEGORIES THAT CONTAIN OPINIONS</p>
+    </div>
+    <div class="tim-comm-left-column-advert">
+        <div class="tim-advert">
+            <!-- area for marketing stuff -->
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_one')->toHtml(); ?>
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_two')->toHtml(); ?>
+        </div>
+    </div>
+</div>
+
+
 <!-- Main (middle) column: -->
 
 <div class="tim-comm-main-column">
@@ -57,4 +72,16 @@
         </div>
         <!-- end for each -->
     </div>
+</div>
+
+
+
+
+  <div class="tim-comm-right-column">
+<div class="tim-advert">
+    <!-- area for marketing stuff -->
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_one')->toHtml(); ?>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_two')->toHtml(); ?>
+    <!-- to delete -->  <p style="text-align:center; font-weight:bold; font-size:20px; margin-top:30px;">PLACE FOR MARKETING STUFF AS CMS BLOCKS<br/>column width without padding 198px;</p>
+</div>
 </div>
