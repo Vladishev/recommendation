@@ -54,6 +54,49 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Concatinates customer first name and last name
+     * @param int $customerId
+     * @return string
+     */
+    public function getCustomerName($customerId)
+    {
+        $customer = Mage::getModel('customer/customer')->load($customerId);
+        $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+
+        return $name;
+    }
+
+    /**
+     * Get name of user type
+     * @param int $userTypeId
+     * @return string
+     */
+    public function getUserTypeName($userTypeId)
+    {
+        $userType = Mage::getModel('tim_recommendation/userType')->load($userTypeId, 'user_type_id');
+        $userTypeName = $userType->getName();
+
+        return $userTypeName;
+    }
+
+    /**
+     * Counts quantity of opinions
+     * @param int|bool $customerId
+     * @return int
+     */
+    public function getOpinionQty($customerId = false)
+    {
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->getSelect()->where('parent IS NULL');
+        if ($customerId) {
+            $opinionCollection->addFieldToFilter('user_id', $customerId);
+        }
+        $qty = count($opinionCollection->getData());
+
+        return $qty;
+    }
+
+    /**
      * Compare values from system configuration (tim_recommendation/user_type/values)
      * and tim_recommendation/userType collection
      * @param array $userTypes

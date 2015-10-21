@@ -28,7 +28,6 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($params['customer_id'])
             ->setProductId($params['product_id'])
-            ->setTitle($params['opinion-title'])
             ->setAdvantages($params['opinion-advantages'])
             ->setDefects($params['opinion-disadvantages'])
             ->setConclusion($params['opinion-summary'])

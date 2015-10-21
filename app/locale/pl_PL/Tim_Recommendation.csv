@@ -1,6 +1,6 @@
 "User","Użytkownik"
 "User type","Typ użytkownika"
-"View user's profile","Zobacz profil użytkownika"
+"View user\'s profile","Zobacz profil użytkownika"
 "Add your own opinion","Dodaj własną opinię"
 "Criterion sorting","Kryterium sortowanie"
 "Latest","Najnowsze"
@@ -76,3 +76,15 @@ postępowania otrzymasz w potwierdzającym mailu.","<strong>Uwag! Nie jesteś za
 naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
 loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
 postępowania otrzymasz w potwierdzającym mailu."
+"Opinia z dnia: <span>%s</span>","Opinia z dnia: <span>%s</span>"
+"Product highlights","Product highlights"
+"read more","read more"
+"Product defects","Product defects"
+"Summary","Summary"
+"See photos","See photos"
+"See footage","See footage"
+"Comment added <span>%s</span>, user: <span>%s</span>","Comment added <span>%s</span>,user: <span>%s</span>"
+"Opinion has <span>%s</span> comments.","Opinion has <span>%s</span> comments."
+"see them all","see them all"
+"Add your own comment","Add your own comment"
+"%s opinii","%s opinii"
