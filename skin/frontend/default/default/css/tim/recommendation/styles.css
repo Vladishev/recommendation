@@ -389,6 +389,27 @@ label.tim-opinion-content-subtitle, .tim-opinion-content-subtitle {
 	color:#000;
 }
 
+.tim-comment-add-window {
+	clear:both;	
+	padding-left:35px;
+    margin-top: 10px;
+	position:relative;
+	top:10px;
+	display:none;
+}
+
+.tim-comment-add-info {
+	color:#656565;
+	margin-bottom:10px;
+	padding-top:10px;
+	border-top:1px solid #eee;
+	font-weight:bold;
+}
+
+.tim-comment-add-window .tim-comment-add {
+	margin-bottom:8px;
+}
+
 /* right collumn for opinion page */
 
 .tim-comm-right-column {
