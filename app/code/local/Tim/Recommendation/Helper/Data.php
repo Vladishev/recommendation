@@ -9,6 +9,30 @@
  */
 class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /**
+     * @return array
+     */
+    public function getNonAdminUserTypes()
+    {
+        $collection = Mage::getModel('tim_recommendation/userType')->getCollection();
+        $collection->addFieldToFilter('admin', 0);
+        $data = $collection->getData();
+
+        return $data;
+    }
+
+    /**
+     * @param string|int $customerId
+     * @return string
+     */
+    public function getCustomerUserTypeId($customerId)
+    {
+        $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+        $userTypeId = $user->getUserType();
+
+        return $userTypeId;
+    }
+
     public function getRecommendationDataUrl()
     {
         $url = "recommendation/user/data";
@@ -47,7 +71,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $diff;
     }
-    
+
     /**
      * Compare values from system configuration (tim_recommendation/user_level/level_values)
      * and tim_recommendation/userLevel collection

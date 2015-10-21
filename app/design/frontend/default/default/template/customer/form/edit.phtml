@@ -114,6 +114,23 @@
                     <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo Mage::helper('tim_recommendation')->getCustomerDescription(); ?></textarea>
                 </div>
             </li>
+            <?php
+            $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
+            $customerUserTypeId = Mage::helper('tim_recommendation')->getCustomerUserTypeId($this->getCustomer()->getEntityId());
+            ?>
+            <?php if(!empty($userTypes)): ?>
+            <li>
+                <label for="user_type" class="required"><em>*</em><?php echo Mage::helper('tim_recommendation')->__('User type') ?></label>
+                <div class="input-box">
+                    <select id="tim-form-user-type" name="user_type" class="user-type-select required-entry">
+                        <option value=""><?php echo Mage::helper('tim_recommendation')->__('--Select user type--') ?></option>
+                        <?php foreach ($userTypes as $type): ?>
+                            <option value="<?php echo $type['user_type_id'];?>" <?php if($type['user_type_id'] == $customerUserTypeId): ?>selected="selected"<?php endif ?>><?php echo $type['name'];?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </li>
+            <?php endif; ?>
         </ul>
     </div>
 <!-- End of Tim Recommendation form-->
