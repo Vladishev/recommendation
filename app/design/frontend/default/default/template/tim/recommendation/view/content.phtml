@@ -1,5 +1,8 @@
 <?php
 $isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
+$customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+$customerIp = Mage::helper('core/http')->getRemoteAddr();
+$customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
 $opinionData = $this->getOpinionData($productId);
 $qtyComments = count($opinionData['comments']);
@@ -69,37 +72,44 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
 <?php if ($qtyComments > 5) : ?>
     <!-- if opinion has more than 5 comments then next div will be visible -->
     <div class="tim-comment-seemore">
-        <?php echo $this->__('Opinion has <span>%s</span> comments.',$qtyComments); ?>
+        <?php echo $this->__('Opinion has <span>%s</span> comments.', $qtyComments); ?>
         <a class="tim-readmore" href="#"><?php echo $this->__('see them all'); ?></a>
         <!-- link to reveal all comments -->
     </div>
 <?php endif; ?>
-    <!-- next div/button always visible -->
-    <div class="tim-comment-add">
-        <button type="button" class="tim-comment-button-add" id="tim-comment-add-show" onclick="showAddComment()"><?php echo $this->__("Add your own comment"); ?></button>
-        </div>
+<!-- next div/button always visible -->
+<div class="tim-comment-add">
+    <button type="button" class="tim-comment-button-add" id="tim-comment-add-show" onclick="showAddComment()"><?php echo $this->__("Add your own comment"); ?></button>
+</div>
+<form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" id="form-validate" autocomplete="off">
+    <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
+    <input type="hidden" name="recom_id" value="<?php echo $opinionData['recom_id'] ?>"/>
+    <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
+    <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
     <div class="tim-comment-add-window">
         <div class="tim-comment-add-info">
-        <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
+            <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
-            <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"></textarea>
-            </div>
-    <div class="tim-comment-add">
+        <div class="tim-opinion-content tim-add-opinion">
+            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
+        </div>
+        <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj własny komentarz')) ?>" class="tim-comment-button-add">
-                    <span><span><?php echo $this->__('Dodaj własny komentarz') ?></span></span>
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
+                        class="tim-comment-button-add">
+                    <span><span><?php echo $this->__('Add your own comment') ?></span></span>
                 </button>
             <?php else: ?>
-                <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj własny komentarz')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
-                    <span><span><?php echo $this->__('Dodaj własny komentarz') ?></span></span>
+                <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
+                        class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
+                    <span><span><?php echo $this->__('Add your own comment') ?></span></span>
                 </button>
             <?php endif; ?>
         </div>
     </div>
+</form>
 
 <!-- this part is shown when user is not logged in  -->
-
 <div class="tim-userlogin-popup">
     <div class="tim-userlogin-popup-bg"></div>
     <div class="tim-userlogin-popup-container">
@@ -107,12 +117,11 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
         <div class="tim-userlogin-area">
             <div class="tim-userlogin-area-info">
                 <p><?php echo $this->__('<strong>Uwag! Nie jesteś zalogowanym użytkownikiem, aby dodać opinię musisz zalogować się lub założyć konto na
-        naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
-        loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
-        postępowania otrzymasz w potwierdzającym mailu.') ?>
+naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
+loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
+postępowania otrzymasz w potwierdzającym mailu.') ?>
                 </p>
                 <span><?php echo $this->__('Czy posiadasz już konto na naszym serwisie?') ?></span>
-
                 <form>
                     <input type="radio" name="userHaveaccount" value="TAK" class="tim-rating-button-boolean" id="userHaveaccount1"></input>
                     <label for="userHaveaccount1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
@@ -128,7 +137,6 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
                     <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zaloguj się i dodaj komentarz') ?></button>
                 </div>
             </div>
-
             <div class="tim-userlogin-newuser">
                 <div class="tim-userlogin-credentials">
                     <!-- area to input user login as e-mail, password, nick  -->
@@ -141,13 +149,17 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
                     <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zapisz się i dodaj komentarz') ?></button>
                 </div>
             </div>
-
         </div>
     </div>
-</div>   
-         
-  <script>
-      
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var dataForm = new VarienForm('form-validate');
+    //]]>
+</script>
+
+<script>
     /* function to put value into html content right to rating stars and switch userlogin details*/
     jQuery('input').on('change', function () {
         var inputChangeName = jQuery(this).attr('name');
@@ -159,19 +171,20 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
             if (inputChangeValue == 'TAK') {
                 jQuery('.tim-userlogin-existuser').show();
                 jQuery('.tim-userlogin-newuser').hide();
-            };
+            }
             if (inputChangeValue == 'NIE') {
                 jQuery('.tim-userlogin-existuser').hide();
                 jQuery('.tim-userlogin-newuser').show();
-            };
+            }
         }
     });
-      
+
     /* function to show place for adding comment */
-      function showAddComment() {
-        jQuery('#tim-comment-add-show').hide();   
-        jQuery('.tim-comment-add-window').show(300);   
-      }
+    function showAddComment() {
+        jQuery('#tim-comment-add-show').hide();
+        jQuery('.tim-comment-add-window').show(300);
+    }
+
     function checkIfUserIsLoggedIn() {
         /* function open modal when submit button is pressed without validation yet */
         jQuery('.tim-userlogin-popup').show(300);
@@ -180,5 +193,5 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
         jQuery('#tim-userlogin-popup-close').on('click', function () {
             jQuery('.tim-userlogin-popup').hide(300);
         })
-    }      
+    }
 </script>
