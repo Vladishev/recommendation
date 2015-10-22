@@ -168,4 +168,114 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             return true;
         }
     }
+
+    /**
+     * Gets custom opinion data
+     * @return array
+     */
+    public function getProductOpinionData()
+    {
+        $productCollection = Mage::getModel('catalog/product');
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToSelect('product_id');
+        $opinionCollection->getSelect()->where('parent IS NULL');
+        $opinionCollection->setOrder('date_add', 'DESC');
+        $productDataId = $opinionCollection->getData();
+        $productData = array();
+
+
+        $productsId = $this->_getUniqueArray($productDataId);
+
+        $i = 0;
+        foreach($productsId as $key=>$value)
+        {
+            $productData[$i]['name'] = $productCollection->load($value)->getName();
+            $productData[$i]['image'] = $productCollection->load($value)->getImageUrl();
+            $productData[$i]['average'] = $this->getAverage($value);
+            $i++;
+        }
+
+        return $productData;
+    }
+
+    /**
+     * Calculate average from all product rating
+     * @param (int)$prodId
+     * @return float|int
+     */
+    public function getAverage($prodId)
+    {
+        $ratingFields = array('rating_price','rating_durability','rating_failure','rating_service');
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->getSelect()->where('parent IS NULL');
+        $opinions = $opinionCollection->addFieldToFilter('product_id', $prodId)->getData();
+        $opinionCount = count($opinions);
+        $rating = 0;
+
+        foreach($opinions as $opinion)
+        {
+            foreach($ratingFields as $field)
+            {
+                $rating += $opinion[$field]/4;
+            }
+        }
+        $rating = round(($rating/$opinionCount),1);
+
+        return $rating;
+    }
+
+    /**
+     * Gets information of user who writes opinions
+     * and sort it by summ of opinions.
+     * @return array
+     */
+    public function getUserInformation()
+    {
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToSelect('user_id');
+        $opinionCollection->getSelect()->where('parent IS NULL');
+        $usersId = $opinionCollection->getData();
+        $singleId = $this->_getUniqueArray($usersId);
+        $userData = array();
+
+        foreach($singleId as $key=>$value)
+        {
+            $usersIdRating[$value] = Mage::helper('tim_recommendation')->getOpinionQty($value);
+        }
+        arsort($usersIdRating);
+
+        $i = 0;
+        foreach($usersIdRating as $key=>$value)
+        {
+            $userData[$i]['rating'] = $value;
+
+            $collection = Mage::getModel('tim_recommendation/user')->getCollection();
+            $collection->addFieldToFilter('customer_id', $key);
+            $data = $collection->getData();
+            $userData[$i]['avatar'] = Mage::getBaseUrl().$data[0]['avatar'];
+
+            $userData[$i]['name'] = Mage::helper('tim_recommendation')->getCustomerName($key);
+
+            $i++;
+        }
+        return $userData;
+    }
+
+    /**
+     * return array with unique values
+     * @param (obj, arr)$data
+     * @return array
+     */
+    private function _getUniqueArray($data)
+    {
+        foreach($data as $item)
+        {
+            foreach($item as $key=>$value) {
+                $arrayId[] = $value;
+            }
+        }
+        $arrayId = array_unique($arrayId);
+
+        return $arrayId;
+    }
 }

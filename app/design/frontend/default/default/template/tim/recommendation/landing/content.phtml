@@ -83,19 +83,22 @@
             <div class="tim-list-col2"><?php echo $this->__('Średnia Ocena') ?></div>
         </div>
   <!-- for each company -->
-    <?php foreach ($options as $option): ?>             
+    <?php $opinionsData = $this->getProductOpinionData(); $i = 1;?>
+    <?php foreach ($opinionsData as $opinionData): ?>
+        <?php if($i>10) break; ?>
         <div class="tim-comm-list-bulk-positions">
         <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name --> 
-            <a href="#"><img src="<?php echo $this->getSkinUrl('images/producttemp.jpg'); ?>" alt="Zdjęcie produktu" /><?php echo $this->__('Jakiś produkt sobie jest') ?></a>
+            <a href="#"><img src="<?php echo $opinionData['image']; ?>" alt="Zdjęcie produktu" /><?php echo $this->__($opinionData['name']) ?></a>
         </div>
         <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating --> 
         <div class="tim-comm-list-bulk-rating-bar"> 
                 <div class="tim-comm-list-bulk-rating-barinner"> 
-                <?php echo $this->__(mt_rand (0.1*10,5*10) / 10) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+                <?php echo $this->__($opinionData['average']) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
                 </div>
         </div>
         </div>
         </div>
+        <?php $i++; ?>
     <?php endforeach; ?>
                 <!-- end for each --> 
     </div>
@@ -109,22 +112,22 @@
    <div class="tim-comm-list-bulk tim-noborder">
         <!-- listing of users who added highest count of opinions -->
         <!-- for each user -->
-<?php $users = array(1, 2, 3, 4, 5, 6, 7, 8, 9); ?>
-    <?php foreach ($users as $user): ?>                    
+    <?php $users = $this->getUserInformation(); ?>
+    <?php foreach ($users as $user): ?>
                    <div class="tim-comm-usergrid">
             <!-- place for user avatar image --> 
-                       <a href="#"><img src="<?php echo $this->getSkinUrl('images/media/usertemp_photo.jpg'); ?>" alt="Zdjęcie produktu" /></a>
-            <div class="tim-comm-usergrid-name">  
+                       <a href="#"><img src="<?php echo $user['avatar']; ?>" alt="Zdjęcie produktu" /></a>
+            <div class="tim-comm-usergrid-name">
                 <!-- place for user name -->
-                <a href="#"><?php echo $this->__('Zdenek Zdziałek') ?></a>
+                <a href="#"><?php echo $this->__($user['name']) ?></a>
             </div>
             <div class="tim-comm-usergrid-whois">  
                 <!-- place for status of user -->
-                <?php echo $this->__('Ekspert dostawcy') ?>                
+                <?php echo $this->__('Ekspert dostawcy') ?>
             </div>
             <div class="tim-comm-usergrid-count">
                 <!-- place for user's opinion count -->
-                <?php echo $this->__('Liczba opinii: ') ?><span><?php echo $this->__('32') ?></span>                
+                <?php echo $this->__('Liczba opinii: ') ?><span><?php echo $this->__($user['rating']) ?></span>
             </div>
         </div>
     <?php endforeach; ?>        
