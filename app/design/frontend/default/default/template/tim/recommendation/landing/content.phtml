@@ -112,8 +112,9 @@
    <div class="tim-comm-list-bulk tim-noborder">
         <!-- listing of users who added highest count of opinions -->
         <!-- for each user -->
-    <?php $users = $this->getUserInformation(); ?>
+    <?php $users = $this->getUserInformation(); $k = 1;?>
     <?php foreach ($users as $user): ?>
+        <?php if($k>9) break; ?>
                    <div class="tim-comm-usergrid">
             <!-- place for user avatar image --> 
                        <a href="#"><img src="<?php echo $user['avatar']; ?>" alt="Zdjęcie produktu" /></a>
@@ -130,6 +131,7 @@
                 <?php echo $this->__('Liczba opinii: ') ?><span><?php echo $this->__($user['rating']) ?></span>
             </div>
         </div>
+        <?php $k++; ?>
     <?php endforeach; ?>        
         <!-- end for each -->
     </div>
