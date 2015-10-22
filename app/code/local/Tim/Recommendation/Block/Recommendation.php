@@ -127,7 +127,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         foreach ($data as $comment) {
             $comments[] = array(
                 'name' => Mage::helper('tim_recommendation')->getCustomerName($comment['user_id']),
-                'comment' => $comment['title'],
+                'comment' => $comment['comment'],
                 'date_add' => $comment['date_add'],
             );
         }
