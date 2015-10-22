@@ -96,11 +96,10 @@ velit esse cillum dolore eu fugiat nulla pariatur.
         <!-- for each comment (end) -->
     </div>     
     <!-- if opinion has more than 5 comments then next div will be visible -->
-    <div class="tim-comment-seemore">
+           <div class="tim-comment-seemore">
         <?php echo $this->__("Opinion has"); ?> <span> 5<!-- total number of comments --> </span> <?php echo $this->__("comments"); ?>.
          <a class="tim-readmore" href="#"><?php echo $this->__("see them all"); ?></a> <!-- link to reveal all comments -->
     </div>
-  
       <!-- next div/button always visible -->
     <div class="tim-comment-add">
         <button type="button" class="tim-comment-button-add" id="tim-comment-add-show" onclick="showAddComment()"><?php echo $this->__("Add your own comment"); ?></button>

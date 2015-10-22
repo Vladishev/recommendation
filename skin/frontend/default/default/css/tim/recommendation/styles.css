@@ -134,6 +134,19 @@ a.tim-readmore:hover {
 	min-height:30px;
 }
 
+.tim-noborder {
+	border:0 !important;
+}
+
+.tim-nopadding {
+	padding:0;
+}
+
+.tim-col-noborder {
+	border:0;
+	padding: 0px 30px 30px 30px;
+}
+
 /* header for opinion page */
 
 .tim-comm-header {
@@ -379,6 +392,13 @@ label.tim-opinion-content-subtitle, .tim-opinion-content-subtitle {
     margin-bottom: 10px;
     float: left;
     padding-top: 5px;
+}
+
+.tim-comment-seemore-container {
+	width:100%;
+	clear:both;
+	margin-bottom:10px;
+    overflow: auto;	
 }
 
 .tim-comment-add {
@@ -796,4 +816,123 @@ label.tim-rating-button-boolean-label {
 
 .tim-add-comment .tim-comment-add {
 	margin-bottom:15px;
+}
+
+/* opinion landing page */
+
+.recommendation-index-landing .tim-comm-right-column {
+	border: 1px solid #cdcece;
+}
+
+.recommendation-index-landing .tim-comment-seemore {
+	float:right;
+}
+
+.tim-comm-list-bulk-subtitle {
+	color:#000;
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom:8px;
+	background: url(../../../images/tim_triangle.png) top left no-repeat;
+	background-size: 20px 20px;
+	line-height:100%;
+	padding-top: 4px;
+	padding-left: 5px;
+	min-height:20px;
+}
+
+.tim-comm-list-bulk {
+	border:1px solid #cdcece;
+	overflow: auto;
+    clear: both;
+}
+
+.tim-comm-usergrid a:link, .tim-comm-list-bulk a:link {
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.tim-comm-usergrid a:hover, .tim-comm-list-bulk a:hover {
+	text-decoration:underline;
+}
+
+.tim-comm-list-titlebar {
+	background-color:#e5e5e5;
+	color:#656565;
+	font-size:12px;
+}
+
+.tim-list-col1 {
+	box-sizing: border-box;
+	width:50%;
+	float:left;
+	padding:4px 5px 4px 15px;
+	overflow:hidden;
+	display:inline-block;
+}
+.tim-list-col2 {
+	box-sizing: border-box;
+	width:49%;
+	text-align:center;
+	padding:4px 0 4px 0;	
+	display:inline-block;	
+}
+
+.tim-comm-list-bulk-name {
+	color:#000;
+	font-weight:bold;
+}
+
+.tim-comm-list-bulk-name span {
+	color:#999999;
+	font-weight:normal;
+	margin-left:10px;
+}
+
+.tim-comm-list-bulk-positions {
+	border-top:1px solid #eee;
+}
+
+.tim-comm-list-bulk-rating-bar {
+	background-color:#ffdd00;
+	width:0;
+}
+
+.tim-comm-list-bulk-rating-barinner {
+	width:311px;
+	border:1px solid #cdcece;		
+	opacity:0;
+	overflow:hidden;
+}
+
+.tim-comm-list-bulk-name img {
+	max-width:30px;
+	height:20px;
+	border:0;
+	margin-right:10px;
+}
+
+.tim-comm-usergrid {
+    width: 33%;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #cdcece;
+    padding: 5px;
+    margin-bottom: 3px;
+}
+.tim-comm-usergrid img {
+	 width:auto;
+	 max-width: 100%;
+	 max-height: 120px;
+	 margin-bottom: 3px;
+}
+
+.tim-comm-usergrid-whois {
+	color:#656565;
+	margin-bottom:5px;	
+}
+
+.tim-comm-usergrid-count span {
+	font-weight:bold;
 }
