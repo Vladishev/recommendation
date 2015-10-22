@@ -136,8 +136,26 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
+     * Calculates the average rating of the last added opinion to the product
+     * @param int $productId
+     * @return float
+     */
+    public function getProductEvaluation($productId)
+    {
+        $data = $this->getLastAddedOpinion($productId);
+        $ratings = array();
+        $ratings[] = $data['rating_price'];
+        $ratings[] = $data['rating_durability'];
+        $ratings[] = $data['rating_failure'];
+        $ratings[] = $data['rating_service'];
+        $evaluation = round(array_sum($ratings) / count($ratings), 1);
+
+        return $evaluation;
+    }
+
+    /**
      * Checks if opinion exist
-     * @param int$productId
+     * @param int $productId
      * @return bool
      */
     public function isOpinionExist($productId)

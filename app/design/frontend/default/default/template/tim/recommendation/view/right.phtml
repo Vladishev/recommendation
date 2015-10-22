@@ -1,13 +1,14 @@
 <?php
 $productId = Mage::registry('current_product')->getId();
 $opinionData = $this->getOpinionData($productId);
+$averageRating = $this->getProductEvaluation($productId);
 $byIt = $opinionData['by_it'] ? 1 : 0;
 $recommend = $opinionData['recommend'] ? 1 : 0;
 ?>
 <div class="tim-rating"> <!-- main container for rating part of opinion -->
     <div class="tim-rating-title"><?php echo $this->__('EVALUATION OF PRODUCT'); ?>:</div>
     <div class="tim-rating-score-main">
-        4,3<span>/5<span>
+        <?php echo $averageRating ?><span>/5<span>
     </div>
     <div class="tim-rating-score-part">
         <?php echo $this->__('Value for money'); ?>:
