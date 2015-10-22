@@ -1,4 +1,5 @@
 <?php
+$isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
 $productId = Mage::registry('current_product')->getId();
 $opinionData = $this->getOpinionData($productId);
 $qtyComments = count($opinionData['comments']);
@@ -93,13 +94,9 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj własny komentarz')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
                     <span><span><?php echo $this->__('Dodaj własny komentarz') ?></span></span>
                 </button>
-            <?php endif; ?>        
-        
-        
-        
-        </div>            
-    </div>           
-   </div>
+            <?php endif; ?>
+        </div>
+    </div>
 
 <!-- this part is shown when user is not logged in  -->
 
