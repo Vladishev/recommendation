@@ -171,8 +171,6 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     public function getUserOpinionData($userId)
     {
-//        $productCollection = Mage::getModel('catalog/product');
-
         $ratingFields = array('rating_price','rating_durability','rating_failure','rating_service');
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->getSelect()->where('parent IS NULL')->where('user_id = '.$userId);
@@ -189,6 +187,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $productCollection = Mage::getModel('catalog/product');
             $userOpinionData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
             $userOpinionData[$i]['url'] = $productCollection->load($productId)->getProductUrl();
+            $userOpinionData[$i]['name'] = $productCollection->load($productId)->getName();
             foreach($ratingFields as $field)
             {
                 $rating += $item[$field]/4;
@@ -198,5 +197,12 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $i++;
         }
         return $userOpinionData;
+    }
+
+    public function getOpinionComment($userId)
+    {
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->getSelect()->where('parent IS NULL')->where('user_id = '.$userId);
+        $opinionCollection->setOrder('date_add', 'DESC');
     }
 }
