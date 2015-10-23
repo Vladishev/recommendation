@@ -168,4 +168,35 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             return true;
         }
     }
+
+    public function getUserOpinionData($userId)
+    {
+//        $productCollection = Mage::getModel('catalog/product');
+
+        $ratingFields = array('rating_price','rating_durability','rating_failure','rating_service');
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->getSelect()->where('parent IS NULL')->where('user_id = '.$userId);
+        $opinionCollection->setOrder('date_add', 'DESC');
+        $opinionData = $opinionCollection->getData();
+
+
+        $userOpinionData = array();
+        $i = 0;
+        foreach($opinionData as $item)
+        {
+            $rating = 0;
+            $productId = $item['product_id'];
+            $productCollection = Mage::getModel('catalog/product');
+            $userOpinionData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
+            $userOpinionData[$i]['url'] = $productCollection->load($productId)->getProductUrl();
+            foreach($ratingFields as $field)
+            {
+                $rating += $item[$field]/4;
+            }
+            $userOpinionData[$i]['rating'] = round($rating, 1);
+
+            $i++;
+        }
+        return $userOpinionData;
+    }
 }

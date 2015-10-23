@@ -1,6 +1,6 @@
 <?php
 $userId = $this->getRequest()->getParam('id');
-$userInformation = $this->getUserInformation($userId);
+$userInformation = $this->getUserData($userId);
 $site = $userInformation['www'];
 if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
     $site = 'http://' . $userInformation['www'];
@@ -67,13 +67,20 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
             <div class="tim-opinion-list tim-comm-col5"></div>
         </div>
         <!-- for each opinion -->
+        <?php
+        $UserOpinionData = $this->getUserOpinionData($userId);
+        $z = 1;
+        foreach($UserOpinionData as $itemData):
+        if($z > 10) break;
+        ?>
         <div class="tim-opinion-list-inside">
-            <div class="tim-opinion-list-inside-photo tim-comm-col1"> <!-- place for photo of item --></div>
+            <div class="tim-opinion-list-inside-photo tim-comm-col1"> <!-- place for photo of item --><img src="<?php echo $itemData['image']; ?>"></div>
             <div class="tim-opinion-list-inside-itemname tim-comm-col2"> <!-- place for item name --></div>
             <div class="tim-opinion-list-inside-text tim-comm-col3"> <!-- place for shortcut of comment --></div>
-            <div class="tim-opinion-list-inside-rating tim-comm-col4"> <!-- place for item rating --></div>
-            <div class="tim-opinion-list-inside-addbutton tim-comm-col5"> <!-- place for button to add own opinion --></div>
+            <div class="tim-opinion-list-inside-rating tim-comm-col4"><?php echo $itemData['rating']; ?> <!-- place for item rating --></div>
+            <div class="tim-opinion-list-inside-addbutton tim-comm-col5"><a href="<?php echo $itemData['url']; ?>">Link to product</a> <!-- place for button to add own opinion --></div>
         </div>
+        <?php $z++; endforeach; ?>
         <!-- end of for each -->
     </div>
 
