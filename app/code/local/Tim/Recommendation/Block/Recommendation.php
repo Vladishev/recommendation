@@ -169,6 +169,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         }
     }
 
+    /**
+     * Returns custom opinion data
+     * @param (int)$userId
+     * @return array
+     */
     public function getUserOpinionData($userId)
     {
         $ratingFields = array('rating_price','rating_durability','rating_failure','rating_service');
@@ -199,6 +204,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         return $userOpinionData;
     }
 
+    /**
+     * Returns customer comments and date
+     * @param (int)$userId
+     * @return mixed
+     */
     public function getOpinionComment($userId)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
@@ -206,6 +216,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $opinionCollection->addFieldToSelect('comment');
         $opinionCollection->addFieldToSelect('date_add');
         $opinionCollection->setOrder('date_add', 'DESC');
-        return $result = $opinionCollection->getData();
+        $result = $opinionCollection->getData();
+
+        return $result;
     }
 }

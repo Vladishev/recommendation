@@ -83,21 +83,23 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         <?php $z++; endforeach; ?>
         <!-- end of for each -->
     </div>
-    <pre>
-<?php var_dump($this->getOpinionComment($userId)); ?>
-    </pre>
+
     <!-- start of user's comments list -->
+    <?php $opinionComments = $this->getOpinionComment($userId); ?>
+    <?php foreach($opinionComments as $comment): ?>
     <div class="tim-comment">
         <!-- for each comment owned by user (start) -->
         <div class="tim-comment-container">
             <div class="tim-comment-container-title">
                 <?php echo $this->__("Comment added"); ?>
-                <span> <!-- date when comment was added --> </span>, <?php echo $this->__("user"); ?>: <span> <!-- name of user that add comment --> </span>
+                <span> <!-- date when comment was added --><?php echo $comment['date_add']; ?> </span>, <?php echo $this->__("user"); ?>: <span> <!-- name of user that add comment --> </span>
             </div>
             <div class="tim-comment-container-content">
                 <!-- content of comment -->
+                <?php echo $this->__($comment['comment']); ?>
             </div>
         </div>
-        <!-- for each comment (end) -->
+    <?php endforeach; ?>
+    <!-- for each comment (end) -->
     </div>
 </div>
