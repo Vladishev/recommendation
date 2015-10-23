@@ -229,7 +229,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * and sort it by summ of opinions.
      * @return array
      */
-    public function getUserInformation()
+    public function getUserSummaryInformation()
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->addFieldToSelect('user_id');
