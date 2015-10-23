@@ -83,7 +83,9 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         <?php $z++; endforeach; ?>
         <!-- end of for each -->
     </div>
-
+    <pre>
+<?php var_dump($this->getOpinionComment($userId)); ?>
+    </pre>
     <!-- start of user's comments list -->
     <div class="tim-comment">
         <!-- for each comment owned by user (start) -->

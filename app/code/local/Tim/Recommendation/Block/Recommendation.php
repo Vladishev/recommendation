@@ -202,7 +202,10 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionComment($userId)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $opinionCollection->getSelect()->where('parent IS NULL')->where('user_id = '.$userId);
+        $opinionCollection->getSelect()->where('parent IS NOT NULL')->where('user_id = '.$userId);
+        $opinionCollection->addFieldToSelect('comment');
+        $opinionCollection->addFieldToSelect('date_add');
         $opinionCollection->setOrder('date_add', 'DESC');
+        return $result = $opinionCollection->getData();
     }
 }
