@@ -175,22 +175,22 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      */
     public function getProductOpinionData()
     {
+        $opinionCollectionForeach = Mage::getModel('tim_recommendation/recommendation');
         $productCollection = Mage::getModel('catalog/product');
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $opinionCollection->addFieldToSelect('product_id');
+        $opinionCollection->addFieldToSelect('recom_id');
         $opinionCollection->getSelect()->where('parent IS NULL');
         $opinionCollection->setOrder('date_add', 'DESC');
-        $productDataId = $opinionCollection->getData();
+        $opinionDataId = $opinionCollection->getData();
         $productData = array();
 
-
-        $productsId = $this->_getUniqueArray($productDataId);
-
         $i = 0;
-        foreach($productsId as $key=>$value)
+        foreach($opinionDataId as $key=>$value)
         {
-            $productData[$i]['name'] = $productCollection->load($value)->getName();
-            $productData[$i]['image'] = $productCollection->load($value)->getImageUrl();
+            $productId = $opinionCollectionForeach->load($value)->getProductId();
+
+            $productData[$i]['name'] = $productCollection->load($productId)->getName();
+            $productData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
             $productData[$i]['average'] = $this->getAverage($value);
             $i++;
         }
@@ -199,27 +199,27 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * Calculate average from all product rating
+     * Calculate average from each product rating
      * @param (int)$prodId
      * @return float|int
      */
-    public function getAverage($prodId)
+    public function getAverage($opinionId)
     {
         $ratingFields = array('rating_price','rating_durability','rating_failure','rating_service');
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->getSelect()->where('parent IS NULL');
-        $opinions = $opinionCollection->addFieldToFilter('product_id', $prodId)->getData();
-        $opinionCount = count($opinions);
+        $opinions = $opinionCollection->addFieldToFilter('recom_id', $opinionId)->getData();
         $rating = 0;
 
         foreach($opinions as $opinion)
         {
             foreach($ratingFields as $field)
             {
-                $rating += $opinion[$field]/4;
+                Mage::log($opinion[$field]);
+                $rating += $opinion[$field]/5;
             }
         }
-        $rating = round(($rating/$opinionCount),1);
+        $rating = round(($rating),1);
 
         return $rating;
     }
