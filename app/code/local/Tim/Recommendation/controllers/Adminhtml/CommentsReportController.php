@@ -45,10 +45,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
                 $recommendationModel->setAcceptance(1);
                 $recommendationModel->save();
             }
-            Mage::getSingleton('adminhtml/session')->addSuccess(
-                Mage::helper('tim_recommendation')->__(
-                    'Total of %d comment(s) were allowed.', count($commentsId)
-                ));
+            $this->_addAlert('allowed', $commentsId);
         }
         $this->_redirect('*/*/index');
     }
@@ -67,12 +64,22 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
                 $recommendationModel->setAcceptance(0);
                 $recommendationModel->save();
             }
-            Mage::getSingleton('adminhtml/session')->addSuccess(
-                Mage::helper('tim_recommendation')->__(
-                    'Total of %d comment(s) were denied.', count($commentsId)
-                ));
+            $this->_addAlert('denied', $commentsId);
         }
         $this->_redirect('*/*/index');
+    }
+
+    /**
+     * Added alert to user
+     * @param (string)$status
+     * @param (int)$id
+     */
+    protected function _addAlert($status, $id)
+    {
+        Mage::getSingleton('adminhtml/session')->addSuccess(
+            Mage::helper('tim_recommendation')->__(
+                'Total of %d opinion(s) were '.$status.'.', count($id)
+            ));
     }
 
     protected function _isAllowed()

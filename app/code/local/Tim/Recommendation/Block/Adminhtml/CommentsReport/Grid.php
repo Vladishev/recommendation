@@ -95,12 +95,12 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         $this->getMassactionBlock()->setFormFieldName('acceptance');
 
         $this->getMassactionBlock()->addItem('yes', array(
-            'label'=> Mage::helper('tim_recommendation')->__('Yes'),
+            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
             'url'  => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
         $this->getMassactionBlock()->addItem('no', array(
-            'label'=> Mage::helper('tim_recommendation')->__('No'),
+            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
             'url'  => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
