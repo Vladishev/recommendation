@@ -215,7 +215,6 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         {
             foreach($ratingFields as $field)
             {
-                Mage::log($opinion[$field]);
                 $rating += $opinion[$field]/5;
             }
         }
