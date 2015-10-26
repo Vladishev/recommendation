@@ -31,7 +31,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
         );
     }
 
-    /**Changed data in acceptance field to 1
+    /** Changed data in acceptance field to 1
      * @throws Exception
      */
     public function massAcceptanceYesAction()
