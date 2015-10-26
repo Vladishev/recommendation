@@ -31,6 +31,52 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         );
     }
 
+    /**Changed data in acceptance field to 1
+     * @throws Exception
+     */
+    public function massAcceptanceYesAction()
+    {
+        $commentsId = $this->getRequest()->getParam('acceptance');
+        if(!empty($commentsId))
+        {
+            foreach($commentsId as $item)
+            {
+                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
+                $recommendationModel->setAcceptance(1);
+                $recommendationModel->save();
+            }
+            $this->_addAlert('allowed', $commentsId);
+        }
+        $this->_redirect('*/*/index');
+    }
+
+    /**Changed data in acceptance field to 0
+     * @throws Exception
+     */
+    public function massAcceptanceNoAction()
+    {
+        $commentsId = $this->getRequest()->getParam('acceptance');
+        if(!empty($commentsId))
+        {
+            foreach($commentsId as $item)
+            {
+                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
+                $recommendationModel->setAcceptance(0);
+                $recommendationModel->save();
+            }
+            $this->_addAlert('denied', $commentsId);
+        }
+        $this->_redirect('*/*/index');
+    }
+
+    protected function _addAlert($status, $id)
+    {
+        Mage::getSingleton('adminhtml/session')->addSuccess(
+            Mage::helper('tim_recommendation')->__(
+                'Total of %d opinion(s) were '.$status.'.', count($id)
+            ));
+    }
+
     /**
      * Export recommendation grid to CSV format
      */
