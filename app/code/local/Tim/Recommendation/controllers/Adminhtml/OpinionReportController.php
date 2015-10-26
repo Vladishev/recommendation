@@ -69,6 +69,11 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $this->_redirect('*/*/index');
     }
 
+    /**
+     * Added alert to user
+     * @param (string)$status
+     * @param (int)$id
+     */
     protected function _addAlert($status, $id)
     {
         Mage::getSingleton('adminhtml/session')->addSuccess(
