@@ -195,7 +195,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $userOpinionData[$i]['name'] = $productCollection->load($productId)->getName();
             foreach($ratingFields as $field)
             {
-                $rating += $item[$field]/4;
+                $rating += $item[$field]/5;
             }
             $userOpinionData[$i]['rating'] = round($rating, 1);
 
