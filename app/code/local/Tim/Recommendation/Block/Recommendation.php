@@ -251,7 +251,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $collection = Mage::getModel('tim_recommendation/user')->getCollection();
             $collection->addFieldToFilter('customer_id', $key);
             $data = $collection->getData();
-            $userData[$i]['avatar'] = Mage::getBaseUrl().$data[0]['avatar'];
+            $userData[$i]['avatar'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$data[0]['avatar'];
 
             $userData[$i]['name'] = Mage::helper('tim_recommendation')->getCustomerName($key);
 
