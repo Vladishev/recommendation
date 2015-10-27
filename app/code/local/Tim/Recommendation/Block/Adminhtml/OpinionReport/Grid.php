@@ -28,7 +28,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             array('sku'));
         $collection->getSelect()->joinLeft(array('cpef' =>'catalog_product_entity_varchar'),
             'main_table.product_id = cpef.entity_id AND cpef.attribute_id = 71',
-            array('product_name'=>'value'));
+            array('product_name'=>'value', "Akceptacja" =>"IF (main_table.acceptance =1,'TAK','NIE')"));
         $collection->getSelect()->joinLeft(array('tru' =>'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
             array('user_type','engage'));
@@ -136,11 +136,63 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                 'index'     => 'stores',
                 'is_system' => true,
             ));
+        $this->addColumn('Akceptacja', array(
+            'header' => Mage::helper('tim_recommendation')->__('Akceptacja'),
+            'width' => '20',
+            'index' => 'Akceptacja',
+            'filter_condition_callback' => array($this, '_acceptanceFilter'),
+        ));
 
         $this->addExportType('*/*/exportCsv', Mage::helper('sales')->__('CSV'));
         $this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel XML'));
 
         return parent::_prepareColumns();
+    }
+
+    /**
+     * Custom filter for Akceptacja field
+     * @param (obj)$collection
+     * @param (obj)$column
+     * @return $this
+     */
+    protected function _acceptanceFilter($collection, $column)
+    {
+        if ($value = $column->getFilter()->getValue())
+        {
+            if($value == 'TAK')
+            {
+                $this->getCollection()->getSelect()->where(
+                    "main_table.acceptance = 1");
+                return $this;
+            }
+            if($value == 'NIE')
+            {
+                $this->getCollection()->getSelect()->where(
+                    "main_table.acceptance = 0");
+                return $this;
+            }
+        }else{
+            return $this;
+        }
+    }
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('recom_id');
+        $this->getMassactionBlock()->setFormFieldName('acceptance');
+
+        $this->getMassactionBlock()->addItem('yes', array(
+            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
+            'url'  => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
+            'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
+        ));
+        $this->getMassactionBlock()->addItem('no', array(
+            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
+            'url'  => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
+            'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
+        ));
+
+        return $this;
     }
 
     /**
