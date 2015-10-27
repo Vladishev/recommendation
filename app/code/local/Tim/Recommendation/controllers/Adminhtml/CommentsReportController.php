@@ -37,10 +37,8 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     public function massAcceptanceYesAction()
     {
         $commentsId = $this->getRequest()->getParam('acceptance');
-        if(!empty($commentsId))
-        {
-            foreach($commentsId as $item)
-            {
+        if (!empty($commentsId)) {
+            foreach ($commentsId as $item) {
                 $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
                 $recommendationModel->setAcceptance(1);
                 $recommendationModel->save();
@@ -56,10 +54,8 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     public function massAcceptanceNoAction()
     {
         $commentsId = $this->getRequest()->getParam('acceptance');
-        if(!empty($commentsId))
-        {
-            foreach($commentsId as $item)
-            {
+        if (!empty($commentsId)) {
+            foreach ($commentsId as $item) {
                 $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
                 $recommendationModel->setAcceptance(0);
                 $recommendationModel->save();
@@ -78,7 +74,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     {
         Mage::getSingleton('adminhtml/session')->addSuccess(
             Mage::helper('tim_recommendation')->__(
-                'Total of %d opinion(s) were '.$status.'.', count($id)
+                'Total of %d opinion(s) were ' . $status . '.', count($id)
             ));
     }
 

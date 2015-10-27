@@ -1,3 +1,7 @@
+<?php
+$opinionsData = $this->getProductOpinionData();
+$users = $this->getUserSummaryInformation();
+?>
 <!-- Left column: -->
 <div class="tim-comm-left-column-landing">
     <div class="tim-comm-left-column-navi">
@@ -7,162 +11,154 @@
             <!-- area for marketing stuff -->
             <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_one')->toHtml(); ?>
             <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_two')->toHtml(); ?>
-    <img src="<?php echo $this->getSkinUrl('images/marketing_temp_stuff2.jpg'); ?>" alt="Marketing stuff" />
-                </div>
+            <img src="<?php echo $this->getSkinUrl('images/marketing_temp_stuff2.jpg'); ?>" alt="Marketing stuff"/>
+        </div>
     </div>
 </div>
-
-
 <!-- Main (middle) column: -->
-
 <div class="tim-comm-main-column tim-col-noborder">
-        <!-- listing of highest opinion count by company -->
-        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Producenci z największą ilością opinii o produktach') ?></div>
-           <div class="tim-comm-list-bulk">
+    <!-- listing of highest opinion count by company -->
+    <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Producenci z największą ilością opinii o produktach') ?></div>
+    <div class="tim-comm-list-bulk">
         <div class="tim-comm-list-titlebar">
             <div class="tim-list-col1"><?php echo $this->__('Producent') ?></div>
             <div class="tim-list-col2"><?php echo $this->__('Średnia ocena produktów') ?></div>
         </div>
-<?php $options = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10); ?>
-                <!-- for each company -->
-    <?php foreach ($options as $option): ?>             
-        <div class="tim-comm-list-bulk-positions">
-        <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name --> 
-            <a href="#"><?php echo $this->__('Philips') ?></a><span><?php echo $this->__('(142)') ?></span>
-        </div>
-        <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating --> 
-        <div class="tim-comm-list-bulk-rating-bar"> 
-                <div class="tim-comm-list-bulk-rating-barinner"> 
-                <?php echo $this->__(mt_rand (0.1*10,5*10) / 10) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+        <?php $options = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10); ?>
+        <!-- for each company -->
+        <?php foreach ($options as $option): ?>
+            <div class="tim-comm-list-bulk-positions">
+                <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
+                    <a href="#"><?php echo $this->__('Philips') ?></a><span><?php echo $this->__('(142)') ?></span>
                 </div>
-        </div>
-        </div>
-        </div>
-    <?php endforeach; ?>
-                <!-- end for each -->    
+                <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
+                    <div class="tim-comm-list-bulk-rating-bar">
+                        <div class="tim-comm-list-bulk-rating-barinner">
+                            <?php echo $this->__(mt_rand(0.1 * 10, 5 * 10) / 10) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <!-- end for each -->
     </div>
-<div class="tim-comment-seemore-container">
-                   <div class="tim-comment-seemore">
-            <a href"#" class="tim-readmore"><?php echo $this->__('zobacz wszystkich producentów') ?></a> <!-- link to reveal all company's -->
-        </div>    
+    <div class="tim-comment-seemore-container">
+        <div class="tim-comment-seemore">
+            <a href"#" class="tim-readmore"><?php echo $this->__('zobacz wszystkich producentów') ?></a>
+            <!-- link to reveal all company's -->
+        </div>
     </div>
-        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Najwyżej oceniani producenci (średnia ocen wszystkich produktów)') ?></div>
-           <div class="tim-comm-list-bulk">
+    <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Najwyżej oceniani producenci (średnia ocen wszystkich produktów)') ?></div>
+    <div class="tim-comm-list-bulk">
         <!-- listing of highest scored company's by average rating taken from all products of that company -->
         <div class="tim-comm-list-titlebar">
             <div class="tim-list-col1"><?php echo $this->__('Producent') ?></div>
             <div class="tim-list-col2"><?php echo $this->__('Średnia ocena produktów') ?></div>
         </div>
-                <!-- for each company -->
-    <?php foreach ($options as $option): ?>             
-        <div class="tim-comm-list-bulk-positions">
-        <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name --> 
-            <a href="#"><?php echo $this->__('Eti Polam Mambo Jambo') ?></a><span><?php echo $this->__('(543)') ?></span>
-        </div>
-        <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating --> 
-        <div class="tim-comm-list-bulk-rating-bar"> 
-                <div class="tim-comm-list-bulk-rating-barinner"> 
-                <?php echo $this->__(mt_rand (0.1*10,5*10) / 10) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+        <!-- for each company -->
+        <?php foreach ($options as $option): ?>
+            <div class="tim-comm-list-bulk-positions">
+                <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
+                    <a href="#"><?php echo $this->__('Eti Polam Mambo Jambo') ?></a><span><?php echo $this->__('(543)') ?></span>
                 </div>
-        </div>
-        </div>
-        </div>
-    <?php endforeach; ?>
-                <!-- end for each --> 
+                <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
+                    <div class="tim-comm-list-bulk-rating-bar">
+                        <div class="tim-comm-list-bulk-rating-barinner">
+                            <?php echo $this->__(mt_rand(0.1 * 10, 5 * 10) / 10) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <!-- end for each -->
     </div>
     <div class="tim-comment-seemore-container">
-                   <div class="tim-comment-seemore">
-            <a href"#" class="tim-readmore"><?php echo $this->__('zobacz wszystkich producentów') ?></a> <!-- link to reveal all company's -->
-        </div>    
+        <div class="tim-comment-seemore">
+            <a href"#" class="tim-readmore"><?php echo $this->__('zobacz wszystkich producentów') ?></a>
+            <!-- link to reveal all company's -->
+        </div>
     </div>
-        <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Najnowsze opinie o produktach') ?></div>
-           <div class="tim-comm-list-bulk">
+    <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Najnowsze opinie o produktach') ?></div>
+    <div class="tim-comm-list-bulk">
         <!-- listing of newest opinions -->
         <div class="tim-comm-list-titlebar">
             <div class="tim-list-col1"><?php echo $this->__('Produkt') ?></div>
             <div class="tim-list-col2"><?php echo $this->__('Średnia Ocena') ?></div>
         </div>
-  <!-- for each company -->
-    <?php $opinionsData = $this->getProductOpinionData(); $i = 1;?>
-    <?php foreach ($opinionsData as $opinionData): ?>
-        <?php if($i>10) break; ?>
-        <div class="tim-comm-list-bulk-positions">
-        <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name --> 
-            <a href="#"><img src="<?php echo $opinionData['image']; ?>" alt="Zdjęcie produktu" /><?php echo $this->__($opinionData['name']) ?></a>
-        </div>
-        <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating --> 
-        <div class="tim-comm-list-bulk-rating-bar"> 
-                <div class="tim-comm-list-bulk-rating-barinner"> 
-                <?php echo $this->__($opinionData['average']) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+        <!-- for each company -->
+        <?php $i = 1; ?>
+        <?php foreach ($opinionsData as $opinionData): ?>
+            <?php if ($i > 10) break; ?>
+            <div class="tim-comm-list-bulk-positions">
+                <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
+                    <a href="#"><img src="<?php echo $opinionData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($opinionData['name']) ?></a>
                 </div>
-        </div>
-        </div>
-        </div>
-        <?php $i++; ?>
-    <?php endforeach; ?>
-                <!-- end for each --> 
+                <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
+                    <div class="tim-comm-list-bulk-rating-bar">
+                        <div class="tim-comm-list-bulk-rating-barinner">
+                            <?php echo $this->__($opinionData['average']) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        <!-- end for each -->
     </div>
-          <div class="tim-comment-seemore-container">
-                   <div class="tim-comment-seemore">
-            <a href"#" class="tim-readmore"><?php echo $this->__('zobacz wszystkie produkty') ?></a> <!-- link to reveal all items with opinions -->
-        </div>    
+    <div class="tim-comment-seemore-container">
+        <div class="tim-comment-seemore">
+            <a href"#" class="tim-readmore"><?php echo $this->__('zobacz wszystkie produkty') ?></a>
+            <!-- link to reveal all items with opinions -->
+        </div>
     </div>
 
-      <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Użytkownicy, którzy dodali największą ilość opinii') ?></div>
-   <div class="tim-comm-list-bulk tim-noborder">
+    <div class="tim-comm-list-bulk-subtitle"><?php echo $this->__('Użytkownicy, którzy dodali największą ilość opinii') ?></div>
+    <div class="tim-comm-list-bulk tim-noborder">
         <!-- listing of users who added highest count of opinions -->
         <!-- for each user -->
-    <?php $users = $this->getUserSummaryInformation(); $k = 1;?>
-    <?php foreach ($users as $user): ?>
-        <?php if($k>9) break; ?>
-                   <div class="tim-comm-usergrid">
-            <!-- place for user avatar image --> 
-                       <a href="#"><img src="<?php echo $user['avatar']; ?>" alt="Zdjęcie produktu" /></a>
-            <div class="tim-comm-usergrid-name">
-                <!-- place for user name -->
-                <a href="#"><?php echo $this->__($user['name']) ?></a>
+        <?php $k = 1; ?>
+        <?php foreach ($users as $user): ?>
+            <?php if ($k > 9) break; ?>
+            <div class="tim-comm-usergrid">
+                <!-- place for user avatar image -->
+                <a href="#"><img src="<?php echo $user['avatar']; ?>" alt="Zdjęcie produktu"/></a>
+                <div class="tim-comm-usergrid-name">
+                    <!-- place for user name -->
+                    <a href="#"><?php echo $this->__($user['name']) ?></a>
+                </div>
+                <div class="tim-comm-usergrid-whois">
+                    <!-- place for status of user -->
+                    <?php echo $this->__('Ekspert dostawcy') ?>
+                </div>
+                <div class="tim-comm-usergrid-count">
+                    <!-- place for user's opinion count -->
+                    <?php echo $this->__('Liczba opinii: ') ?><span><?php echo $this->__($user['rating']) ?></span>
+                </div>
             </div>
-            <div class="tim-comm-usergrid-whois">  
-                <!-- place for status of user -->
-                <?php echo $this->__('Ekspert dostawcy') ?>
-            </div>
-            <div class="tim-comm-usergrid-count">
-                <!-- place for user's opinion count -->
-                <?php echo $this->__('Liczba opinii: ') ?><span><?php echo $this->__($user['rating']) ?></span>
-            </div>
-        </div>
-        <?php $k++; ?>
-    <?php endforeach; ?>        
+            <?php $k++; ?>
+        <?php endforeach; ?>
         <!-- end for each -->
     </div>
 </div>
-
-
-
-
-  <div class="tim-comm-right-column tim-noborder tim-nopadding">
-<div class="tim-advert">
-    <!-- area for marketing stuff -->
-    <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_one')->toHtml(); ?>
-    <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_two')->toHtml(); ?>
-
-        <!-- to delete --> 
-    <img src="<?php echo $this->getSkinUrl('images/marketing_temp_stuff1.jpg'); ?>" alt="Marketing stuff" />
+<div class="tim-comm-right-column tim-noborder tim-nopadding">
+    <div class="tim-advert">
+        <!-- area for marketing stuff -->
+        <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_one')->toHtml(); ?>
+        <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('tim_recommendation_two')->toHtml(); ?>
+        <!-- to delete -->
+        <img src="<?php echo $this->getSkinUrl('images/marketing_temp_stuff1.jpg'); ?>" alt="Marketing stuff"/>
+    </div>
 </div>
-</div>
-
-
-
 
 <script>
-/* function to get value from rating field and make graph bar */
-    jQuery('.tim-comm-list-bulk-rating-barinner').each(function() {
-		var ratingValue = jQuery(this).contents().filter(function() {
-                return this.nodeType == 3;
+    /* function to get value from rating field and make graph bar */
+    jQuery('.tim-comm-list-bulk-rating-barinner').each(function () {
+        var ratingValue = jQuery(this).contents().filter(function () {
+            return this.nodeType == 3;
         }).text();
-        var ratingValuePercent = ((ratingValue * 20)/100)*100;
+        var ratingValuePercent = ((ratingValue * 20) / 100) * 100;
 //        console.log(ratingValuePercent);
-        jQuery(this).parent().animate({ 'width' : ratingValuePercent + '%'});
-        jQuery(this).animate({opacity: '1',}, 1000);  
-	});
+        jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
+        jQuery(this).animate({opacity: '1',}, 1000);
+    });
 </script>

@@ -13,12 +13,12 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $collection->getSelect()->join(array('val' =>'customer_entity_varchar'),
+        $collection->getSelect()->join(array('val' => 'customer_entity_varchar'),
             "val.entity_id = main_table.user_id AND val.attribute_id = (SELECT ea.attribute_id FROM eav_attribute ea JOIN eav_entity_type eat ON eat.entity_type_id = ea.entity_type_id WHERE ea.attribute_code IN ('firstname') AND eat.entity_type_code= 'customer')",
-            array("Akceptacja" =>"IF (main_table.acceptance =1,'TAK','NIE')"));
-        $collection->getSelect()->join(array('val1' =>'customer_entity_varchar'),
+            array("Akceptacja" => "IF (main_table.acceptance =1,'TAK','NIE')"));
+        $collection->getSelect()->join(array('val1' => 'customer_entity_varchar'),
             "val1.entity_id = main_table.user_id AND val1.attribute_id = (SELECT ea.attribute_id FROM eav_attribute ea JOIN eav_entity_type eat ON eat.entity_type_id = ea.entity_type_id WHERE ea.attribute_code IN ('lastname') AND eat.entity_type_code= 'customer')",
-            array("name" =>"CONCAT( val.value,' ', val1.value)"));
+            array("name" => "CONCAT( val.value,' ', val1.value)"));
         $collection->getSelect()->where('main_table.parent IS NOT NULL');
         $this->setCollection($collection);
 
@@ -70,21 +70,18 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
      */
     protected function _acceptanceFilter($collection, $column)
     {
-        if ($value = $column->getFilter()->getValue())
-        {
-            if($value == 'TAK')
-            {
+        if ($value = $column->getFilter()->getValue()) {
+            if ($value == 'TAK') {
                 $this->getCollection()->getSelect()->where(
                     "main_table.acceptance = 1");
                 return $this;
             }
-            if($value == 'NIE')
-            {
+            if ($value == 'NIE') {
                 $this->getCollection()->getSelect()->where(
                     "main_table.acceptance = 0");
                 return $this;
             }
-        }else{
+        } else {
             return $this;
         }
     }
@@ -95,13 +92,13 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         $this->getMassactionBlock()->setFormFieldName('acceptance');
 
         $this->getMassactionBlock()->addItem('yes', array(
-            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
-            'url'  => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
+            'label' => Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
+            'url' => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
         $this->getMassactionBlock()->addItem('no', array(
-            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
-            'url'  => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
+            'label' => Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
+            'url' => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
 

@@ -37,10 +37,8 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
     public function massAcceptanceYesAction()
     {
         $commentsId = $this->getRequest()->getParam('acceptance');
-        if(!empty($commentsId))
-        {
-            foreach($commentsId as $item)
-            {
+        if (!empty($commentsId)) {
+            foreach ($commentsId as $item) {
                 $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
                 $recommendationModel->setAcceptance(1);
                 $recommendationModel->save();
@@ -56,10 +54,8 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
     public function massAcceptanceNoAction()
     {
         $commentsId = $this->getRequest()->getParam('acceptance');
-        if(!empty($commentsId))
-        {
-            foreach($commentsId as $item)
-            {
+        if (!empty($commentsId)) {
+            foreach ($commentsId as $item) {
                 $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
                 $recommendationModel->setAcceptance(0);
                 $recommendationModel->save();
@@ -78,7 +74,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
     {
         Mage::getSingleton('adminhtml/session')->addSuccess(
             Mage::helper('tim_recommendation')->__(
-                'Total of %d opinion(s) were '.$status.'.', count($id)
+                'Total of %d opinion(s) were ' . $status . '.', count($id)
             ));
     }
 
@@ -87,8 +83,8 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
      */
     public function exportCsvAction()
     {
-        $fileName   = 'recommendations.csv';
-        $grid       = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport_grid');
+        $fileName = 'recommendations.csv';
+        $grid = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
 
@@ -97,8 +93,8 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
      */
     public function exportExcelAction()
     {
-        $fileName   = 'recommendations.xml';
-        $grid       = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport_grid');
+        $fileName = 'recommendations.xml';
+        $grid = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
 
