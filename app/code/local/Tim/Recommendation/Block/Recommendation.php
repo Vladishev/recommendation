@@ -277,4 +277,56 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
         return $arrayId;
     }
+
+    /**
+     * Returns custom opinion data
+     * @param (int)$userId
+     * @return array
+     */
+    public function getUserOpinionData($userId)
+    {
+        $ratingFields = array('rating_price','rating_durability','rating_failure','rating_service');
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->getSelect()->where('parent IS NULL')->where('user_id = '.$userId);
+        $opinionCollection->setOrder('date_add', 'DESC');
+        $opinionData = $opinionCollection->getData();
+
+
+        $userOpinionData = array();
+        $i = 0;
+        foreach($opinionData as $item)
+        {
+            $rating = 0;
+            $productId = $item['product_id'];
+            $productCollection = Mage::getModel('catalog/product');
+            $userOpinionData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
+            $userOpinionData[$i]['url'] = $productCollection->load($productId)->getProductUrl();
+            $userOpinionData[$i]['name'] = $productCollection->load($productId)->getName();
+            foreach($ratingFields as $field)
+            {
+                $rating += $item[$field]/5;
+            }
+            $userOpinionData[$i]['rating'] = round($rating, 1);
+
+            $i++;
+        }
+        return $userOpinionData;
+    }
+
+    /**
+     * Returns customer comments and date
+     * @param (int)$userId
+     * @return mixed
+     */
+    public function getOpinionComment($userId)
+    {
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->getSelect()->where('parent IS NOT NULL')->where('user_id = '.$userId);
+        $opinionCollection->addFieldToSelect('comment');
+        $opinionCollection->addFieldToSelect('date_add');
+        $opinionCollection->setOrder('date_add', 'DESC');
+        $result = $opinionCollection->getData();
+
+        return $result;
+    }
 }
