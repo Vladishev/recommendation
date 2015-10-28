@@ -113,6 +113,13 @@
         </routers>
     </admin>
     <adminhtml>
+        <layout>
+            <updates>
+                <tim_recommendation>
+                    <file>tim/recommendation.xml</file>
+                </tim_recommendation>
+            </updates>
+        </layout>
         <translate>
             <modules>
                 <Tim_Recommendation>

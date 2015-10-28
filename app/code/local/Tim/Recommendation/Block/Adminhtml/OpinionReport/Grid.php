@@ -26,13 +26,13 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->getSelect()->joinLeft(array('cpe' => 'catalog_product_entity'), 'main_table.product_id = cpe.entity_id',
             array('sku'));
-        $collection->getSelect()->joinLeft(array('cpef' =>'catalog_product_entity_varchar'),
+        $collection->getSelect()->joinLeft(array('cpef' => 'catalog_product_entity_varchar'),
             'main_table.product_id = cpef.entity_id AND cpef.attribute_id = 71',
-            array('product_name'=>'value', "Akceptacja" =>"IF (main_table.acceptance =1,'TAK','NIE')"));
-        $collection->getSelect()->joinLeft(array('tru' =>'tim_recom_user'),
+            array('product_name' => 'value', "Akceptacja" => "IF (main_table.acceptance =1,'TAK','NIE')"));
+        $collection->getSelect()->joinLeft(array('tru' => 'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
-            array('user_type','engage'));
-        $collection->getSelect()->joinLeft(array('tut' =>'tim_user_type'),
+            array('user_type', 'engage'));
+        $collection->getSelect()->joinLeft(array('tut' => 'tim_user_type'),
             'tru.user_type = tut.user_type_id',
             array('user_type_name' => 'name'));
         $collection->getSelect()->where('main_table.parent IS NULL');
@@ -119,21 +119,21 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         ));
         $this->addColumn('display_opinion',
             array(
-                'header'    =>  Mage::helper('tim_recommendation')->__('Display opinion'),
-                'width'     => '70',
-                'type'      => 'action',
-                'getter'    => 'getId',
-                'actions'   => array(
+                'header' => Mage::helper('tim_recommendation')->__('Display opinion'),
+                'width' => '70',
+                'type' => 'action',
+                'getter' => 'getId',
+                'actions' => array(
                     array(
-                        'caption'   => Mage::helper('tim_recommendation')->__('Opinion'),
-                        'onclick' => 'alert("Soon you\'ll see the opinion view");'
-//                        'url'       => array('base'=> '*/*/edit'),
-//                        'field'     => 'id'
+                        'caption' => Mage::helper('tim_recommendation')->__('Opinion'),
+                        'url' => array('base' => '*/*/opinionInfo'),
+                        'target' => '_blank',
+                        'field' => 'id'
                     )
                 ),
-                'filter'    => false,
-                'sortable'  => false,
-                'index'     => 'stores',
+                'filter' => false,
+                'sortable' => false,
+                'index' => 'stores',
                 'is_system' => true,
             ));
         $this->addColumn('Akceptacja', array(
@@ -157,21 +157,18 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
      */
     protected function _acceptanceFilter($collection, $column)
     {
-        if ($value = $column->getFilter()->getValue())
-        {
-            if($value == 'TAK')
-            {
+        if ($value = $column->getFilter()->getValue()) {
+            if ($value == 'TAK') {
                 $this->getCollection()->getSelect()->where(
                     "main_table.acceptance = 1");
                 return $this;
             }
-            if($value == 'NIE')
-            {
+            if ($value == 'NIE') {
                 $this->getCollection()->getSelect()->where(
                     "main_table.acceptance = 0");
                 return $this;
             }
-        }else{
+        } else {
             return $this;
         }
     }
@@ -182,13 +179,13 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $this->getMassactionBlock()->setFormFieldName('acceptance');
 
         $this->getMassactionBlock()->addItem('yes', array(
-            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
-            'url'  => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
+            'label' => Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
+            'url' => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
         $this->getMassactionBlock()->addItem('no', array(
-            'label'=> Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
-            'url'  => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
+            'label' => Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
+            'url' => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
 

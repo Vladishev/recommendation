@@ -18,6 +18,13 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $this->renderLayout();
     }
 
+    public function opinionInfoAction()
+    {
+        $this->_title($this->__('Opinion info'));
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
     /**
      * Grid action
      *

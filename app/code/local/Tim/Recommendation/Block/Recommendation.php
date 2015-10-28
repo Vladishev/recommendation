@@ -53,7 +53,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionData($productId)
     {
         $lastAddedOpinion = $this->getLastAddedOpinion($productId);
-        $opinionMedia = $this->getOpinionMediaPath($lastAddedOpinion['recom_id']);
+        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($lastAddedOpinion['recom_id']);
         $lastAddedOpinion['date_add'] = date('d-m-Y', strtotime($lastAddedOpinion['date_add']));
         $lastAddedOpinion['media'] = $opinionMedia;
         $lastAddedOpinion['comments'] = $this->getOpinionComments($lastAddedOpinion['recom_id']);
@@ -87,28 +87,6 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $opinion = $this->getLastAddedOpinion($productId);
         $opinionId = $opinion['recom_id'];
         return $opinionId;
-    }
-
-    /**
-     * Get paths to opinion media files
-     * @param int $opinionId
-     * @return array
-     */
-    public function getOpinionMediaPath($opinionId)
-    {
-        $collection = Mage::getModel('tim_recommendation/media')->getCollection();
-        $collection->addFieldToFilter('recom_id', $opinionId);
-        $data = $collection->getData();
-        $mediaPaths = array();
-        foreach ($data as $item) {
-            if ($item['type'] == 'url/youtube') {
-                $mediaPaths['url/youtube'] = $item['name'];
-                continue;
-            }
-            $mediaPaths[] .= $item['name'];
-        }
-
-        return $mediaPaths;
     }
 
     /**
