@@ -4,132 +4,112 @@ $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
 $customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
+$opinionData = $this->getOpinionData($productId);
+$qtyComments = count($opinionData['comments']);
+$movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media']['url/youtube'] : '';
 ?>
-           <div class="tim-opinion"> <!-- main container for opinion -->
-        <div class="tim-opinion-date">
-            Opinia z dnia: <span>10.10.2015</span><!-- place for date when opinion was added -->
-        </div>
-        <div class="tim-opinion-content-subtitle tim-icon-good"><?php echo $this->__("Product highlights"); ?>:</div>
-        <div class="tim-opinion-content">
-            <!-- place for text from textarea (user input) -->
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id 
-est laborum
-            <a class="tim-readmore" href="#"><?php echo $this->__("read more"); ?></a> <!-- place for read more if necessary -->
-        </div>
-        <div class="tim-opinion-content-subtitle tim-icon-bad"><?php echo $this->__("Product defects"); ?>:</div>
-        <div class="tim-opinion-content">
-            <!-- place for text from textarea (user input) -->
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id 
-est laborum
-            <a class="tim-readmore" href="#"><?php echo $this->__("read more"); ?></a> <!-- place for read more if necessary -->
-        </div>
-        <div class="tim-opinion-content-subtitle tim-icon-summary"><?php echo $this->__("Summary"); ?>:</div>
-        <div class="tim-opinion-content">
-            <!-- place for text from textarea (user input) -->
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id 
-est laborum
-            <a class="tim-readmore" href="#"><?php echo $this->__("read more"); ?></a> <!-- place for read more if necessary -->
-        </div>
-	<div class="tim-opinion-media">
+<div class="tim-opinion"> <!-- main container for opinion -->
+    <div class="tim-opinion-date">
+        <!-- place for date when opinion was added -->
+        <?php echo $this->__('Opinia z dnia: <span>%s</span>', $opinionData['date_add']); ?>
+    </div>
+    <div class="tim-opinion-content-subtitle tim-icon-good"><?php echo $this->__('Product highlights'); ?>:</div>
+    <div class="tim-opinion-content">
+        <!-- place for text from textarea (user input) -->
+        <?php echo $opinionData['advantages'] ?>
+        <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
+        <!-- place for read more if necessary -->
+    </div>
+    <div class="tim-opinion-content-subtitle tim-icon-bad"><?php echo $this->__('Product defects'); ?>:</div>
+    <div class="tim-opinion-content">
+        <!-- place for text from textarea (user input) -->
+        <?php echo $opinionData['defects'] ?>
+        <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
+        <!-- place for read more if necessary -->
+    </div>
+    <div class="tim-opinion-content-subtitle tim-icon-summary"><?php echo $this->__('Summary'); ?>:</div>
+    <div class="tim-opinion-content">
+        <!-- place for text from textarea (user input) -->
+        <?php echo $opinionData['conclusion'] ?>
+        <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
+        <!-- place for read more if necessary -->
+    </div>
+    <?php foreach ($opinionData['media'] as $type => $path): ?>
+        <?php if ($type === 'url/youtube') { continue; } ?>
+        <img src="<?php echo Mage::getBaseUrl() . $path ?>" width="50" height="50" alt="img"/>
+    <?php endforeach; ?>
+    <div class="tim-opinion-media">
         <div class="tim-opinion-photo">
-            <a class="tim-readmore" href="#"><?php echo $this->__("See photos"); ?></a>
+            <a class="tim-readmore" href="#"><?php echo $this->__('See photos'); ?></a>
             <!-- button for displaying user added photos in overlay -->
         </div>
+        <?php if(!empty($movieUrl)): ?>
         <div class="tim-opinion-movie">
-            <a class="tim-readmore" href="#"><?php echo $this->__("See footage"); ?></a>
+            <a class="tim-readmore" href="<?php echo $movieUrl ?>" target="_blank"><?php echo $this->__('See footage'); ?></a>
             <!-- button for displaying movie in overlay (movie source: YouTube)  -->
         </div>
-      </div>  
+        <?php endif; ?>
     </div>
-    <div class="tim-comment">
-        <!-- for each comment (start) -->
+</div>
+<div class="tim-comment">
+    <!-- for each comment (start) -->
+    <?php $i = 1; ?>
+    <?php foreach ($opinionData['comments'] as $comment): ?>
+        <?php if($i > 5){break;} ?>
         <div class="tim-comment-container">
             <div class="tim-comment-container-title">
-                <?php echo $this->__("Comment added"); ?> <span> 11.12.2014<!-- date when comment was added --> </span>, <?php echo $this->__("user"); ?>: <span> Krzysztof Drobnik<!-- name of user that add comment --> </span>
-			</div>
-
-			<div class="tim-comment-container-content">
+                <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?>
+            </div>
+            <div class="tim-comment-container-content">
                 <!-- content of comment -->
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur.
+                <?php echo $comment['comment'] ?>
             </div>
         </div>
-        <!-- for each comment (end) -->
-
-
-        <!-- for each comment (start) -->
-        <div class="tim-comment-container">
-            <div class="tim-comment-container-title">
-                <?php echo $this->__("Comment added"); ?> <span> 09.07.2013<!-- date when comment was added --> </span>, <?php echo $this->__("user"); ?>: <span> Wacek<!-- name of user that add comment --> </span>
-			</div>
-
-			<div class="tim-comment-container-content">
-                <!-- content of comment -->
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur.
-            </div>
-
-        <!-- for each comment (end) -->
-    </div>   
-
-        <!-- for each comment (start) -->
-        <div class="tim-comment-container">
-            <div class="tim-comment-container-title">
-                <?php echo $this->__("Comment added"); ?> <span> 15.07.2014<!-- date when comment was added --> </span>, <?php echo $this->__("user"); ?>: <span> Ziutek Gacek<!-- name of user that add comment --> </span>
-			</div>
-
-			<div class="tim-comment-container-content">
-                <!-- content of comment -->
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-velit esse cillum dolore eu fugiat nulla pariatur.
-            </div>
-
-        <!-- for each comment (end) -->
-    </div>     
+        <?php $i++; ?>
+    <?php endforeach; ?>
+    <!-- for each comment (end) -->
+</div>
+<?php if ($qtyComments > 5) : ?>
     <!-- if opinion has more than 5 comments then next div will be visible -->
-           <div class="tim-comment-seemore">
-        <?php echo $this->__("Opinion has"); ?> <span> 5<!-- total number of comments --> </span> <?php echo $this->__("comments"); ?>.
-         <a class="tim-readmore" href="#"><?php echo $this->__("see them all"); ?></a> <!-- link to reveal all comments -->
+    <div class="tim-comment-seemore">
+        <?php echo $this->__('Opinion has <span>%s</span> comments.', $qtyComments); ?>
+        <a class="tim-readmore" href="#"><?php echo $this->__('see them all'); ?></a>
+        <!-- link to reveal all comments -->
     </div>
-      <!-- next div/button always visible -->
-    <div class="tim-comment-add">
-        <button type="button" class="tim-comment-button-add" id="tim-comment-add-show" onclick="showAddComment()"><?php echo $this->__("Add your own comment"); ?></button>
-        </div>
+<?php endif; ?>
+<!-- next div/button always visible -->
+<div class="tim-comment-add">
+    <button type="button" class="tim-comment-button-add" id="tim-comment-add-show" onclick="showAddComment()"><?php echo $this->__("Add your own comment"); ?></button>
+</div>
+<form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" id="form-validate" autocomplete="off">
+    <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
+    <input type="hidden" name="recom_id" value="<?php echo $opinionData['recom_id'] ?>"/>
+    <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
+    <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
     <div class="tim-comment-add-window">
         <div class="tim-comment-add-info">
-        <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
+            <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
-            <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"></textarea>
-            </div>
-    <div class="tim-comment-add">
+        <div class="tim-opinion-content tim-add-opinion">
+            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
+        </div>
+        <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj własny komentarz')) ?>" class="tim-comment-button-add">
-                    <span><span><?php echo $this->__('Dodaj własny komentarz') ?></span></span>
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
+                        class="tim-comment-button-add">
+                    <span><span><?php echo $this->__('Add your own comment') ?></span></span>
                 </button>
             <?php else: ?>
-                <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj własny komentarz')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
-                    <span><span><?php echo $this->__('Dodaj własny komentarz') ?></span></span>
+                <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
+                        class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
+                    <span><span><?php echo $this->__('Add your own comment') ?></span></span>
                 </button>
-            <?php endif; ?>        
-        
-        
-        
-        </div>            
-    </div>           
-   </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</form>
 
 <!-- this part is shown when user is not logged in  -->
-
 <div class="tim-userlogin-popup">
     <div class="tim-userlogin-popup-bg"></div>
     <div class="tim-userlogin-popup-container">
@@ -137,12 +117,11 @@ velit esse cillum dolore eu fugiat nulla pariatur.
         <div class="tim-userlogin-area">
             <div class="tim-userlogin-area-info">
                 <p><?php echo $this->__('<strong>Uwag! Nie jesteś zalogowanym użytkownikiem, aby dodać opinię musisz zalogować się lub założyć konto na
-        naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
-        loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
-        postępowania otrzymasz w potwierdzającym mailu.') ?>
+naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
+loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
+postępowania otrzymasz w potwierdzającym mailu.') ?>
                 </p>
                 <span><?php echo $this->__('Czy posiadasz już konto na naszym serwisie?') ?></span>
-
                 <form>
                     <input type="radio" name="userHaveaccount" value="TAK" class="tim-rating-button-boolean" id="userHaveaccount1"></input>
                     <label for="userHaveaccount1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
@@ -158,7 +137,6 @@ velit esse cillum dolore eu fugiat nulla pariatur.
                     <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zaloguj się i dodaj komentarz') ?></button>
                 </div>
             </div>
-
             <div class="tim-userlogin-newuser">
                 <div class="tim-userlogin-credentials">
                     <!-- area to input user login as e-mail, password, nick  -->
@@ -171,13 +149,17 @@ velit esse cillum dolore eu fugiat nulla pariatur.
                     <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zapisz się i dodaj komentarz') ?></button>
                 </div>
             </div>
-
         </div>
     </div>
-</div>   
-         
-  <script>
-      
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var dataForm = new VarienForm('form-validate');
+    //]]>
+</script>
+
+<script>
     /* function to put value into html content right to rating stars and switch userlogin details*/
     jQuery('input').on('change', function () {
         var inputChangeName = jQuery(this).attr('name');
@@ -189,19 +171,20 @@ velit esse cillum dolore eu fugiat nulla pariatur.
             if (inputChangeValue == 'TAK') {
                 jQuery('.tim-userlogin-existuser').show();
                 jQuery('.tim-userlogin-newuser').hide();
-            };
+            }
             if (inputChangeValue == 'NIE') {
                 jQuery('.tim-userlogin-existuser').hide();
                 jQuery('.tim-userlogin-newuser').show();
-            };
+            }
         }
     });
-      
+
     /* function to show place for adding comment */
-      function showAddComment() {
-        jQuery('#tim-comment-add-show').hide();   
-        jQuery('.tim-comment-add-window').show(300);   
-      }
+    function showAddComment() {
+        jQuery('#tim-comment-add-show').hide();
+        jQuery('.tim-comment-add-window').show(300);
+    }
+
     function checkIfUserIsLoggedIn() {
         /* function open modal when submit button is pressed without validation yet */
         jQuery('.tim-userlogin-popup').show(300);
@@ -210,5 +193,5 @@ velit esse cillum dolore eu fugiat nulla pariatur.
         jQuery('#tim-userlogin-popup-close').on('click', function () {
             jQuery('.tim-userlogin-popup').hide(300);
         })
-    }      
+    }
 </script>

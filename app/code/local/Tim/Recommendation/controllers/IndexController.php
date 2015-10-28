@@ -28,7 +28,6 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($params['customer_id'])
             ->setProductId($params['product_id'])
-            ->setTitle($params['opinion-title'])
             ->setAdvantages($params['opinion-advantages'])
             ->setDefects($params['opinion-disadvantages'])
             ->setConclusion($params['opinion-summary'])
@@ -75,6 +74,28 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             }
         }
 
+        $this->_redirectReferer();
+    }
+
+    /**
+     * Adds comment to opinion
+     */
+    public function addCommentAction()
+    {
+        $params = $this->getRequest()->getParams();
+        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+            ->setUserId($params['customer_id'])
+            ->setParent($params['recom_id']) //recommendation ID
+            ->setComment($params['opinion-comment'])
+            ->setTimIp($params['customer_ip_address'])
+            ->setTimHost($params['customer_host_name']);
+        try {
+            $recommendationModel->save();
+            Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Comment was successfully added.'));
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add comment.'));
+        }
         $this->_redirectReferer();
     }
 

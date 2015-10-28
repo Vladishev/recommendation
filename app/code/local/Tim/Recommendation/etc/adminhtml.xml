@@ -10,6 +10,25 @@
  */
 -->
 <config>
+    <menu>
+        <report>
+            <children>
+                <tim translate="title" module="tim_recommendation">
+                    <title>TIM</title>
+                    <children>
+                        <tim_recommendation translate="title">
+                            <title>Recommendations</title>
+                            <action>adminhtml/opinionReport</action>
+                        </tim_recommendation>
+                        <tim_comments translate="title">
+                            <title>Comments</title>
+                            <action>adminhtml/commentsReport</action>
+                        </tim_comments>
+                    </children>
+                </tim>
+            </children>
+        </report>
+    </menu>
     <acl>
         <resources>
             <admin>
@@ -25,6 +44,23 @@
                             </config>
                         </children>
                     </system>
+                    <report>
+                        <children>
+                            <tim translate="title" module="tim_recommendation">
+                                <title>TIM</title>
+                                <children>
+                                    <tim_recommendation translate="title">
+                                        <title>Recommendations</title>
+                                        <sort_order>0</sort_order>
+                                    </tim_recommendation>
+                                    <tim_comments translate="title">
+                                        <title>Comments</title>
+                                        <sort_order>0</sort_order>
+                                    </tim_comments>
+                                </children>
+                            </tim>
+                        </children>
+                    </report>
                 </children>
             </admin>
         </resources>

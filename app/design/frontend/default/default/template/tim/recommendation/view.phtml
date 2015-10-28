@@ -1,28 +1,24 @@
-<div>
-    <!-- Header -->
-
-    <div class="tim-comm-header">
-        <?php echo $this->getChildHtml('header.recommendation.view') ?>
+<?php
+$productId = Mage::registry('current_product')->getId();
+$opinionExist = $this->isOpinionExist($productId);
+?>
+<?php if ($opinionExist): ?>
+    <div>
+        <!-- Header -->
+        <div class="tim-comm-header">
+            <?php echo $this->getChildHtml('header.recommendation.view') ?>
+        </div>
+        <!-- Left column: -->
+        <div class="tim-comm-left-column">
+            <?php echo $this->getChildHtml('left.recommendation.view') ?>
+        </div>
+        <!-- Main (middle) column: -->
+        <div class="tim-comm-main-column">
+            <?php echo $this->getChildHtml('content.recommendation.view') ?>
+        </div>
+        <!-- Right column: -->
+        <div class="tim-comm-right-column">
+            <?php echo $this->getChildHtml('right.recommendation.view') ?>
+        </div>
     </div>
-
-
-    <!-- Left column: -->
-
-    <div class="tim-comm-left-column">
-        <?php echo $this->getChildHtml('left.recommendation.view') ?>
-    </div>
-
-
-    <!-- Main (middle) column: -->
-
-    <div class="tim-comm-main-column">
-        <?php echo $this->getChildHtml('content.recommendation.view') ?>
-    </div>
-
-
-    <!-- Right column: -->
-
-    <div class="tim-comm-right-column">
-        <?php echo $this->getChildHtml('right.recommendation.view') ?>
-    </div>
-</div>
+<?php endif; ?>
