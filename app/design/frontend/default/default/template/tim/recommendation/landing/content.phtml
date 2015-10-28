@@ -160,4 +160,10 @@
         jQuery(this).parent().animate({ 'width' : ratingValuePercent + '%'});
         jQuery(this).animate({opacity: '1',}, 1000);  
 	});
+    
+jQuery('.tim-advert').mouseover(function()
+	{
+	   $(this).css("cursor","pointer");
+	   $(this).animate({width: "500px"}, 'slow');
+	});    
 </script>
