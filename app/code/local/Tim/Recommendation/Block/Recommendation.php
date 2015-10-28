@@ -120,6 +120,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('parent', $opinionId);
+        $collection->addFieldToFilter('acceptance', true);
         $collection->getSelect()->where('parent IS NOT NULL');
         $collection->setOrder('date_add', 'DESC');
         $data = $collection->getData();
@@ -313,6 +314,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionComment($userId)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToFilter('acceptance', true);
         $opinionCollection->getSelect()->where('parent IS NOT NULL')->where('user_id = ' . $userId);
         $opinionCollection->addFieldToSelect('comment');
         $opinionCollection->addFieldToSelect('date_add');
@@ -320,5 +322,19 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $result = $opinionCollection->getData();
 
         return $result;
+    }
+
+    /**
+     * Get acceptance status from last added opinion to the product
+     * @param int $productId
+     * @return int
+     */
+    public function opinionAcceptanceStatus($productId)
+    {
+        $opinionId = $this->getLastAddedOpinionId($productId);
+        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($opinionId);
+        $acceptance = (int)$opinion->getAcceptance();
+
+        return $acceptance;
     }
 }
