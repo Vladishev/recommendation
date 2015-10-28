@@ -120,7 +120,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('parent', $opinionId);
-        $collection->addFieldToFilter('acceptance', true);
+        $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NOT NULL');
         $collection->setOrder('date_add', 'DESC');
         $data = $collection->getData();
