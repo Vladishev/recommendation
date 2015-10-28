@@ -99,7 +99,25 @@
                     </tim_recommendation_save>
                 </observers>
             </controller_action_predispatch_customer_account_editPost>
+            <controller_index_add_opinion_data>
+                <observers>
+                    <send_opinion_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendOpinionEmail</method>
+                    </send_opinion_email>
+                </observers>
+            </controller_index_add_opinion_data>
         </events>
+        <template>
+            <email>
+                <opinion_template translate="label" module="tim_recommendation">
+                    <label>Opinion message</label>
+                    <file>opinion.html</file>
+                    <type>html</type>
+                </opinion_template>
+            </email>
+        </template>
     </global>
     <admin>
         <routers>

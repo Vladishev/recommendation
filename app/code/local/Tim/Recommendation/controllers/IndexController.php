@@ -41,7 +41,15 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
-            Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
+            $eventData['recom_id'] = $recomId;
+            $eventData['date_add'] = $recommendationModel->load($recomId)->getDateAdd();
+            $eventData['customer_name'] = Mage::helper('tim_recommendation')->getCustomerName($params['customer_id']);
+//            $eventData['opinion-advantages'] = $params['opinion-advantages'];
+//            $eventData['opinion-disadvantages'] = $params['opinion-disadvantages'];
+//            $eventData['opinion-summary'] = $params['opinion-summary'];
+            $event = array('opinion_data' => $eventData);
+            Mage::dispatchEvent('controller_index_add_opinion_data', $event);
+                Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
