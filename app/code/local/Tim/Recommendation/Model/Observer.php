@@ -112,28 +112,27 @@ class Tim_Recommendation_Model_Observer
     {
         $opinionData = $observer->getEvent()->getOpinionData();
 //        Mage::log($opinionData);
-        $emails = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_to'), ',;'));
+        $email = Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_email_to');
         $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_enabled');
-        if ($status == 1)
+        if ($status == 1 and !empty($email))
         {
-            if (!empty($emails[0])) {
-                foreach ($emails as $email) {
-                    $this->sendEmail($email, $opinionData);
-                }
-            }
+                $this->sendEmail($email, $opinionData);
         }
     }
 
     public function sendEmail($toEmail, $templateVar)
     {
+//        $emails = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_email_to'), ',;'));
         $templateId = 'opinion_template';
         $emailTemplate = Mage::getModel('core/email_template')->loadDefault($templateId);
         $processedTemplate = $emailTemplate->getProcessedTemplate($templateVar);
-
+        Mage::log($processedTemplate);
         $mail = Mage::getModel('core/email')
             ->setToEmail($toEmail)
             ->setBody($processedTemplate)
             ->setSubject('Opinion')
+//            ->setCc('bakalov.bogdan@gmail.com')
+//            ->setBcc('bakalov.bogdan@gmail.com')
             ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
             ->setType('html');
         $mail->send();
