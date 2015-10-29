@@ -41,6 +41,11 @@
                     </level>
                 </entities>
             </tim_recommendation_resource>
+            <core>
+                <rewrite>
+                    <email>Tim_Recommendation_Model_Email</email>
+                </rewrite>
+            </core>
         </models>
         <resources>
             <tim_recommendation_setup>
@@ -108,12 +113,21 @@
                     </send_opinion_email>
                 </observers>
             </controller_index_add_opinion_data>
+            <controller_index_add_comment_data>
+                <observers>
+                    <send_opinion_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendCommentEmail</method>
+                    </send_opinion_email>
+                </observers>
+            </controller_index_add_comment_data>
         </events>
         <template>
             <email>
                 <opinion_template>
                     <label>Opinion message</label>
-                    <file>opinion.html</file>
+                    <file>confirmOpinion.html</file>
                     <type>html</type>
                 </opinion_template>
             </email>

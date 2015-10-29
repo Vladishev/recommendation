@@ -99,6 +99,12 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setTimHost($params['customer_host_name']);
         try {
             $recommendationModel->save();
+            $recomId = $recommendationModel->getRecomId();
+            $eventData['recom_id'] = $recomId;
+            $eventData['date_add'] = $recommendationModel->load($recomId)->getDateAdd();
+            $eventData['customer_name'] = Mage::helper('tim_recommendation')->getCustomerName($params['customer_id']);
+            $event = array('comment_data' => $eventData);
+            Mage::dispatchEvent('controller_index_add_comment_data', $event);
             Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Comment was successfully added.'));
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
