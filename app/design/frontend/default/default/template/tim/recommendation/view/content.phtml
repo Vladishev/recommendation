@@ -43,11 +43,11 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
             <a class="tim-readmore" href="#"><?php echo $this->__('See photos'); ?></a>
             <!-- button for displaying user added photos in overlay -->
         </div>
-        <?php if(!empty($movieUrl)): ?>
-        <div class="tim-opinion-movie">
-            <a class="tim-readmore" href="<?php echo $movieUrl ?>" target="_blank"><?php echo $this->__('See footage'); ?></a>
-            <!-- button for displaying movie in overlay (movie source: YouTube)  -->
-        </div>
+        <?php if (!empty($movieUrl)): ?>
+            <div class="tim-opinion-movie">
+                <a class="tim-readmore" href="<?php echo $movieUrl ?>" target="_blank"><?php echo $this->__('See footage'); ?></a>
+                <!-- button for displaying movie in overlay (movie source: YouTube)  -->
+            </div>
         <?php endif; ?>
     </div>
 </div>
@@ -192,6 +192,12 @@ postępowania otrzymasz w potwierdzającym mailu.') ?>
         /* function to close modal login area */
         jQuery('#tim-userlogin-popup-close').on('click', function () {
             jQuery('.tim-userlogin-popup').hide(300);
-        })
+        });
+        /* function to close modal login area by escape button*/
+        jQuery(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                jQuery('.tim-userlogin-popup').hide(300);
+            }
+        });
     }
 </script>
