@@ -133,4 +133,14 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $diff;
     }
+
+    /**
+     * Get salt from system configuration
+     * @return string
+     */
+    public function getSalt()
+    {
+        $salt = Mage::getStoreConfig('tim_salt/salt/value');
+        return $salt;
+    }
 }

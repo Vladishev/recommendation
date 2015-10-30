@@ -40,6 +40,9 @@
                                     <tim_recommendation>
                                         <title>Recommendation</title>
                                     </tim_recommendation>
+                                    <tim_salt>
+                                        <title>Salt</title>
+                                    </tim_salt>
                                 </children>
                             </config>
                         </children>
