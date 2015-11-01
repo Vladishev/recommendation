@@ -41,11 +41,11 @@
                     </level>
                 </entities>
             </tim_recommendation_resource>
-            <!--<core>-->
-                <!--<rewrite>-->
-                    <!--<email>Tim_Recommendation_Model_Email</email>-->
-                <!--</rewrite>-->
-            <!--</core>-->
+            <core>
+                <rewrite>
+                    <email>Tim_Recommendation_Model_Email</email>
+                </rewrite>
+            </core>
         </models>
         <resources>
             <tim_recommendation_setup>
