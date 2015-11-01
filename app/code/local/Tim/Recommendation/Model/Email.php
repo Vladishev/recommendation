@@ -13,7 +13,7 @@ class Tim_Recommendation_Model_Email extends Mage_Core_Model_Email
      * Customized for sending Cc and Bcc email
      * @return $this
      */
-    public function send()
+    public function send($templateVar = null)
     {
         if (Mage::getStoreConfigFlag('system/smtp/disable')) {
             return $this;
@@ -37,6 +37,14 @@ class Tim_Recommendation_Model_Email extends Mage_Core_Model_Email
         }
         if ($this->getCc()) {
             $mail->addCc($this->getCc());
+        }
+
+        if(isset($templateVar['image_name'])) {
+            $attachment = $mail->createAttachment(file_get_contents(Mage::getBaseDir().$templateVar['image_name']));
+            $attachment->type        = $templateVar['image_type'];
+            $attachment->disposition = Zend_Mime::DISPOSITION_INLINE;
+            $attachment->encoding    = Zend_Mime::ENCODING_BASE64;
+            $attachment->filename    = 'Image';
         }
 
         $mail->send();

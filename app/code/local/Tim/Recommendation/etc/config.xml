@@ -130,6 +130,11 @@
                     <file>confirmOpinion.html</file>
                     <type>html</type>
                 </opinion_template>
+                <comment_template>
+                    <label>Comment message</label>
+                    <file>confirmComment.html</file>
+                    <type>html</type>
+                </comment_template>
             </email>
         </template>
     </global>
