@@ -1,6 +1,6 @@
 /* common styles for all */
 
-.tim-comm-left-column, .tim-comm-main-column, .tim-comm-right-column {
+.tim-comm-left-column, .tim-comm-main-column, .tim-comm-main-column-wide, .tim-comm-right-column {
 	border: 1px solid #cdcece;
 	box-sizing: border-box;
 	padding:15px;
@@ -265,16 +265,14 @@ a.tim-readmore:hover {
 	text-align:center;
 }
 
-
 .tim-user-type-icon {
 	width:30px;
 	height:30px;
 	float:right;
-    margin-top: 2px;
     margin-right: 5px;	
+    top: -5px;
+    position: relative;	
 }
-
-
 
 .tim-user-scoregraph {
 	background: url(../../../images/tim_user_status_rating.png) top left no-repeat;
@@ -302,6 +300,11 @@ a.tim-readmore:hover {
 .tim-comm-main-column {
 	width:700px;
 	float:left;
+}
+
+.tim-comm-main-column-wide {
+	width:900px;
+	    overflow: auto;
 }
 
 .tim-comm-main-column-short {
@@ -361,6 +364,7 @@ label.tim-opinion-content-subtitle, .tim-opinion-content-subtitle {
 .tim-opinion-content {
 	width:100%;	
 	margin-bottom:10px;
+	    overflow: hidden;
 }
 
 .tim-comment {
@@ -935,4 +939,170 @@ label.tim-rating-button-boolean-label {
 
 .tim-comm-usergrid-count span {
 	font-weight:bold;
+}
+
+/* user profile page */
+
+.tim-comm-border-right {
+		border-right: 1px solid #cdcece;
+}
+
+.tim-user-picture {
+	width:100%;
+	max-height:500px;
+	margin-bottom:15px;
+	overflow:hidden;	
+}
+
+.tim-user-picture img {
+	width:100%;
+	height:auto;
+}
+
+.tim-user-wwwpage {
+	border: 1px solid #cdcece;
+	padding:10px;
+	font-size:16px;
+	font-weight:bold;
+}
+
+.tim-triangle-background {
+	background: url(../../../images/tim_triangle.png) top left no-repeat;
+	background-size: 25px 25px;
+	padding-top: 2px;
+	padding-left: 6px;
+	min-height:30px;
+}
+
+.tim-user-about-textfield {
+	margin-bottom:15px;
+}
+
+.tim-opinion-list-header, .tim-opinion-list {
+	margin-bottom:20px;
+}
+
+.tim-profile-opinion-list .tim-list-col1 {
+	width:70%;
+}
+
+.tim-profile-opinion-list .tim-list-col2 {
+	width:30%;
+}
+
+.tim-profile-opinion-list .tim-comm-list-bulk-rating-barinner {
+	width:240px;
+}
+
+.tim-opinion-list-header-pagecount, .tim-comm-sorting {
+	float:left;
+}
+
+
+
+.tim-opinion-list-header-howmuchshow ul, .tim-opinion-list-header-howmuchshow p {
+    display: inline-block;
+    font-size: 13px;
+}
+
+.tim-opinion-list-header {
+	border-bottom: 1px solid #eaebeb;
+	border-top: 1px solid #eaebeb;	
+	padding: 5px 0 2px 0;
+	    height: 35px;
+}
+
+.tim-opinion-list-header-howmuchshow {
+	float:left;
+	margin-right:30px;
+}
+
+.tim-opinion-list-header-howmuchshow ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.tim-opinion-list-header-howmuchshow ul li a {
+    background: #d7d7d7;
+    display: block;
+    width: 30px;
+    height: auto;
+    padding: 6px 0;
+    color: black;
+    border-radius: 3px;
+    font-size: 13px;
+	    text-align: center;
+		text-decoration:none;
+}
+
+.tim-opinion-list-header-howmuchshow ul li {
+    display: inline-block;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.tim-opinion-list-header-howmuchshow ul li.active a {
+    background: #b6b6b6;
+}
+
+.list-toolbar .page-of input[type="text"] {
+    width: 20px;
+    border: 1px solid #d4d4d4;
+    text-align: center;
+    color: #000000;
+    padding: 0px 7px;
+    line-height: 20px;
+}
+.tim-opinion-list-header-pagecount {
+	margin-right:80px;
+}
+.tim-opinion-list-header-pagecount button {
+    display: inline-block;
+    width: 16px;
+    height: 17px;
+    line-height: 30px;
+    padding: 0px;
+    vertical-align: middle;
+    margin-left: 5px;
+	cursor: pointer;
+		background-repeat: no-repeat;
+	background-position: right center;
+	background-image: url(../../../images/tim_arrow_right.png);
+	border:0;
+}
+
+.tim-opinion-list-header-pagecount input[type="text"] {
+    width: 20px;
+    border: 1px solid #d4d4d4;
+    text-align: center;
+    color: #000000;
+    padding: 0px 7px;
+    line-height: 25px;
+}
+
+.tim-opinion-list-header-pagecount p {
+    margin: 0px;
+    display: inline-block;
+    line-height: 30px;
+}
+
+.tim-opinion-list-header .tim-comm-sorting {
+    margin-top: 0;
+    width: 280px;
+    float: right;
+}
+
+.tim-opinion-list-header .tim-comm-sorting p {
+	margin:0;
+    display: inline-block;
+	    line-height: 30px;
+		margin-right:5px;
+}
+
+.tim-opinion-list-header .tim-comm-sorting select {
+	margin-left:0px;
 }

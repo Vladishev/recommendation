@@ -91,9 +91,7 @@ $users = $this->getUserSummaryInformation();
             <?php if ($i > 10) break; ?>
             <div class="tim-comm-list-bulk-positions">
                 <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
-                    <a href="<?php echo $opinionData['product_url']; ?>">
-                        <img src="<?php echo $opinionData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($opinionData['name']) ?>
-                    </a>
+                    <a href="#"><img src="<?php echo $opinionData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($opinionData['name']) ?></a>
                 </div>
                 <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
                     <div class="tim-comm-list-bulk-rating-bar">
@@ -123,12 +121,10 @@ $users = $this->getUserSummaryInformation();
             <?php if ($k > 9) break; ?>
             <div class="tim-comm-usergrid">
                 <!-- place for user avatar image -->
-                <a href="<?php echo $user['customer_view_url'] ?>">
-                    <img src="<?php echo $user['avatar']; ?>" alt="Zdjęcie produktu"/>
-                </a>
+                <a href="#"><img src="<?php echo $user['avatar']; ?>" alt="Zdjęcie produktu"/></a>
                 <div class="tim-comm-usergrid-name">
                     <!-- place for user name -->
-                    <a href="<?php echo $user['customer_view_url'] ?>"><?php echo $this->__($user['name']) ?></a>
+                    <a href="#"><?php echo $this->__($user['name']) ?></a>
                 </div>
                 <div class="tim-comm-usergrid-whois">
                     <!-- place for status of user -->
@@ -162,13 +158,19 @@ $users = $this->getUserSummaryInformation();
         }).text();
         var ratingValuePercent = ((ratingValue * 20) / 100) * 100;
 //        console.log(ratingValuePercent);
-        jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
-        jQuery(this).animate({opacity: '1',}, 1000);
-    });
+<<<<<<< HEAD
+        jQuery(this).parent().animate({ 'width' : ratingValuePercent + '%'});
+        jQuery(this).animate({opacity: '1',}, 1000);  
+	});
     
 jQuery('.tim-advert').mouseover(function()
 	{
 	   $(this).css("cursor","pointer");
 	   $(this).animate({width: "500px"}, 'slow');
 	});    
+=======
+        jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
+        jQuery(this).animate({opacity: '1',}, 1000);
+    });
+>>>>>>> adac0dd4aaf1f618165ca85e08cce1c9a2865b9c
 </script>
