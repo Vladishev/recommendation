@@ -177,6 +177,9 @@
                                         <tim_recommendation>
                                             <title>Tim Recommendation</title>
                                         </tim_recommendation>
+                                        <tim_salt>
+                                            <title>Tim Salt</title>
+                                        </tim_salt>
                                         <tim_confirm>
                                             <title>Settings</title>
                                         </tim_confirm>

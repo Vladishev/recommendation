@@ -61,6 +61,33 @@
                 </user_level>
             </groups>
         </tim_recommendation>
+        <tim_salt translate="label">
+            <label>Salt</label>
+            <tab>tim_tab</tab>
+            <sort_order>110</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <salt translate="label">
+                    <label>Salt</label>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <value translate="label">
+                            <label>Salt</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </value>
+                    </fields>
+                </salt>
+            </groups>
+        </tim_salt>
         <tim_confirm translate="label">
             <label>Settings</label>
             <tab>tim_tab</tab>
