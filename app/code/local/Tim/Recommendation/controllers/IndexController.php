@@ -25,43 +25,24 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             mkdir($folderForFiles, 0777, true);
         }
 
-        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
-            ->setUserId($params['customer_id'])
-            ->setProductId($params['product_id'])
-            ->setAdvantages($params['opinion-advantages'])
-            ->setDefects($params['opinion-disadvantages'])
-            ->setConclusion($params['opinion-summary'])
-            ->setRatingPrice($params['itemValuetomoney'])
-            ->setRatingDurability($params['itemDurability'])
-            ->setRatingFailure($params['itemFailure'])
-            ->setRatingService($params['itemEaseofinstall'])
-            ->setRecommend($params['itemDoyourecommend'])
-            ->setTimIp($params['customer_ip_address'])
-            ->setTimHost($params['customer_host_name']);
+        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->setUserId($params['customer_id'])->setProductId($params['product_id'])->setAdvantages($params['opinion-advantages'])->setDefects($params['opinion-disadvantages'])->setConclusion($params['opinion-summary'])->setRatingPrice($params['itemValuetomoney'])->setRatingDurability($params['itemDurability'])->setRatingFailure($params['itemFailure'])->setRatingService($params['itemEaseofinstall'])->setRecommend($params['itemDoyourecommend'])->setTimIp($params['customer_ip_address'])->setTimHost($params['customer_host_name']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
-                Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
+            Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
         }
 
         if (!empty($params['link_to_youtube'])) {
-            Mage::getModel('tim_recommendation/media')
-                ->setRecomId($recomId)
-                ->setName($params['link_to_youtube'])
-                ->setType('url/youtube')
-                ->save();
+            Mage::getModel('tim_recommendation/media')->setRecomId($recomId)->setName($params['link_to_youtube'])->setType('url/youtube')->save();
         }
 
         foreach ((array)$files as $file) {
             if ($file['error'] == 0) {
                 $fileName = time() . $file['name'];
-                $mediaModel = Mage::getModel('tim_recommendation/media')
-                    ->setRecomId($recomId)
-                    ->setName('/media/tim/recommendation/' . $fileName)
-                    ->setType($file['type']);
+                $mediaModel = Mage::getModel('tim_recommendation/media')->setRecomId($recomId)->setName('/media/tim/recommendation/' . $fileName)->setType($file['type']);
                 try {
                     $saveMedia = $mediaModel->save();
                 } catch (Exception $e) {
@@ -74,8 +55,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             }
         }
 
-        if(!empty($recomId))
-        {
+        if (!empty($recomId)) {
             $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
             $event = array('opinion_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_opinion_data', $event);
@@ -96,8 +76,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $recommendationData = $recommendationModel->load($recomId);
         $eventData['date_add'] = $recommendationData->getDateAdd();
 
-        if ($type === 'opinion')
-        {
+        if ($type === 'opinion') {
             $productId = $recommendationData->getProductId();
             $productCollection = Mage::getModel('catalog/product')->load($productId);
             $eventData['product_name'] = $productCollection->getName();
@@ -110,34 +89,34 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['rating_failure'] = $recommendationData->getRatingFailure();
             $eventData['rating_service'] = $recommendationData->getRatingService();
 
-            if($recommendationData->getByIt() == 1)
-            {
+            if ($recommendationData->getByIt() == 1) {
                 $eventData['by_it'] = 'TAK';
-            }else{
+            } else {
                 $eventData['by_it'] = 'NIE';
             }
-            if($recommendationData->getRecommend() == 1)
-            {
+            if ($recommendationData->getRecommend() == 1) {
                 $eventData['recommend'] = 'TAK';
-            }else{
+            } else {
                 $eventData['recommend'] = 'NIE';
             }
             $mediaCollection = Mage::getModel('tim_recommendation/media')->getCollection();
             $mediaCollection->addFieldToFilter('recom_id', $recomId);
             $mediaData = $mediaCollection->getData();
-            foreach ($mediaData as $item)
-            {
-                if ($item['type'] == 'url/youtube')
-                {
+            $i = 0;
+            foreach ($mediaData as $item) {
+                if ($item['type'] == 'url/youtube') {
                     $eventData['media_name'] = $item['name'];
-                }else{
-                    $eventData['image_type'] = $item['type'];
-                    $eventData['image_name'] = $item['name'];
+                    continue;
                 }
+
+                $eventData['image_type' . $i] = $item['type'];
+                $eventData['image_name' . $i] = $item['name'];
+
+
+                $i++;
             }
         }
-        if ($type === 'comment')
-        {
+        if ($type === 'comment') {
             $eventData['comment'] = $recommendationModel->getComment();
             $parentId = $recommendationData->getParent();
             $commentData = $recommendationModel->load($parentId);
@@ -166,8 +145,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $salt = 'test';
         $md5 = 'tim_recommendation.md5';
-        $request = sha1($salt.$status.$md5);
-        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'recommendation/index/confirm/request/'.$request.'/id/'.$recomId;
+        $request = sha1($salt . $status . $md5);
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/confirm/request/' . $request . '/id/' . $recomId;
         return $url;
     }
 
@@ -177,12 +156,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     public function addCommentAction()
     {
         $params = $this->getRequest()->getParams();
-        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
-            ->setUserId($params['customer_id'])
-            ->setParent($params['recom_id']) //recommendation ID
-            ->setComment($params['opinion-comment'])
-            ->setTimIp($params['customer_ip_address'])
-            ->setTimHost($params['customer_host_name']);
+        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->setUserId($params['customer_id'])->setParent($params['recom_id'])//recommendation ID
+            ->setComment($params['opinion-comment'])->setTimIp($params['customer_ip_address'])->setTimHost($params['customer_host_name']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
@@ -191,8 +166,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add comment.'));
         }
-        if(!empty($recomId))
-        {
+        if (!empty($recomId)) {
             $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
             $event = array('comment_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_comment_data', $event);
