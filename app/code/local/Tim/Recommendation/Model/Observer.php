@@ -108,6 +108,77 @@ class Tim_Recommendation_Model_Observer
         }
     }
 
+    /**
+     * Send email with information about person who added opinion
+     * @param (obj)$observer
+     */
+    public function sendOpinionEmail($observer)
+    {
+        $opinionData = $observer->getEvent()->getOpinionData();
+        $email = Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_enabled');
+        if ($status == 1 and !empty($email))
+        {
+                $this->sendEmail($email, $opinionData, 'Opinion');
+        }
+    }
+
+    /**
+     * Send email with information about person who added comment
+     * @param (obj)$observer
+     */
+    public function sendCommentEmail($observer)
+    {
+        $commentData = $observer->getEvent()->getCommentData();
+        $email = Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_enabled');
+        if ($status == 1 and !empty($email))
+        {
+            $this->sendEmail($email, $commentData, 'Comment');
+        }
+    }
+
+    /**
+     * Sending email
+     * @param (str)$toEmail
+     * @param (arr)$templateVar
+     * @param (str)$subject
+     */
+    public function sendEmail($toEmail, $templateVar, $subject)
+    {
+        $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_to'), ',;'));
+        $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_method');
+        if ($subject == 'Opinion') {
+            $templateId = 'opinion_template';
+        } else {
+            $templateId = 'comment_template';
+        }
+        $emailTemplate = Mage::getModel('core/email_template')->loadDefault($templateId);
+        $processedTemplate = $emailTemplate->getProcessedTemplate($templateVar);
+        $mail = Mage::getModel('core/email')
+            ->setToEmail($toEmail)
+            ->setBody($processedTemplate)
+            ->setSubject($subject)
+            ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
+            ->setType('html');
+        if ($method === 1)
+        {
+            $mail->setCc($copyTo);
+        }
+        if ($method === 2)
+        {
+            $mail->setBcc($copyTo);
+        }
+
+        if($subject == 'Opinion')
+        {
+            $mail->send($templateVar);
+        }else{
+            $mail->send();
+        }
+
+    }
+
     public function saveCustomerAction($observer)
     {
         $controller = $observer->getEvent()->getControllerAction();

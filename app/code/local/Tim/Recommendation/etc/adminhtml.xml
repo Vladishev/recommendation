@@ -40,6 +40,9 @@
                                     <tim_recommendation>
                                         <title>Recommendation</title>
                                     </tim_recommendation>
+                                    <tim_confirm>
+                                        <title>Settings</title>
+                                    </tim_confirm>
                                 </children>
                             </config>
                         </children>
