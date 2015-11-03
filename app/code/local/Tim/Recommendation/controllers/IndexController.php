@@ -94,7 +94,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     protected function _getDataForConfirmEmail($recomId, $recommendationModel, $type)
     {
         $recommendationData = $recommendationModel->load($recomId);
+        $eventData['recom_id'] = $recomId;
         $eventData['date_add'] = $recommendationData->getDateAdd();
+        $eventData['user_id'] = $recommendationData->getUserId();
 
         if ($type === 'opinion')
         {
