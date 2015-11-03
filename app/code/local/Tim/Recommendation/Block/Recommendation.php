@@ -321,4 +321,28 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
         return $result;
     }
+
+    /**
+     * Check GET data for wrong data.
+     * If data true, return array with status and url
+     * @return array
+     * @throws Exception
+     */
+    public function getConfirmData()
+    {
+        $requestArray = $this->getRequest()->getParams();//['request'],['id']
+        $salt = 'test';
+        $md5 = 'tim_recommendation.md5';
+        $request0 = sha1($salt . '0' . $md5);
+        $request1 = sha1($salt . '1' . $md5);
+        $resultData = array();
+        if ($requestArray['request'] == $request0) {
+            $resultData['status'] = '0';
+            $resultData['url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/allow/request/' . $requestArray['request'] . '/id/' . $requestArray['id'];
+        } elseif ($requestArray['request'] == $request1) {
+            $resultData['status'] = '1';
+            $resultData['url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/moderate/request/' . $requestArray['request'] . '/id/' . $requestArray['id'];
+        }
+        return $resultData;
+    }
 }

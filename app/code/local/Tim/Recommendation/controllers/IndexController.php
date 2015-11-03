@@ -166,10 +166,41 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         return $url;
     }
 
+    /**
+     * Displays confirm/moderate links
+     * or 404 if GET data are wrong
+     */
     public function confirmAction()
     {
-        $this->loadLayout();
-        $this->renderLayout();
+        $requestArray = $this->getRequest()->getParams();
+        if (!empty($requestArray)) {
+            $result = Mage::helper('tim_recommendation')->checkForNoRote($requestArray);
+            if ($result) {
+                $this->norouteAction();
+            } else {
+                $this->loadLayout();
+                $this->renderLayout();
+            }
+        }
+    }
+
+    /**
+     * Set acceptance = 1 in tim_recommendation table
+     * for current opinion/comment
+     */
+    public function allowAction()
+    {
+        $requestArray = $this->getRequest()->getParams();
+        if (!empty($requestArray)) {
+            $result = Mage::helper('tim_recommendation')->checkForNoRote($requestArray);
+            if ($result) {
+                $this->norouteAction();
+            } else {
+                $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
+                $opinion->setAcceptance('1')->save();
+                echo '<h2>'.Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!').'</h2>';
+            }
+        }
     }
 
     /**
