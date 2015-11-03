@@ -135,12 +135,11 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Checking for wrong data in GET method, if some
-     * fucking hacker try to put his fucking data... fuck them all!!!)))
+     * Checking for wrong data in GET method
      * @param (array)$requestArray
      * @return bool
      */
-    public function checkForNoRote($requestArray)
+    public function checkForNoRoute($requestArray)
     {
         $salt = 'test';
         $md5 = 'tim_recommendation.md5';

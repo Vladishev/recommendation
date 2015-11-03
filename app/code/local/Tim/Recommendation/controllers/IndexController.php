@@ -174,7 +174,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $requestArray = $this->getRequest()->getParams();
         if (!empty($requestArray)) {
-            $result = Mage::helper('tim_recommendation')->checkForNoRote($requestArray);
+            $result = Mage::helper('tim_recommendation')->checkForNoRoute($requestArray);
             if ($result) {
                 $this->norouteAction();
             } else {
@@ -192,7 +192,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $requestArray = $this->getRequest()->getParams();
         if (!empty($requestArray)) {
-            $result = Mage::helper('tim_recommendation')->checkForNoRote($requestArray);
+            $result = Mage::helper('tim_recommendation')->checkForNoRoute($requestArray);
             if ($result) {
                 $this->norouteAction();
             } else {
