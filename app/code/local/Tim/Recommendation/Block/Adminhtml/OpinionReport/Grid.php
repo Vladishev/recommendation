@@ -136,6 +136,33 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                 'index' => 'stores',
                 'is_system' => true,
             ));
+        $this->addColumn('add_note', array(
+            'width' => '50',
+            'index' => 'recom_id',
+            'filter' => false,
+            'sortable'  => false,
+            'is_system' => true,
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_AddNote',
+        ));
+        $this->addColumn('display_note',
+            array(
+                'width' => '70',
+                'type' => 'action',
+                'getter' => 'getId',
+                'actions' => array(
+                    array(
+                        'caption' => Mage::helper('tim_recommendation')->__('Display note'),
+                        'onclick' => 'alert("Display note");',
+//                        'url' => array('base' => '*/*/opinionInfo'),
+//                        'target' => '_blank',
+//                        'field' => 'id'
+                    )
+                ),
+                'filter' => false,
+                'sortable' => false,
+                'index' => 'stores',
+                'is_system' => true,
+            ));
         $this->addColumn('Akceptacja', array(
             'header' => Mage::helper('tim_recommendation')->__('Akceptacja'),
             'width' => '20',

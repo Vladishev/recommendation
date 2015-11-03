@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.1.4</version>
+            <version>0.1.5</version>
         </Tim_Recommendation>
     </modules>
     <global>
@@ -39,6 +39,9 @@
                     <level>
                         <table>tim_user_level</table>
                     </level>
+                    <note>
+                        <table>tim_recom_note</table>
+                    </note>
                 </entities>
             </tim_recommendation_resource>
             <core>
