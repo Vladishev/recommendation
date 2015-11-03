@@ -97,9 +97,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
         if ($type === 'opinion') {
             $productId = $recommendationData->getProductId();
-            $productCollection = Mage::getModel('catalog/product')->load($productId);
-            $eventData['product_name'] = $productCollection->getName();
-            $eventData['product_url'] = $productCollection->getProductUrl();
+            $product = Mage::getModel('catalog/product')->load($productId);
+            $eventData['product_name'] = $product->getName();
+            $eventData['product_url'] = $product->getProductUrl();
             $eventData['advantages'] = $recommendationData->getAdvantages();
             $eventData['defects'] = $recommendationData->getDefects();
             $eventData['conclusion'] = $recommendationData->getConclusion();
@@ -109,14 +109,14 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['rating_service'] = $recommendationData->getRatingService();
 
             if ($recommendationData->getByIt() == 1) {
-                $eventData['by_it'] = 'TAK';
+                $eventData['by_it'] = Mage::helper('tim_recommendation')->__('TAK');
             } else {
-                $eventData['by_it'] = 'NIE';
+                $eventData['by_it'] = Mage::helper('tim_recommendation')->__('NIE');
             }
             if ($recommendationData->getRecommend() == 1) {
-                $eventData['recommend'] = 'TAK';
+                $eventData['recommend'] = Mage::helper('tim_recommendation')->__('TAK');
             } else {
-                $eventData['recommend'] = 'NIE';
+                $eventData['recommend'] = Mage::helper('tim_recommendation')->__('NIE');
             }
             $mediaCollection = Mage::getModel('tim_recommendation/media')->getCollection();
             $mediaCollection->addFieldToFilter('recom_id', $recomId);
@@ -137,9 +137,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $parentId = $recommendationData->getParent();
             $commentData = $recommendationModel->load($parentId);
             $productId = $commentData->getProductId();
-            $productCollection = Mage::getModel('catalog/product')->load($productId);
-            $eventData['product_name'] = $productCollection->getName();
-            $eventData['product_url'] = $productCollection->getProductUrl();
+            $product = Mage::getModel('catalog/product')->load($productId);
+            $eventData['product_name'] = $product->getName();
+            $eventData['product_url'] = $product->getProductUrl();
 
         }
 
