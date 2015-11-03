@@ -38,14 +38,14 @@ class Tim_Recommendation_Model_Email extends Aschroder_SMTPPro_Model_Email
         $mail->setFrom($this->getFromEmail(), $this->getFromName())
             ->addTo($this->getToEmail(), $this->getToName())
             ->setSubject($this->getSubject());
-//start rewrite//////////
+//Add Cc and Bcc functionality
          if ($this->getBcc()) {
              $mail->addBcc($this->getBcc());
          }
          if ($this->getCc()) {
              $mail->addCc($this->getCc());
          }
-
+//Add attachment functionality
          if(isset($templateVar['image_name0'])) {
              $i = 0;
              while($templateVar['image_name'.$i]) {
@@ -57,7 +57,7 @@ class Tim_Recommendation_Model_Email extends Aschroder_SMTPPro_Model_Email
                  $i++;
              }
          }
-//end rewrite////////////
+
         $transport = new Varien_Object(); // for observers to set if required
         Mage::dispatchEvent('aschroder_smtppro_before_send', array(
             'mail' => $mail,

@@ -25,7 +25,19 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             mkdir($folderForFiles, 0777, true);
         }
 
-        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->setUserId($params['customer_id'])->setProductId($params['product_id'])->setAdvantages($params['opinion-advantages'])->setDefects($params['opinion-disadvantages'])->setConclusion($params['opinion-summary'])->setRatingPrice($params['itemValuetomoney'])->setRatingDurability($params['itemDurability'])->setRatingFailure($params['itemFailure'])->setRatingService($params['itemEaseofinstall'])->setRecommend($params['itemDoyourecommend'])->setTimIp($params['customer_ip_address'])->setTimHost($params['customer_host_name']);
+        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+            ->setUserId($params['customer_id'])
+            ->setProductId($params['product_id'])
+            ->setAdvantages($params['opinion-advantages'])
+            ->setDefects($params['opinion-disadvantages'])
+            ->setConclusion($params['opinion-summary'])
+            ->setRatingPrice($params['itemValuetomoney'])
+            ->setRatingDurability($params['itemDurability'])
+            ->setRatingFailure($params['itemFailure'])
+            ->setRatingService($params['itemEaseofinstall'])
+            ->setRecommend($params['itemDoyourecommend'])
+            ->setTimIp($params['customer_ip_address'])
+            ->setTimHost($params['customer_host_name']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
@@ -36,13 +48,20 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         if (!empty($params['link_to_youtube'])) {
-            Mage::getModel('tim_recommendation/media')->setRecomId($recomId)->setName($params['link_to_youtube'])->setType('url/youtube')->save();
+            Mage::getModel('tim_recommendation/media')
+                ->setRecomId($recomId)
+                ->setName($params['link_to_youtube'])
+                ->setType('url/youtube')
+                ->save();
         }
 
         foreach ((array)$files as $file) {
             if ($file['error'] == 0) {
                 $fileName = time() . $file['name'];
-                $mediaModel = Mage::getModel('tim_recommendation/media')->setRecomId($recomId)->setName('/media/tim/recommendation/' . $fileName)->setType($file['type']);
+                $mediaModel = Mage::getModel('tim_recommendation/media')
+                    ->setRecomId($recomId)
+                    ->setName('/media/tim/recommendation/' . $fileName)
+                    ->setType($file['type']);
                 try {
                     $saveMedia = $mediaModel->save();
                 } catch (Exception $e) {
@@ -108,11 +127,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     $eventData['media_name'] = $item['name'];
                     continue;
                 }
-
                 $eventData['image_type' . $i] = $item['type'];
                 $eventData['image_name' . $i] = $item['name'];
-
-
                 $i++;
             }
         }
@@ -150,14 +166,24 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         return $url;
     }
 
+    public function confirmAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
     /**
      * Adds comment to opinion
      */
     public function addCommentAction()
     {
         $params = $this->getRequest()->getParams();
-        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->setUserId($params['customer_id'])->setParent($params['recom_id'])//recommendation ID
-            ->setComment($params['opinion-comment'])->setTimIp($params['customer_ip_address'])->setTimHost($params['customer_host_name']);
+        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+            ->setUserId($params['customer_id'])
+            ->setParent($params['recom_id'])//recommendation ID
+            ->setComment($params['opinion-comment'])
+            ->setTimIp($params['customer_ip_address'])
+            ->setTimHost($params['customer_host_name']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
