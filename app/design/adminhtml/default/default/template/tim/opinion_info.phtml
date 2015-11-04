@@ -1,0 +1,50 @@
+<?php
+$opinion = $this->getOpinionData();
+$recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
+?>
+<div>
+    <div class="tim-advantages">
+        <?php echo $this->__('Advantages'); ?>:
+        <?php echo $opinion['advantages']; ?>
+    </div>
+    <div class="tim-defects">
+        <?php echo $this->__('Defects'); ?>:
+        <?php echo $opinion['defects']; ?>
+    </div>
+    <div class="tim-conclusion">
+        <?php echo $this->__('Conclusion'); ?>:
+        <?php echo $opinion['conclusion']; ?>
+    </div>
+    <div class="tim-rating-price">
+        <?php echo $this->__('Rating price'); ?>:
+        <?php echo $opinion['rating_price']; ?>
+    </div>
+    <div class="tim-rating-durability">
+        <?php echo $this->__('Rating durability'); ?>:
+        <?php echo $opinion['rating_durability']; ?>
+    </div>
+    <div class="tim-rating-failure">
+        <?php echo $this->__('Rating failure'); ?>:
+        <?php echo $opinion['rating_failure']; ?>
+    </div>
+    <div class="tim-rating-service">
+        <?php echo $this->__('Rating service'); ?>:
+        <?php echo $opinion['rating_service']; ?>
+    </div>
+    <div class="tim-recommend">
+        <?php echo $this->__('Recommend'); ?>:
+        <?php echo $recommend; ?>
+    </div>
+    <div class="tim-date-add">
+        <?php echo $this->__('Date Added'); ?>:
+        <?php echo $opinion['date_add']; ?>
+    </div>
+    <div class="tim-media">
+        <div class="tim-image">
+            <?php foreach ($opinion['media'] as $type => $path): ?>
+                <?php if ($type === 'url/youtube') { continue; } ?>
+                <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $path ?>" width="100" height="100" alt="img"/>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

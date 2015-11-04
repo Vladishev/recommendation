@@ -1,8 +1,9 @@
 <?php
 $productId = Mage::registry('current_product')->getId();
 $opinionExist = $this->isOpinionExist($productId);
+$opinionAcceptance = $this->opinionAcceptanceStatus($productId);
 ?>
-<?php if ($opinionExist): ?>
+<?php if ($opinionExist && $opinionAcceptance): ?>
     <div>
         <!-- Header -->
         <div class="tim-comm-header">

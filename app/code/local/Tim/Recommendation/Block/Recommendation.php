@@ -53,7 +53,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionData($productId)
     {
         $lastAddedOpinion = $this->getLastAddedOpinion($productId);
-        $opinionMedia = $this->getOpinionMediaPath($lastAddedOpinion['recom_id']);
+        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($lastAddedOpinion['recom_id']);
         $lastAddedOpinion['date_add'] = date('d-m-Y', strtotime($lastAddedOpinion['date_add']));
         $lastAddedOpinion['media'] = $opinionMedia;
         $lastAddedOpinion['comments'] = $this->getOpinionComments($lastAddedOpinion['recom_id']);
@@ -90,28 +90,6 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * Get paths to opinion media files
-     * @param int $opinionId
-     * @return array
-     */
-    public function getOpinionMediaPath($opinionId)
-    {
-        $collection = Mage::getModel('tim_recommendation/media')->getCollection();
-        $collection->addFieldToFilter('recom_id', $opinionId);
-        $data = $collection->getData();
-        $mediaPaths = array();
-        foreach ($data as $item) {
-            if ($item['type'] == 'url/youtube') {
-                $mediaPaths['url/youtube'] = $item['name'];
-                continue;
-            }
-            $mediaPaths[] .= $item['name'];
-        }
-
-        return $mediaPaths;
-    }
-
-    /**
      * Get comments to opinion
      * @param int $opinionId
      * @return array
@@ -120,6 +98,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('parent', $opinionId);
+        $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NOT NULL');
         $collection->setOrder('date_add', 'DESC');
         $data = $collection->getData();
@@ -190,6 +169,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
             $productData[$i]['name'] = $productCollection->load($productId)->getName();
             $productData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
+            $productData[$i]['product_url'] = Mage::getBaseUrl() . $productCollection->load($productId)->getUrlPath();
             $productData[$i]['average'] = $this->getAverage($value);
             $i++;
         }
@@ -247,7 +227,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $collection->addFieldToFilter('customer_id', $key);
             $data = $collection->getData();
             $userData[$i]['avatar'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $data[0]['avatar'];
-
+            $userData[$i]['customer_view_url'] = Mage::getBaseUrl() . 'recommendation/user/profile/id/' . $key;
             $userData[$i]['name'] = Mage::helper('tim_recommendation')->getCustomerName($key);
 
             $i++;
@@ -313,6 +293,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionComment($userId)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToFilter('acceptance', true);
         $opinionCollection->getSelect()->where('parent IS NOT NULL')->where('user_id = ' . $userId);
         $opinionCollection->addFieldToSelect('comment');
         $opinionCollection->addFieldToSelect('date_add');
@@ -320,5 +301,19 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $result = $opinionCollection->getData();
 
         return $result;
+    }
+
+    /**
+     * Get acceptance status from last added opinion to the product
+     * @param int $productId
+     * @return int
+     */
+    public function opinionAcceptanceStatus($productId)
+    {
+        $opinionId = $this->getLastAddedOpinionId($productId);
+        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($opinionId);
+        $acceptance = (int)$opinion->getAcceptance();
+
+        return $acceptance;
     }
 }

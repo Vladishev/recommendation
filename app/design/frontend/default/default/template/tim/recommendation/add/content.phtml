@@ -136,3 +136,10 @@ $productId = Mage::registry('current_product')->getId();
     //]]>
 </script>
 
+        });
+        /* function to close modal login area by escape button*/
+        jQuery(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                jQuery('.tim-userlogin-popup').hide(300);
+            }
+        });

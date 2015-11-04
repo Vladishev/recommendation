@@ -41,6 +41,11 @@
                     </level>
                 </entities>
             </tim_recommendation_resource>
+            <core>
+                <rewrite>
+                    <email>Tim_Recommendation_Model_Email</email>
+                </rewrite>
+            </core>
         </models>
         <resources>
             <tim_recommendation_setup>
@@ -99,7 +104,39 @@
                     </tim_recommendation_save>
                 </observers>
             </controller_action_predispatch_customer_account_editPost>
+            <controller_index_add_opinion_data>
+                <observers>
+                    <send_opinion_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendOpinionEmail</method>
+                    </send_opinion_email>
+                </observers>
+            </controller_index_add_opinion_data>
+            <controller_index_add_comment_data>
+                <observers>
+                    <send_opinion_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendCommentEmail</method>
+                    </send_opinion_email>
+                </observers>
+            </controller_index_add_comment_data>
         </events>
+        <template>
+            <email>
+                <opinion_template>
+                    <label>Opinion message</label>
+                    <file>confirmOpinion.html</file>
+                    <type>html</type>
+                </opinion_template>
+                <comment_template>
+                    <label>Comment message</label>
+                    <file>confirmComment.html</file>
+                    <type>html</type>
+                </comment_template>
+            </email>
+        </template>
     </global>
     <admin>
         <routers>
@@ -113,6 +150,13 @@
         </routers>
     </admin>
     <adminhtml>
+        <layout>
+            <updates>
+                <tim_recommendation>
+                    <file>tim/recommendation.xml</file>
+                </tim_recommendation>
+            </updates>
+        </layout>
         <translate>
             <modules>
                 <Tim_Recommendation>
@@ -133,6 +177,12 @@
                                         <tim_recommendation>
                                             <title>Tim Recommendation</title>
                                         </tim_recommendation>
+                                        <tim_salt>
+                                            <title>Tim Salt</title>
+                                        </tim_salt>
+                                        <tim_confirm>
+                                            <title>Settings</title>
+                                        </tim_confirm>
                                     </children>
                                 </config>
                             </children>

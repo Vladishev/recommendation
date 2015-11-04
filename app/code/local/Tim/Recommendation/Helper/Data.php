@@ -80,6 +80,28 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Get paths to opinion media files
+     * @param int $opinionId
+     * @return array
+     */
+    public function getOpinionMediaPath($opinionId)
+    {
+        $collection = Mage::getModel('tim_recommendation/media')->getCollection();
+        $collection->addFieldToFilter('recom_id', $opinionId);
+        $data = $collection->getData();
+        $mediaPaths = array();
+        foreach ($data as $item) {
+            if ($item['type'] == 'url/youtube') {
+                $mediaPaths['url/youtube'] = $item['name'];
+                continue;
+            }
+            $mediaPaths[] .= $item['name'];
+        }
+
+        return $mediaPaths;
+    }
+
+    /**
      * Counts quantity of opinions
      * @param int|bool $customerId
      * @return int
@@ -132,5 +154,15 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $diff = array_diff($configIds, $formIds);
 
         return $diff;
+    }
+
+    /**
+     * Get salt from system configuration
+     * @return string
+     */
+    public function getSalt()
+    {
+        $salt = Mage::getStoreConfig('tim_salt/salt/value');
+        return $salt;
     }
 }

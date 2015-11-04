@@ -1,55 +1,51 @@
 <?php
 $userId = $this->getRequest()->getParam('id');
-$userInformation = $this->getUserData($userId);
+$userData = $this->getUserData($userId);
 $userOpinionData = $this->getUserOpinionData($userId);
 $opinionComments = $this->getOpinionComment($userId);
-$site = $userInformation['www'];
+$site = $userData['www'];
 if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
-    $site = 'http://' . $userInformation['www'];
+    $site = 'http://' . $userData['www'];
 }
 ?>
-
 <div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
-
-  <div class="tim-user"> <!-- main container for user details -->
-    <div class="tim-user-photo">
-        <img src="<?php echo Mage::getBaseUrl() . $userData['avatar'] ?>" width="269" height="168" alt="user-photo"/>
-        <!-- place for user photo -->
-    </div>
-    <div class="tim-user-name">
-        <p><?php echo $this->__('User'); ?></p>
-        <!-- place for user name -->
-        <p><?php echo $userData['customer_name']; ?></p>
-    </div>
-    <div class="tim-user-type">
-        <div class="tim-user-type-icon">
-            <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>"
-                 alt="user-status"/>
+    <div class="tim-user"> <!-- main container for user details -->
+        <div class="tim-user-photo">
+            <img src="<?php echo Mage::getBaseUrl() . $userData['avatar'] ?>" width="269" height="168"
+                 alt="user-photo"/>
+            <!-- place for user photo -->
         </div>
-        <?php echo $this->__('User type'); ?>
-        <!-- place for user name and icon -->
-        <p><?php echo $userData['user_type_name']; ?></p>
-    </div>
-    <div class="tim-user-involvement">
-        <?php echo $this->__('User involvement'); ?>
-        <!-- place for user score which will result from the number of entries -->
-        <p><?php echo $userData['engage']; ?></p>
-        <div class="tim-user-scoregraph tim-score-2">
-            <!-- number of opinons -->
-            <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
+        <div class="tim-user-name">
+            <p><?php echo $this->__('User'); ?></p>
+            <!-- place for user name -->
+            <p><?php echo $userData['customer_name']; ?></p>
         </div>
-        <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
-    </div>
+        <div class="tim-user-type">
+            <div class="tim-user-type-icon">
+                <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status"/>
+            </div>
+            <?php echo $this->__('User type'); ?>
+            <!-- place for user name and icon -->
+            <p><?php echo $userData['user_type_name']; ?></p>
+        </div>
+        <div class="tim-user-involvement">
+            <?php echo $this->__('User involvement'); ?>
+            <!-- place for user score which will result from the number of entries -->
+            <p><?php echo $userData['engage']; ?></p>
+            <div class="tim-user-scoregraph tim-score-2">
+                <!-- number of opinons -->
+                <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
+            </div>
+            <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
+        </div>
         <div class="tim-user-email">
             <!-- place for user e-mail if he want to show that  -->
-            <?php echo $userInformation['email']; ?>
-        </div>    
-</div>  
-    
-    
+            <?php echo $userData['email']; ?>
+        </div>
+    </div>
+
+
 </div>
-
-
 
 
 <div class="tim-comm-main-column-wide tim-col-noborder">
@@ -57,32 +53,32 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("ABOUT USER"); ?></div>
         <div class="tim-user-about-textfield">
             <!-- about user info based on his own input -->Lorem epsilum <!-- tem -->
-            <?php echo $userInformation['description']; ?>
+            <?php echo $userData['description']; ?>
         </div>
         <div class="tim-user-picture">
             <!-- graphic provided by user -->
-            <img src="<?php echo $userInformation['ad']; ?>" alt="user-picture"/>
+            <img src="<?php echo $userData['ad']; ?>" alt="user-picture"/>
         </div>
         <div class="tim-user-wwwpage">
 
-        <div class="tim-user-wwwpage-button">
-            <?php echo $this->__("Website User"); ?>: <!-- link to user webpage -->
-            <a href="#"><?php echo $site; ?></a>
-        </div>
+            <div class="tim-user-wwwpage-button">
+                <?php echo $this->__("Website User"); ?>: <!-- link to user webpage -->
+                <a href="#"><?php echo $site; ?></a>
             </div>
+        </div>
     </div>
-
     <!-- start of user's opinion list -->
     <div class="tim-opinion-list">
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("OPINIE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
         <div class="tim-opinion-list-header">
             <div class="tim-opinion-list-header-pagecount">
-                <input value="1" type="text"> <p><?php echo $this->__('z XXX') ?></p><!-- go to page X from all -->
+                <input value="1" type="text">
+                <p><?php echo $this->__('z XXX') ?></p><!-- go to page X from all -->
                 <button class="tim-opinion-nextbutton"></button>
             </div>
             <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
                 <p><?php echo $this->__('Wyświetl:') ?></p>
-                   <ul>
+                <ul>
                     <li class="active">
                         <a href="#">10</a>
                     </li>
@@ -94,7 +90,7 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
                     </li>
                 </ul>
                 <p><?php echo $this->__('opinii:') ?></p>
-                        </div>
+            </div>
             <div class="tim-comm-sorting">
                 <p><?php echo $this->__("Criterion sorting"); ?></p>
                 <select class="tim-comm-sortingselect">
@@ -105,58 +101,52 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
                 </select>
             </div>
         </div>
-
-    <div class="tim-comm-list-bulk tim-profile-opinion-list">
-        <!-- listing of newest opinions -->
-        <div class="tim-comm-list-titlebar">
-            <div class="tim-list-col1"><?php echo $this->__('Produkt') ?></div>
-            <div class="tim-list-col2"><?php echo $this->__('Średnia Ocena') ?></div>
-        </div>
-        <!-- for each company -->
-        <?php $i = 1; ?>
-        <?php foreach ($userOpinionData as $itemData): ?>
-            <?php if ($i > 10) break; ?>
-            <div class="tim-comm-list-bulk-positions">
-                <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
-                    <a href="#"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
-                </div>
-                <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
-                    <div class="tim-comm-list-bulk-rating-bar">
-                        <div class="tim-comm-list-bulk-rating-barinner">
-                            <?php echo $this->__($itemData['rating']) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+        <div class="tim-comm-list-bulk tim-profile-opinion-list">
+            <!-- listing of newest opinions -->
+            <div class="tim-comm-list-titlebar">
+                <div class="tim-list-col1"><?php echo $this->__('Produkt') ?></div>
+                <div class="tim-list-col2"><?php echo $this->__('Średnia Ocena') ?></div>
+            </div>
+            <!-- for each company -->
+            <?php $i = 1; ?>
+            <?php foreach ($userOpinionData as $itemData): ?>
+                <?php if ($i > 10) break; ?>
+                <div class="tim-comm-list-bulk-positions">
+                    <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
+                        <a href="#"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
+                    </div>
+                    <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
+                        <div class="tim-comm-list-bulk-rating-bar">
+                            <div class="tim-comm-list-bulk-rating-barinner">
+                                <?php echo $this->__($itemData['rating']) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php $i++; ?>
-        <?php endforeach; ?>
-        <!-- end for each -->
-    </div>
-
-    </div>
-
-            <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("KOMENTARZE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
-    <!-- start of user's comments list -->
-    <?php foreach ($opinionComments as $comment): ?>
-    <div class="tim-comment">
-        <!-- for each comment owned by user (start) -->
-        <div class="tim-comment-container">
-            <div class="tim-comment-container-title">
-                <?php echo $this->__("Comment added"); ?>
-                <span> <!-- date when comment was added -->
-                    <?php echo $comment['date_add']; ?> </span>
-            </div>
-            <div class="tim-comment-container-content">
-                <!-- content of comment -->
-                <?php echo $this->__($comment['comment']); ?>
-            </div>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+            <!-- end for each -->
         </div>
+    </div>
+    <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("KOMENTARZE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
+    <!-- start of user's comments list -->
+    <div class="tim-comment">
+        <?php foreach ($opinionComments as $comment): ?>
+            <!-- for each comment owned by user (start) -->
+            <div class="tim-comment-container">
+                <div class="tim-comment-container-title">
+                    <?php echo $this->__("Comment added"); ?>
+                    <span><?php echo $comment['date_add']; ?></span>
+                </div>
+                <div class="tim-comment-container-content">
+                    <!-- content of comment -->
+                    <?php echo $this->__($comment['comment']); ?>
+                </div>
+            </div>
         <?php endforeach; ?>
         <!-- for each comment (end) -->
     </div>
 </div>
-
-
 <script>
     /* function to get value from rating field and make graph bar */
     jQuery('.tim-comm-list-bulk-rating-barinner').each(function () {
@@ -168,4 +158,4 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
         jQuery(this).animate({opacity: '1',}, 1000);
     });
-    </script>
+</script>
