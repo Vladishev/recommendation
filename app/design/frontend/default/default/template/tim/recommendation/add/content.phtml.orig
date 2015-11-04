@@ -104,18 +104,6 @@ $productId = Mage::registry('current_product')->getId();
 
             </div>
         </div>
-<<<<<<< HEAD
-         <div class="tim-rating-input">
-       <p><?php echo $this->__('Tutaj możesz dodać zdjęcia:') ?></p>
-        <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"  class="tim-comm-button-smal"/>
-<label for="recommendation-img"  class="tim-comm-button-smal">Wczytaj zdjęcia</label>         
-        <!-- place for user input - upload photos -->
-        </div>
-       <div class="tim-rating-input-url">       
-  <p><?php echo $this->__('Tutaj możesz dodać film:') ?></p>
-        <input type="text" name="link_to_youtube" id="link_to_youtube" class="input-text validate-url" value="Podaj link z serwisu Youtube" style="color:#949090;" onfocus="{ this.value = ''; }" onblur="if(this.value == '') { this.value = 'Podaj link z serwisu Youtube'; }"/>
-        <!-- place for user input - add movie - url to youtube -->
-=======
         <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
         <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
         <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
@@ -133,58 +121,13 @@ $productId = Mage::registry('current_product')->getId();
                     <span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
                 </button>
             <?php endif; ?>
->>>>>>> b4c1778785cac9386ca983cb5767e164384af7b7
         </div>
     </fieldset>
 </form>
 
 <!-- this part is shown when user is not logged in  -->
 
-<div class="tim-userlogin-popup">
-    <div class="tim-userlogin-popup-bg"></div>
-    <div class="tim-userlogin-popup-container">
-        <input type="button" class="tim-userlogin-popup-bt-close" value="x" id="tim-userlogin-popup-close"/>
-        <div class="tim-userlogin-area">
-            <div class="tim-userlogin-area-info">
-                <p><?php echo $this->__('<strong>Uwag! Nie jesteś zalogowanym użytkownikiem, aby dodać opinię musisz zalogować się lub założyć konto na
-        naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
-        loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
-        postępowania otrzymasz w potwierdzającym mailu.') ?>
-                </p>
-                <span><?php echo $this->__('Czy posiadasz już konto na naszym serwisie?') ?></span>
 
-                <form>
-                    <input type="radio" name="userHaveaccount" value="TAK" class="tim-rating-button-boolean" id="userHaveaccount1"></input>
-                    <label for="userHaveaccount1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
-                    <input type="radio" name="userHaveaccount" value="NIE" class="tim-rating-button-boolean" id="userHaveaccount2"></input>
-                    <label for="userHaveaccount2" class="tim-rating-button-boolean-label"><?php echo $this->__('No') ?></label>
-                </form>
-            </div>
-            <div class="tim-userlogin-existuser">
-                <div class="tim-userlogin-credentials">
-                    <!-- area to input user login as e-mail, password, nick  -->
-                    <p><span><?php echo $this->__('Podaj twój login:') ?></span><input type="text" label="e-mail"></p>
-                    <p><span><?php echo $this->__('Podaj twoje hasło:') ?></span><input type="text"></p>
-                    <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zaloguj się i dodaj opinię') ?></button>
-                </div>
-            </div>
-
-            <div class="tim-userlogin-newuser">
-                <div class="tim-userlogin-credentials">
-                    <!-- area to input user login as e-mail, password, nick  -->
-                    <p><span><?php echo $this->__('Podaj adres e-mail:') ?></span>
-                        <input type="text" label="e-mail"></p>
-                    <p><span><?php echo $this->__('Podaj proponowane hasło:') ?></span>
-                        <input type="text"></p>
-                    <p><span><?php echo $this->__('Podaj proponowany pseudonim:') ?></span>
-                        <input type="text"></p>
-                    <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Zapisz się i dodaj opinię') ?></button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 
 <script type="text/javascript">
@@ -193,6 +136,8 @@ $productId = Mage::registry('current_product')->getId();
     //]]>
 </script>
 
+<<<<<<< HEAD
+=======
 <script>
     /* function to put value into html content right to rating stars and sitch userlogin details*/
     jQuery('input').on('change', function () {
@@ -220,6 +165,13 @@ $productId = Mage::registry('current_product')->getId();
         /* function to close modal login area */
         jQuery('#tim-userlogin-popup-close').on('click', function () {
             jQuery('.tim-userlogin-popup').hide(300);
-        })
+        });
+        /* function to close modal login area by escape button*/
+        jQuery(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                jQuery('.tim-userlogin-popup').hide(300);
+            }
+        });
     }
 </script>
+>>>>>>> 40bb7bde619e40078d29d09e35a8c4fe93869bd6

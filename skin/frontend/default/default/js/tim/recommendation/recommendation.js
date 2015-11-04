@@ -37,5 +37,11 @@ jQuery(document).ready(function() {
         jQuery('#tim-userlogin-popup-close').on('click', function () {
             jQuery('.tim-userlogin-popup').hide(300);
         })
+       /* function to close modal login area by escape button*/
+        jQuery(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                jQuery('.tim-userlogin-popup').hide(300);
+            }
+        });        
     }
     
