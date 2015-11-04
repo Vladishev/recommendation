@@ -117,6 +117,12 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'index' => 'tim_host',
             'filter_index' => 'tim_host'
         ));
+        $this->addColumn('Akceptacja', array(
+            'header' => Mage::helper('tim_recommendation')->__('Akceptacja'),
+            'width' => '20',
+            'index' => 'Akceptacja',
+            'filter_condition_callback' => array($this, '_acceptanceFilter'),
+        ));
         $this->addColumn('display_opinion',
             array(
                 'header' => Mage::helper('tim_recommendation')->__('Display opinion'),
@@ -140,7 +146,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'width' => '50',
             'index' => 'recom_id',
             'filter' => false,
-            'sortable'  => false,
+            'sortable' => false,
             'is_system' => true,
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_AddNote',
         ));
@@ -152,10 +158,9 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                 'actions' => array(
                     array(
                         'caption' => Mage::helper('tim_recommendation')->__('Display note'),
-                        'onclick' => 'alert("Display note");',
-//                        'url' => array('base' => '*/*/opinionInfo'),
-//                        'target' => '_blank',
-//                        'field' => 'id'
+                        'url' => array('base' => '*/note/noteInfo'),
+                        'target' => '_blank',
+                        'field' => 'id'
                     )
                 ),
                 'filter' => false,
@@ -163,12 +168,6 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                 'index' => 'stores',
                 'is_system' => true,
             ));
-        $this->addColumn('Akceptacja', array(
-            'header' => Mage::helper('tim_recommendation')->__('Akceptacja'),
-            'width' => '20',
-            'index' => 'Akceptacja',
-            'filter_condition_callback' => array($this, '_acceptanceFilter'),
-        ));
 
         $this->addExportType('*/*/exportCsv', Mage::helper('sales')->__('CSV'));
         $this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel XML'));

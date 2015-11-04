@@ -9,6 +9,17 @@
  */
 class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
+    /**
+     * Init grid
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setId('tim_recommendation_comment_grid');
+        $this->setDefaultDir('DESC');
+        $this->setSaveParametersInSession(true);
+        $this->setUseAjax(true);
+    }
 
     protected function _prepareCollection()
     {
@@ -58,6 +69,32 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'index' => 'Akceptacja',
             'filter_condition_callback' => array($this, '_acceptanceFilter'),
         ));
+        $this->addColumn('add_note', array(
+            'width' => '50',
+            'index' => 'recom_id',
+            'filter' => false,
+            'sortable' => false,
+            'is_system' => true,
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_AddNote',
+        ));
+        $this->addColumn('display_note',
+            array(
+                'width' => '70',
+                'type' => 'action',
+                'getter' => 'getId',
+                'actions' => array(
+                    array(
+                        'caption' => Mage::helper('tim_recommendation')->__('Display note'),
+                        'url' => array('base' => '*/note/noteInfo'),
+                        'target' => '_blank',
+                        'field' => 'id'
+                    )
+                ),
+                'filter' => false,
+                'sortable' => false,
+                'index' => 'stores',
+                'is_system' => true,
+            ));
 
         return parent::_prepareColumns();
     }
