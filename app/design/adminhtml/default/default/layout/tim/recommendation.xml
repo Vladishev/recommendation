@@ -5,4 +5,32 @@
             <block type="tim_recommendation/adminhtml_opinionInfo" name="opinion.info" template="tim/opinion_info.phtml"/>
         </reference>
     </adminhtml_opinionreport_opinioninfo>
+    <adminhtml_opinionreport_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addCss">
+                <name>lib/prototype/windows/themes/magento.css</name>
+            </action>
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/template" template="tim/recommendation/report/js.phtml" name="recom.report.js" as="recom_report_js"></block>
+        </reference>
+    </adminhtml_opinionreport_index>
+    <adminhtml_commentsreport_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addCss">
+                <name>lib/prototype/windows/themes/magento.css</name>
+            </action>
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/template" template="tim/recommendation/report/js.phtml" name="recom.report.js" as="recom_report_js"></block>
+        </reference>
+    </adminhtml_commentsreport_index>
 </layout>

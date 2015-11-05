@@ -39,6 +39,9 @@
                     <level>
                         <table>tim_user_level</table>
                     </level>
+                    <note>
+                        <table>tim_recom_note</table>
+                    </note>
                 </entities>
             </tim_recommendation_resource>
             <!--<core>-->
