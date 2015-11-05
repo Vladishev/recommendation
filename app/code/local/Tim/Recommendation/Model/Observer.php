@@ -139,6 +139,43 @@ class Tim_Recommendation_Model_Observer
     }
 
     /**
+     * Save opinion md5 hash in tim_recommendation table
+     * @param $observer
+     */
+    public function saveOpinionHash($observer)
+    {
+        $opinionData = $observer->getEvent()->getOpinionData();
+        $salt = Mage::helper('tim_recommendation')->getSalt();
+        $md5hash = md5($opinionData['user_id'] . $opinionData['date_add'] . $opinionData['advantages'] . $salt);
+
+        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($opinionData['recom_id'])->setMd5($md5hash);
+        try {
+            $opinion->save();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        }
+    }
+
+    /**
+     * Save comment md5 hash in tim_recommendation table
+     * @param $observer
+     */
+    public function saveCommentHash($observer)
+    {
+        $commentData = $observer->getEvent()->getCommentData();
+        $salt = Mage::helper('tim_recommendation')->getSalt();
+        $md5hash = md5($commentData['user_id'] . $commentData['date_add'] . $commentData['comment'] . $salt);
+
+        $comment = Mage::getModel('tim_recommendation/recommendation')->load($commentData['recom_id'])->setMd5($md5hash);
+        try {
+            $comment->save();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        }
+    }
+
+
+    /**
      * Sending email
      * @param (str)$toEmail
      * @param (arr)$templateVar
