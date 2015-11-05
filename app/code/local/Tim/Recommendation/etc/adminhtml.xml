@@ -24,6 +24,10 @@
                             <title>Comments</title>
                             <action>adminhtml/commentsReport</action>
                         </tim_comments>
+                        <tim_opinion_images translate="title">
+                            <title>Opinion images</title>
+                            <action>adminhtml/opinionImages</action>
+                        </tim_opinion_images>
                     </children>
                 </tim>
             </children>
@@ -61,8 +65,12 @@
                                     </tim_recommendation>
                                     <tim_comments translate="title">
                                         <title>Comments</title>
-                                        <sort_order>0</sort_order>
+                                        <sort_order>5</sort_order>
                                     </tim_comments>
+                                    <tim_opinion_images translate="title">
+                                        <title>Opinion images</title>
+                                        <sort_order>10</sort_order>
+                                    </tim_opinion_images>
                                 </children>
                             </tim>
                         </children>
