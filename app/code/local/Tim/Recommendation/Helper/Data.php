@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Tim
  *
@@ -178,5 +177,25 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $salt = Mage::getStoreConfig('tim_salt/salt/value');
         return $salt;
+    }
+
+    /**
+     * Checking for wrong data in GET method
+     * @param (array)$requestArray
+     * @return bool
+     */
+    public function checkForNoRoute($requestArray)
+    {
+        $salt = 'test';
+        $md5 = 'tim_recommendation.md5';
+        $request0 = sha1($salt . '0' . $md5);
+        $request1 = sha1($salt . '1' . $md5);
+        if ($requestArray['request'] == $request0) {
+            return false;
+        } elseif ($requestArray['request'] == $request1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

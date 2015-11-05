@@ -41,7 +41,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
-                Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
+            Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
@@ -74,8 +74,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             }
         }
 
-        if(!empty($recomId))
-        {
+        if (!empty($recomId)) {
             $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
             $event = array('opinion_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_opinion_data', $event);
@@ -98,12 +97,11 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $eventData['date_add'] = $recommendationData->getDateAdd();
         $eventData['user_id'] = $recommendationData->getUserId();
 
-        if ($type === 'opinion')
-        {
+        if ($type === 'opinion') {
             $productId = $recommendationData->getProductId();
-            $productCollection = Mage::getModel('catalog/product')->load($productId);
-            $eventData['product_name'] = $productCollection->getName();
-            $eventData['product_url'] = $productCollection->getProductUrl();
+            $product = Mage::getModel('catalog/product')->load($productId);
+            $eventData['product_name'] = $product->getName();
+            $eventData['product_url'] = $product->getProductUrl();
             $eventData['advantages'] = $recommendationData->getAdvantages();
             $eventData['defects'] = $recommendationData->getDefects();
             $eventData['conclusion'] = $recommendationData->getConclusion();
@@ -112,41 +110,38 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['rating_failure'] = $recommendationData->getRatingFailure();
             $eventData['rating_service'] = $recommendationData->getRatingService();
 
-            if($recommendationData->getByIt() == 1)
-            {
-                $eventData['by_it'] = 'TAK';
-            }else{
-                $eventData['by_it'] = 'NIE';
+            if ($recommendationData->getByIt() == 1) {
+                $eventData['by_it'] = Mage::helper('tim_recommendation')->__('TAK');
+            } else {
+                $eventData['by_it'] = Mage::helper('tim_recommendation')->__('NIE');
             }
-            if($recommendationData->getRecommend() == 1)
-            {
-                $eventData['recommend'] = 'TAK';
-            }else{
-                $eventData['recommend'] = 'NIE';
+            if ($recommendationData->getRecommend() == 1) {
+                $eventData['recommend'] = Mage::helper('tim_recommendation')->__('TAK');
+            } else {
+                $eventData['recommend'] = Mage::helper('tim_recommendation')->__('NIE');
             }
             $mediaCollection = Mage::getModel('tim_recommendation/media')->getCollection();
             $mediaCollection->addFieldToFilter('recom_id', $recomId);
             $mediaData = $mediaCollection->getData();
-            foreach ($mediaData as $item)
-            {
-                if ($item['type'] == 'url/youtube')
-                {
+            $i = 0;
+            foreach ($mediaData as $item) {
+                if ($item['type'] == 'url/youtube') {
                     $eventData['media_name'] = $item['name'];
-                }else{
-                    $eventData['image_type'] = $item['type'];
-                    $eventData['image_name'] = $item['name'];
+                    continue;
                 }
+                $eventData['image_type' . $i] = $item['type'];
+                $eventData['image_name' . $i] = $item['name'];
+                $i++;
             }
         }
-        if ($type === 'comment')
-        {
+        if ($type === 'comment') {
             $eventData['comment'] = $recommendationModel->getComment();
             $parentId = $recommendationData->getParent();
             $commentData = $recommendationModel->load($parentId);
             $productId = $commentData->getProductId();
-            $productCollection = Mage::getModel('catalog/product')->load($productId);
-            $eventData['product_name'] = $productCollection->getName();
-            $eventData['product_url'] = $productCollection->getProductUrl();
+            $product = Mage::getModel('catalog/product')->load($productId);
+            $eventData['product_name'] = $product->getName();
+            $eventData['product_url'] = $product->getProductUrl();
 
         }
 
@@ -168,9 +163,46 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $salt = 'test';
         $md5 = 'tim_recommendation.md5';
-        $request = sha1($salt.$status.$md5);
-        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'recommendation/index/confirm/request/'.$request.'/id/'.$recomId;
+        $request = sha1($salt . $status . $md5);
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/confirm/request/' . $request . '/id/' . $recomId;
         return $url;
+    }
+
+    /**
+     * Displays confirm/moderate links
+     * or 404 if GET data are wrong
+     */
+    public function confirmAction()
+    {
+        $requestArray = $this->getRequest()->getParams();
+        if (!empty($requestArray)) {
+            $result = Mage::helper('tim_recommendation')->checkForNoRoute($requestArray);
+            if ($result) {
+                $this->norouteAction();
+            } else {
+                $this->loadLayout();
+                $this->renderLayout();
+            }
+        }
+    }
+
+    /**
+     * Set acceptance = 1 in tim_recommendation table
+     * for current opinion/comment
+     */
+    public function allowAction()
+    {
+        $requestArray = $this->getRequest()->getParams();
+        if (!empty($requestArray)) {
+            $result = Mage::helper('tim_recommendation')->checkForNoRoute($requestArray);
+            if ($result) {
+                $this->norouteAction();
+            } else {
+                $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
+                $opinion->setAcceptance('1')->save();
+                echo '<h2>'.Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!').'</h2>';
+            }
+        }
     }
 
     /**
@@ -181,7 +213,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $params = $this->getRequest()->getParams();
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($params['customer_id'])
-            ->setParent($params['recom_id']) //recommendation ID
+            ->setParent($params['recom_id'])//recommendation ID
             ->setComment($params['opinion-comment'])
             ->setTimIp($params['customer_ip_address'])
             ->setTimHost($params['customer_host_name']);
@@ -193,8 +225,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add comment.'));
         }
-        if(!empty($recomId))
-        {
+        if (!empty($recomId)) {
             $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
             $event = array('comment_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_comment_data', $event);
