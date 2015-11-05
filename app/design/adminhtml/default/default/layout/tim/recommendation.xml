@@ -5,11 +5,6 @@
             <block type="tim_recommendation/adminhtml_opinionInfo" name="opinion.info" template="tim/opinion_info.phtml"/>
         </reference>
     </adminhtml_opinionreport_opinioninfo>
-    <adminhtml_note_noteinfo>
-        <reference name="content">
-            <block type="tim_recommendation/adminhtml_noteInfo" name="note.info" template="tim/note_info.phtml"/>
-        </reference>
-    </adminhtml_note_noteinfo>
     <adminhtml_opinionreport_index>
         <reference name="head">
             <action method="addItem">

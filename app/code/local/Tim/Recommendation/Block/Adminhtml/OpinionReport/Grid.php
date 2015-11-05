@@ -158,7 +158,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                 'actions' => array(
                     array(
                         'caption' => Mage::helper('tim_recommendation')->__('Display note'),
-                        'url' => array('base' => '*/note/noteInfo'),
+                        'url' => array('base' => '*/noteReport'),
                         'target' => '_blank',
                         'field' => 'id'
                     )
