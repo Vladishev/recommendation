@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -37,6 +38,19 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $url = "recommendation/user/data";
         return $url;
+    }
+
+    /**
+     * Gets md5 hash from tim_recommendation table
+     * @param int $recomId
+     * @return string
+     */
+    public function getRecommendationMd5($recomId)
+    {
+        $object = Mage::getModel('tim_recommendation/recommendation')->load($recomId);
+        $md5hash = $object->getMd5();
+
+        return $md5hash;
     }
 
     public function getSiteUrl()
