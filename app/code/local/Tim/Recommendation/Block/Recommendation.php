@@ -192,7 +192,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
         foreach ($opinions as $opinion) {
             foreach ($ratingFields as $field) {
-                $rating += $opinion[$field] / 5;
+                $rating += $opinion[$field] / 4;
             }
         }
         $rating = round(($rating), 1);

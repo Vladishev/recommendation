@@ -84,6 +84,7 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
 <form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" id="form-validate" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
     <input type="hidden" name="recom_id" value="<?php echo $opinionData['recom_id'] ?>"/>
+    <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
     <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
     <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
     <div class="tim-comment-add-window">

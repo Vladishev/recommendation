@@ -36,6 +36,7 @@ $productId = Mage::registry('current_product')->getId();
                 <div class="tim-rating-input">
                     <p><?php echo $this->__('Stosunek jakości do ceny:') ?></p>
                     <span class="tim-rating-choice">
+                        <input type="hidden" name="itemValuetomoney" value="0"/>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemValuetomoney" class="radio tim-rating-input-span" id="radio-itemValuetomoney-1-<?php echo $option ?>" value="<?php echo $option ?>" </input>
                         <label for="radio-itemValuetomoney-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -46,6 +47,7 @@ $productId = Mage::registry('current_product')->getId();
                 <div class="tim-rating-input">
                     <p><?php echo $this->__('Trwałość produktu:') ?></p>
                     <span class="tim-rating-choice">
+                        <input type="hidden" name="itemDurability" value="0"/>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemDurability" class="radio tim-rating-input-span" id="radio-itemDurability-1-<?php echo $option ?>" value="<?php echo $option ?>" </input>
                         <label for="radio-itemDurability-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -56,6 +58,7 @@ $productId = Mage::registry('current_product')->getId();
                 <div class="tim-rating-input">
                     <p><?php echo $this->__('Awaryjność produktu:') ?></p>
                     <span class="tim-rating-choice">
+                        <input type="hidden" name="itemFailure" value="0"/>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemFailure" class="radio tim-rating-input-span" id="radio-itemFailure-1-<?php echo $option ?>" value="<?php echo $option ?>" </input>
                         <label for="radio-itemFailure-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -66,6 +69,7 @@ $productId = Mage::registry('current_product')->getId();
                 <div class="tim-rating-input">
                     <p><?php echo $this->__('Łatwość montażu:') ?></p>
                     <span class="tim-rating-choice">
+                        <input type="hidden" name="itemEaseofinstall" value="0"/>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemEaseofinstall" class="radio tim-rating-input-span" id="radio-itemEaseofinstall-1-<?php echo $option ?>" value="<?php echo $option ?>" </input>
                         <label for="radio-itemEaseofinstall-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -75,6 +79,7 @@ $productId = Mage::registry('current_product')->getId();
                 </div>
                 <div class="tim-rating-input">
                     <p><?php echo $this->__('Czy używasz tego produktu:') ?></p>
+                    <input type="hidden" name="itemDoyouuseitem" value="null"/>
                     <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem1" value="1" class="radio tim-rating-button-boolean"></input>
                     <label for="radio-itemDoyouuseitem1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
                     <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem2" value="0" class="radio tim-rating-button-boolean"></input>
@@ -82,6 +87,7 @@ $productId = Mage::registry('current_product')->getId();
                 </div>
                 <div class="tim-rating-input">
                     <p><?php echo $this->__('Czy polecasz ten produkt:') ?></p>
+                    <input type="hidden" name="itemDoyourecommend" value="null"/>
                     <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend1" value="1" class="radio tim-rating-button-boolean">                </input>
                     <label for="radio-itemDoyourecommend1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
                     <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend2" value="0" class="radio tim-rating-button-boolean"></input>
