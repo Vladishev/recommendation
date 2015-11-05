@@ -23,7 +23,11 @@
                         <tim_comments translate="title">
                             <title>Comments</title>
                             <action>adminhtml/commentsReport</action>
-                        </tim_comments>
+                        </tim_comments>opinion and comment
+                        <tim_opinion_comment translate="title">
+                            <title>Opinion and comment</title>
+                            <action>adminhtml/opinionCommentReport</action>
+                        </tim_opinion_comment>
                     </children>
                 </tim>
             </children>
@@ -63,6 +67,10 @@
                                         <title>Comments</title>
                                         <sort_order>0</sort_order>
                                     </tim_comments>
+                                    <tim_opinion_comment translate="title">
+                                        <title>Opinion and comment</title>
+                                        <sort_order>0</sort_order>
+                                    </tim_opinion_comment>
                                 </children>
                             </tim>
                         </children>
