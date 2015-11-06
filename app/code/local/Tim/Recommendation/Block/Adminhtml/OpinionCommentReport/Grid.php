@@ -21,7 +21,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionCommentReport_Grid extends Mage_
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
 
-        $collection->getSelect()->join(array('cpe' => 'catalog_product_entity'), 'cpe.entity_id = main_table.product_id', array('Ocena produktu' => 'round((main_table.rating_price + main_table.rating_durability + main_table.rating_failure + main_table.rating_service)/4,1)', 'sku'));
+        $collection->getSelect()->join(array('cpe' => 'catalog_product_entity'), 'cpe.entity_id = main_table.product_id', array('sku'));
         $collection->getSelect()->join(array('tru' => 'tim_recom_user'), 'tru.customer_id = main_table.user_id', array('engage'));
         $collection->getSelect()->join(array('tut' => 'tim_user_type'), 'tut.user_type_id = tru.user_type', array('name'));
         $collection->getSelect()->join(array('cpev' => 'catalog_product_entity_varchar'), 'main_table.product_id = cpev.entity_id AND attribute_id = 71');
