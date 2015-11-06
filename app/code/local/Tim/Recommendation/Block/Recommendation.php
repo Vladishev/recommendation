@@ -326,8 +326,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getConfirmData()
     {
         $requestArray = $this->getRequest()->getParams();//['request'],['id']
-        $salt = 'test';
-        $md5 = 'tim_recommendation.md5';
+        $salt = Mage::helper('tim_recommendation')->getSalt();
+        $md5 = Mage::helper('tim_recommendation')->getRecommendationMd5($requestArray['id']);
         $request0 = sha1($salt . '0' . $md5);
         $request1 = sha1($salt . '1' . $md5);
         $resultData = array();

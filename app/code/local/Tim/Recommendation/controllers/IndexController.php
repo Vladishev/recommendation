@@ -75,11 +75,29 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         if (!empty($recomId)) {
+            $this->saveMd5($recomId);
             $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
             $event = array('opinion_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_opinion_data', $event);
         }
         $this->_redirectReferer();
+    }
+
+    /**
+     * Saves hash to table
+     * @param (int)$recomId
+     */
+    public function saveMd5($recomId)
+    {
+        $recommendation = Mage::getModel('tim_recommendation/recommendation')->load($recomId);
+        $salt = Mage::helper('tim_recommendation')->getSalt();
+        $md5hash = md5($recommendation->getUserId() . $recommendation->getDateAdd() . $recommendation->getAdvantages() . $recommendation->getComment() . $salt);
+        $recommendation->setMd5($md5hash);
+        try {
+            $recommendation->save();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        }
     }
 
     /**
@@ -161,8 +179,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      */
     public function getConfirmUrl($recomId, $status)
     {
-        $salt = 'test';
-        $md5 = 'tim_recommendation.md5';
+        $salt = Mage::helper('tim_recommendation')->getSalt();
+        $md5 = Mage::helper('tim_recommendation')->getRecommendationMd5($recomId);
         $request = sha1($salt . $status . $md5);
         $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/confirm/request/' . $request . '/id/' . $recomId;
         return $url;
@@ -227,6 +245,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add comment.'));
         }
         if (!empty($recomId)) {
+            $this->saveMd5($recomId);
             $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
             $event = array('comment_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_comment_data', $event);

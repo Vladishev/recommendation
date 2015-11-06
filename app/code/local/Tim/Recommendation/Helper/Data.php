@@ -186,8 +186,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function checkForNoRoute($requestArray)
     {
-        $salt = 'test';
-        $md5 = 'tim_recommendation.md5';
+        $salt = $this->getSalt();
+        $md5 = $this->getRecommendationMd5($requestArray['id']);
         $request0 = sha1($salt . '0' . $md5);
         $request1 = sha1($salt . '1' . $md5);
         if ($requestArray['request'] == $request0) {
