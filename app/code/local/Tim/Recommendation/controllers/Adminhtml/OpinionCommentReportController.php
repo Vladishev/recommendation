@@ -36,7 +36,7 @@ class Tim_Recommendation_Adminhtml_OpinionCommentReportController extends Mage_A
      */
     public function exportCsvAction()
     {
-        $fileName = 'recommendations.csv';
+        $fileName = 'opinion_comment_report.csv';
         $grid = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionCommentReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
@@ -46,7 +46,7 @@ class Tim_Recommendation_Adminhtml_OpinionCommentReportController extends Mage_A
      */
     public function exportExcelAction()
     {
-        $fileName = 'recommendations.xml';
+        $fileName = 'opinion_comment_report.xml';
         $grid = $this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionCommentReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }

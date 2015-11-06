@@ -11,25 +11,14 @@ class Tim_Recommendation_Block_Adminhtml_Render_Average extends Mage_Adminhtml_B
     {
         $recomId = $row->getData($this->getColumn()->getIndex());
         $record = Mage::getModel('tim_recommendation/recommendation')->load($recomId);
-        if($record->getRatingPrice()){
-            $ratingPrice = $record->getRatingPrice();
-        }
-        if($record->getRatingDurability()) {
-            $ratingDurability = $record->getRatingDurability();
-        }
-        if($record->getRatingFailure()) {
-            $ratingFailure = $record->getRatingFailure();
-        }
-        if($record->getRatingService()) {
-            $ratingService = $record->getRatingService();
-        }
-        $summ = $ratingPrice + $ratingDurability + $ratingFailure + $ratingService;
-        if (!empty($summ)) {
-            $average = round(($summ)/4, 1);
-            return $average;
-        } else {
-            $average = '0';
-            return $average;
-        }
+        $ratingPrice = $record->getRatingPrice();
+        $ratingDurability = $record->getRatingDurability();
+        $ratingFailure = $record->getRatingFailure();
+        $ratingService = $record->getRatingService();
+
+        $sum = $ratingPrice + $ratingDurability + $ratingFailure + $ratingService;
+        $average = round(($sum)/4, 1);
+
+        return $average;
     }
 }
