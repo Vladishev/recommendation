@@ -109,11 +109,6 @@
             </controller_action_predispatch_customer_account_editPost>
             <controller_index_add_opinion_data>
                 <observers>
-                    <!--<save_opinion_md5_hash>-->
-                        <!--<type>singleton</type>-->
-                        <!--<class>tim_recommendation/observer</class>-->
-                        <!--<method>saveOpinionHash</method>-->
-                    <!--</save_opinion_md5_hash>-->
                     <send_opinion_email>
                         <type>singleton</type>
                         <class>tim_recommendation/observer</class>
@@ -123,11 +118,6 @@
             </controller_index_add_opinion_data>
             <controller_index_add_comment_data>
                 <observers>
-                    <!--<save_comment_md5_hash>-->
-                        <!--<type>singleton</type>-->
-                        <!--<class>tim_recommendation/observer</class>-->
-                        <!--<method>saveCommentHash</method>-->
-                    <!--</save_comment_md5_hash>-->
                     <send_opinion_email>
                         <type>singleton</type>
                         <class>tim_recommendation/observer</class>
