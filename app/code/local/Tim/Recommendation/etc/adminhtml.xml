@@ -23,7 +23,7 @@
                         <tim_comments translate="title">
                             <title>Comments</title>
                             <action>adminhtml/commentsReport</action>
-                        </tim_comments>opinion and comment
+                        </tim_comments>
                         <tim_opinion_comment translate="title">
                             <title>Opinion and comment</title>
                             <action>adminhtml/opinionCommentReport</action>
