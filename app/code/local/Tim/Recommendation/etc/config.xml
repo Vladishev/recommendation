@@ -143,6 +143,13 @@
     </global>
     <admin>
         <routers>
+            <tim_recommendation_import>
+                <use>admin</use>
+                <args>
+                    <module>Tim_Recommendation</module>
+                    <frontName>tim_recommendation_import</frontName>
+                </args>
+            </tim_recommendation_import>
             <adminhtml>
                 <args>
                     <modules>

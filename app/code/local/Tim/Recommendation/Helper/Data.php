@@ -198,4 +198,24 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return true;
         }
     }
+
+    /**
+     * Returns allowed extensions
+     * @return array
+     */
+    public function getAllowedExtensions()
+    {
+        return array('xml' => 'xml', 'csv' => 'csv');
+    }
+
+    /**
+     * @return string
+     */
+    public function getImportFilePath()
+    {
+        $importFilePath = Mage::getBaseDir('var') . DS .'import' . DS;
+        $fileName = Mage::getStoreConfig('tim_confirm/import_group/import');
+        $file = $importFilePath . $fileName;
+        return $file;
+    }
 }

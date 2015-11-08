@@ -1,0 +1,47 @@
+<?php echo $this->getButtonHtml() ?><span class="sync-indicator no-display" id="sync_span"><img alt="Synchronize" style="margin:0 5px" src="<?php echo $this->getSkinUrl('images/process_spinner.gif') ?>"/><span id="sync_message_span"></span></span>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var fileInput = $('tim_confirm_import_group_import');
+    function importFiles() {
+        new Ajax.Request('<?php echo $this->getAjaxImportUrl() ?>', {
+            //asynchronous:   true
+            onSuccess: function (response) {
+                var result = response.responseText.evalJSON(true);
+                $('messages').innerHTML = result.html;
+                enableImportForm();
+            }
+        });
+        disableImportForm();
+    }
+
+    function enableImportForm() {
+        Form.Element.enable('import_button');
+        $('import_button').removeClassName('disabled');
+    }
+
+    function disableImportForm() {
+        Form.Element.disable('import_button');
+        $('import_button').addClassName('disabled');
+    }
+
+    function addNote(){
+        var note = $('tim_confirm_import_group_import').next('p.note');
+        note.innerHTML = '<span style="color: red">To upload file, please click button "Save config"</span>';
+    }
+
+    Event.observe(fileInput, 'change', function() {
+        addNote();
+        disableImportForm();
+    });
+
+    Event.observe($('tim_confirm_import_group_import_delete'), 'click', function() {
+        var delValue = $('tim_confirm_import_group_import_delete').getValue();
+        if (delValue == 1) {
+            disableImportForm();
+        } else {
+            enableImportForm();
+        }
+    });
+    //]]>
+</script>
