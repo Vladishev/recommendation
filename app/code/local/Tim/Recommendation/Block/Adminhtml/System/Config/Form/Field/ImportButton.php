@@ -1,11 +1,11 @@
 <?php
 /**
- * A frontend model for a Import AT button
+ * Tim
  *
  * @category   Tim
- * @package    Tim_ExportImportProducts
+ * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov
+ * @author     Vladislav Verbitskiy
  */
 class Tim_Recommendation_Block_Adminhtml_System_Config_Form_Field_ImportButton extends Mage_Adminhtml_Block_System_Config_Form_Field
 {

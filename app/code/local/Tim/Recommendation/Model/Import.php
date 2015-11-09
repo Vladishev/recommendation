@@ -97,18 +97,20 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
                 if (!empty($items['recom_id'])) {
                     $tmpRecomId = $items['recom_id'];
                     $productId = Mage::getModel("catalog/product")->getIdBySku($items['sku']);
-                    $opinionId = $this->_addNewOpinion($items, $productId, $_helper);
+                    $response = $this->_addNewOpinion($items, $productId);
                 }
 
                 if (!empty($items['parent']) and ($items['parent'] == $tmpRecomId)) {
-                    $this->_addNewComment($items, $productId, $opinionId, $_helper);
+                    $response = $this->_addNewComment($items, $productId, $response['opinionId']);
                 }
 
                 if (!empty($items['parent']) and ($items['parent']{0} == self::EXIST_RECOM)) {
-                    $this->_addExistingComment($items, $_helper);
+                    $response = $this->_addExistingComment($items);
                 }
             }
         }
+        Mage::log($response);
+        return $response;
     }
 
     /**
@@ -118,8 +120,9 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * @param (obj)$_helper
      * @return integer
      */
-    protected function _addNewOpinion($items, $productId, $_helper)
+    protected function _addNewOpinion($items, $productId)
     {
+        $response = array();
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($items['user_id'])
             ->setProductId($productId)
@@ -132,13 +135,13 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
             ->setRatingService($items['rating_service']);
         try {
             $recommendationModel->save();
-            $opinionId = $recommendationModel->getRecomId();
-            Mage::getSingleton('core/session')->addSuccess($_helper->__('Opinion was successfully added.'));
-            return $opinionId;
+            $response['opinionId'] = $recommendationModel->getRecomId();
+            $response['success'] = true;
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            Mage::getSingleton('core/session')->addError($_helper->__('Can\'t add opinion.'));
+            $response['success'] = false;
         }
+        return $response;
     }
 
     /**
@@ -148,7 +151,7 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * @param (int)$opinionId
      * @param (obj)$_helper
      */
-    protected function _addNewComment($items, $productId, $opinionId, $_helper)
+    protected function _addNewComment($items, $productId, $opinionId)
     {
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($items['user_id'])
@@ -157,11 +160,12 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
             ->setComment($items['comment']);
         try {
             $recommendationModel->save();
-            Mage::getSingleton('core/session')->addSuccess($_helper->__('Comment was successfully added.'));
+            $response['success'] = true;
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            Mage::getSingleton('core/session')->addError($_helper->__('Can\'t add comment.'));
+            $response['success'] = false;
         }
+        return $response;
     }
 
     /**
@@ -169,7 +173,7 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * @param (arr)$items
      * @param (obj)$_helper
      */
-    protected function _addExistingComment($items, $_helper)
+    protected function _addExistingComment($items)
     {
         $productId = Mage::getModel('tim_recommendation/recommendation')
             ->load(substr($items['parent'], 1))
@@ -181,10 +185,11 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
             ->setComment($items['comment']);
         try {
             $recommendationModel->save();
-            Mage::getSingleton('core/session')->addSuccess($_helper->__('Comment was successfully added.'));
+            $response['success'] = true;
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            Mage::getSingleton('core/session')->addError($_helper->__('Can\'t add comment.'));
+            $response['success'] = false;
         }
+        return $response;
     }
 }
