@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -27,7 +28,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
         $collection = Mage::getModel('tim_recommendation/media')->getCollection();
         $collection->getSelect()->joinLeft(array('tr' => 'tim_recommendation'), 'main_table.recom_id = tr.recom_id',
             array('date_add'));
-        $collection->getSelect()->where('main_table.type = "image/png"');
+        $collection->getSelect()->where('main_table.type != "url/youtube"');
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -39,21 +40,32 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
      */
     protected function _prepareColumns()
     {
-//        $this->addColumn('recom_id', array(
-//            'header' => Mage::helper('tim_recommendation')->__('ID'),
-//            'width' => '10',
-//            'index' => 'recom_id',
-//        ));
-        $this->addColumn('name', array(
-            'header' => Mage::helper('tim_recommendation')->__('Name'),
-            'width' => '100',
-            'index' => 'name',
-        ));
         $this->addColumn('date_add', array(
             'header' => Mage::helper('tim_recommendation')->__('Date Added'),
             'index' => 'date_add',
             'type' => 'datetime',
-            'width' => '100'
+            'width' => '100',
+        ));
+        $this->addColumn('name', array(
+            'width' => '100',
+            'index' => 'name',
+            'sortable' => false,
+            'filter' => false
+        ));
+        $this->addColumn('empty', array(
+            'width' => '100',
+            'sortable' => false,
+            'filter' => false
+        ));
+        $this->addColumn('empty1', array(
+            'width' => '100',
+            'sortable' => false,
+            'filter' => false
+        ));
+        $this->addColumn('empty2', array(
+            'width' => '100',
+            'sortable' => false,
+            'filter' => false
         ));
 
         return parent::_prepareColumns();
@@ -61,7 +73,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
 
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/opinionReport/opinionInfo', array('id'=>$row->getRecomId()));
+        return $this->getUrl('*/opinionReport/opinionInfo', array('id' => $row->getRecomId()));
     }
 
     /**
