@@ -109,7 +109,6 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
                 }
             }
         }
-        Mage::log($response);
         return $response;
     }
 
@@ -117,7 +116,6 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * Adds new opinion to tim_recommendation table
      * @param (arr)$items
      * @param (int)$productId
-     * @param (obj)$_helper
      * @return integer
      */
     protected function _addNewOpinion($items, $productId)
@@ -149,7 +147,6 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * @param (arr)$items
      * @param (int)$productId
      * @param (int)$opinionId
-     * @param (obj)$_helper
      */
     protected function _addNewComment($items, $productId, $opinionId)
     {
@@ -171,7 +168,6 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
     /**
      * Adds new comment for existing opinion to tim_recommendation table
      * @param (arr)$items
-     * @param (obj)$_helper
      */
     protected function _addExistingComment($items)
     {
