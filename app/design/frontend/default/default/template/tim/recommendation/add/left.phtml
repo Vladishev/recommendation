@@ -1,28 +1,33 @@
+<?php $userData = $this->getPersonalUserData(); ?>
+<?php if($userData): ?>
 <div class="tim-user"> <!-- main container for user details -->
         <div class="tim-user-photo">
-             <!-- place for user photo --> <img src="<?php echo $this->getSkinUrl('images/media/usertemp_photo.jpg'); ?>" width="269" height="168" alt="user-photo" />                
+             <!-- place for user photo --> <img src="<?php echo $userData['avatar']; ?>" width="269" height="168" alt="user-photo" />
         </div>
         <div class="tim-user-name">
             <?php echo $this->__('User'); ?>
-            <p>Zyzio Dyzio<!-- place for user name             {Magento: get user name} --></p>
+            <p><?php echo $this->__($userData['customerName']); ?><!-- place for user name             {Magento: get user name} --></p>
         </div>
         <div class="tim-user-type">
             <div class="tim-user-type-icon">
              <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status" />  
             </div>
             <?php echo $this->__('User type'); ?>
-            <p>Pracownik TIM<!-- place for user name and icon --></p>
+            <p><?php echo $this->__($userData['customerTypeName']); ?><!-- place for user name and icon --></p>
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
             <p>Profesjonalista<!-- place for user score which will result from the number of entries --></p>
- 
+            <p><?php echo $userData['engage']; ?></p>
+
         <div class="tim-user-scoregraph tim-score-2">
-		 <!-- number of opinons --> 10 opinii</div>
+		 <!-- number of opinons --> <?php echo $this->__($userData['opinionQty']); ?></div>
             <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
         </div>
     <div class="tim-user-editprofile">
         <!-- place for button that will redirect to user's profile page where he can edit user info-->
-        <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Edytuj swój profil') ?></button>
+        <a href="<?php echo $userData['editUrl']; ?>">
+        <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Edytuj swój profil') ?></button></a>
     </div>
 </div>
+<?php endif ?>
