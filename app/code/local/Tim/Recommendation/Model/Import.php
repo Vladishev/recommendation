@@ -78,9 +78,12 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
 
     /**
      * Saves data from imported file
+     *
+     * @return array
      */
     public function saveImportData($fileType)
     {
+        $response = array();
         $_helper = Mage::helper('tim_recommendation');
         $allowedExtensions = $_helper->getAllowedExtensions();
         switch ($fileType) {
@@ -116,7 +119,7 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * Adds new opinion to tim_recommendation table
      * @param (arr)$items
      * @param (int)$productId
-     * @return integer
+     * @return array
      */
     protected function _addNewOpinion($items, $productId)
     {
@@ -147,9 +150,11 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
      * @param (arr)$items
      * @param (int)$productId
      * @param (int)$opinionId
+     * @return array
      */
     protected function _addNewComment($items, $productId, $opinionId)
     {
+        $response = array();
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($items['user_id'])
             ->setParent($opinionId)
@@ -168,9 +173,11 @@ class Tim_Recommendation_Model_Import extends Mage_Core_Model_Abstract
     /**
      * Adds new comment for existing opinion to tim_recommendation table
      * @param (arr)$items
+     * @return array
      */
     protected function _addExistingComment($items)
     {
+        $response = array();
         $productId = Mage::getModel('tim_recommendation/recommendation')
             ->load(substr($items['parent'], 1))
             ->getProductId();
