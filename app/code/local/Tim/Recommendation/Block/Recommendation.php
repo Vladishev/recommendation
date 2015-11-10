@@ -340,4 +340,29 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         }
         return $resultData;
     }
+
+    /**
+     * Returns logged in user info
+     * or false if user not logged in
+     * @return array|bool
+     */
+    public function getPersonalUserData()
+    {
+        if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $customerInfo = array();
+            $_helper = Mage::helper('tim_recommendation');
+            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+            $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
+            $customerInfo['customerName'] = $_helper->getCustomerName($customerId);
+            $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
+            $customerInfo['customerTypeName'] = $_helper->getUserTypeName($customerTypeId);
+            $customerInfo['avatar'] = $_helper->getCustomerAvatar($customerId);
+            $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $customerId;
+            $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+            $customerInfo['engage'] = $user->getEngage();
+            return $customerInfo;
+        } else {
+            return false;
+        }
+    }
 }

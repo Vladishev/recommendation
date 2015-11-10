@@ -67,6 +67,18 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Gives full path to customer avatar
+     * @param (int)$customerId
+     * @return string
+     */
+    public function getCustomerAvatar($customerId)
+    {
+        $customerAvatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
+        $customerAvatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $customerAvatar;
+        return $customerAvatar;
+    }
+
+    /**
      * Concatinates customer first name and last name
      * @param int $customerId
      * @return string
