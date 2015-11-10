@@ -2,12 +2,12 @@
 <layout version="0.1.0">
     <catalog_product_view>
         <reference name="head">
-			<action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>			
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="product.info">
-	            <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
+            <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
                 <block type="tim_recommendation/recommendation" name="header.recommendation.add" template="tim/recommendation/add/header.phtml" />
                 <block type="tim_recommendation/recommendation" name="left.recommendation.add" template="tim/recommendation/add/left.phtml" />
                 <block type="tim_recommendation/recommendation" name="right.recommendation.add" template="tim/recommendation/add/right.phtml" />
@@ -18,19 +18,19 @@
                 <block type="tim_recommendation/recommendation" name="left.recommendation.view" template="tim/recommendation/view/left.phtml" />
                 <block type="tim_recommendation/recommendation" name="right.recommendation.view" template="tim/recommendation/view/right.phtml" />
                 <block type="tim_recommendation/recommendation" name="content.recommendation.view" template="tim/recommendation/view/content.phtml" />
-				</block>
-   		</reference>   
-		<reference name="content">
-				  <block type="tim_recommendation/recommendation" name="recommendation.loginpopup" template="tim/recommendation/loginpopup.phtml" />		                			
-		</reference>   						
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="recommendation.loginpopup" template="tim/recommendation/loginpopup.phtml" />
+        </reference>
     </catalog_product_view>
     <recommendation_user_profile>
-	<reference name="root">
+        <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
-			<action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>			
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="content">
@@ -38,18 +38,18 @@
         </reference>
     </recommendation_user_profile>
     <recommendation_index_landing>
-	<reference name="root">
+        <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
-			<action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>			
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="header">
-		<block type="page/header" name="header">
-                <action method="setTemplate"><template>tim/recommendation/landing/header.phtml</template></action>			
-            </block>
+            <block type="page/header" name="header">
+            <action method="setTemplate"><template>tim/recommendation/landing/header.phtml</template></action>
+        </block>
         </reference>
         <reference name="content">
             <block type="tim_recommendation/recommendation" name="content.recommendation.landing" template="tim/recommendation/landing/content.phtml" />

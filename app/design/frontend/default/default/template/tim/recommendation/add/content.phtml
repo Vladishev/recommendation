@@ -114,9 +114,7 @@ $productId = Mage::registry('current_product')->getId();
         <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
         <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
         <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
-        <!-- start of login area if user isn't logged -->
 
-        <!-- end of login area if user isn't logged -->
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
                 <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add">
@@ -130,12 +128,6 @@ $productId = Mage::registry('current_product')->getId();
         </div>
     </fieldset>
 </form>
-
-<!-- this part is shown when user is not logged in  -->
-
-
-
-
 <script type="text/javascript">
     //<![CDATA[
     var dataForm = new VarienForm('form-validate');
