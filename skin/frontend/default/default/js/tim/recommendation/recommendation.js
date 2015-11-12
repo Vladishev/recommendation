@@ -35,13 +35,33 @@ jQuery(document).ready(function() {
 
         /* function to close modal login area */
         jQuery('#tim-userlogin-popup-close').on('click', function () {
-            jQuery('.tim-userlogin-popup').hide(300);
-        })
+            jQuery('.tim-userlogin-popup').hide();
+        });
        /* function to close modal login area by escape button*/
         jQuery(document).keydown(function (e) {
             if (e.keyCode == 27) {
-                jQuery('.tim-userlogin-popup').hide(300);
+                jQuery('.tim-userlogin-popup').hide();
             }
         });        
     }
-    
+
+    function markUserAbuse() {
+        jQuery('.tim-markabuse-popup').show(300);
+
+        jQuery('#tim-markabuse-popup-close').on('click', function () {
+            jQuery('.tim-markabuse-popup').hide();
+			jQuery('#tim-abuse-application').show();			
+			jQuery('#tim-abuse-application-sendbt').show();				
+        });
+        jQuery('#tim-abuse-application-sendbt').on('click', function () {
+			jQuery('#tim-abuse-application').hide();			
+			jQuery('#tim-abuse-application-sendbt').hide();	
+            jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za wysłanie zgłoszenia, sytuacja zostanie zbadana przez naszego pracownika w najszybszym możliwym terminie.');				
+        });
+		
+        jQuery(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                jQuery('.tim-markabuse-popup').hide();
+            }
+        });        
+    }    

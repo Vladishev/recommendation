@@ -696,7 +696,7 @@ label.tim-rating-button-boolean-label {
 }
 
 /* popup window when user needs to login */
-.tim-userlogin-popup {
+.tim-userlogin-popup, .tim-markabuse-popup {
     position:fixed;
     top:0;
     left:0;
@@ -706,7 +706,7 @@ label.tim-rating-button-boolean-label {
     display:none; 
 }
  
-.tim-userlogin-popup-bg {
+.tim-userlogin-popup-bg, .tim-markabuse-popup-bg {
     position:absolute;
     top:0;
     left:0;
@@ -717,7 +717,7 @@ label.tim-rating-button-boolean-label {
     opacity: 0.6;
 }
  
-.tim-userlogin-popup-container {
+.tim-userlogin-popup-container, .tim-markabuse-popup-container {
     width:600px;
     height: auto;
     position:absolute;
@@ -1105,4 +1105,23 @@ label.tim-rating-button-boolean-label {
 
 .tim-opinion-list-header .tim-comm-sorting select {
 	margin-left:0px;
+}
+
+.tim-markabuse-button {
+	font-size:10px;	
+	text-decoration:none;
+	    background: none;
+    border: none;
+	color:#0057C1;
+	cursor:pointer;
+}
+
+#tim-abuse-application-sendbt {
+	float:right;
+}
+
+.tim-abuse-button-position-opinion {
+    float: right;
+    position: relative;
+    bottom: -20px;
 }

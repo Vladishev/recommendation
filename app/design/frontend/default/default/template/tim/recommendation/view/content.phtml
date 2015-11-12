@@ -50,6 +50,8 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
             </div>
         <?php endif; ?>
     </div>
+<div class="tim-abuse-button-position-opinion">
+<button type="button" class="tim-markabuse-button" onclick="markUserAbuse()"><?php echo $this->__('Zgłoś nadużycie') ?></button></div>
 </div>
 <div class="tim-comment">
     <!-- for each comment (start) -->
@@ -58,7 +60,7 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
         <?php if($i > 5){break;} ?>
         <div class="tim-comment-container">
             <div class="tim-comment-container-title">
-                <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?>
+                <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse()"><?php echo $this->__('Zgłoś nadużycie') ?></button>
             </div>
             <div class="tim-comment-container-content">
                 <!-- content of comment -->
@@ -109,7 +111,25 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
         </div>
     </div>
 </form>
-<script type="text/javascript">
+
+   
+<div class="tim-markabuse-popup">
+    <div class="tim-markabuse-popup-bg"></div>
+    <div class="tim-markabuse-popup-container">
+        <input type="button" class="tim-userlogin-popup-bt-close" value="x" id="tim-markabuse-popup-close"/>
+<p><?php echo $this->__('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.') ?></p>
+ <div class="tim-opinion-content tim-add-opinion">
+      <textarea name="tim-abuse-application" id="tim-abuse-application" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
+        </div>
+<!-- button to submit abuse call -->
+       <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
+        </div>
+</div>   
+   
+   
+   
+   
+   <script type="text/javascript">
     //<![CDATA[
     var dataForm = new VarienForm('form-validate');
     //]]>
