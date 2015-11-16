@@ -348,7 +348,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      */
     public function getPersonalUserData()
     {
-        if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerInfo = array();
             $_helper = Mage::helper('tim_recommendation');
             $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
