@@ -86,54 +86,6 @@
             </li>
         </ul>
     </div>
-<!-- Tim Recommendation form -->
-    <div class="fieldset">
-        <h2 class="legend"><?php echo $this->__('Recommendation Information') ?></h2>
-        <ul class="form-list">
-            <li>
-                <label for="url"><?php echo Mage::helper('tim_recommendation')->__('WWW') ?></label>
-                <div class="input-box">
-                    <input type="text" name="url" id="tim-form-url" class="input-text validate-clean-url" value="<?php echo Mage::helper('tim_recommendation')->getSiteUrl(); ?>" />
-                </div>
-            </li>
-            <li>
-                <label for="banner"><?php echo Mage::helper('tim_recommendation')->__('Banner') ?></label>
-                <div class="input-box">
-                    <input type="file" name="banner" id="banner" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" accept="image/jpeg,image/png,image/gif"/>
-                </div>
-            </li>
-            <li>
-                <label for="image"><?php echo Mage::helper('tim_recommendation')->__('Avatar') ?></label>
-                <div class="input-box">
-                    <input type="file" name="image" id="tim-form-image" title="<?php echo Mage::helper('tim_recommendation')->__('Allowed file types: jpeg, gif, png.') ?>" accept="image/jpeg,image/png,image/gif"/>
-                </div>
-            </li>
-            <li>
-                <label for="description"><?php echo Mage::helper('tim_recommendation')->__('Description') ?></label>
-                <div class="input-box">
-                    <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo Mage::helper('tim_recommendation')->getCustomerDescription(); ?></textarea>
-                </div>
-            </li>
-            <?php
-            $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
-            $customerUserTypeId = Mage::helper('tim_recommendation')->getCustomerUserTypeId($this->getCustomer()->getEntityId());
-            ?>
-            <?php if(!empty($userTypes)): ?>
-            <li>
-                <label for="user_type" class="required"><em>*</em><?php echo Mage::helper('tim_recommendation')->__('User type') ?></label>
-                <div class="input-box">
-                    <select id="tim-form-user-type" name="user_type" class="user-type-select required-entry">
-                        <option value=""><?php echo Mage::helper('tim_recommendation')->__('--Select user type--') ?></option>
-                        <?php foreach ($userTypes as $type): ?>
-                            <option value="<?php echo $type['user_type_id'];?>" <?php if($type['user_type_id'] == $customerUserTypeId): ?>selected="selected"<?php endif ?>><?php echo $type['name'];?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-            </li>
-            <?php endif; ?>
-        </ul>
-    </div>
-<!-- End of Tim Recommendation form-->
     <div class="buttons-set">
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>

@@ -1,0 +1,97 @@
+<?php $_helper = Mage::helper('tim_recommendation'); ?>
+<form action="<?php echo $this->getUrl('recommendation/user/saveCustomer') ?>" method="post" id="form-validate" autocomplete="off" enctype="multipart/form-data">
+<div class="fieldset">
+    <h2 class="legend"><?php echo $this->__('Recommendation Information') ?></h2>
+    <ul class="form-list">
+        <li>
+            <label for="url"><?php echo $_helper->__('WWW') ?></label>
+            <div class="input-box">
+                <input type="text" name="url" id="tim-form-url" class="input-text validate-clean-url" value="<?php echo $_helper->getSiteUrl(); ?>" />
+            </div>
+        </li>
+        <li>
+            <label class="required" for="nick"><em>*</em><?php echo $_helper->__('Nick') ?></label>
+            <div class="input-box">
+                <input type="text" name="nick" id="nick" class="input-text required-entry" value="<?php echo $_helper->getUserNick(); ?>" />
+            </div>
+        </li>
+        <li>
+            <label for="banner"><?php echo $_helper->__('Banner') ?></label>
+            <div class="input-box">
+                <input type="file" name="banner" id="banner" title="<?php echo $_helper->__('Allowed file types: jpeg, gif, png.') ?>" accept="image/jpeg,image/png,image/gif"/>
+            </div>
+            <?php if($_helper->getCustomerBanner()): ?>
+                <label for="banner-checkbox"><?php echo $_helper->__('Delete') ?></label>
+                <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
+            <div class="recommendation-image">
+                <img src="<?php echo $_helper->getCustomerBanner(); ?>" />
+            </div>
+            <?php endif ?>
+        </li>
+        <li>
+            <label for="image"><?php echo $_helper->__('Avatar') ?></label>
+            <div class="input-box">
+                <input type="file" name="image" id="tim-form-image" title="<?php echo $_helper->__('Allowed file types: jpeg, gif, png.') ?>" accept="image/jpeg,image/png,image/gif"/>
+            </div>
+            <?php if($_helper->getCustomerAvatar()): ?>
+                <label for="avatar-checkbox"><?php echo $_helper->__('Delete') ?></label>
+                <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
+                <div class="recommendation-image">
+                    <img src="<?php echo $_helper->getCustomerAvatar(); ?>" />
+                </div>
+            <?php endif ?>
+        </li>
+        <li>
+            <label for="description"><?php echo $_helper->__('Description') ?></label>
+            <div class="input-box">
+                <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo $_helper->getCustomerDescription(); ?></textarea>
+            </div>
+        </li>
+        <?php
+        $userTypes = $_helper->getNonAdminUserTypes();
+        $customerUserTypeId = $_helper->getCustomerUserTypeId($this->getCustomer()->getEntityId());
+        ?>
+        <?php if(!empty($userTypes)): ?>
+            <li>
+                <label for="user_type" class="required"><em>*</em><?php echo $_helper->__('User type') ?></label>
+                <div class="input-box">
+                    <select id="tim-form-user-type" name="user_type" class="user-type-select required-entry">
+                        <option value=""><?php echo $_helper->__('--Select user type--') ?></option>
+                        <?php foreach ($userTypes as $type): ?>
+                            <option value="<?php echo $type['user_type_id'];?>" <?php if($type['user_type_id'] == $customerUserTypeId): ?>selected="selected"<?php endif ?>><?php echo $type['name'];?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </li>
+        <?php endif; ?>
+    </ul>
+</div>
+<div class="buttons-set">
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Save')) ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+</div>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var dataForm = new VarienForm('form-validate', true);
+    function setPasswordForm(arg){
+        if(arg){
+            $('current_password').up(3).show();
+            $('current_password').addClassName('required-entry');
+            $('password').addClassName('required-entry');
+            $('confirmation').addClassName('required-entry');
+
+        }else{
+            $('current_password').up(3).hide();
+            $('current_password').removeClassName('required-entry');
+            $('password').removeClassName('required-entry');
+            $('confirmation').removeClassName('required-entry');
+        }
+    }
+
+    <?php if($this->getCustomer()->getChangePassword()): ?>
+    setPasswordForm(true);
+    <?php endif; ?>
+    //]]>
+</script>
