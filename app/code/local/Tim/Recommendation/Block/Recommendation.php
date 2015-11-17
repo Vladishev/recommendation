@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -20,6 +21,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $userData = $user->getData();
         $userData['user_type_name'] = Mage::helper('tim_recommendation')->getUserTypeName($user['user_type']);
         $userData['customer_name'] = Mage::helper('tim_recommendation')->getCustomerName($customerId);
+        $userData['customer_nickname'] = Mage::helper('tim_recommendation')->getCustomerNickname($customerId);
         $userData['opinion_qty'] = Mage::helper('tim_recommendation')->getOpinionQty($customerId);
 
         return $userData;
@@ -55,10 +57,29 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $lastAddedOpinion = $this->getLastAddedOpinion($productId);
         $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($lastAddedOpinion['recom_id']);
         $lastAddedOpinion['date_add'] = date('d-m-Y', strtotime($lastAddedOpinion['date_add']));
-        $lastAddedOpinion['media'] = $opinionMedia;
+        $lastAddedOpinion['movie_url'] = $opinionMedia['url/youtube'];
+        $lastAddedOpinion['images'] = $this->getImages($lastAddedOpinion['recom_id']);
         $lastAddedOpinion['comments'] = $this->getOpinionComments($lastAddedOpinion['recom_id']);
 
         return $lastAddedOpinion;
+    }
+
+    /**
+     * Gets image path without url/youtube path
+     * @param int $recomId
+     * @return array
+     */
+    public function getImages($recomId)
+    {
+        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($recomId);
+        $images = array();
+        foreach ($opinionMedia as $key => $value) {
+            if ($key === 'url/youtube') {
+                continue;
+            }
+            $images[] .= $value;
+        }
+        return $images;
     }
 
     /**
@@ -105,7 +126,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $comments = array();
         foreach ($data as $comment) {
             $comments[] = array(
-                'name' => Mage::helper('tim_recommendation')->getCustomerName($comment['user_id']),
+                'name' => Mage::helper('tim_recommendation')->getCustomerName($comment['user_id']),//TODO: delete when nickname attribute will be available
+                'nickname' => Mage::helper('tim_recommendation')->getCustomerNickname($comment['user_id']),
                 'comment' => $comment['comment'],
                 'date_add' => $comment['date_add'],
             );
@@ -348,7 +370,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      */
     public function getPersonalUserData()
     {
-        if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerInfo = array();
             $_helper = Mage::helper('tim_recommendation');
             $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();

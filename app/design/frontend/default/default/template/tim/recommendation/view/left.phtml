@@ -12,7 +12,7 @@ $userData = $this->getUserData($userId);
     <div class="tim-user-name">
         <p><?php echo $this->__('User'); ?></p>
         <!-- place for user name -->
-        <p><?php echo $userData['customer_name']; ?></p>
+        <p><?php echo $userData['customer_nickname']; ?></p>
     </div>
     <div class="tim-user-type">
         <div class="tim-user-type-icon">
@@ -26,7 +26,6 @@ $userData = $this->getUserData($userId);
     <div class="tim-user-involvement">
         <?php echo $this->__('User involvement'); ?>
         <!-- place for user score which will result from the number of entries -->
-        <p><?php echo $userData['engage']; ?></p>
         <div class="tim-user-scoregraph tim-score-2">
             <!-- number of opinons -->
             <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
