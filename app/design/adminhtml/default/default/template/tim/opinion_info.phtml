@@ -2,41 +2,50 @@
 $opinion = $this->getOpinionData();
 $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
 ?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="width:50%;">
+                <h3 class="icon-head head-adminhtml-opinionInfo"><?php echo $this->__('Opinion details for product'); ?></h3>
+            </td>
+        </tr>
+    </table>
+</div>
 <div>
     <div class="tim-advantages">
-        <?php echo $this->__('Advantages'); ?>:
+        <b><?php echo $this->__('Advantages'); ?>:</b>
         <?php echo $opinion['advantages']; ?>
     </div>
     <div class="tim-defects">
-        <?php echo $this->__('Defects'); ?>:
+        <b><?php echo $this->__('Defects'); ?>:</b>
         <?php echo $opinion['defects']; ?>
     </div>
     <div class="tim-conclusion">
-        <?php echo $this->__('Conclusion'); ?>:
+        <b><?php echo $this->__('Conclusion'); ?>:</b>
         <?php echo $opinion['conclusion']; ?>
     </div>
     <div class="tim-rating-price">
-        <?php echo $this->__('Rating price'); ?>:
+        <b><?php echo $this->__('Rating price'); ?>:</b>
         <?php echo $opinion['rating_price']; ?>
     </div>
     <div class="tim-rating-durability">
-        <?php echo $this->__('Rating durability'); ?>:
+        <b><?php echo $this->__('Rating durability'); ?>:</b>
         <?php echo $opinion['rating_durability']; ?>
     </div>
     <div class="tim-rating-failure">
-        <?php echo $this->__('Rating failure'); ?>:
+        <b><?php echo $this->__('Rating failure'); ?>:</b>
         <?php echo $opinion['rating_failure']; ?>
     </div>
     <div class="tim-rating-service">
-        <?php echo $this->__('Rating service'); ?>:
+        <b><?php echo $this->__('Rating service'); ?>:</b>
         <?php echo $opinion['rating_service']; ?>
     </div>
     <div class="tim-recommend">
-        <?php echo $this->__('Recommend'); ?>:
+        <b><?php echo $this->__('Recommend'); ?>:</b>
         <?php echo $recommend; ?>
     </div>
     <div class="tim-date-add">
-        <?php echo $this->__('Date Added'); ?>:
+        <b><?php echo $this->__('Date Added'); ?>:</b>
         <?php echo $opinion['date_add']; ?>
     </div>
     <div class="tim-media">
@@ -47,4 +56,7 @@ $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
             <?php endforeach; ?>
         </div>
     </div>
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/commentsToOpinion', array('id' => $opinion['recom_id'])) ?>" target="_blank">
+        <span><?php echo $this->__('Display comments'); ?></span>
+    </a>
 </div>
