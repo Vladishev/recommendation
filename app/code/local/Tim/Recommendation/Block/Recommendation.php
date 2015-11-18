@@ -19,10 +19,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();
-        $userData['user_type_name'] = Mage::helper('tim_recommendation')->getUserTypeName($user['user_type']);
-        $userData['customer_name'] = Mage::helper('tim_recommendation')->getCustomerName($customerId);
-        $userData['customer_nickname'] = Mage::helper('tim_recommendation')->getCustomerNickname($customerId);
-        $userData['opinion_qty'] = Mage::helper('tim_recommendation')->getOpinionQty($customerId);
+        $userData['user_type_name'] = $this->getHelper()->getUserTypeName($user['user_type']);
+        $userData['customer_name'] = $this->getHelper()->getCustomerNameOrNick($customerId);
+        $userData['opinion_qty'] = $this->getHelper()->getOpinionQty($customerId);
 
         return $userData;
     }
@@ -55,11 +54,14 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionData($productId)
     {
         $lastAddedOpinion = $this->getLastAddedOpinion($productId);
-        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($lastAddedOpinion['recom_id']);
+        $opinionMedia = $this->getHelper()->getOpinionMediaPath($lastAddedOpinion['recom_id']);
         $lastAddedOpinion['date_add'] = date('d-m-Y', strtotime($lastAddedOpinion['date_add']));
-        $lastAddedOpinion['movie_url'] = $opinionMedia['url/youtube'];
+        if (!empty($opinionMedia['url/youtube'])) {
+            $lastAddedOpinion['movie_url'] = $opinionMedia['url/youtube'];
+        }
         $lastAddedOpinion['images'] = $this->getImages($lastAddedOpinion['recom_id']);
         $lastAddedOpinion['comments'] = $this->getOpinionComments($lastAddedOpinion['recom_id']);
+        $lastAddedOpinion['name'] = $this->getHelper()->getCustomerNameOrNick($lastAddedOpinion['user_id']);
 
         return $lastAddedOpinion;
     }
@@ -71,7 +73,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      */
     public function getImages($recomId)
     {
-        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($recomId);
+        $opinionMedia = $this->getHelper()->getOpinionMediaPath($recomId);
         $images = array();
         foreach ($opinionMedia as $key => $value) {
             if ($key === 'url/youtube') {
@@ -126,8 +128,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $comments = array();
         foreach ($data as $comment) {
             $comments[] = array(
-                'name' => Mage::helper('tim_recommendation')->getCustomerName($comment['user_id']),//TODO: delete when nickname attribute will be available
-                'nickname' => Mage::helper('tim_recommendation')->getCustomerNickname($comment['user_id']),
+                'name' => $this->getHelper()->getCustomerNameOrNick($comment['user_id']),
                 'comment' => $comment['comment'],
                 'date_add' => $comment['date_add'],
             );
@@ -237,7 +238,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $userData = array();
 
         foreach ($singleId as $key => $value) {
-            $usersIdRating[$value] = Mage::helper('tim_recommendation')->getOpinionQty($value);
+            $usersIdRating[$value] = $this->getHelper()->getOpinionQty($value);
         }
         arsort($usersIdRating);
 
@@ -250,7 +251,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $data = $collection->getData();
             $userData[$i]['avatar'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $data[0]['avatar'];
             $userData[$i]['customer_view_url'] = Mage::getBaseUrl() . 'recommendation/user/profile/id/' . $key;
-            $userData[$i]['name'] = Mage::helper('tim_recommendation')->getCustomerName($key);
+            $userData[$i]['name'] = $this->getHelper()->getCustomerName($key);
 
             $i++;
         }
@@ -348,8 +349,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getConfirmData()
     {
         $requestArray = $this->getRequest()->getParams();//['request'],['id']
-        $salt = Mage::helper('tim_recommendation')->getSalt();
-        $md5 = Mage::helper('tim_recommendation')->getRecommendationMd5($requestArray['id']);
+        $salt = $this->getHelper()->getSalt();
+        $md5 = $this->getHelper()->getRecommendationMd5($requestArray['id']);
         $request0 = sha1($salt . '0' . $md5);
         $request1 = sha1($salt . '1' . $md5);
         $resultData = array();
@@ -372,7 +373,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerInfo = array();
-            $_helper = Mage::helper('tim_recommendation');
+            $_helper = $this->getHelper();
             $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
             $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
             $customerInfo['customerName'] = $_helper->getCustomerName($customerId);
@@ -386,5 +387,13 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         } else {
             return false;
         }
+    }
+
+    /**
+     * @return Tim_Recommendation_Helper_Data
+     */
+    public function getHelper()
+    {
+        return Mage::helper('tim_recommendation');
     }
 }

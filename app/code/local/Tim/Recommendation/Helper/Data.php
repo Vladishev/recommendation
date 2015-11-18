@@ -106,6 +106,21 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Get customer name or nickname
+     * @param int $customerId
+     * @return string
+     */
+    public function getCustomerNameOrNick($customerId)
+    {
+        $customerName = $this->getCustomerNickname($customerId);
+        if(empty($customerName)){
+            $customerName = $this->getCustomerName($customerId);
+        }
+
+        return $customerName;
+    }
+
+    /**
      * Get name of user type
      * @param int $userTypeId
      * @return string

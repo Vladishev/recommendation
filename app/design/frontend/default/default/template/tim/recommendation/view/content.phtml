@@ -60,7 +60,7 @@ $qtyComments = count($opinionData['comments']);
         <?php if($i > 5){break;} ?>
         <div class="tim-comment-container">
             <div class="tim-comment-container-title">
-                <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['nickname']); ?>
+                <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?>
             </div>
             <div class="tim-comment-container-content">
                 <!-- content of comment -->
