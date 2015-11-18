@@ -1,9 +1,12 @@
 <?php
+$product = Mage::registry('current_product');
 $isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
 $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
 $customerHostName = $this->getHost($customerIp);
-$productId = Mage::registry('current_product')->getId();
+$productId = $product->getId();
+$manufacturerId = $product->getManufacturer();
+$currentCategoryId = $product->getCategoryId();
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate"
       autocomplete="off" enctype="multipart/form-data">
@@ -114,6 +117,8 @@ $productId = Mage::registry('current_product')->getId();
         <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
         <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
         <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
+        <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturerId ?>"/>
+        <input type="hidden" name="current_category_id" value="<?php echo $currentCategoryId ?>"/>
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>

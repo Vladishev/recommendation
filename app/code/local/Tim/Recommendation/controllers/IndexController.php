@@ -37,7 +37,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setRatingService($params['itemEaseofinstall'])
             ->setRecommend($params['itemDoyourecommend'])
             ->setTimIp($params['customer_ip_address'])
-            ->setTimHost($params['customer_host_name']);
+            ->setTimHost($params['customer_host_name'])
+            ->setManufacturerId($params['manufacturer_id'])
+            ->setCategoryId($params['current_category_id']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
@@ -218,7 +220,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
                 $opinion->setAcceptance('1')->save();
-                echo '<h2>'.Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!').'</h2>';
+                echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!') . '</h2>';
             }
         }
     }
