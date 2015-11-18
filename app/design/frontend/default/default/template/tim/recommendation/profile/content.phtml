@@ -4,8 +4,8 @@ $userData = $this->getUserData($userId);
 $userOpinionData = $this->getUserOpinionData($userId);
 $opinionComments = $this->getOpinionComment($userId);
 $site = $userData['www'];
-if (!strstr($site, 'http://') && !strstr($site, 'https://') && !empty($userData['www'])) {
-    $site = 'http://' . $userData['www'];
+if (!empty($site) && !strstr($site, 'http://') && !strstr($site, 'https://')) {
+    $site = 'http://' . $site;
 } else {
     $site = null;
 }

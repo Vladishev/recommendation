@@ -79,15 +79,6 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return mixed
-     */
-//    public function getCustomerNick($customerId)
-//    {
-//        $nick = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
-//        return $nick;
-//    }
-
-    /**
      * @return bool|string
      */
     public function getCustomerBanner()
