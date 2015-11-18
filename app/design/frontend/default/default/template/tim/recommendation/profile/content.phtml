@@ -4,8 +4,10 @@ $userData = $this->getUserData($userId);
 $userOpinionData = $this->getUserOpinionData($userId);
 $opinionComments = $this->getOpinionComment($userId);
 $site = $userData['www'];
-if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
+if (!strstr($site, 'http://') && !strstr($site, 'https://') && !empty($userData['www'])) {
     $site = 'http://' . $userData['www'];
+} else {
+    $site = null;
 }
 ?>
 <div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
@@ -18,7 +20,7 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         <div class="tim-user-name">
             <p><?php echo $this->__('User'); ?></p>
             <!-- place for user name -->
-            <p><?php echo $userData['customer_name']; ?></p>
+            <p><?php echo $userData['customer_nick']; ?></p>
         </div>
         <div class="tim-user-type">
             <div class="tim-user-type-icon">
@@ -31,7 +33,6 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
             <!-- place for user score which will result from the number of entries -->
-            <p><?php echo $userData['engage']; ?></p>
             <div class="tim-user-scoregraph tim-score-2">
                 <!-- number of opinons -->
                 <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
@@ -52,20 +53,23 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
     <div class="tim-opinion">
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("ABOUT USER"); ?></div>
         <div class="tim-user-about-textfield">
-            <!-- about user info based on his own input -->Lorem epsilum <!-- tem -->
+            <!-- about user info based on his own input --><!-- tem -->
             <?php echo $userData['description']; ?>
         </div>
+        <?php if(!empty($userData['ad'])): ?>
         <div class="tim-user-picture">
             <!-- graphic provided by user -->
             <img src="<?php echo $userData['ad']; ?>" alt="user-picture"/>
         </div>
+        <?php endif ?>
+        <?php if(!empty($site)): ?>
         <div class="tim-user-wwwpage">
-
             <div class="tim-user-wwwpage-button">
                 <?php echo $this->__("Website User"); ?>: <!-- link to user webpage -->
-                <a href="#"><?php echo $site; ?></a>
+                <a href="<?php echo $site; ?>" target="_blank"><?php echo $site; ?></a>
             </div>
         </div>
+        <?php endif ?>
     </div>
     <!-- start of user's opinion list -->
     <div class="tim-opinion-list">
@@ -113,7 +117,7 @@ if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
                 <?php if ($i > 10) break; ?>
                 <div class="tim-comm-list-bulk-positions">
                     <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
-                        <a href="#"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
+                        <a href="<?php echo $itemData['url']; ?>"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
                     </div>
                     <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
                         <div class="tim-comm-list-bulk-rating-bar">
