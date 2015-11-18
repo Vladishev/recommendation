@@ -21,6 +21,7 @@ $installer->getConnection()
             'comment' => 'User nick'
         )
     );
-
+$installer->getConnection()->modifyColumn($installer->getTable('tim_recommendation/user'), 'description', 'text'
+);
 
 $installer->endSetup();
