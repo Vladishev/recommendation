@@ -59,7 +59,7 @@ if (!empty($site) && !strstr($site, 'http://') && !strstr($site, 'https://')) {
         <?php if(!empty($userData['ad'])): ?>
         <div class="tim-user-picture">
             <!-- graphic provided by user -->
-            <img src="<?php echo $userData['ad']; ?>" alt="user-picture"/>
+            <img src="<?php echo Mage::getBaseUrl() . $userData['ad']; ?>" alt="user-picture"/>
         </div>
         <?php endif ?>
         <?php if(!empty($site)): ?>
