@@ -13,7 +13,7 @@ if (!empty($site) && !strstr($site, 'http://') && !strstr($site, 'https://')) {
 <div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
     <div class="tim-user"> <!-- main container for user details -->
         <div class="tim-user-photo">
-            <img src="<?php echo Mage::getBaseUrl() . $userData['avatar'] ?>" width="269" height="168"
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" width="269" height="168"
                  alt="user-photo"/>
             <!-- place for user photo -->
         </div>
@@ -59,7 +59,7 @@ if (!empty($site) && !strstr($site, 'http://') && !strstr($site, 'https://')) {
         <?php if(!empty($userData['ad'])): ?>
         <div class="tim-user-picture">
             <!-- graphic provided by user -->
-            <img src="<?php echo Mage::getBaseUrl() . $userData['ad']; ?>" alt="user-picture"/>
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['ad']; ?>" alt="user-picture"/>
         </div>
         <?php endif ?>
         <?php if(!empty($site)): ?>
