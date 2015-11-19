@@ -56,9 +56,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         if (!empty($_FILES['banner']['name'])) {
             $banner = time() . $_FILES['banner']['name'];
         }
-        if (!is_null($postData['url'])) {
-            $siteUrl = $postData['url'];
-        }
+        $siteUrl = $postData['url'];
         if (!is_null($postData['description'])) {
             $description = $postData['description'];
         }
@@ -110,18 +108,16 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
                 Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__($e->getMessage()));
             }
         }
-        if (!empty($siteUrl)) {
-            try {
-                if (!empty($userData)) {
-                    $user->setWww($siteUrl);
-                } else {
-                    $user->setCustomerId($customerId);
-                    $user->setWww($siteUrl);
-                }
-                $user->save();
-            } catch (Exception $e) {
-                Mage::getSingleton('core/session')->addError($e->getMessage());
+        try {
+            if ($userData != null) {
+                $user->setWww($siteUrl);
+            } else {
+                $user->setCustomerId($customerId);
+                $user->setWww($siteUrl);
             }
+            $user->save();
+        } catch (Exception $e) {
+            Mage::getSingleton('core/session')->addError($e->getMessage());
         }
         if (!empty($description)) {
             try {
