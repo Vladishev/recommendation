@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.1.6</version>
+            <version>0.1.7</version>
         </Tim_Recommendation>
     </modules>
     <global>
@@ -42,6 +42,9 @@
                     <note>
                         <table>tim_recom_note</table>
                     </note>
+                    <malpractice>
+                        <table>tim_recom_malpractice</table>
+                    </malpractice>
                 </entities>
             </tim_recommendation_resource>
             <core>
@@ -99,14 +102,6 @@
                     </save_user_level>
                 </observers>
             </admin_system_config_changed_section_tim_recommendation>
-            <controller_action_predispatch_customer_account_editPost>
-                <observers>
-                    <tim_recommendation_save>
-                        <class>Tim_Recommendation_Model_Observer</class>
-                        <method>saveCustomerAction</method>
-                    </tim_recommendation_save>
-                </observers>
-            </controller_action_predispatch_customer_account_editPost>
             <controller_index_add_opinion_data>
                 <observers>
                     <send_opinion_email>

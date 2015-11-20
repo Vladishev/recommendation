@@ -44,10 +44,26 @@ function checkIfUserIsLoggedIn() {
         }
     });
 }
+/**
+ * Variables for sendParams() method
+ */
+var recomId;
+var userId;
+var customerIp;
+var customerHostName;
+var siteUrl;
 
-function markUserAbuse() {
+/**
+ * Display popup and set variables
+ * @param id
+ * @param customerId
+ * @param ip
+ * @param hostName
+ * @param url
+ */
+function markUserAbuse(id, customerId, ip, url, hostName) {
     jQuery('.tim-markabuse-popup').show(300);
-
+    //console.log(url);
     jQuery('#tim-markabuse-popup-close').on('click', function () {
         jQuery('.tim-markabuse-popup').hide();
         jQuery('#tim-abuse-application').show();
@@ -58,10 +74,27 @@ function markUserAbuse() {
         jQuery('#tim-abuse-application-sendbt').hide();
         jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za wysłanie zgłoszenia, sytuacja zostanie zbadana przez naszego pracownika w najszybszym możliwym terminie.');
     });
-
+    recomId = id;
+    userId = customerId;
+    customerIp = ip;
+    customerHostName = hostName;
+    siteUrl = url;
     jQuery(document).keydown(function (e) {
         if (e.keyCode == 27) {
             jQuery('.tim-markabuse-popup').hide();
         }
+    });
+}
+/**
+ * Send customer parameters to controller
+ */
+function sendParams() {
+
+    var comment = jQuery('#tim-abuse-application').val();
+    var param = {userId: userId, customerHostName: customerHostName, customerIp: customerIp, recom_id: recomId, comment: comment};
+
+    jQuery.ajax({
+        url: siteUrl,
+        data: param
     });
 }
