@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -27,14 +28,19 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $collection->getSelect()->joinLeft(array('cpe' => 'catalog_product_entity'), 'main_table.product_id = cpe.entity_id',
             array('sku'));
         $collection->getSelect()->joinLeft(array('cpef' => 'catalog_product_entity_varchar'),
-            'main_table.product_id = cpef.entity_id AND cpef.attribute_id = 71',
-            array('product_name' => 'value', "Akceptacja" => "IF (main_table.acceptance =1,'TAK','NIE')"));
+            'main_table.product_id = cpef.entity_id AND cpef.attribute_id = 71',//71 = name
+            array('product_name' => 'value', "acceptance" => "IF (main_table.acceptance =1,'TAK','NIE')"));
         $collection->getSelect()->joinLeft(array('tru' => 'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
             array('user_type', 'engage'));
         $collection->getSelect()->joinLeft(array('tut' => 'tim_user_type'),
             'tru.user_type = tut.user_type_id',
             array('user_type_name' => 'name'));
+        $collection->getSelect()->joinLeft(array('cpei' => 'catalog_product_entity_int'),
+            'main_table.product_id = cpei.entity_id AND cpei.attribute_id = 81',//81 = manufacturer
+            array('manufacturer_id' => 'value'));
+        $collection->getSelect()->joinLeft(array('eaov' => 'eav_attribute_option_value'), 'cpei.value = eaov.option_id',
+            array('manufacturer_name' => 'value'));
         $collection->getSelect()->where('main_table.parent IS NULL');
         $this->setCollection($collection);
 
@@ -44,7 +50,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     /**
      * Prepare grid columns
      *
-     * @return Tim_Recommendation_Block_Adminhtml_Report_Grid
+     * @return Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid
      */
     protected function _prepareColumns()
     {
@@ -73,10 +79,17 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'index' => 'product_name',
             'filter_index' => 'cpef.value'
         ));
+        $this->addColumn('manufacturer_name', array(
+            'header' => Mage::helper('tim_recommendation')->__('Manufacturer'),
+            'width' => '100',
+            'index' => 'manufacturer_name',
+            'filter_index' => 'eaov.value'
+        ));
         $this->addColumn('date_add', array(
             'header' => Mage::helper('tim_recommendation')->__('Date Added'),
             'index' => 'date_add',
             'type' => 'datetime',
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_DateFormat',
             'width' => '100'
         ));
         $this->addColumn('comments', array(
@@ -117,10 +130,10 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'index' => 'tim_host',
             'filter_index' => 'tim_host'
         ));
-        $this->addColumn('Akceptacja', array(
-            'header' => Mage::helper('tim_recommendation')->__('Akceptacja'),
+        $this->addColumn('acceptance', array(
+            'header' => Mage::helper('tim_recommendation')->__('Acceptance'),
             'width' => '20',
-            'index' => 'Akceptacja',
+            'index' => 'acceptance',
             'filter_condition_callback' => array($this, '_acceptanceFilter'),
         ));
         $this->addColumn('display_opinion',
@@ -176,7 +189,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     }
 
     /**
-     * Custom filter for Akceptacja field
+     * Custom filter for acceptance field
      * @param (obj)$collection
      * @param (obj)$column
      * @return $this
