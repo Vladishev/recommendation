@@ -52,11 +52,54 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         return $md5hash;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSiteUrl()
     {
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getWww();
         return $siteUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserNick()
+    {
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $nick = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
+        return $nick;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getCustomerBanner()
+    {
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $banner = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAd();
+        if(!empty($banner)) {
+            $banner = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $banner;
+            return $banner;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getCustomerAvatar()
+    {
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $avatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
+        if(!empty($avatar)) {
+            $avatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $avatar;
+            return $avatar;
+        } else {
+            return false;
+        }
     }
 
     public function getCustomerDescription()
@@ -209,5 +252,21 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         } else {
             return true;
         }
+    }
+
+    /**
+     * Save image to folder
+     * @param string $varName
+     * @param string $path
+     * @param string $postName
+     */
+    public function saveImage($varName, $path, $postName)
+    {
+        $uploader = new Varien_File_Uploader($postName);
+        $uploader->setAllowedExtensions(array('png', 'gif', 'jpeg', 'jpg'));
+        $uploader->setAllowCreateFolders(true);
+        $uploader->setAllowRenameFiles(false);
+        $uploader->setFilesDispersion(false);
+        $uploader->save($path, $varName);
     }
 }

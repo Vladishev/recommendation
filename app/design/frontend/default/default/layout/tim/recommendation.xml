@@ -82,4 +82,20 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.confirm" template="tim/recommendation/confirm/confirm.phtml" />
         </reference>
     </recommendation_index_confirm>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink">
+                <name>Recommendation</name>
+                <path>recommendation/user/edit</path>
+                <label>Recommendation</label>
+            </action>
+        </reference>
+    </customer_account>
+    <recommendation_user_edit>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper"> <!-- target parent block -->
+            <block type="customer/form_edit" name="customer_edit" template="tim/recommendation/profile/recommendation_tab.phtml"/>
+            <!--<block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml" /> &lt;!&ndash; add a back link &ndash;&gt;-->
+        </reference>
+    </recommendation_user_edit>
 </layout>
