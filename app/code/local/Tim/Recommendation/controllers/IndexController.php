@@ -313,6 +313,11 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $model->setComment($params['comment']);
         $model->setTimIp($params['customerIp']);
         $model->setTimHost($params['customerHostName']);
-        $model->save();
+        try {
+            $model->save();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        }
+
     }
 }
