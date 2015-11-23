@@ -28,7 +28,7 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
 
     public function exportCsvAction()
     {
-        $fileName = 'recommendations.csv';
+        $fileName = 'malpractice.csv';
         $grid = $this->getLayout()->createBlock('tim_recommendation/adminhtml_malpracticeReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
@@ -38,7 +38,7 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
      */
     public function exportExcelAction()
     {
-        $fileName = 'recommendations.xml';
+        $fileName = 'malpractice.xml';
         $grid = $this->getLayout()->createBlock('tim_recommendation/adminhtml_malpracticeReport_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
