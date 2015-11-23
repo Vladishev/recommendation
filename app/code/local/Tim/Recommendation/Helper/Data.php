@@ -64,12 +64,18 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * If passed $customerId - returns nick for passed id.
+     * If $customerId not passed - returns current customer nick.
      * @return mixed
      */
-    public function getUserNick()
+    public function getUserNick($customerId = null)
     {
-        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
-        $nick = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
+        if(empty($customerId)){
+            $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+            $nick = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
+        } else {
+            $nick = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
+        }
         return $nick;
     }
 

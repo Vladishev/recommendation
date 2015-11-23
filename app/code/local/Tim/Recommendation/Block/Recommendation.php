@@ -21,6 +21,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $userData = $user->getData();
         $userData['user_type_name'] = $this->getHelper()->getUserTypeName($user['user_type']);
         $userData['customer_name'] = $this->getHelper()->getCustomerNameOrNick($customerId);
+        $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);
         $userData['opinion_qty'] = $this->getHelper()->getOpinionQty($customerId);
 
         return $userData;
