@@ -6,6 +6,7 @@ $customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
 $opinionData = $this->getOpinionData($productId);
 $qtyComments = count($opinionData['comments']);
+$malpracticeUrl = $this->getUrl('recommendation/index/saveMalpractice');
 ?>
 <div class="tim-opinion"> <!-- main container for opinion -->
     <div class="tim-opinion-date">
@@ -35,7 +36,7 @@ $qtyComments = count($opinionData['comments']);
     </div>
     <?php if (!empty($opinionData['images'])): ?>
         <?php foreach ($opinionData['images'] as $image): ?>
-            <img src="<?php echo Mage::getBaseUrl() . $image ?>" width="50" height="50" alt="img"/>
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $image ?>" width="50" height="50" alt="img"/>
         <?php endforeach; ?>
     <?php endif; ?>
     <div class="tim-opinion-media">
@@ -52,11 +53,19 @@ $qtyComments = count($opinionData['comments']);
             </div>
         <?php endif; ?>
     </div>
+    <?php if ($isLoggedIn): ?>
     <div class="tim-abuse-button-position-opinion">
-        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse()">
+        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $opinionData['recom_id'] . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
             <?php echo $this->__('Zgłoś nadużycie') ?>
         </button>
     </div>
+    <?php else: ?>
+    <div class="tim-abuse-button-position-opinion">
+        <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
+            <?php echo $this->__('Zgłoś nadużycie') ?>
+        </button>
+    </div>
+    <?php endif ?>
 </div>
 <div class="tim-comment">
     <!-- for each comment (start) -->
@@ -66,9 +75,15 @@ $qtyComments = count($opinionData['comments']);
         <div class="tim-comment-container">
             <div class="tim-comment-container-title">
                 <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
-                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse()">
+                <?php if ($isLoggedIn): ?>
+                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $comment['recom_id'] . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
                     <?php echo $this->__('Zgłoś nadużycie') ?>
                 </button>
+                <?php else: ?>
+                <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
+                    <?php echo $this->__('Zgłoś nadużycie') ?>
+                </button>
+                <?php endif ?>
             </div>
             <div class="tim-comment-container-content">
                 <!-- content of comment -->
@@ -128,7 +143,7 @@ $qtyComments = count($opinionData['comments']);
             <textarea name="tim-abuse-application" id="tim-abuse-application" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
         </div>
 <!-- button to submit abuse call -->
-        <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
+        <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt" onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
     </div>
 </div>
 

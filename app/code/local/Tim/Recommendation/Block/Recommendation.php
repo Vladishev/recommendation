@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Tim
  *
@@ -132,6 +131,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
                 'name' => $this->getHelper()->getCustomerNameOrNick($comment['user_id']),
                 'comment' => $comment['comment'],
                 'date_add' => $comment['date_add'],
+                'recom_id' => $comment['recom_id'],
             );
         }
 
@@ -193,7 +193,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
             $productData[$i]['name'] = $productCollection->load($productId)->getName();
             $productData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
-            $productData[$i]['product_url'] = Mage::getBaseUrl() . $productCollection->load($productId)->getUrlPath();
+            $productData[$i]['product_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $productCollection->load($productId)->getUrlPath();
             $productData[$i]['average'] = $this->getAverage($value);
             $i++;
         }
@@ -251,7 +251,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $collection->addFieldToFilter('customer_id', $key);
             $data = $collection->getData();
             $userData[$i]['avatar'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $data[0]['avatar'];
-            $userData[$i]['customer_view_url'] = Mage::getBaseUrl() . 'recommendation/user/profile/id/' . $key;
+            $userData[$i]['customer_view_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $key;
             $userData[$i]['name'] = $this->getHelper()->getCustomerName($key);
 
             $i++;

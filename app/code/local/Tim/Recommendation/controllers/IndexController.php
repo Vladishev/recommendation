@@ -302,4 +302,24 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
         return $newFileArray;
     }
+
+    /**
+     * saves user data to tim_recom_malpractice table
+     */
+    public function saveMalpracticeAction()
+    {
+        $params = $this->getRequest()->getParams();
+        $model = Mage::getModel('tim_recommendation/malpractice');
+        $model->setRecomId($params['recom_id']);
+        $model->setUserId($params['userId']);
+        $model->setComment($params['comment']);
+        $model->setTimIp($params['customerIp']);
+        $model->setTimHost($params['customerHostName']);
+        try {
+            $model->save();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        }
+
+    }
 }
