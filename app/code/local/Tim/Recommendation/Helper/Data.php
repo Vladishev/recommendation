@@ -257,4 +257,20 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $uploader->setFilesDispersion(false);
         $uploader->save($path, $varName);
     }
+
+    /**
+     * Gets row by recomId and check is it opinion or comment.
+     * If opinion - returns recomId, if comment - returns 'parent' column data.
+     * @param (int)$recomId
+     * @return integer
+     */
+    public function checkForOpinionComment($recomId)
+    {
+        $recommendationRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId);
+        if ($parent = $recommendationRow->getParent()) {
+            return $parent;
+        } else {
+            return $recomId;
+        }
+    }
 }

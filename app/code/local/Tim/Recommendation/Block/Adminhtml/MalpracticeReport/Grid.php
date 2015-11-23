@@ -83,7 +83,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
                 'header' => Mage::helper('tim_recommendation')->__('Detail'),
                 'width' => '70',
                 'type' => 'action',
-                'getter' => 'getId',
+                'getter' => 'getRecomId',
                 'actions' => array(
                     array(
                         'caption' => Mage::helper('tim_recommendation')->__('Detail'),
