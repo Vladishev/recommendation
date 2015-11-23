@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -120,6 +121,34 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $name = $customer->getFirstname() . ' ' . $customer->getLastname();
 
         return $name;
+    }
+
+    /**
+     * Get customer nickname
+     * @param int $customerId
+     * @return string
+     */
+    public function getCustomerNickname($customerId)
+    {
+        $recommendationUser = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+        $nickname = $recommendationUser->getNick();
+
+        return $nickname;
+    }
+
+    /**
+     * Get customer name or nickname
+     * @param int $customerId
+     * @return string
+     */
+    public function getCustomerNameOrNick($customerId)
+    {
+        $customerName = $this->getCustomerNickname($customerId);
+        if(empty($customerName)){
+            $customerName = $this->getCustomerName($customerId);
+        }
+
+        return $customerName;
     }
 
     /**

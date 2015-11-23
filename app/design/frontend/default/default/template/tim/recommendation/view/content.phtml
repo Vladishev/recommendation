@@ -6,7 +6,6 @@ $customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
 $opinionData = $this->getOpinionData($productId);
 $qtyComments = count($opinionData['comments']);
-$movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media']['url/youtube'] : '';
 ?>
 <div class="tim-opinion"> <!-- main container for opinion -->
     <div class="tim-opinion-date">
@@ -34,18 +33,21 @@ $movieUrl = isset($opinionData['media']['url/youtube']) ? $opinionData['media'][
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
         <!-- place for read more if necessary -->
     </div>
-    <?php foreach ($opinionData['media'] as $type => $path): ?>
-        <?php if ($type === 'url/youtube') { continue; } ?>
-        <img src="<?php echo Mage::getBaseUrl() . $path ?>" width="50" height="50" alt="img"/>
-    <?php endforeach; ?>
+    <?php if (!empty($opinionData['images'])): ?>
+        <?php foreach ($opinionData['images'] as $image): ?>
+            <img src="<?php echo Mage::getBaseUrl() . $image ?>" width="50" height="50" alt="img"/>
+        <?php endforeach; ?>
+    <?php endif; ?>
     <div class="tim-opinion-media">
+        <?php if (!empty($opinionData['images'])): ?>
         <div class="tim-opinion-photo">
             <a class="tim-readmore" href="#"><?php echo $this->__('See photos'); ?></a>
             <!-- button for displaying user added photos in overlay -->
         </div>
-        <?php if (!empty($movieUrl)): ?>
+        <?php endif; ?>
+        <?php if (!empty($opinionData['movie_url'])): ?>
             <div class="tim-opinion-movie">
-                <a class="tim-readmore" href="<?php echo $movieUrl ?>" target="_blank"><?php echo $this->__('See footage'); ?></a>
+                <a class="tim-readmore" href="<?php echo $opinionData['movie_url'] ?>" target="_blank"><?php echo $this->__('See footage'); ?></a>
                 <!-- button for displaying movie in overlay (movie source: YouTube)  -->
             </div>
         <?php endif; ?>
