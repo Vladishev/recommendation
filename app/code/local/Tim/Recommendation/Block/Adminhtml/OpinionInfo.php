@@ -7,9 +7,10 @@ class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Bloc
      */
     public function getOpinionData()
     {
-        $opinionId = $this->getRequest()->getParam('id');
-        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getData();
-        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($opinionId);
+        $recomId = $this->getRequest()->getParam('id');
+        $checkedId = Mage::helper('tim_recommendation')->checkForOpinionComment($recomId);
+        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($checkedId)->getData();
+        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($checkedId);
         $opinion['media'] = $opinionMedia;
 
         return $opinion;

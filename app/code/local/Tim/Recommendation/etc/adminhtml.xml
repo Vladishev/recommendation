@@ -32,6 +32,10 @@
                             <title>Opinion images</title>
                             <action>adminhtml/opinionImages</action>
                         </tim_opinion_images>
+                        <tim_malpractice translate="title">
+                            <title>Malpractices</title>
+                            <action>adminhtml/malpracticeReport</action>
+                        </tim_malpractice>
                     </children>
                 </tim>
             </children>
@@ -79,6 +83,10 @@
                                         <title>Opinion and comment</title>
                                         <sort_order>0</sort_order>
                                     </tim_opinion_comment>
+                                    <tim_malpractice translate="title">
+                                        <title>Malpractices</title>
+                                        <sort_order>0</sort_order>
+                                    </tim_malpractice>
                                 </children>
                             </tim>
                         </children>

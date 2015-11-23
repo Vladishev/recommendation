@@ -42,6 +42,9 @@
                     <note>
                         <table>tim_recom_note</table>
                     </note>
+                    <malpractice>
+                        <table>tim_recom_malpractice</table>
+                    </malpractice>
                 </entities>
             </tim_recommendation_resource>
             <core>
