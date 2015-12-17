@@ -7,6 +7,7 @@
     </adminhtml_opinionreport_opinioninfo>
     <adminhtml_opinionreport_index>
         <reference name="head">
+            <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
             <action method="addItem">
                 <type>js_css</type>
                 <name>prototype/windows/themes/default.css</name>
@@ -21,6 +22,7 @@
     </adminhtml_opinionreport_index>
     <adminhtml_commentsreport_index>
         <reference name="head">
+            <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
             <action method="addItem">
                 <type>js_css</type>
                 <name>prototype/windows/themes/default.css</name>
@@ -33,4 +35,19 @@
             <block type="adminhtml/template" template="tim/recommendation/report/js.phtml" name="recom.report.js" as="recom_report_js"></block>
         </reference>
     </adminhtml_commentsreport_index>
+    <adminhtml_notereport_index>
+        <reference name="head">
+            <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
+        </reference>
+    </adminhtml_notereport_index>
+    <adminhtml_opinionimages_index>
+        <reference name="head">
+            <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
+        </reference>
+    </adminhtml_opinionimages_index>
+    <adminhtml_malpracticereport_index>
+        <reference name="head">
+            <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
+        </reference>
+    </adminhtml_malpracticereport_index>
 </layout>

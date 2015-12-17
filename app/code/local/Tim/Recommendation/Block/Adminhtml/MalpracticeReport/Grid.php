@@ -55,7 +55,8 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'type' => 'datetime',
             'index' => 'date_add',
             'filter_index' => 'date_add',
-            'sortable' => true
+            'sortable' => true,
+            'filter_time' => true,
         ));
         $this->addColumn('comment', array(
             'header' => Mage::helper('tim_recommendation')->__('comment'),

@@ -1,2 +1,8 @@
 /*Tim styles*/
 .note-form { height: 100px; width: 450px; }
+.grid tr.filter .range input {
+    width: 95px!important;
+}
+.grid tr.filter .range div.date {
+    min-width: 160px;
+}

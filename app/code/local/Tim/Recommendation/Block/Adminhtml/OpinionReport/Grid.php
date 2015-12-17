@@ -90,7 +90,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'index' => 'date_add',
             'type' => 'datetime',
 //            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_DateFormat',
-            'width' => '100',
+            'width' => '200',
             'filter_time' => true,
         ));
         $this->addColumn('comments', array(

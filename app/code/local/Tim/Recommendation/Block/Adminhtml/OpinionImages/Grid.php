@@ -45,6 +45,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
             'index' => 'date_add',
             'type' => 'datetime',
             'width' => '100',
+            'filter_time' => true,
         ));
         $this->addColumn('name', array(
             'width' => '100',

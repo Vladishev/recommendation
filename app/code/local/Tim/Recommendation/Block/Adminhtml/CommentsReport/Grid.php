@@ -18,7 +18,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         $this->setId('tim_recommendation_comment_grid');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
-        $this->setUseAjax(true);
+        $this->setUseAjax(false);
     }
 
     protected function _prepareCollection()
@@ -56,6 +56,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'type' => 'datetime',
             'filter_index' => 'date_add',
             'width' => '100',
+            'filter_time' => true,
         ));
         $this->addColumn('comments', array(
             'header' => Mage::helper('tim_recommendation')->__('Comment'),
