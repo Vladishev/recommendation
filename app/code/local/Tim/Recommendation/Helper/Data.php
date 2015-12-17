@@ -308,4 +308,18 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return $recomId;
         }
     }
+
+    /**
+     * Gets customer type name to array
+     * @return array
+     */
+    public function getCustomerTypeName()
+    {
+        $collection = Mage::getModel('tim_recommendation/userType')->getCollection();
+        $options = array();
+        foreach ($collection->getData() as $val) {
+            $options[$val['name']] = $val['name'];
+        }
+        return $options;
+    }
 }

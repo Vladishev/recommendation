@@ -29,10 +29,10 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             array('sku'));
         $collection->getSelect()->joinLeft(array('cpef' => 'catalog_product_entity_varchar'),
             'main_table.product_id = cpef.entity_id AND cpef.attribute_id = 71',//71 = name
-            array('product_name' => 'value', "acceptance" => "IF (main_table.acceptance =1,'TAK','NIE')"));
+            array('product_name' => 'value'));
         $collection->getSelect()->joinLeft(array('tru' => 'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
-            array('user_type', 'engage'));
+            array('user_type', 'engage', 'nick'));
         $collection->getSelect()->joinLeft(array('tut' => 'tim_user_type'),
             'tru.user_type = tut.user_type_id',
             array('user_type_name' => 'name'));
@@ -41,6 +41,10 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             array('manufacturer_id' => 'value'));
         $collection->getSelect()->joinLeft(array('eaov' => 'eav_attribute_option_value'), 'cpei.value = eaov.option_id',
             array('manufacturer_name' => 'value'));
+        $collection->getSelect()->joinLeft(array('cev' => 'customer_entity_varchar'),
+            "cev.entity_id = main_table.user_id AND cev.attribute_id = 5", array('customer_firstname' => 'value'));
+        $collection->getSelect()->joinLeft(array('cev1' => 'customer_entity_varchar'),
+            "cev1.entity_id = main_table.user_id AND cev1.attribute_id = 7", array('customer_lastname' => 'value'));
         $collection->getSelect()->where('main_table.parent IS NULL');
         $this->setCollection($collection);
 
@@ -58,17 +62,16 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'header' => Mage::helper('tim_recommendation')->__('ID'),
             'width' => '10',
             'index' => 'recom_id',
-            'filter_index' => 'recom_id'
         ));
         $this->addColumn('name', array(
             'header' => Mage::helper('tim_recommendation')->__('Customer Name'),
             'width' => '100',
             'index' => 'user_id',
-            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_CustomerName',
-            'filter' => false
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_CustomerNameNickname',
+            'filter_index' => 'CONCAT(cev.value, \' \', cev1.value, \' \', tru.nick)'
         ));
         $this->addColumn('product_sku', array(
-            'header' => Mage::helper('tim_recommendation')->__('Product SKU'),
+            'header' => Mage::helper('tim_recommendation')->__('Index TIM'),
             'width' => '100',
             'index' => 'sku',
             'filter_index' => 'sku'
@@ -95,22 +98,26 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $this->addColumn('comments', array(
             'header' => Mage::helper('tim_recommendation')->__('Comments'),
             'width' => '200',
-            'index' => 'recom_id',
+            'index' => 'advantages',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_Comments',
-            'filter' => false
         ));
         $this->addColumn('media', array(
             'header' => Mage::helper('tim_recommendation')->__('Media'),
             'width' => '30',
-            'index' => 'product_id',
-            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_ProductData',
-            'filter' => false
+            'index' => 'recom_id',
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RecomMedia',
+            'type' => 'options',
+            'options' => array('No' => $this->__('No'), 'Yes' => $this->__('Yes')),
+            'filter_condition_callback' => array($this, '_mediaFilter'),
+            'sortable' => false
         ));
         $this->addColumn('user_type', array(
             'header' => Mage::helper('tim_recommendation')->__('User type'),
             'width' => '50',
             'index' => 'user_type_name',
-            'filter_index' => 'tut.name'
+            'filter_index' => 'tut.name',
+            'type' => 'options',
+            'options' => Mage::helper('tim_recommendation')->getCustomerTypeName(),
         ));
         $this->addColumn('user_level', array(
             'header' => Mage::helper('tim_recommendation')->__('User level'),
@@ -134,17 +141,19 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'header' => Mage::helper('tim_recommendation')->__('Acceptance'),
             'width' => '20',
             'index' => 'acceptance',
-            'filter_condition_callback' => array($this, '_acceptanceFilter'),
+            'filter_index' => 'main_table.acceptance',
+            'type' => 'options',
+            'options' => array(0 => $this->__('No'), 1 => $this->__('Yes')),
         ));
         $this->addColumn('display_opinion',
             array(
-                'header' => Mage::helper('tim_recommendation')->__('Display opinion'),
+                'header' => Mage::helper('tim_recommendation')->__('Operation'),
                 'width' => '70',
                 'type' => 'action',
                 'getter' => 'getId',
                 'actions' => array(
                     array(
-                        'caption' => Mage::helper('tim_recommendation')->__('Opinion'),
+                        'caption' => Mage::helper('tim_recommendation')->__('Display opinion'),
                         'url' => array('base' => '*/*/opinionInfo'),
                         'target' => '_blank',
                         'field' => 'id'
@@ -156,6 +165,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                 'is_system' => true,
             ));
         $this->addColumn('add_note', array(
+            'header' => Mage::helper('tim_recommendation')->__('Operation'),
             'width' => '50',
             'index' => 'recom_id',
             'filter' => false,
@@ -165,20 +175,12 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         ));
         $this->addColumn('display_note',
             array(
+                'header' => Mage::helper('tim_recommendation')->__('Operation'),
                 'width' => '70',
-                'type' => 'action',
-                'getter' => 'getId',
-                'actions' => array(
-                    array(
-                        'caption' => Mage::helper('tim_recommendation')->__('Display note'),
-                        'url' => array('base' => '*/noteReport'),
-                        'target' => '_blank',
-                        'field' => 'id'
-                    )
-                ),
+                'index' => 'recom_id',
+                'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_DisplayNote',
                 'filter' => false,
                 'sortable' => false,
-                'index' => 'stores',
                 'is_system' => true,
             ));
 
@@ -189,26 +191,28 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     }
 
     /**
-     * Custom filter for acceptance field
+     * Custom filter for media field
      * @param (obj)$collection
      * @param (obj)$column
      * @return $this
      */
-    protected function _acceptanceFilter($collection, $column)
+    protected function _mediaFilter($collection, $column)
     {
         if ($value = $column->getFilter()->getValue()) {
-            if ($value == 'TAK') {
-                $this->getCollection()->getSelect()->where(
-                    "main_table.acceptance = 1");
-                return $this;
+            if ($value == 'Yes') {
+                $collection->getSelect()->joinInner(array('trm' => 'tim_recom_media'), 'main_table.recom_id= trm.recom_id',
+                    array('media_recom_id' => 'recom_id'));
+                $collection->getSelect()->group('trm.recom_id');
+                return $collection;
             }
-            if ($value == 'NIE') {
-                $this->getCollection()->getSelect()->where(
-                    "main_table.acceptance = 0");
-                return $this;
+            if ($value == 'No') {
+                $collection->getSelect()->joinLeft(array('trm' => 'tim_recom_media'), 'main_table.recom_id = trm.recom_id',
+                    array('media_recom_id' => 'recom_id'));
+                $collection->getSelect()->where('trm.recom_id IS NULL');
+                return $collection;
             }
         } else {
-            return $this;
+            return $collection;
         }
     }
 
