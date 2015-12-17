@@ -13,7 +13,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_DateFormat extends Mage_Adminhtm
     public function render(Varien_Object $row)
     {
         $date = $row->getData($this->getColumn()->getIndex());
-        $formatDate = date('d-m-Y', strtotime($date));
+        $formatDate = date('d.m.Y H:i', strtotime($date));
         return $formatDate;
     }
 }
