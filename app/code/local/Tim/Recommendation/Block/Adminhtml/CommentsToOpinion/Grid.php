@@ -12,6 +12,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid extends Mage_Adm
 {
     /**
      * Init grid
+     * TODO remove this grid till 01/02/2016. Reason: useless. The same functionality in grid @see Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid
      */
     public function __construct()
     {

@@ -10,6 +10,9 @@
  */
 class Tim_Recommendation_Adminhtml_CommentsToOpinionController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * TODO remove this grid till 01/02/2016. Reason: useless. The same functionality in grid @see Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid
+     */
     public function indexAction()
     {
         $this->_title($this->__('Recommendations'));
