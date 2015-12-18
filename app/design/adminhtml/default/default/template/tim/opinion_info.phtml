@@ -1,6 +1,7 @@
 <?php
 $opinion = $this->getOpinionData();
 $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
+$byIt = $opinion['by_it'] ? $this->__('Yes') : $this->__('No');
 ?>
 <div class="content-header">
     <table cellspacing="0">
@@ -44,7 +45,7 @@ $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
     </div><p>
     <div class="tim-recommend">
         <b><?php echo $this->__('Do you use this product'); ?>:</b>
-        <?php echo $this->__('Yes'); ?>/<?php echo $this->__('No'); ?>
+        <?php echo $byIt; ?>
     </div><p><div class="tim-recommend">
         <b><?php echo $this->__('Recommend'); ?>:</b>
         <?php echo $recommend; ?>
