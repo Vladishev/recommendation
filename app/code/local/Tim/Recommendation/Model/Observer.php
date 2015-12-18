@@ -147,7 +147,6 @@ class Tim_Recommendation_Model_Observer
     public function sendEmail($toEmail, $templateVar, $subject)
     {
         $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_to'), ',;'));
-        $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_method');
         if ($subject == 'Opinion') {
             $templateId = 'opinion_template';
         } else {
@@ -161,13 +160,17 @@ class Tim_Recommendation_Model_Observer
             ->setSubject($subject)
             ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
             ->setType('html');
-        if ($method === 1)
-        {
-            $mail->setCc($copyTo);
-        }
-        if ($method === 2)
-        {
-            $mail->setBcc($copyTo);
+        if (!empty($copyTo[0])) {
+            $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_method');
+
+            if ($method === 1)
+            {
+                $mail->setCc($copyTo);
+            }
+            if ($method === 2)
+            {
+                $mail->setBcc($copyTo);
+            }
         }
 
         if($subject == 'Opinion')
