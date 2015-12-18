@@ -161,6 +161,7 @@ class Tim_Recommendation_Model_Observer
             ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
             ->setType('html');
         if (!empty($copyTo[0])) {
+
             $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_method');
 
             if ($method === 1)
