@@ -71,6 +71,46 @@
         });
     }
 
+    function displayRecommendationPopup(recom_id) {
+        if (document.getElementById('recomId')) {
+            document.getElementById("recomId").remove();
+        }
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("id", "recomId");
+        input.setAttribute("name", "recomId");
+        input.setAttribute("value", recom_id);
+        document.getElementById('tim_recommendation_comment_grid_table').appendChild(input);
+
+        var url = '<?php echo $this->getUrl("adminhtml/opinionInfo/infoPopup") ?>id/' + recom_id;
+
+        if ($('browser_window') && typeof(Windows) != 'undefined') {
+            Windows.focus('browser_window');
+            return;
+        }
+
+        var dialogWindow = Dialog.info(null, {
+            closable: true,
+            resizable: false,
+            draggable: true,
+            className: 'magento',
+            windowClassName: 'popup-window',
+            title: 'Opinion Info',
+            top: 50,
+            width: 550,
+            height: 200,
+            zIndex: 1000,
+            recenterAuto: false,
+            hideEffect: Element.hide,
+            showEffect: Element.show,
+            id: 'browser_window',
+            url: url,
+            onClose: function (param, el) {
+
+            }
+        });
+    }
+
     function closePopup() {
         Windows.close('browser_window');
     }
