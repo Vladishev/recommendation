@@ -17,6 +17,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     {
         parent::__construct();
         $this->setId('tim_recommendation_opinion_grid');
+        $this->setDefaultSort('recom_id');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);

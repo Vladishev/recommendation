@@ -12,8 +12,8 @@ class Tim_Recommendation_Block_Adminhtml_Render_RecomMedia extends Mage_Adminhtm
 {
     public function render(Varien_Object $row)
     {
-        $productId = $row->getData($this->getColumn()->getIndex());
-        $recomMedia = Mage::getModel('tim_recommendation/media')->load($productId,'recom_id')->getData();
+        $recomId = $row->getData($this->getColumn()->getIndex());
+        $recomMedia = Mage::getModel('tim_recommendation/media')->load($recomId, 'recom_id')->getData();
         if (empty($recomMedia)) {
             return Mage::helper('tim_recommendation')->__('No');
         } else {

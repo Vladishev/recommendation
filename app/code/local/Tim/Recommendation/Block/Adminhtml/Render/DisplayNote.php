@@ -15,7 +15,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
         $return = '';
         $recomId = $row->getRecomId();
         $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('id' => $recomId));
-        $title = Mage::helper('tim_recommendation')->__('Add note');
+        $title = Mage::helper('tim_recommendation')->__('Display note');
         $note = $this->getNote($recomId);
         if (!empty($note)) {
             $return .= $note;
