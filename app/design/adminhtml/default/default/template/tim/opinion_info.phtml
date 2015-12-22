@@ -2,6 +2,8 @@
 $opinion = $this->getOpinionData();
 $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
 $byIt = $opinion['by_it'] ? $this->__('Yes') : $this->__('No');
+$images = $opinion['images'] ? $this->__('Yes') : $this->__('No');
+$video = $opinion['movie_url'] ? $this->__('Yes') : $this->__('No');
 ?>
 <div class="content-header">
     <table cellspacing="0">
@@ -46,9 +48,18 @@ $byIt = $opinion['by_it'] ? $this->__('Yes') : $this->__('No');
     <div class="tim-recommend">
         <b><?php echo $this->__('Do you use this product'); ?>:</b>
         <?php echo $byIt; ?>
-    </div><p><div class="tim-recommend">
+    </div><p>
+    <div class="tim-recommend">
         <b><?php echo $this->__('Recommend'); ?>:</b>
         <?php echo $recommend; ?>
+    </div><p>
+    <div class="tim-recommend">
+        <b><?php echo $this->__('Photo'); ?>:</b>
+        <?php echo $images; ?>
+    </div><p>
+    <div class="tim-recommend">
+        <b><?php echo $this->__('Film'); ?>:</b>
+        <?php echo $video; ?>
     </div><p>
     <div class="tim-date-add">
         <b><?php echo $this->__('Date Added'); ?>:</b>
@@ -56,8 +67,7 @@ $byIt = $opinion['by_it'] ? $this->__('Yes') : $this->__('No');
     </div><p>
     <div class="tim-media">
         <div class="tim-image">
-            <?php foreach ($opinion['media'] as $type => $path): ?>
-                <?php if ($type === 'url/youtube') { continue; } ?>
+            <?php foreach ($opinion['images'] as $type => $path): ?>
                 <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $path ?>" width="100" height="100" alt="img"/>
             <?php endforeach; ?>
         </div>
