@@ -40,4 +40,9 @@ class Tim_Recommendation_Adminhtml_NoteController extends Mage_Adminhtml_Control
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
         }
     }
+
+    protected function _isAllowed()
+    {
+        return true;
+    }
 }
