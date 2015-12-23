@@ -57,6 +57,7 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
             'type' => 'datetime',
             'width' => '100',
             'filter_index' => 'main_table.date_add',
+            'filter_time' => true,
         ));
 
         return parent::_prepareColumns();
