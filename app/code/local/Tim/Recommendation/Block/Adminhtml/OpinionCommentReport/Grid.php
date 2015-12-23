@@ -14,7 +14,9 @@ class Tim_Recommendation_Block_Adminhtml_OpinionCommentReport_Grid extends Mage_
     {
         parent::__construct();
         $this->setId('tim_recommendation_opinion_comment_grid');
+        $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
+        $this->setUseAjax(true);
     }
 
     protected function _prepareCollection()
@@ -167,5 +169,15 @@ class Tim_Recommendation_Block_Adminhtml_OpinionCommentReport_Grid extends Mage_
         $this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel XML'));
 
         return parent::_prepareColumns();
+    }
+
+    /**
+     * Returns a grid URL
+     *
+     * @return string
+     */
+    public function getGridUrl()
+    {
+        return $this->getUrl('*/*/grid', array('_current' => true));
     }
 }
