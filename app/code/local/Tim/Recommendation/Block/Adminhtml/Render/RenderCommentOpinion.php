@@ -12,8 +12,8 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mag
 {
     /**
      * Accept recom_id and check what is it: comment or opinion.
-     * If it's opinion - returns data from 'advantages' field.
-     * If it's comment - returns data from 'comment' field.
+     * If it's opinion - returns data from 'advantages' field and recom_id.
+     * If it's comment - returns data from 'comment' field and recom_id.
      * @param Varien_Object $row
      * @return mixed
      */
@@ -21,11 +21,14 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mag
     {
         $recomId = $row->getRecomId();
         $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
-        if ($advantages = $recomRow->getAdvantages()) {
-            return $advantages;
+        if ($recomRow->getAdvantages()) {
+            $advantages = substr($recomRow->getAdvantages(), 0, 100);
+            $string = '<p align="center"><b>' . $recomId . '</b></p>' . $advantages . '...';
+            return $string;
         } else {
-            $comment = $recomRow->getComment();
-            return $comment;
+            $comment = substr($recomRow->getComment(), 0, 100);
+            $string = '<p align="center"><b>' . $recomId . '</b></p>' . $comment . '...';
+            return $string;
         }
     }
 }
