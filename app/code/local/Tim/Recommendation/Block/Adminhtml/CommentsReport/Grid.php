@@ -18,7 +18,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         $this->setId('tim_recommendation_comment_grid');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
-        $this->setUseAjax(false);
+        $this->setUseAjax(true);
     }
 
     protected function _prepareCollection()
@@ -141,5 +141,15 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         ));
 
         return $this;
+    }
+
+    /**
+     * Returns a grid URL
+     *
+     * @return string
+     */
+    public function getGridUrl()
+    {
+        return $this->getUrl('*/*/grid', array('_current' => true));
     }
 }
