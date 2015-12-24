@@ -83,6 +83,9 @@
         </reference>
     </recommendation_index_confirm>
     <customer_account>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
+        </reference>
         <reference name="customer_account_navigation">
             <action method="addLink">
                 <name>Recommendation</name>

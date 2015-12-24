@@ -49,10 +49,26 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $siteUrl = null;
         $nick = null;
         $postData = $this->getRequest()->getPost();
-        if (!empty($_FILES['image']['name'])) {
-            $avatar = time() . $_FILES['image']['name'];
+        if (!empty($postData['selected_avatar'])) {
+            $avatar = $postData['selected_avatar'];
+            $defaultAvatar = true;
+        }
+        if (empty($avatar)) {
+            if (!empty($_FILES['image']['name'])) {
+                if (!$this->checkFileSize($_FILES['image']['size'], 419430) ||
+                    !$this->checkFileType($_FILES['image']['type'])) {
+                    $this->_redirect('*/*/edit');
+                    return;
+                }
+                $avatar = time() . $_FILES['image']['name'];
+            }
         }
         if (!empty($_FILES['banner']['name'])) {
+            if (!$this->checkFileSize($_FILES['banner']['size'], 419430) ||
+                !$this->checkFileType($_FILES['banner']['type'])) {
+                $this->_redirect('*/*/edit');
+                return;
+            }
             $banner = time() . $_FILES['banner']['name'];
         }
         $siteUrl = $postData['url'];
@@ -79,7 +95,9 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
         if (!is_null($avatar)) {
             try {
-                Mage::helper('tim_recommendation')->saveImage($avatar, $path, 'image');
+                if (empty($defaultAvatar)) {
+                    Mage::helper('tim_recommendation')->saveImage($avatar, $path, 'image');
+                }
                 $dbPath = '/media/tim/recommendation/' . $avatar;
                 if (!empty($userData)) {
                     $user->setAvatar($dbPath);
@@ -158,11 +176,44 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
                     Mage::getSingleton('core/session')->addError($e->getMessage());
                 }
             } elseif ($existingNick['nick'] == $nick and $existingNick['customer_id'] == $customerId) {
-            }else {
+            } else {
                 Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Sorry, but this nick already exist.'));
             }
         }
 
         $this->_redirect('*/*/edit');
+    }
+
+    /**
+     * Check file type
+     * @param string $fileType
+     * @return bool
+     */
+    public function checkFileType($fileType)
+    {
+        switch ($fileType) {
+            case 'image/png':
+            case 'image/jpeg':
+                break;
+            default:
+                Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Nie można przesłać pliku. Dopuszczalne są pliki graficzne w formacie jpg lub png.'));
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check file size
+     * @param int $fileSize
+     * @param int $limit
+     * @return bool
+     */
+    public function checkFileSize($fileSize, $limit)
+    {
+        if ($fileSize > $limit) {
+            Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Nie można przesłać pliku. Maksymalny rozmiar to 400 kb.'));
+            return false;
+        }
+        return true;
     }
 }

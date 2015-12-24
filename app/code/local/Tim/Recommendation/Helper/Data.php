@@ -70,7 +70,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getUserNick($customerId = null)
     {
-        if(empty($customerId)){
+        if (empty($customerId)) {
             $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
             $nick = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
         } else {
@@ -86,7 +86,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $banner = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAd();
-        if(!empty($banner)) {
+        if (!empty($banner)) {
             $banner = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $banner;
             return $banner;
         } else {
@@ -150,7 +150,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getCustomerNameOrNick($customerId)
     {
         $customerName = $this->getCustomerNickname($customerId);
-        if(empty($customerName)){
+        if (empty($customerName)) {
             $customerName = $this->getCustomerName($customerId);
         }
 
@@ -307,5 +307,38 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         } else {
             return $recomId;
         }
+    }
+
+    /**
+     * Return all path to avatars from system configuration (tim_avatar_settings/default_avatars)
+     * @return array
+     */
+    public function getDefaultAvatarsPath()
+    {
+        $path = Mage::getBaseUrl('media') . 'tim/recommendation' . DS;
+        $avatars = array();
+        for ($i = 1; $i <= 5; $i++) {
+            $fileName = Mage::getStoreConfig('tim_avatar_settings/default_avatars/avatar' . $i);
+            if($fileName){
+                $avatars[] = $path . $fileName;
+            }
+        }
+        return $avatars;
+    }
+
+    /**
+     * Return all file name to avatars from system configuration (tim_avatar_settings/default_avatars)
+     * @return array
+     */
+    public function getDefaultAvatarsFile()
+    {
+        $avatars = array();
+        for ($i = 1; $i <= 5; $i++) {
+            $fileName = Mage::getStoreConfig('tim_avatar_settings/default_avatars/avatar' . $i);
+            if($fileName){
+                $avatars[] = $fileName;
+            }
+        }
+        return $avatars;
     }
 }
