@@ -93,25 +93,16 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'filter_index' => 'tim_host',
             'sortable' => true
         ));
-        $this->addColumn('detail',
-            array(
-                'header' => Mage::helper('tim_recommendation')->__('Detail'),
-                'width' => '70',
-                'type' => 'action',
-                'getter' => 'getRecomId',
-                'actions' => array(
-                    array(
-                        'caption' => Mage::helper('tim_recommendation')->__('Detail'),
-                        'url' => array('base' => '*/opinionReport/opinionInfo'),
-                        'target' => '_blank',
-                        'field' => 'id'
-                    )
-                ),
-                'filter' => false,
-                'sortable' => false,
-                'index' => 'stores',
-                'is_system' => true,
-            ));
+        $this->addColumn('detail', array(
+            'header' => Mage::helper('tim_recommendation')->__('Detail'),
+            'width' => '70',
+            'type' => 'text',
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RenderDetailActions',
+            'index' => 'recom_id',
+            'filter' => false,
+            'sortable' => false,
+            'is_system' => true,
+        ));
 
 
         $this->addExportType('*/*/exportCsv', Mage::helper('sales')->__('CSV'));

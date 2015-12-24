@@ -9,6 +9,11 @@
  */
 class Tim_Recommendation_Block_Adminhtml_Render_RenderTitle extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
+    /**
+     * Render type of content
+     * @param Varien_Object $row
+     * @return string
+     */
     public function render(Varien_Object $row)
     {
         $recomId = $row->getRecomId();
