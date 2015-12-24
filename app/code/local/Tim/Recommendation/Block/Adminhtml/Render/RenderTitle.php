@@ -20,10 +20,9 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderTitle extends Mage_Adminht
         $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
         if ($recomRow->getParent()) {
             $title = $this->__('Comment');
-            return $title;
         } else {
             $title = $this->__('Opinion');
-            return $title;
         }
+        return $title;
     }
 }

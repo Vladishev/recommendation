@@ -21,14 +21,20 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mag
     {
         $recomId = $row->getRecomId();
         $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
-        if ($recomRow->getAdvantages()) {
-            $advantages = substr($recomRow->getAdvantages(), 0, 100);
-            $string = '<p align="center"><b>' . $recomId . '</b></p>' . $advantages . '...';
-            return $string;
+        if ($advantages = $recomRow->getAdvantages()) {
+            if (strlen($advantages) > 100) {
+                $string = '<p align="center"><b>' . $recomId . '</b></p>' . substr($advantages, 0, 99) . '...';
+            } else {
+                $string = '<p align="center"><b>' . $recomId . '</b></p>' . $advantages;
+            }
         } else {
-            $comment = substr($recomRow->getComment(), 0, 100);
-            $string = '<p align="center"><b>' . $recomId . '</b></p>' . $comment . '...';
-            return $string;
+            $comment = $recomRow->getComment();
+            if (strlen($comment) > 100) {
+                $string = '<p align="center"><b>' . $recomId . '</b></p>' . substr($comment, 0, 99) . '...';
+            } else {
+                $string = '<p align="center"><b>' . $recomId . '</b></p>' . $comment;
+            }
         }
+        return $string;
     }
 }
