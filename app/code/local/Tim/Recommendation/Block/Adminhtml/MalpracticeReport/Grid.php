@@ -28,6 +28,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             "cev1.entity_id = main_table.user_id AND cev1.attribute_id = 7", array('customer_lastname' => 'value'));
         $collection->getSelect()->joinLeft(array('tr' => 'tim_recommendation'), 'main_table.recom_id= tr.recom_id', array('parent'));
         $this->setCollection($collection);
+
         return parent::_prepareCollection();
     }
 
@@ -54,7 +55,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         $this->addColumn('recom_id', array(
             'header' => Mage::helper('tim_recommendation')->__('Comment ID / Opinion ID'),
             'width' => '100',
-            'index' => 'recom_id',
+            'index' => 'main_table.recom_id',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion',
         ));
         $this->addColumn('name', array(
@@ -69,28 +70,28 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'width' => '10',
             'type' => 'datetime',
             'index' => 'date_add',
-            'filter_index' => 'date_add',
+            'filter_index' => 'main_table.date_add',
             'sortable' => true
         ));
         $this->addColumn('malpractice_text', array(
             'header' => Mage::helper('tim_recommendation')->__('Malpractice text'),
             'width' => '100',
             'index' => 'comment',
-            'filter_index' => 'comment',
+            'filter_index' => 'main_table.comment',
             'sortable' => true
         ));
         $this->addColumn('tim_ip', array(
             'header' => Mage::helper('tim_recommendation')->__('IP'),
             'width' => '10',
             'index' => 'tim_ip',
-            'filter_index' => 'tim_ip',
+            'filter_index' => 'main_table.tim_ip',
             'sortable' => true
         ));
         $this->addColumn('tim_host', array(
             'header' => Mage::helper('tim_recommendation')->__('host'),
             'width' => '15',
             'index' => 'tim_host',
-            'filter_index' => 'tim_host',
+            'filter_index' => 'main_table.tim_host',
             'sortable' => true
         ));
         $this->addColumn('detail', array(
