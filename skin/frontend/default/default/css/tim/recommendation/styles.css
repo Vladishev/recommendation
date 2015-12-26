@@ -559,7 +559,7 @@ display: none;
 	position:relative;
 	top:2px;
 	color:#ECECED;
-	padding: 8px 25px;	
+	padding: 8px 25px;
  }
  
  .tim-rating-input input[type=file] + label:hover {
@@ -1125,3 +1125,5 @@ label.tim-rating-button-boolean-label {
     position: relative;
     bottom: -20px;
 }
+
+#form-validate label.required em { color: #eb340a; }

@@ -308,4 +308,14 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return $recomId;
         }
     }
+
+    /**
+     * Get all fields from system configuration (tim_settings/required_opinion_fields)
+     * @return array
+     */
+    public function getOpinionRequiredFields()
+    {
+        $fieldValues = Mage::getStoreConfig('tim_settings/required_opinion_fields');
+        return $fieldValues;
+    }
 }

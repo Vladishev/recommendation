@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -396,5 +397,14 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getHelper()
     {
         return Mage::helper('tim_recommendation');
+    }
+
+    /**
+     * Get all fields from system configuration (tim_settings/required_opinion_fields)
+     * @return array
+     */
+    public function getRequiredFields()
+    {
+        return $this->getHelper()->getOpinionRequiredFields();
     }
 }
