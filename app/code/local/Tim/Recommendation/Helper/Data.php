@@ -308,4 +308,15 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return $recomId;
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getOpinionMaxMinCharacters()
+    {
+        $opinionLimit['max'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_opinion_max');
+        $opinionLimit['min'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_opinion_min');
+
+        return $opinionLimit;
+    }
 }
