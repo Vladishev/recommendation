@@ -7,13 +7,16 @@ $customerHostName = $this->getHost($customerIp);
 $productId = $product->getId();
 $manufacturerId = $product->getManufacturer();
 $currentCategoryId = $product->getCategoryId();
-$opinionLimitCharacters = Mage::helper('tim_recommendation')->getOpinionMaxMinCharacters();
-$placeholder = '';
+$opinionLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacters('opinion');
+$opinionPlaceholder = '';
+$opinionClass = '';
 if (!empty($opinionLimitCharacters['min'])) {
-    $placeholder .= $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
+    $opinionPlaceholder .= $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
+    $opinionClass .= ' min-length-opinion';
 }
 if (!empty($opinionLimitCharacters['max'])) {
-    $placeholder .= $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
+    $opinionPlaceholder .= $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
+    $opinionClass .= ' max-length-opinion';
 }
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate"
@@ -25,9 +28,9 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
 
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-advantages" id="tim-opinion-advantages" class="custom-url-validate" cols="5" rows="3" oninput="placeholderAction(this)"></textarea>
+                <textarea name="opinion-advantages" id="tim-opinion-advantages" class="<?php echo $opinionClass ?>" cols="5" rows="3" oninput="placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
-                    <?php echo $placeholder; ?>
+                    <?php echo $opinionPlaceholder; ?>
                 </div>
             </div>
             <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad">
@@ -35,9 +38,9 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
 
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" oninput="placeholderAction(this)"></textarea>
+                <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" class="<?php echo $opinionClass ?>" oninput="placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
-                    <?php echo $placeholder; ?>
+                    <?php echo $opinionPlaceholder; ?>
                 </div>
             </div>
             <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary">
@@ -45,9 +48,9 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
 
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" oninput="placeholderAction(this)"></textarea>
+                <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" class="<?php echo $opinionClass ?>" oninput="placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
-                    <?php echo $placeholder; ?>
+                    <?php echo $opinionPlaceholder; ?>
                 </div>
             </div>
             <div class="tim-rating-input-container">
@@ -152,15 +155,8 @@ if (!empty($opinionLimitCharacters['max'])) {
 </form>
 <script type="text/javascript">
     //<![CDATA[
-    var dataForm = new VarienForm('form-validate');
-//    Validation.add('custom-url-validate', 'Please enter a valid URL. For example http://www.example.com or www.example.com or example.com', function () {
-//        var url = document.getElementById("tim-form-url").value;
-//        var pattern = /([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
-//        if (pattern.test(url)) {
-//            return true;
-//        }
-//        return false;
-//    });
+    var dataForm = new VarienForm('form-validate', true);
+
 
     var placeholderAction = function (elem) {
         var id = jQuery(elem).attr('id');
@@ -170,5 +166,25 @@ if (!empty($opinionLimitCharacters['max'])) {
             jQuery('#ph-'+id).show();
         }
     }
+
+    Validation.add('min-length-opinion', '<?php echo $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] ?>', function (v) {
+        var min = <?php echo ($opinionLimitCharacters['min']) ? $opinionLimitCharacters['min'] : 0 ?>;
+        if (min) {
+            if (v.length < min) {
+                return false;
+            }
+        }
+        return true;
+    });
+
+    Validation.add('max-length-opinion', '<?php echo $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'] ?>', function (v) {
+        var max = <?php echo ($opinionLimitCharacters['max']) ? $opinionLimitCharacters['max'] : 0 ?>;
+        if (max) {
+            if (v.length > max) {
+                return false;
+            }
+        }
+        return true;
+    });
     //]]>
 </script>

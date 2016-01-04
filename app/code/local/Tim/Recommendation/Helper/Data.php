@@ -310,13 +310,17 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Takes two types:
+     * - opinion - returns settings for opinion
+     * - comment - returns settings for comment
+     * @param (string)$type
      * @return array
      */
-    public function getOpinionMaxMinCharacters()
+    public function getMaxMinCharacters($type)
     {
-        $opinionLimit['max'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_opinion_max');
-        $opinionLimit['min'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_opinion_min');
+        $limit['max'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_' . $type . '_max');
+        $limit['min'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_' . $type . '_min');
 
-        return $opinionLimit;
+        return $limit;
     }
 }
