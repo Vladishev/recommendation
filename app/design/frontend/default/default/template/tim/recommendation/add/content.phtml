@@ -20,8 +20,8 @@ $currentCategoryId = $product->getCategoryId();
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
-                    <?php echo $requiredFields['advantages']? 'class="required-entry"' : '' ?>>
-                </textarea>
+                    <?php echo $requiredFields['advantages']? 'class="required-entry"' : '' ?>
+                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
             </div>
 
             <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad <?php echo $requiredFields['defects']? 'required' : '' ?>">
@@ -30,8 +30,8 @@ $currentCategoryId = $product->getCategoryId();
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
-                    <?php echo $requiredFields['defects']? 'class="required-entry"' : '' ?>>
-                </textarea>
+                    <?php echo $requiredFields['defects']? 'class="required-entry"' : '' ?>
+                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
             </div>
 
             <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary <?php echo $requiredFields['summary']? 'required' : '' ?>">
@@ -40,8 +40,8 @@ $currentCategoryId = $product->getCategoryId();
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
-                    <?php echo $requiredFields['summary']? 'class="required-entry"' : '' ?>>
-                </textarea>
+                    <?php echo $requiredFields['summary']? 'class="required-entry"' : '' ?>
+                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
             </div>
             <div class="tim-rating-input-container">
                 <div class="tim-secondary-title"><?php echo $this->__('OCEŃ WALORY PRODUKTU') ?></div>
@@ -61,7 +61,7 @@ $currentCategoryId = $product->getCategoryId();
                         <input type="radio" name="itemValuetomoney"
                         class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemValuetomoney-1-<?php echo $option ?>" value="<?php echo $option ?>"
-                        </input>
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemValuetomoney-1-<?php echo $option ?>" class="tim-rating-star"></label>
                         <?php endforeach; ?>
                     </span>
@@ -82,7 +82,7 @@ $currentCategoryId = $product->getCategoryId();
                         <input type="radio" name="itemDurability"
                         class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemDurability-1-<?php echo $option ?>" value="<?php echo $option ?>"
-                        </input>
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemDurability-1-<?php echo $option ?>" class="tim-rating-star"></label>
                         <?php endforeach; ?>
                     </span>
@@ -103,7 +103,7 @@ $currentCategoryId = $product->getCategoryId();
                         <input type="radio" name="itemFailure"
                         class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemFailure-1-<?php echo $option ?>" value="<?php echo $option ?>"
-                        </input>
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemFailure-1-<?php echo $option ?>" class="tim-rating-star"></label>
                         <?php endforeach; ?>
                     </span>
@@ -124,7 +124,7 @@ $currentCategoryId = $product->getCategoryId();
                         <input type="radio" name="itemEaseofinstall"
                         class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemEaseofinstall-1-<?php echo $option ?>" value="<?php echo $option ?>"
-                        </input>
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemEaseofinstall-1-<?php echo $option ?>" class="tim-rating-star"></label>
                         <?php endforeach; ?>
                     </span>
@@ -140,10 +140,12 @@ $currentCategoryId = $product->getCategoryId();
                     <?php if(!$requiredFields['use_product']) : ?>
                         <input type="hidden" name="itemDoyouuseitem" value="null"/>
                     <?php endif; ?>
-                    <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem1" value="1" class="radio tim-rating-button-boolean"></input>
+                    <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem1" value="1" class="radio tim-rating-button-boolean"
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyouuseitem1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
                     <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem2" value="0"
-                           class="radio tim-rating-button-boolean <?php echo $requiredFields['use_product'] ? 'validate-one-required':'' ?>"></input>
+                           class="radio tim-rating-button-boolean <?php echo $requiredFields['use_product'] ? 'validate-one-required':'' ?>"
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyouuseitem2" class="tim-rating-button-boolean-label"><?php echo $this->__('No') ?></label>
                 </div>
                 <div class="tim-rating-input">
@@ -156,10 +158,12 @@ $currentCategoryId = $product->getCategoryId();
                     <?php if(!$requiredFields['recommend_product']) : ?>
                         <input type="hidden" name="itemDoyourecommend" value="null"/>
                     <?php endif; ?>
-                    <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend1" value="1" class="radio tim-rating-button-boolean"></input>
+                    <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend1" value="1" class="radio tim-rating-button-boolean"
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyourecommend1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
                     <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend2" value="0"
-                           class="radio tim-rating-button-boolean <?php echo $requiredFields['recommend_product'] ? 'validate-one-required':'' ?>"></input>
+                           class="radio tim-rating-button-boolean <?php echo $requiredFields['recommend_product'] ? 'validate-one-required':'' ?>"
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyourecommend2" class="tim-rating-button-boolean-label"><?php echo $this->__('No') ?></label>
                 </div>
                 <div class="tim-rating-input">
@@ -170,7 +174,8 @@ $currentCategoryId = $product->getCategoryId();
                         <?php endif; ?>
                     </p>
                     <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"
-                           class="tim-comm-button-smal <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"/>
+                           class="tim-comm-button-smal <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Wczytaj zdjęcia') ?></label>
                     <!-- place for user input - upload photos -->
                 </div>
@@ -185,7 +190,8 @@ $currentCategoryId = $product->getCategoryId();
                            class="input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Podaj link z serwisu Youtube') ?>" style="color:#949090;"
                            onfocus="{ this.value = ''; }"
-                           onblur="if(this.placeholder == '') { this.placeholder = 'Podaj link z serwisu Youtube'; }"/>
+                           onblur="if(this.placeholder == '') { this.placeholder = 'Podaj link z serwisu Youtube'; }"
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <!-- place for user input - add movie - url to youtube -->
                 </div>
 
