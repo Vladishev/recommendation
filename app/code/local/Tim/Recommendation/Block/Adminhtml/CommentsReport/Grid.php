@@ -16,6 +16,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
     {
         parent::__construct();
         $this->setId('tim_recommendation_comment_grid');
+        $this->setDefaultSort('date_add');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
@@ -39,16 +40,16 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
 
     protected function _prepareColumns()
     {
+        $this->addColumn('comment_id', array(
+            'header' => Mage::helper('tim_recommendation')->__('Comment ID'),
+            'width' => '10',
+            'index' => 'recom_id',
+        ));
         $this->addColumn('recom_id', array(
             'header' => Mage::helper('tim_recommendation')->__('Recom ID'),
             'width' => '10',
             'index' => 'parent',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RecommendDesc',
-        ));
-        $this->addColumn('comment_id', array(
-            'header' => Mage::helper('tim_recommendation')->__('Comment ID'),
-            'width' => '10',
-            'index' => 'recom_id',
         ));
         $this->addColumn('name', array(
             'header' => Mage::helper('tim_recommendation')->__('Customer Name'),
