@@ -16,6 +16,7 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
     {
         parent::__construct();
         $this->setId('tim_recommendation_note_grid');
+        $this->setDefaultSort('date_add');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
