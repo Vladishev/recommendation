@@ -79,7 +79,7 @@
                             <avatar1 translate="label comment" module="tim_recommendation">
                                 <label>Avatar 1</label>
                                 <frontend_type>image</frontend_type>
-                                <backend_model>adminhtml/system_config_backend_image</backend_model>
+                                <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
                                 <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
                                 <base_url type="media">tim/recommendation</base_url>
                                 <sort_order>5</sort_order>
@@ -90,7 +90,7 @@
                             <avatar2 translate="label comment" module="tim_recommendation">
                                 <label>Avatar 2</label>
                                 <frontend_type>image</frontend_type>
-                                <backend_model>adminhtml/system_config_backend_image</backend_model>
+                                <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
                                 <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
                                 <base_url type="media">tim/recommendation</base_url>
                                 <sort_order>10</sort_order>
@@ -101,7 +101,7 @@
                             <avatar3 translate="label comment" module="tim_recommendation">
                                 <label>Avatar 3</label>
                                 <frontend_type>image</frontend_type>
-                                <backend_model>adminhtml/system_config_backend_image</backend_model>
+                                <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
                                 <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
                                 <base_url type="media">tim/recommendation</base_url>
                                 <sort_order>15</sort_order>
@@ -112,7 +112,7 @@
                             <avatar4 translate="label comment" module="tim_recommendation">
                                 <label>Avatar 4</label>
                                 <frontend_type>image</frontend_type>
-                                <backend_model>adminhtml/system_config_backend_image</backend_model>
+                                <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
                                 <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
                                 <base_url type="media">tim/recommendation</base_url>
                                 <sort_order>20</sort_order>
@@ -123,7 +123,7 @@
                             <avatar5 translate="label comment" module="tim_recommendation">
                                 <label>Avatar 5</label>
                                 <frontend_type>image</frontend_type>
-                                <backend_model>adminhtml/system_config_backend_image</backend_model>
+                                <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
                                 <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
                                 <base_url type="media">tim/recommendation</base_url>
                                 <sort_order>25</sort_order>
