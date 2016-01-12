@@ -47,7 +47,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         ));
         $this->addColumn('recom_id', array(
             'header' => Mage::helper('tim_recommendation')->__('Recom ID'),
-            'width' => '10',
+            'width' => '50',
             'index' => 'parent',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RecommendDesc',
         ));
