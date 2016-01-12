@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadTinyMce"><flag>1</flag></action>
+            <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+            <action method="addJs"><script>lib/flex.js</script></action>
+            <action method="addJs"><script>lib/FABridge.js</script></action>
+            <action method="addJs"><script>tiny_mce/tiny_mce.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/browser.js</script></action>
+            <action method="addJs"><script>prototype/window.js</script></action>
+            <action method="addJs"><script>prototype/prototype.js</script></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+        </reference>
+    </default>
     <catalog_product_view>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
