@@ -28,7 +28,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
 
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-advantages" id="tim-opinion-advantages" class="<?php echo $opinionClass ?>" cols="5" rows="3" oninput="placeholderAction(this)"></textarea>
+                <textarea name="opinion-advantages" id="tim-opinion-advantages" class="<?php echo $opinionClass ?>" cols="5" rows="3" onclick="placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionPlaceholder; ?>
                 </div>
@@ -38,7 +38,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
 
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" class="<?php echo $opinionClass ?>" oninput="placeholderAction(this)"></textarea>
+                <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" class="<?php echo $opinionClass ?>" onclick="placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
                 </div>
@@ -48,7 +48,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
 
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" class="<?php echo $opinionClass ?>" oninput="placeholderAction(this)"></textarea>
+                <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" class="<?php echo $opinionClass ?>" onclick="placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
                 </div>
@@ -160,12 +160,13 @@ if (!empty($opinionLimitCharacters['max'])) {
 
     var placeholderAction = function (elem) {
         var id = jQuery(elem).attr('id');
-        if (jQuery('#'+id).val()) {
-            jQuery('#ph-'+id).hide();
-        } else {
-            jQuery('#ph-'+id).show();
-        }
-    }
+        jQuery('#ph-'+id).hide();
+        jQuery('#' + id).focusout(function(){
+            if (!jQuery('#'+id).val()) {
+                jQuery('#ph-'+id).show();
+            }
+        });
+    };
 
     Validation.add('min-length-opinion', '<?php echo $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] ?>', function (v) {
         var min = <?php echo ($opinionLimitCharacters['min']) ? $opinionLimitCharacters['min'] : 0 ?>;

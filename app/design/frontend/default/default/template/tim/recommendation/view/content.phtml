@@ -12,11 +12,11 @@ $commentPlaceholder = '';
 $commentClass = '';
 if (!empty($commentLimitCharacters['min'])) {
     $commentPlaceholder .= $this->__('The minimum number of characters is ') . $commentLimitCharacters['min'] . '<br>';
-    $commentClass .= ' min-length-comment';
+    $commentClass .= 'min-length-comment ';
 }
 if (!empty($commentLimitCharacters['max'])) {
     $commentPlaceholder .= $this->__('The maximum number of characters is ') . $commentLimitCharacters['max'];
-    $commentClass .= ' max-length-comment';
+    $commentClass .= 'max-length-comment ';
 }
 ?>
 <div class="tim-opinion"> <!-- main container for opinion -->
@@ -128,7 +128,7 @@ if (!empty($commentLimitCharacters['max'])) {
             <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
         <div class="tim-opinion-content tim-add-opinion">
-            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="input-text required-entry validate-no-html-tags<?php echo $commentClass ?>"  oninput="placeholderAction(this)"></textarea>
+            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="<?php echo $commentClass ?>input-text required-entry validate-no-html-tags"  onclick="placeholderAction(this)"></textarea>
             <div id="ph-tim-opinion-comment" class="placeholder-div">
                 <?php echo $commentPlaceholder; ?>
             </div>
@@ -167,12 +167,13 @@ var dataForm = new VarienForm('form-validate-comment');
 
 var placeholderAction = function (elem) {
     var id = jQuery(elem).attr('id');
-    if (jQuery('#'+id).val()) {
-        jQuery('#ph-'+id).hide();
-    } else {
-        jQuery('#ph-'+id).show();
-    }
-}
+    jQuery('#ph-'+id).hide();
+    jQuery('#' + id).focusout(function(){
+        if (!jQuery('#'+id).val()) {
+            jQuery('#ph-'+id).show();
+        }
+    });
+};
 
 Validation.add('min-length-comment', '<?php echo $this->__('The minimum number of characters is ') . $commentLimitCharacters['min'] ?>', function (v) {
     var min = <?php echo ($commentLimitCharacters['min']) ? $commentLimitCharacters['min'] : 0 ?>;

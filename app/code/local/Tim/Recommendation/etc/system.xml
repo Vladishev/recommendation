@@ -159,6 +159,7 @@
                         <tim_opinion_min>
                             <label>The minimum number of characters</label>
                             <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
