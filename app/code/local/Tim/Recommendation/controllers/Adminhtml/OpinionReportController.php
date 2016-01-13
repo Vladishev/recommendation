@@ -20,7 +20,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
 
     public function opinionInfoAction()
     {
-        $this->_title($this->__('Opinion info'));
+        $this->_title($this->__('Szczegóły opinii'));
         $this->loadLayout();
         $this->renderLayout();
     }
