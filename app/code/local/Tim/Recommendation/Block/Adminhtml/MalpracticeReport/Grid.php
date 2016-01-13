@@ -13,6 +13,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
     {
         parent::__construct();
         $this->setId('tim_recommendation_malpractice_grid');
+        $this->setDefaultSort('date_add');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
