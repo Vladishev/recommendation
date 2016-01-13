@@ -142,7 +142,7 @@
                     </fields>
                 </confirm_opinion>
                 <required_opinion_fields translate="label">
-                    <label>Required fields in the opinion and comments</label>
+                    <label>Required fields in the opinion</label>
                     <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
