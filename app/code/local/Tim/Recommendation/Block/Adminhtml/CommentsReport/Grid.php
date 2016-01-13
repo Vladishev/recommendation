@@ -25,6 +25,15 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        if ($recomId = $this->getRequest()->getParam('commentId')) {
+            $collection->addFieldToFilter(array('recom_id'), array( array('eq' => $recomId)));
+        }
+        $collection->getSelect()->join(array('val' => 'customer_entity_varchar'),
+            "val.entity_id = main_table.user_id AND val.attribute_id = (SELECT ea.attribute_id FROM eav_attribute ea JOIN eav_entity_type eat ON eat.entity_type_id = ea.entity_type_id WHERE ea.attribute_code IN ('firstname') AND eat.entity_type_code= 'customer')",
+            array("Akceptacja" => "IF (main_table.acceptance =1,'TAK','NIE')"));
+        $collection->getSelect()->join(array('val1' => 'customer_entity_varchar'),
+            "val1.entity_id = main_table.user_id AND val1.attribute_id = (SELECT ea.attribute_id FROM eav_attribute ea JOIN eav_entity_type eat ON eat.entity_type_id = ea.entity_type_id WHERE ea.attribute_code IN ('lastname') AND eat.entity_type_code= 'customer')",
+            array("name" => "CONCAT( val.value,' ', val1.value)"));
         $collection->getSelect()->joinLeft(array('cev' => 'customer_entity_varchar'),
             "cev.entity_id = main_table.user_id AND cev.attribute_id = 5", array('customer_firstname' => 'value'));
         $collection->getSelect()->joinLeft(array('cev1' => 'customer_entity_varchar'),

@@ -15,7 +15,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_CustomerNameNickname extends Mag
         $customerId = $row->getData($this->getColumn()->getIndex());
         $customerNickname = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
         $customer = Mage::getModel('customer/customer')->load($customerId);
-        $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+        $name = $customer->getName();
         if ($customerNickname) {
             $name .= ' (' . $customerNickname . ')';
         }
