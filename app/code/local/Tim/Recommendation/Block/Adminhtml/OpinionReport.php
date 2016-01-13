@@ -16,7 +16,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport extends Mage_Adminhtml_Bl
     {
         $this->_blockGroup = 'tim_recommendation';
         $this->_controller = 'adminhtml_opinionReport';
-        $this->_headerText = Mage::helper('tim_recommendation')->__('Recommendations');
+        $this->_headerText = Mage::helper('tim_recommendation')->__('Opinion');
 
         parent::__construct();
         $this->_removeButton('add');

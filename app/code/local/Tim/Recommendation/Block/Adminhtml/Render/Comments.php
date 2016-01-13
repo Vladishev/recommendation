@@ -12,7 +12,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_Comments extends Mage_Adminhtml_
 {
     public function render(Varien_Object $row)
     {
-        $recommendationId = $row->getData($this->getColumn()->getIndex());
+        $recommendationId = $row->getRecomId();
         $opinion = Mage::getModel('tim_recommendation/recommendation')->load($recommendationId);
         if (!$opinion->getParent()) {
             $advantages = $opinion->getAdvantages();
