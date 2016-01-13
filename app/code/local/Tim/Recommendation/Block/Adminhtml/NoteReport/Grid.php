@@ -16,6 +16,7 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
     {
         parent::__construct();
         $this->setId('tim_recommendation_note_grid');
+        $this->setDefaultSort('date_add');
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
@@ -26,6 +27,8 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
         $id = $this->getRequest()->getParam('id');
         $collection = Mage::getModel('tim_recommendation/note')->getCollection();
         $collection->addFieldToFilter('object_id',$id);
+        $collection->getSelect()->joinLeft(array('au' => 'admin_user'), 'main_table.admin_id = au.user_id',
+            array('username'));
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -42,7 +45,7 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
             'width' => '30',
             'index' => 'admin_id',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_AdminUsername',
-            'filter' => false
+            'filter_index' => 'username',
         ));
         $this->addColumn('note', array(
             'header' => Mage::helper('tim_recommendation')->__('Note'),
