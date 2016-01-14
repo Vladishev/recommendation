@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
         var inputChangeNameSpan = 'span.' + inputChangeName
         /* alert(inputChangeName+inputChangeValue)         */
         jQuery(inputChangeNameSpan).html(inputChangeValue);
-        console.log(inputChangeName);
+        //console.log(inputChangeName);
 
         if (inputChangeName == 'userHaveaccount') {
             if (inputChangeValue == 'TAK') {
