@@ -19,6 +19,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();
+        $userData['avatar'] = Mage::helper('tim_recommendation')->getCustomerAvatar($customerId);
         $userData['user_type_name'] = $this->getHelper()->getUserTypeName($user['user_type']);
         $userData['customer_name'] = $this->getHelper()->getCustomerNameOrNick($customerId);
         $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);
@@ -94,6 +95,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->addFieldToFilter('product_id', $productId);
+        $opinionCollection->addFieldToFilter('acceptance', 1);
         $opinionCollection->getSelect()->where('parent IS NULL');
         $opinionCollection->setOrder('date_add', 'DESC');
         $lastAddedOpinion = $opinionCollection->getData()[0];
