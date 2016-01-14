@@ -365,4 +365,19 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $fieldValues = Mage::getStoreConfig('tim_settings/required_opinion_fields');
         return $fieldValues;
     }
+
+    /**
+     * Takes two types:
+     * - opinion - returns settings for opinion
+     * - comment - returns settings for comment
+     * @param (string)$type
+     * @return array
+     */
+    public function getMaxMinCharacters($type)
+    {
+        $limit['max'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_' . $type . '_max');
+        $limit['min'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_' . $type . '_min');
+
+        return $limit;
+    }
 }

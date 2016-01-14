@@ -323,6 +323,67 @@
                         </add_video>
                     </fields>
                 </required_opinion_fields>
+                <max_min_length translate="label">
+                    <label>The maximum and minimum number of characters in the opinion and comments</label>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <tim_opinion_label>
+                            <label><![CDATA[<strong>Opinia</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_opinion_label>
+                        <tim_opinion_min>
+                            <label>The minimum number of characters</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_opinion_min>
+                        <tim_opinion_max>
+                            <label>The maximum number of characters</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_opinion_max>
+                        <tim_comment_label>
+                            <label><![CDATA[<strong>Komentarz</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_label>
+                        <tim_comment_min>
+                            <label>The minimum number of characters</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_min>
+                        <tim_comment_max>
+                            <label>The maximum number of characters</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_max>
+                    </fields>
+                </max_min_length>
             </groups>
         </tim_settings>
     </sections>

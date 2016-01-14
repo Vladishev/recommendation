@@ -8,6 +8,17 @@ $requiredFields = $this->getRequiredFields();
 $productId = $product->getId();
 $manufacturerId = $product->getManufacturer();
 $currentCategoryId = $product->getCategoryId();
+$opinionLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacters('opinion');
+$opinionPlaceholder = '';
+$opinionClass = '';
+if (!empty($opinionLimitCharacters['min'])) {
+    $opinionPlaceholder .= $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
+    $opinionClass .= ' min-length-opinion';
+}
+if (!empty($opinionLimitCharacters['max'])) {
+    $opinionPlaceholder .= $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
+    $opinionClass .= ' max-length-opinion';
+}
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate"
       autocomplete="off" enctype="multipart/form-data">
@@ -19,9 +30,15 @@ $currentCategoryId = $product->getCategoryId();
                 <?php echo $this->__('Opisz zalety produktu:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
+                <textarea name="opinion-advantages" id="tim-opinion-advantages" 
+                          class="<?php echo $opinionClass ?>" cols="5" rows="3" 
+                          onclick="placeholderAction(this)"
                     <?php echo $requiredFields['advantages']? 'class="required-entry"' : '' ?>
-                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
+                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>
+                    ></textarea>
+                <div id="ph-tim-opinion-advantages" class="placeholder-div">
+                    <?php echo $opinionPlaceholder; ?>
+                </div>
             </div>
 
             <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad <?php echo $requiredFields['defects']? 'required' : '' ?>">
@@ -29,9 +46,14 @@ $currentCategoryId = $product->getCategoryId();
                 <?php echo $this->__('Opisz wady produktu:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
+                <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" 
+                          class="<?php echo $opinionClass ?>" 
+                          onclick="placeholderAction(this)"
                     <?php echo $requiredFields['defects']? 'class="required-entry"' : '' ?>
                     <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
+                <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
+                    <?php echo $opinionPlaceholder; ?>
+                </div>
             </div>
 
             <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary <?php echo $requiredFields['summary']? 'required' : '' ?>">
@@ -39,9 +61,15 @@ $currentCategoryId = $product->getCategoryId();
                 <?php echo $this->__('Podsumowanie / dodatkowe informacje / uwagi:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
+                <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" 
+                          class="<?php echo $opinionClass ?>" 
+                          onclick="placeholderAction(this)"
                     <?php echo $requiredFields['summary']? 'class="required-entry"' : '' ?>
-                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
+                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>
+                    ></textarea>
+                <div id="ph-tim-opinion-summary" class="placeholder-div" >
+                    <?php echo $opinionPlaceholder; ?>
+                </div>
             </div>
             <div class="tim-rating-input-container">
                 <div class="tim-secondary-title"><?php echo $this->__('OCEŃ WALORY PRODUKTU') ?></div>
@@ -219,6 +247,37 @@ $currentCategoryId = $product->getCategoryId();
 </form>
 <script type="text/javascript">
     //<![CDATA[
-    var dataForm = new VarienForm('form-validate');
+    var dataForm = new VarienForm('form-validate', true);
+
+
+    var placeholderAction = function (elem) {
+        var id = jQuery(elem).attr('id');
+        jQuery('#ph-'+id).hide();
+        jQuery('#' + id).focusout(function(){
+            if (!jQuery('#'+id).val()) {
+                jQuery('#ph-'+id).show();
+            }
+        });
+    };
+
+    Validation.add('min-length-opinion', '<?php echo $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] ?>', function (v) {
+        var min = <?php echo ($opinionLimitCharacters['min']) ? $opinionLimitCharacters['min'] : 0 ?>;
+        if (min) {
+            if (v.length < min) {
+                return false;
+            }
+        }
+        return true;
+    });
+
+    Validation.add('max-length-opinion', '<?php echo $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'] ?>', function (v) {
+        var max = <?php echo ($opinionLimitCharacters['max']) ? $opinionLimitCharacters['max'] : 0 ?>;
+        if (max) {
+            if (v.length > max) {
+                return false;
+            }
+        }
+        return true;
+    });
     //]]>
 </script>
