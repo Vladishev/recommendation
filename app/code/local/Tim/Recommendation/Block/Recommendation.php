@@ -19,7 +19,6 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();
-        $userData['avatar'] = Mage::helper('tim_recommendation')->getCustomerAvatar($customerId);
         $userData['user_type_name'] = $this->getHelper()->getUserTypeName($user['user_type']);
         $userData['customer_name'] = $this->getHelper()->getCustomerNameOrNick($customerId);
         $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);

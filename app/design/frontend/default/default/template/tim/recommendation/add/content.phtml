@@ -30,12 +30,9 @@ if (!empty($opinionLimitCharacters['max'])) {
                 <?php echo $this->__('Opisz zalety produktu:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="opinion-advantages" id="tim-opinion-advantages" 
-                          class="<?php echo $opinionClass ?>" cols="5" rows="3" 
-                          onclick="placeholderAction(this)"
-                    <?php echo $requiredFields['advantages']? 'class="required-entry"' : '' ?>
-                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>
-                    ></textarea>
+                <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
+                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
+                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionPlaceholder; ?>
                 </div>
@@ -47,10 +44,8 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3" 
-                          class="<?php echo $opinionClass ?>" 
-                          onclick="placeholderAction(this)"
-                    <?php echo $requiredFields['defects']? 'class="required-entry"' : '' ?>
-                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>></textarea>
+                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
+                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
                 </div>
@@ -62,10 +57,8 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3" 
-                          class="<?php echo $opinionClass ?>" 
-                          onclick="placeholderAction(this)"
-                    <?php echo $requiredFields['summary']? 'class="required-entry"' : '' ?>
-                    <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>
+                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
+                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"
                     ></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>

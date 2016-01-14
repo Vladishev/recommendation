@@ -6,7 +6,7 @@ $userData = $this->getUserData($userId);
 ?>
 <div class="tim-user"> <!-- main container for user details -->
     <div class="tim-user-photo">
-        <img src="<?php echo $userData['avatar'] ?>" width="269" height="168" alt="user-photo"/>
+        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" width="269" height="168" alt="user-photo"/>
         <!-- place for user photo -->
     </div>
     <div class="tim-user-name">

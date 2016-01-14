@@ -375,8 +375,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getMaxMinCharacters($type)
     {
-        $limit['max'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_' . $type . '_max');
-        $limit['min'] = Mage::getStoreConfig('tim_confirm/max_min_length/tim_' . $type . '_min');
+        $limit['max'] = Mage::getStoreConfig('tim_settings/max_min_length/tim_' . $type . '_max');
+        $limit['min'] = Mage::getStoreConfig('tim_settings/max_min_length/tim_' . $type . '_min');
 
         return $limit;
     }

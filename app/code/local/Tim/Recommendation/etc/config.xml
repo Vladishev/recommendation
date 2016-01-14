@@ -218,13 +218,13 @@
         </translate>
     </frontend>
     <default>
-        <tim_confirm>
+        <tim_settings>
             <max_min_length>
                 <tim_opinion_min>0</tim_opinion_min>
                 <tim_opinion_max>0</tim_opinion_max>
                 <tim_comment_min>0</tim_comment_min>
                 <tim_comment_max>0</tim_comment_max>
             </max_min_length>
-        </tim_confirm>
+        </tim_settings>
     </default>
 </config>
