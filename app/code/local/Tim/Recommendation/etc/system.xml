@@ -96,18 +96,27 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <confirm_opinion translate="label">
-                    <label>Confirm opinion</label>
+                <confirm_set translate="label">
+                    <label>Confirm opinion comment malpractice</label>
                     <sort_order>5</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
+                        <!--Opinion field set-->
+                        <tim_opinion_confirm_label>
+                            <label><![CDATA[<strong>Opinia</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_opinion_confirm_label>
                         <tim_enabled>
                             <label>Enabled</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>1</sort_order>
+                            <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -116,7 +125,8 @@
                             <label>Send order email to</label>
                             <frontend_type>text</frontend_type>
                             <comment>Please, put only one address</comment>
-                            <sort_order>2</sort_order>
+                            <validate>validate-email</validate>
+                            <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -125,7 +135,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>text</frontend_type>
                             <comment>Comma-separated</comment>
-                            <sort_order>3</sort_order>
+                            <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -134,13 +144,132 @@
                             <label>Send order email copy to</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/methods</source_model>
-                            <sort_order>4</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </tim_copy_method>
+                        <tim_opinion_inform>
+                            <label>Send confirmation to add opinion</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_opinion_inform>
+                        <!--Comment field set-->
+                        <tim_comment_confirm_label>
+                            <label><![CDATA[<strong>Komentarz</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_confirm_label>
+                        <tim_comment_enabled>
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_enabled>
+                        <tim_comment_email_to>
+                            <label>Send order email to</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Please, put only one address</comment>
+                            <validate>validate-email</validate>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_email_to>
+                        <tim_comment_copy_to>
+                            <label>Send order email copy to</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated</comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_copy_to>
+                        <tim_comment_copy_method>
+                            <label>Send order email copy to</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/methods</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_copy_method>
+                        <tim_comment_inform>
+                            <label>Send confirmation to add comment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_comment_inform>
+                        <!--Malpractice field set-->
+                        <tim_malpractice_confirm_label>
+                            <label><![CDATA[<strong>Nadużycie</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_malpractice_confirm_label>
+                        <tim_malpractice_enabled>
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_malpractice_enabled>
+                        <tim_malpractice_email_to>
+                            <label>Send order email to</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Please, put only one address</comment>
+                            <validate>validate-email</validate>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_malpractice_email_to>
+                        <tim_malpractice_copy_to>
+                            <label>Send order email copy to</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated</comment>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_malpractice_copy_to>
+                        <tim_malpractice_copy_method>
+                            <label>Send order email copy to</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/methods</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_malpractice_copy_method>
+                        <tim_malpractice_inform>
+                            <label>Send confirmation to add malpractice</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_malpractice_inform>
                     </fields>
-                </confirm_opinion>
+                </confirm_set>
             </groups>
         </tim_confirm>
     </sections>
