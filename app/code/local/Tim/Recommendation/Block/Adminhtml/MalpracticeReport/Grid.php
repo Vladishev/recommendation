@@ -72,8 +72,6 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'type' => 'datetime',
             'index' => 'date_add',
             'filter_index' => 'main_table.date_add',
-            'sortable' => true
-            'filter_index' => 'date_add',
             'sortable' => true,
             'filter_time' => true,
         ));
