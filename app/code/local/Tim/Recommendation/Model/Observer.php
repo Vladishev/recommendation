@@ -115,8 +115,8 @@ class Tim_Recommendation_Model_Observer
     public function sendOpinionEmail($observer)
     {
         $opinionData = $observer->getEvent()->getOpinionData();
-        $email = Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_enabled');
+        $email = Mage::getStoreConfig('tim_settings/confirm_opinion/tim_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_opinion/tim_enabled');
         if ($status == 1 and !empty($email))
         {
                 $this->sendEmail($email, $opinionData, 'Opinion');
@@ -130,8 +130,8 @@ class Tim_Recommendation_Model_Observer
     public function sendCommentEmail($observer)
     {
         $commentData = $observer->getEvent()->getCommentData();
-        $email = Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_enabled');
+        $email = Mage::getStoreConfig('tim_settings/confirm_opinion/tim_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_opinion/tim_enabled');
         if ($status == 1 and !empty($email))
         {
             $this->sendEmail($email, $commentData, 'Comment');
@@ -146,7 +146,7 @@ class Tim_Recommendation_Model_Observer
      */
     public function sendEmail($toEmail, $templateVar, $subject)
     {
-        $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_to'), ',;'));
+        $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_settings/confirm_opinion/tim_copy_to'), ',;'));
         if ($subject == 'Opinion') {
             $templateId = 'opinion_template';
         } else {
@@ -162,7 +162,7 @@ class Tim_Recommendation_Model_Observer
             ->setType('html');
         if (!empty($copyTo[0])) {
 
-            $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_opinion/tim_copy_method');
+            $method = (integer)Mage::getStoreConfig('tim_settings/confirm_opinion/tim_copy_method');
 
             if ($method === 1)
             {

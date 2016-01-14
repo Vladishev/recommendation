@@ -58,9 +58,9 @@
                                     <tim_salt>
                                         <title>Salt</title>
                                     </tim_salt>
-                                    <tim_confirm>
+                                    <tim_settings>
                                         <title>Settings</title>
-                                    </tim_confirm>
+                                    </tim_settings>
                                 </children>
                             </config>
                         </children>
