@@ -224,6 +224,7 @@ if (!empty($opinionLimitCharacters['max'])) {
         <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
         <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturerId ?>"/>
         <input type="hidden" name="current_category_id" value="<?php echo $currentCategoryId ?>"/>
+        <input type="hidden" name="add_method" value="<?php echo $customerId ? 'Użytkownik' : null ?>"/>
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>

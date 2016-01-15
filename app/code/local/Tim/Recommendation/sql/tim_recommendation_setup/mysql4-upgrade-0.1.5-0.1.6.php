@@ -5,11 +5,7 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
-<<<<<<< HEAD
- * @author     Vlad Verbitskiy <vladmsu@ukr.net>
-=======
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
->>>>>>> 3905_bb_opinion_save_new_attributes
  */
 
 $installer = $this;

@@ -97,6 +97,13 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'width' => '200',
             'filter_time' => true,
         ));
+        $this->addColumn('publication_date', array(
+            'header' => Mage::helper('tim_recommendation')->__('Date of publication'),
+            'index' => 'publication_date',
+            'type' => 'datetime',
+            'width' => '200',
+            'filter_time' => true,
+        ));
         $this->addColumn('comments', array(
             'header' => Mage::helper('tim_recommendation')->__('Comments'),
             'width' => '200',
@@ -112,6 +119,13 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'options' => array('No' => $this->__('No'), 'Yes' => $this->__('Yes')),
             'filter_condition_callback' => array($this, '_mediaFilter'),
             'sortable' => false
+        ));
+        $this->addColumn('add_method', array(
+            'header' => Mage::helper('tim_recommendation')->__('Method of adding'),
+            'width' => '50',
+            'index' => 'add_method',
+            'type' => 'options',
+            'options' => array('Użytkownik' => $this->__('User'), 'Z pliku' => $this->__('From file')),
         ));
         $this->addColumn('user_type', array(
             'header' => Mage::helper('tim_recommendation')->__('User type'),

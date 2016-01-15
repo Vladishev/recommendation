@@ -39,7 +39,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setTimIp($params['customer_ip_address'])
             ->setTimHost($params['customer_host_name'])
             ->setManufacturerId($params['manufacturer_id'])
-            ->setCategoryId($params['current_category_id']);
+            ->setCategoryId($params['current_category_id'])
+            ->setAddMethod($params['add_method']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
@@ -219,8 +220,15 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $this->norouteAction();
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
-                $opinion->setAcceptance('1')->save();
-                echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!') . '</h2>';
+                $opinion->setAcceptance('1')
+                    ->setPublicationDate(date('Y-m-d H:i:s'));
+                try {
+                    $opinion->save();
+                    echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!') . '</h2>';
+                } catch (Exception $e) {
+                    Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                    echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment wasn\'t allowed. Please try again.') . '</h2>';
+                }
             }
         }
     }

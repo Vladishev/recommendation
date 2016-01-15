@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.1.7</version>
+            <version>0.1.8</version>
         </Tim_Recommendation>
     </modules>
     <global>

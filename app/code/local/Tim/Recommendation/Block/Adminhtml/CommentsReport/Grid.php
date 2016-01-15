@@ -75,10 +75,24 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'width' => '100',
             'filter_time' => true,
         ));
+        $this->addColumn('publication_date', array(
+            'header' => Mage::helper('tim_recommendation')->__('Date of publication'),
+            'index' => 'publication_date',
+            'type' => 'datetime',
+            'width' => '200',
+            'filter_time' => true,
+        ));
         $this->addColumn('comments', array(
             'header' => Mage::helper('tim_recommendation')->__('Comment'),
             'width' => '200',
             'index' => 'comment',
+        ));
+        $this->addColumn('add_method', array(
+            'header' => Mage::helper('tim_recommendation')->__('Method of adding'),
+            'width' => '50',
+            'index' => 'add_method',
+            'type' => 'options',
+            'options' => array('Użytkownik' => $this->__('User'), 'Z pliku' => $this->__('From file')),
         ));
         $this->addColumn('acceptance', array(
             'header' => Mage::helper('tim_recommendation')->__('Acceptance'),
