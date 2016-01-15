@@ -147,6 +147,11 @@
                     <file>malpracticeMessage.html</file>
                     <type>html</type>
                 </malpractice_template>
+                <user_template>
+                    <label>Message for user</label>
+                    <file>userMessage.html</file>
+                    <type>html</type>
+                </user_template>
             </email>
         </template>
     </global>

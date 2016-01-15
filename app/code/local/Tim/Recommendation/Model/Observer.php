@@ -109,7 +109,7 @@ class Tim_Recommendation_Model_Observer
     }
 
     /**
-     * Send email with information about person who added opinion
+     * Send email with information about person who added opinion | sends email to user
      * @param (obj)$observer
      */
     public function sendOpinionEmail($observer)
@@ -117,27 +117,37 @@ class Tim_Recommendation_Model_Observer
         $opinionData = $observer->getEvent()->getOpinionData();
         $email = Mage::getStoreConfig('tim_confirm/confirm_set/tim_email_to');
         $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_enabled');
-        if ($status == 1 and !empty($email))
-        {
-                $this->sendEmail($email, $opinionData, 'Opinion');
+        $statusToUser = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_opinion_inform');
+        if ($status == 1 and !empty($email)) {
+            $this->sendEmail($email, $opinionData, 'Opinion');
+        }
+        if ($statusToUser == 1) {
+            $this->sendEmailToUser($opinionData['user_id'], 'opinion');
         }
     }
 
     /**
-     * Send email with information about person who added comment
+     * Send email with information about person who added comment | sends email to user
      * @param (obj)$observer
      */
     public function sendCommentEmail($observer)
     {
         $commentData = $observer->getEvent()->getCommentData();
         $email = Mage::getStoreConfig('tim_confirm/confirm_set/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_enabled');
-        if ($status == 1 and !empty($email))
-        {
+        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_comment_enabled');
+        $statusToUser = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_comment_inform');
+        if ($status == 1 and !empty($email)) {
             $this->sendEmail($email, $commentData, 'Comment');
+        }
+        if ($statusToUser == 1) {
+            $this->sendEmailToUser($commentData['user_id'], 'comment');
         }
     }
 
+    /**
+     * Sends email to admin | sends email to user
+     * @param $observer
+     */
     public function sendMalpracticeEmail($observer)
     {
         $malpracticeData = $observer->getEvent()->getMalpracticeData();
@@ -147,9 +157,8 @@ class Tim_Recommendation_Model_Observer
         if ($status == 1 and !empty($emailToAdmin)) {
             $this->sendEmail($emailToAdmin, $malpracticeData, 'Malpractice');
         }
-        if ($statusToUser) {
-//            $emailToUser = Mage::helper('tim_recommendation')->getUserEmail($malpracticeData['userId']); //write helper method
-            $this->sendEmailToUser($malpracticeData['userId']); //write method
+        if ($statusToUser == 1) {
+            $this->sendEmailToUser($malpracticeData['userId'], 'malpractice');
         }
     }
 
@@ -175,13 +184,17 @@ class Tim_Recommendation_Model_Observer
                 $templateId = 'malpractice_template';
                 $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_set/tim_malpractice_copy_to'), ',;'));
                 break;
+            case 'User':
+                $templateId = 'user_template';
+                $subject = ucfirst($templateVar['subject']);
+                break;
         }
         $emailTemplate = Mage::getModel('core/email_template')->loadDefault($templateId);
         $processedTemplate = $emailTemplate->getProcessedTemplate($templateVar);
         $mail = Mage::getModel('core/email')
             ->setToEmail($toEmail)
             ->setBody($processedTemplate)
-            ->setSubject($subject)
+            ->setSubject(Mage::helper('tim_recommendation')->__($subject))
             ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
             ->setType('html');
         if (!empty($copyTo[0])) {
@@ -216,8 +229,29 @@ class Tim_Recommendation_Model_Observer
         }
     }
 
-    public function sendEmailToUser($userId)
+    /**
+     * Sends email to user
+     * @param (int)$userId
+     * @param (str)$userSubject
+     */
+    public function sendEmailToUser($userId, $userSubject)
     {
-        $emailToUser = Mage::helper('tim_recommendation')->getUserEmailData($userId);
+        $_helper = Mage::helper('tim_recommendation');
+        $userInformation = $_helper->getUserEmailData($userId);
+        $userEmail = $userInformation['email'];
+
+        switch ($userSubject) {
+            case 'opinion':
+                $userInformation['subject'] = $_helper->__($userSubject);
+                break;
+            case 'comment':
+                $userInformation['subject'] = $_helper->__($userSubject);
+                break;
+            case 'malpractice':
+                $userInformation['subject'] = $_helper->__($userSubject);
+                break;
+        }
+
+        $this->sendEmail($userEmail, $userInformation, 'User');
     }
 }
