@@ -115,9 +115,9 @@ class Tim_Recommendation_Model_Observer
     public function sendOpinionEmail($observer)
     {
         $opinionData = $observer->getEvent()->getOpinionData();
-        $email = Mage::getStoreConfig('tim_confirm/confirm_set/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_enabled');
-        $statusToUser = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_opinion_inform');
+        $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_enabled');
+        $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_opinion_inform');
         if ($status == 1 and !empty($email)) {
             $this->sendEmail($email, $opinionData, 'Opinion');
         }
@@ -133,9 +133,9 @@ class Tim_Recommendation_Model_Observer
     public function sendCommentEmail($observer)
     {
         $commentData = $observer->getEvent()->getCommentData();
-        $email = Mage::getStoreConfig('tim_confirm/confirm_set/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_comment_enabled');
-        $statusToUser = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_comment_inform');
+        $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_enabled');
+        $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_inform');
         if ($status == 1 and !empty($email)) {
             $this->sendEmail($email, $commentData, 'Comment');
         }
@@ -151,9 +151,9 @@ class Tim_Recommendation_Model_Observer
     public function sendMalpracticeEmail($observer)
     {
         $malpracticeData = $observer->getEvent()->getMalpracticeData();
-        $emailToAdmin = Mage::getStoreConfig('tim_confirm/confirm_set/tim_malpractice_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_malpractice_enabled');
-        $statusToUser = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_malpractice_inform');
+        $emailToAdmin = Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_email_to');
+        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
+        $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_inform');
         if ($status == 1 and !empty($emailToAdmin)) {
             $this->sendEmail($emailToAdmin, $malpracticeData, 'Malpractice');
         }
@@ -174,15 +174,15 @@ class Tim_Recommendation_Model_Observer
         switch ($subject) {
             case 'Opinion':
                 $templateId = 'opinion_template';
-                $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_set/tim_copy_to'), ',;'));
+                $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_settings/confirm_set/tim_copy_to'), ',;'));
                 break;
             case 'Comment':
                 $templateId = 'comment_template';
-                $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_set/tim_comment_copy_to'), ',;'));
+                $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_copy_to'), ',;'));
                 break;
             case 'Malpractice':
                 $templateId = 'malpractice_template';
-                $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_confirm/confirm_set/tim_malpractice_copy_to'), ',;'));
+                $copyTo = explode(',', rtrim(Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_copy_to'), ',;'));
                 break;
             case 'User':
                 $templateId = 'user_template';
@@ -201,13 +201,13 @@ class Tim_Recommendation_Model_Observer
 
             switch ($subject) {
                 case 'Opinion':
-                    $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_copy_method');
+                    $method = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_copy_method');
                     break;
                 case 'Comment':
-                    $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_comment_copy_method');
+                    $method = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_copy_method');
                     break;
                 case 'Malpractice':
-                    $method = (integer)Mage::getStoreConfig('tim_confirm/confirm_set/tim_malpractice_copy_method');
+                    $method = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_copy_method');
                     break;
             }
 
