@@ -245,7 +245,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setProductId($params['product_id'])
             ->setComment($params['opinion-comment'])
             ->setTimIp($params['customer_ip_address'])
-            ->setTimHost($params['customer_host_name']);
+            ->setTimHost($params['customer_host_name'])
+            ->setAddMethod($params['add_method']);
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
