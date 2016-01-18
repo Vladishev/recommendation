@@ -196,7 +196,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                     </p>
                     <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"
                            class="tim-comm-button-smal <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"
-                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
+                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn(); return false;"' : ''?>/>
                     <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Wczytaj zdjęcia') ?></label>
                     <!-- place for user input - upload photos -->
                 </div>
@@ -242,6 +242,7 @@ if (!empty($opinionLimitCharacters['max'])) {
     //<![CDATA[
     var dataForm = new VarienForm('form-validate', true);
 
+//    jQuery('#recommendation-img').click(alert('123'));
 
     var placeholderAction = function (elem) {
         var id = jQuery(elem).attr('id');

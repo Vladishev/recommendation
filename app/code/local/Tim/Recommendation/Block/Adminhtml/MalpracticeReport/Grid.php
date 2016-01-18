@@ -44,7 +44,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'sortable' => true
         ));
         $this->addColumn('opinion_comment', array(
-            'header' => Mage::helper('tim_recommendation')->__('Opinion/Comment'),
+            'header' => Mage::helper('tim_recommendation')->__('Opinion / Comment'),
             'width' => '10',
             'index' => 'parent',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RenderTitle',

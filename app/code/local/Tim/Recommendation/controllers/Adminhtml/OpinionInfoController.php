@@ -20,4 +20,9 @@ class Tim_Recommendation_Adminhtml_OpinionInfoController extends Mage_Adminhtml_
             ->setTemplate('tim/recommendation/opinionPopup.phtml')->toHtml();
         $this->getResponse()->setBody($body);
     }
+
+    protected function _isAllowed()
+    {
+        return true;
+    }
 }
