@@ -1,6 +1,10 @@
 <?php
 $opinion = $this->getOpinionData();
 $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
+$byIt = $opinion['by_it'] ? $this->__('Yes') : $this->__('No');
+$images = $opinion['images'] ? $this->__('Yes') : $this->__('No');
+$movieUrl = $opinion['movie_url'];
+$video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this->__('No');
 ?>
 <div>
     <div class="tim-advantages">
@@ -34,6 +38,18 @@ $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
     <div class="tim-recommend">
         <b><?php echo $this->__('Recommend'); ?>:</b>
         <?php echo $recommend; ?>
+    </div>
+    <div class="tim-recommend">
+        <b><?php echo $this->__('Do you use this product'); ?>:</b>
+        <?php echo $byIt; ?>
+    </div>
+    <div class="tim-recommend">
+        <b><?php echo $this->__('Photo'); ?>:</b>
+        <?php echo $images; ?>
+    </div>
+    <div class="tim-recommend">
+        <b><?php echo $this->__('Film'); ?>:</b>
+        <?php echo $video; ?>
     </div>
     <div class="tim-date-add">
         <b><?php echo $this->__('Date Added'); ?>:</b>
