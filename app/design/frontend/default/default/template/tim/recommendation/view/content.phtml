@@ -137,10 +137,8 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
-                        class="tim-comment-button-add">
-                    <span><span><?php echo $this->__('Add your own comment') ?></span></span>
-                </button>
+                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment"
+                        class="tim-comment-button-add" value="<?php echo $this->__('Add your own comment') ?>"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
                         class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
@@ -150,6 +148,19 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
     </div>
 </form>
+<div id="loading-frontend-mask">
+    <p class="loader" id="loading_mask_loader">
+        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
+             alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
+        <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
+</div>
+<div class="tim-add-comment-popup">
+    <div class="tim-add-comment-popup-bg"></div>
+    <div class="tim-add-comment-popup-container">
+        <input type="button" class="tim-add-comment-popup-bt-close" value="x" id="tim-add-comment-popup-close"/>
+        <p></p>
+    </div>
+</div>
 <div class="tim-markabuse-popup">
     <div class="tim-markabuse-popup-bg"></div>
     <div class="tim-markabuse-popup-container">

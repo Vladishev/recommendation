@@ -227,9 +227,8 @@ if (!empty($opinionLimitCharacters['max'])) {
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add">
-                    <span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
-                </button>
+                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" id="add-ajax-opinion"
+                value="<?php echo $this->__('Dodaj opinię') ?>"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
                     <span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
@@ -238,6 +237,19 @@ if (!empty($opinionLimitCharacters['max'])) {
         </div>
     </fieldset>
 </form>
+<div id="loading-frontend-mask">
+    <p class="loader" id="loading_mask_loader">
+        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
+             alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
+        <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
+</div>
+<div class="tim-add-opinion-popup">
+    <div class="tim-add-opinion-popup-bg"></div>
+    <div class="tim-add-opinion-popup-container">
+        <input type="button" class="tim-add-opinion-popup-bt-close" value="x" id="tim-add-opinion-popup-close"/>
+        <p></p>
+    </div>
+</div>
 <script type="text/javascript">
     //<![CDATA[
     var dataForm = new VarienForm('form-validate', true);

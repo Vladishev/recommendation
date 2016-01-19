@@ -713,7 +713,7 @@ label.tim-rating-button-boolean-label {
 }
 
 /* popup window when user needs to login */
-.tim-userlogin-popup, .tim-markabuse-popup {
+.tim-userlogin-popup, .tim-markabuse-popup, .tim-add-opinion-popup, .tim-add-comment-popup{
     position:fixed;
     top:0;
     left:0;
@@ -723,7 +723,7 @@ label.tim-rating-button-boolean-label {
     display:none; 
 }
  
-.tim-userlogin-popup-bg, .tim-markabuse-popup-bg {
+.tim-userlogin-popup-bg, .tim-markabuse-popup-bg, .tim-add-opinion-popup-bg, .tim-add-comment-popup-bg  {
     position:absolute;
     top:0;
     left:0;
@@ -734,7 +734,7 @@ label.tim-rating-button-boolean-label {
     opacity: 0.6;
 }
  
-.tim-userlogin-popup-container, .tim-markabuse-popup-container {
+.tim-userlogin-popup-container, .tim-markabuse-popup-container, .tim-add-opinion-popup-container, .tim-add-comment-popup-container  {
     width:600px;
     height: auto;
     position:absolute;
@@ -762,8 +762,35 @@ label.tim-rating-button-boolean-label {
     margin-right: 10px;
     font-weight: bold;
 }
- 
-.tim-userlogin-popup-bt-close {
+
+#loading-frontend-mask {
+	display: none;
+	position:absolute;
+	color:#d85909;
+	font-size:1.1em;
+	font-weight:bold;
+	text-align:center;
+	opacity:0.80;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /* IE8 */
+	z-index:500;
+}
+
+#loading-frontend-mask .loader {
+	position:fixed;
+	top:45%;
+	left:50%;
+	width:150px;
+	margin-left:-105px;
+	padding:15px 30px;
+	background:#fff4e9;
+	border:2px solid #f1af73;
+	color:#d85909;
+	font-weight:bold;
+	text-align:center;
+	z-index:1000;
+}
+
+.tim-userlogin-popup-bt-close, .tim-add-opinion-popup-bt-close, .tim-add-comment-popup-bt-close {
     text-indent: -9999px;
     width: 23px;
     height: 23px;
@@ -774,7 +801,7 @@ label.tim-rating-button-boolean-label {
 	cursor:pointer;
 	border:0;
 }
-.tim-userlogin-popup-bt-close:hover {
+.tim-userlogin-popup-bt-close:hover, .tim-add-opinion-popup-bt-close:hover, .tim-add-comment-popup-bt-close:hover {
     background: transparent url(../../../images/tim_button_close.png)  no-repeat scroll -33px 0px;
 }
 	
