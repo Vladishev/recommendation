@@ -1,25 +1,29 @@
 <?php
 $productId = Mage::registry('current_product')->getId();
-$opinionExist = $this->isOpinionExist($productId);
-$opinionAcceptance = $this->opinionAcceptanceStatus($productId);
+$opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct($productId);
 ?>
-<?php if ($opinionExist && $opinionAcceptance): ?>
+<?php if ($opinionsSet): ?>
     <div>
         <!-- Header -->
         <div class="tim-comm-header">
             <?php echo $this->getChildHtml('header.recommendation.view') ?>
         </div>
-        <!-- Left column: -->
-        <div class="tim-comm-left-column">
-            <?php echo $this->getChildHtml('left.recommendation.view') ?>
-        </div>
-        <!-- Main (middle) column: -->
-        <div class="tim-comm-main-column">
-            <?php echo $this->getChildHtml('content.recommendation.view') ?>
-        </div>
-        <!-- Right column: -->
-        <div class="tim-comm-right-column">
-            <?php echo $this->getChildHtml('right.recommendation.view') ?>
-        </div>
+        <?php foreach($opinionsSet as $opinion): ?>
+            <!-- Left column: -->
+            <div class="tim-comm-left-column">
+                <?php $this->getChild('left.recommendation.view')->setData('opinion', $opinion) ?>
+                <?php echo $this->getChildHtml('left.recommendation.view', false) ?>
+            </div>
+            <!-- Main (middle) column: -->
+            <div class="tim-comm-main-column">
+                <?php $this->getChild('content.recommendation.view')->setData('opinion', $opinion) ?>
+                <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
+            </div>
+            <!-- Right column: -->
+            <div class="tim-comm-right-column">
+                <?php $this->getChild('right.recommendation.view')->setData('opinion', $opinion) ?>
+                <?php echo $this->getChildHtml('right.recommendation.view', false) ?>
+            </div>
+        <?php endforeach ?>
     </div>
 <?php endif; ?>

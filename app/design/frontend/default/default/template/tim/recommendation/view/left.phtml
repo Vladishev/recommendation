@@ -1,6 +1,6 @@
 <?php
-$productId = Mage::registry('current_product')->getId();
-$opinionData = $this->getOpinionData($productId);
+$recomId = $this->opinion['recom_id'];
+$opinionData = $this->getOpinionData($recomId);
 $userId = $opinionData['user_id'];
 $userData = $this->getUserData($userId);
 ?>

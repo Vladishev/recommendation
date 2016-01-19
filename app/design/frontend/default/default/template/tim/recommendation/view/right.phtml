@@ -1,6 +1,7 @@
 <?php
 $productId = Mage::registry('current_product')->getId();
-$opinionData = $this->getOpinionData($productId);
+$recomId = $this->opinion['recom_id'];
+$opinionData = $this->getOpinionData($recomId);
 $averageRating = $this->getProductEvaluation($productId);
 $byIt = $opinionData['by_it'] ? 1 : 0;
 $recommend = $opinionData['recommend'] ? 1 : 0;
@@ -45,27 +46,28 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
     <div class="tim-rating-score-part">
         <?php echo $this->__("Do you purchased this product"); ?>:
         <div class="tim-chart-boolean">
-            <span id="byIt-yes"><?php echo $this->__('Yes'); ?></span><span id="byIt-no"><?php echo $this->__('No'); ?></span>
+            <span class="byIt-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="byIt-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
         </div>
     </div>
     <div class="tim-rating-score-part">
         <?php echo $this->__('Do you recommend this product'); ?>:
         <div class="tim-chart-boolean">
-            <span id="recommend-yes"><?php echo $this->__('Yes'); ?></span><span id="recommend-no"><?php echo $this->__('No'); ?></span>
+            <span class="recommend-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="recommend-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     var byIt = <?php echo $byIt; ?>;
     var recommend = <?php echo $recommend; ?>;
+    var recomId = <?php echo $recomId ?>;
     if (byIt) {
-        jQuery('#byIt-yes').addClass('tim-chart-boolean-active');
+        jQuery('.byIt-yes-'+recomId).addClass('tim-chart-boolean-active');
     } else {
-        jQuery('#byIt-no').addClass('tim-chart-boolean-active');
+        jQuery('.byIt-no-'+recomId).addClass('tim-chart-boolean-active');
     }
     if (recommend) {
-        jQuery('#recommend-yes').addClass('tim-chart-boolean-active');
+        jQuery('.recommend-yes-'+recomId).addClass('tim-chart-boolean-active');
     } else {
-        jQuery('#recommend-no').addClass('tim-chart-boolean-active');
+        jQuery('.recommend-no-'+recomId).addClass('tim-chart-boolean-active');
     }
 </script>
