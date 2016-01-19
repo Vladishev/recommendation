@@ -380,15 +380,4 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $limit;
     }
-
-    /**
-     * Returns customer data
-     * @param (int)$customerId
-     * @return mixed
-     */
-    public function getUserEmailData($customerId)
-    {
-        $customer = Mage::getModel('customer/customer')->load($customerId)->getData();
-        return $customer;
-    }
 }

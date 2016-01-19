@@ -237,20 +237,9 @@ class Tim_Recommendation_Model_Observer
     public function sendEmailToUser($userId, $userSubject)
     {
         $_helper = Mage::helper('tim_recommendation');
-        $userInformation = $_helper->getUserEmailData($userId);
+        $userInformation = Mage::getModel('customer/customer')->load($userId)->getData();
         $userEmail = $userInformation['email'];
-
-        switch ($userSubject) {
-            case 'opinion':
-                $userInformation['subject'] = $_helper->__($userSubject);
-                break;
-            case 'comment':
-                $userInformation['subject'] = $_helper->__($userSubject);
-                break;
-            case 'malpractice':
-                $userInformation['subject'] = $_helper->__($userSubject);
-                break;
-        }
+        $userInformation['subject'] = $_helper->__($userSubject);
 
         $this->sendEmail($userEmail, $userInformation, 'User');
     }
