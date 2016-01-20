@@ -1,8 +1,7 @@
 <?php
-$productId = Mage::registry('current_product')->getId();
 $recomId = $this->opinion['recom_id'];
 $opinionData = $this->getOpinionData($recomId);
-$averageRating = $this->getProductEvaluation($productId);
+$averageRating = $this->getProductEvaluation($recomId);
 $byIt = $opinionData['by_it'] ? 1 : 0;
 $recommend = $opinionData['recommend'] ? 1 : 0;
 ?>

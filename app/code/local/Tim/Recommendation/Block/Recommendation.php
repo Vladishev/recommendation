@@ -145,9 +145,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * @param int $productId
      * @return float
      */
-    public function getProductEvaluation($productId)
+    public function getProductEvaluation($recomId)
     {
-        $data = $this->getLastAddedOpinion($productId);
+        $data = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
         $ratings = array();
         $ratings[] = $data['rating_price'];
         $ratings[] = $data['rating_durability'];

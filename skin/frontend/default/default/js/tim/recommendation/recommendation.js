@@ -134,3 +134,27 @@ function placeholderAction (elem) {
         }
     });
 }
+
+/**
+ * Shows opinion form after click button
+ */
+function showAddOpinionForm() {
+    jQuery('#tim-add-opinion-layout').show(500);
+    jQuery('#tim-general-add-opinion-button').hide();
+}
+
+/**
+ * Hides opinion form after click button
+ */
+function hideAddOpinionForm() {
+    jQuery('#tim-add-opinion-layout').hide(500);
+    jQuery('#tim-general-add-opinion-button').show();
+}
+
+/**
+ * Hides comment form after click button
+ */
+function hideCommentForm(recomId) {
+    jQuery('#tim-comment-add-window-'+recomId).hide(300);
+    jQuery('#tim-comment-add-show-'+recomId).show(300);
+}
