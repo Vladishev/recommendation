@@ -713,7 +713,7 @@ label.tim-rating-button-boolean-label {
 }
 
 /* popup window when user needs to login */
-.tim-userlogin-popup, .tim-markabuse-popup {
+.tim-userlogin-popup, .tim-markabuse-popup, .tim-all-photo-popup, .tim-video-popup {
     position:fixed;
     top:0;
     left:0;
@@ -723,7 +723,7 @@ label.tim-rating-button-boolean-label {
     display:none; 
 }
  
-.tim-userlogin-popup-bg, .tim-markabuse-popup-bg {
+.tim-userlogin-popup-bg, .tim-markabuse-popup-bg, .tim-all-photo-popup-bg, .tim-video-popup-bg {
     position:absolute;
     top:0;
     left:0;
@@ -734,7 +734,7 @@ label.tim-rating-button-boolean-label {
     opacity: 0.6;
 }
  
-.tim-userlogin-popup-container, .tim-markabuse-popup-container {
+.tim-userlogin-popup-container, .tim-markabuse-popup-container, .tim-all-photo-popup-container, .tim-video-popup-container {
     width:600px;
     height: auto;
     position:absolute;
@@ -763,7 +763,7 @@ label.tim-rating-button-boolean-label {
     font-weight: bold;
 }
  
-.tim-userlogin-popup-bt-close {
+.tim-userlogin-popup-bt-close, .tim-popup-close {
     text-indent: -9999px;
     width: 23px;
     height: 23px;
@@ -774,7 +774,7 @@ label.tim-rating-button-boolean-label {
 	cursor:pointer;
 	border:0;
 }
-.tim-userlogin-popup-bt-close:hover {
+.tim-userlogin-popup-bt-close:hover, .tim-popup-close:hover {
     background: transparent url(../../../images/tim_button_close.png)  no-repeat scroll -33px 0px;
 }
 	

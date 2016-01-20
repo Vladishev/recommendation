@@ -21,6 +21,25 @@ jQuery(document).ready(function () {
         }
     });
 
+    jQuery('.tim-opinion-photo a').click(function (e) {
+        e.preventDefault();
+        jQuery('.tim-all-photo-popup').show(300);
+    });
+    jQuery('.tim-opinion-movie a').click(function (e) {
+        e.preventDefault();
+        jQuery('.tim-video-popup').show(300);
+    });
+    jQuery('.tim-popup-close').click(function () {
+        var popupClass = '.' + jQuery(this).parents().get(1).className;
+        jQuery(popupClass).hide();
+    });
+
+    jQuery(document).keydown(function (e) {
+        if (e.keyCode == 27) {
+            jQuery('.tim-all-photo-popup').hide();
+            jQuery('.tim-video-popup').hide();
+        }
+    });
 });
 
 /* function to show place for adding comment */
@@ -91,7 +110,13 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
 function sendParams() {
 
     var comment = jQuery('#tim-abuse-application').val();
-    var param = {userId: userId, customerHostName: customerHostName, customerIp: customerIp, recom_id: recomId, comment: comment};
+    var param = {
+        userId: userId,
+        customerHostName: customerHostName,
+        customerIp: customerIp,
+        recom_id: recomId,
+        comment: comment
+    };
 
     jQuery.ajax({
         url: siteUrl,
