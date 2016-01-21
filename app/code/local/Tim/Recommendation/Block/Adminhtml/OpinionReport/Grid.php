@@ -238,12 +238,12 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $this->getMassactionBlock()->setFormFieldName('acceptance');
 
         $this->getMassactionBlock()->addItem('yes', array(
-            'label' => Mage::helper('tim_recommendation')->__('Akceptacja Tak'),
+            'label' => Mage::helper('tim_recommendation')->__('Acceptance Yes'),
             'url' => $this->getUrl('*/*/massAcceptanceYes', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
         $this->getMassactionBlock()->addItem('no', array(
-            'label' => Mage::helper('tim_recommendation')->__('Akceptacja Nie'),
+            'label' => Mage::helper('tim_recommendation')->__('Acceptance No'),
             'url' => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
