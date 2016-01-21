@@ -273,5 +273,25 @@ if (!empty($opinionLimitCharacters['max'])) {
         }
         return true;
     });
+
+    window.onload=function()
+    {
+        tinyMCE.init({
+            mode : "exact",
+            elements: "tim-opinion-advantages,tim-opinion-disadvantages,tim-opinion-summary",
+            theme : "advanced",
+            theme_advanced_buttons1 : "bold,italic,underline,jbimages",
+            plugins : "jbimages,inlinepopups,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_path_location : "bottom",
+            extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+            theme_advanced_resize_horizontal : 'false',
+            convert_urls : 'false',
+            object_resizing : 'false',
+            relative_urls: false,
+            doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+        });
+    };
     //]]>
 </script>
