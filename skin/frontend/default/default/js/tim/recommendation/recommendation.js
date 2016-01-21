@@ -98,3 +98,30 @@ function sendParams() {
         data: param
     });
 }
+
+/**
+ * Hide placeholder on tinyMce
+ * @param data
+ */
+function hidePlaceholder(data){
+    var id = jQuery(data).attr('id');
+    var placeholder = jQuery('#ph-'+ id);
+    placeholder.hide();
+    jQuery('#' + id + '_ifr').focusout(function(){
+        if (!placeholder.val()) {
+            placeholder.show();
+        }
+    });
+}
+/**
+ * Show placeholder on tinyMce
+ * @param ed
+ */
+function showPlaceholder(ed){
+    var id = jQuery(ed).attr('id');
+    var placeholder = jQuery('#ph-'+ id);
+    tinyMCE.triggerSave();
+    if (!jQuery('#'+id).val()) {
+        placeholder.show();
+    }
+}
