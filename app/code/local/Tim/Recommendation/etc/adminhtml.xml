@@ -24,10 +24,6 @@
                             <title>Comments</title>
                             <action>adminhtml/commentsReport</action>
                         </tim_comments>
-                        <tim_opinion_comment translate="title">
-                            <title>Opinion and comment</title>
-                            <action>adminhtml/opinionCommentReport</action>
-                        </tim_opinion_comment>
                         <tim_opinion_images translate="title">
                             <title>Opinion images</title>
                             <action>adminhtml/opinionImages</action>
@@ -82,10 +78,6 @@
                                         <title>Opinion images</title>
                                         <sort_order>10</sort_order>
                                     </tim_opinion_images>
-                                    <tim_opinion_comment translate="title">
-                                        <title>Opinion and comment</title>
-                                        <sort_order>0</sort_order>
-                                    </tim_opinion_comment>
                                     <tim_malpractice translate="title">
                                         <title>Malpractices</title>
                                         <sort_order>0</sort_order>
