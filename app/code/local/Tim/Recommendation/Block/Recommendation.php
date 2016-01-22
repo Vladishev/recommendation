@@ -49,22 +49,22 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get array with opinion information
-     * @param int $productId
+     * @param int $recomId
      * @return array
      */
-    public function getOpinionData($productId)
+    public function getOpinionData($recomId)
     {
-        $lastAddedOpinion = $this->getLastAddedOpinion($productId);
-        $opinionMedia = $this->getHelper()->getOpinionMediaPath($lastAddedOpinion['recom_id']);
-        $lastAddedOpinion['date_add'] = date('d-m-Y', strtotime($lastAddedOpinion['date_add']));
+        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id')->getData();
+        $opinionMedia = $this->getHelper()->getOpinionMediaPath($recomId);
+        $opinion['date_add'] = date('d-m-Y', strtotime($opinion['date_add']));
         if (!empty($opinionMedia['url/youtube'])) {
-            $lastAddedOpinion['movie_url'] = $opinionMedia['url/youtube'];
+            $opinion['movie_url'] = $opinionMedia['url/youtube'];
         }
-        $lastAddedOpinion['images'] = $this->getImages($lastAddedOpinion['recom_id']);
-        $lastAddedOpinion['comments'] = $this->getOpinionComments($lastAddedOpinion['recom_id']);
-        $lastAddedOpinion['name'] = $this->getHelper()->getCustomerNameOrNick($lastAddedOpinion['user_id']);
+        $opinion['images'] = $this->getImages($opinion['recom_id']);
+        $opinion['comments'] = $this->getOpinionComments($opinion['recom_id']);
+        $opinion['name'] = $this->getHelper()->getCustomerNameOrNick($opinion['user_id']);
 
-        return $lastAddedOpinion;
+        return $opinion;
     }
 
     /**
@@ -145,9 +145,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * @param int $productId
      * @return float
      */
-    public function getProductEvaluation($productId)
+    public function getProductEvaluation($recomId)
     {
-        $data = $this->getLastAddedOpinion($productId);
+        $data = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
         $ratings = array();
         $ratings[] = $data['rating_price'];
         $ratings[] = $data['rating_durability'];

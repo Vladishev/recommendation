@@ -23,10 +23,32 @@ jQuery(document).ready(function () {
 
 });
 
-/* function to show place for adding comment */
-function showAddComment() {
-    jQuery('#tim-comment-add-show').hide();
-    jQuery('.tim-comment-add-window').show(300);
+/**
+ * function to show place for adding comment
+ */
+function showAddComment(recomId) {
+    jQuery('#tim-comment-add-show-'+recomId).hide();
+    jQuery('#tim-comment-add-window-'+recomId).show(300);
+}
+
+/**
+ * Shows all comments for opinion
+ * @param recomId
+ */
+function seeAllComments(recomId) {
+    jQuery('.tim-comment-display-none-'+recomId).show(300);
+    jQuery('.tim-comment-link-'+recomId).hide();
+    jQuery('.tim-comment-hide-link-'+recomId).show();
+}
+
+/**
+ * Hides comments which not display by default
+ * @param recomId
+ */
+function hideComments(recomId) {
+    jQuery('.tim-comment-hide-link-'+recomId).hide();
+    jQuery('.tim-comment-display-none-'+recomId).hide(300);
+    jQuery('.tim-comment-link-'+recomId).show();
 }
 
 function checkIfUserIsLoggedIn() {
@@ -97,4 +119,42 @@ function sendParams() {
         url: siteUrl,
         data: param
     });
+}
+
+/**
+ * Provide show and hide placeholder for text area.
+ * @param (this)elem
+ */
+function placeholderAction (elem) {
+    var id = jQuery(elem).attr('id');
+    jQuery('#ph-'+id).hide();
+    jQuery('#' + id).focusout(function(){
+        if (!jQuery('#'+id).val()) {
+            jQuery('#ph-'+id).show();
+        }
+    });
+}
+
+/**
+ * Shows opinion form after click button
+ */
+function showAddOpinionForm() {
+    jQuery('#tim-add-opinion-layout').show(500);
+    jQuery('#tim-general-add-opinion-button').hide();
+}
+
+/**
+ * Hides opinion form after click button
+ */
+function hideAddOpinionForm() {
+    jQuery('#tim-add-opinion-layout').hide(500);
+    jQuery('#tim-general-add-opinion-button').show();
+}
+
+/**
+ * Hides comment form after click button
+ */
+function hideCommentForm(recomId) {
+    jQuery('#tim-comment-add-window-'+recomId).hide(300);
+    jQuery('#tim-comment-add-show-'+recomId).show(300);
 }

@@ -4,7 +4,8 @@ $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
 $customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
-$opinionData = $this->getOpinionData($productId);
+$recomId = $this->opinion['recom_id'];
+$opinionData = $this->getOpinionData($recomId);
 $qtyComments = count($opinionData['comments']);
 $malpracticeUrl = $this->getUrl('recommendation/index/saveMalpractice');
 $commentLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacters('comment');
@@ -82,8 +83,8 @@ if (!empty($commentLimitCharacters['max'])) {
     <!-- for each comment (start) -->
     <?php $i = 1; ?>
     <?php foreach ($opinionData['comments'] as $comment): ?>
-        <?php if($i > 5){break;} ?>
-        <div class="tim-comment-container">
+
+        <div class="tim-comment-container <?php if($i > 5) echo 'tim-comment-display-none-'. $recomId ?>" <?php if($i > 5) echo 'style="display:none;"' ?>>
             <div class="tim-comment-container-title">
                 <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
                 <?php if ($isLoggedIn): ?>
@@ -107,16 +108,19 @@ if (!empty($commentLimitCharacters['max'])) {
 </div>
 <?php if ($qtyComments > 5) : ?>
     <!-- if opinion has more than 5 comments then next div will be visible -->
-    <div class="tim-comment-seemore">
-        <?php echo $this->__('Opinion has <span>%s</span> comments.', $qtyComments); ?>
-        <a class="tim-readmore" href="#"><?php echo $this->__('see them all'); ?></a>
+    <div class="tim-comment-seemore tim-comment-link-<?php echo $recomId ?>">
+        <?php echo $this->__("Opinion has <span>%d</span> comments.", $qtyComments); ?>
+        <a class="tim-readmore" href="#!" onclick="seeAllComments(<?php echo $recomId ?>)"><?php echo $this->__('see them all'); ?></a>
         <!-- link to reveal all comments -->
+    </div>
+    <div class="tim-comment-seemore tim-comment-hide-link-<?php echo $recomId ?>" style="display: none">
+        <a class="tim-readmore" href="#!" onclick="hideComments(<?php echo $recomId ?>)"><?php echo $this->__('Hide these comments'); ?></a>
     </div>
 <?php endif; ?>
 <!-- next div/button always visible -->
 <div class="tim-comment-add">
-    <button type="button" class="tim-comment-button-add" id="tim-comment-add-show"
-            onclick="<?php echo $isLoggedIn ? 'showAddComment()' : 'checkIfUserIsLoggedIn()'?>">
+    <button type="button" class="tim-comment-button-add" id="tim-comment-add-show-<?php echo $recomId ?>"
+            onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">
         <?php echo $this->__("Add your own comment"); ?></button>
 </div>
 <form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" id="form-validate-comment" autocomplete="off">
@@ -125,7 +129,7 @@ if (!empty($commentLimitCharacters['max'])) {
     <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
     <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
     <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
-    <div class="tim-comment-add-window">
+    <div class="tim-comment-add-window" id="tim-comment-add-window-<?php echo $recomId ?>">
         <div class="tim-comment-add-info">
             <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
@@ -148,6 +152,10 @@ if (!empty($commentLimitCharacters['max'])) {
                 </button>
             <?php endif; ?>
         </div>
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close form')) ?>"
+                class="tim-comment-button-add" onclick="hideCommentForm(<?php echo $recomId ?>)">
+            <span><span><?php echo $this->__('Close form') ?></span></span>
+        </button>
     </div>
 </form>
 <div class="tim-markabuse-popup">
@@ -166,16 +174,6 @@ if (!empty($commentLimitCharacters['max'])) {
 <script type="text/javascript">
 //<![CDATA[
 var dataForm = new VarienForm('form-validate-comment');
-
-var placeholderAction = function (elem) {
-    var id = jQuery(elem).attr('id');
-    jQuery('#ph-'+id).hide();
-    jQuery('#' + id).focusout(function(){
-        if (!jQuery('#'+id).val()) {
-            jQuery('#ph-'+id).show();
-        }
-    });
-};
 
 Validation.add('min-length-comment', '<?php echo $this->__('The minimum number of characters is ') . $commentLimitCharacters['min'] ?>', function (v) {
     var min = <?php echo ($commentLimitCharacters['min']) ? $commentLimitCharacters['min'] : 0 ?>;
