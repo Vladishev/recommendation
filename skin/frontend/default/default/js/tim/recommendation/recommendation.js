@@ -23,11 +23,13 @@ jQuery(document).ready(function () {
 
     jQuery('.tim-opinion-photo a').click(function (e) {
         e.preventDefault();
-        jQuery('.tim-all-photo-popup').show(300);
+        var recomId = e.target.id;
+        jQuery('#tim-all-photo-popup-' + recomId).show(300);
     });
     jQuery('.tim-opinion-movie a').click(function (e) {
         e.preventDefault();
-        jQuery('.tim-video-popup').show(300);
+        var recomId = e.target.id;
+        jQuery('#tim-video-popup-' + recomId).show(300);
     });
     jQuery('.tim-popup-close').click(function () {
         var popupClass = '.' + jQuery(this).parents().get(1).className;
@@ -46,8 +48,8 @@ jQuery(document).ready(function () {
  * function to show place for adding comment
  */
 function showAddComment(recomId) {
-    jQuery('#tim-comment-add-show-'+recomId).hide();
-    jQuery('#tim-comment-add-window-'+recomId).show(300);
+    jQuery('#tim-comment-add-show-' + recomId).hide();
+    jQuery('#tim-comment-add-window-' + recomId).show(300);
 }
 
 /**
@@ -55,9 +57,9 @@ function showAddComment(recomId) {
  * @param recomId
  */
 function seeAllComments(recomId) {
-    jQuery('.tim-comment-display-none-'+recomId).show(300);
-    jQuery('.tim-comment-link-'+recomId).hide();
-    jQuery('.tim-comment-hide-link-'+recomId).show();
+    jQuery('.tim-comment-display-none-' + recomId).show(300);
+    jQuery('.tim-comment-link-' + recomId).hide();
+    jQuery('.tim-comment-hide-link-' + recomId).show();
 }
 
 /**
@@ -65,9 +67,9 @@ function seeAllComments(recomId) {
  * @param recomId
  */
 function hideComments(recomId) {
-    jQuery('.tim-comment-hide-link-'+recomId).hide();
-    jQuery('.tim-comment-display-none-'+recomId).hide(300);
-    jQuery('.tim-comment-link-'+recomId).show();
+    jQuery('.tim-comment-hide-link-' + recomId).hide();
+    jQuery('.tim-comment-display-none-' + recomId).hide(300);
+    jQuery('.tim-comment-link-' + recomId).show();
 }
 
 function checkIfUserIsLoggedIn() {
@@ -150,12 +152,12 @@ function sendParams() {
  * Provide show and hide placeholder for text area.
  * @param (this)elem
  */
-function placeholderAction (elem) {
+function placeholderAction(elem) {
     var id = jQuery(elem).attr('id');
-    jQuery('#ph-'+id).hide();
-    jQuery('#' + id).focusout(function(){
-        if (!jQuery('#'+id).val()) {
-            jQuery('#ph-'+id).show();
+    jQuery('#ph-' + id).hide();
+    jQuery('#' + id).focusout(function () {
+        if (!jQuery('#' + id).val()) {
+            jQuery('#ph-' + id).show();
         }
     });
 }
@@ -180,6 +182,6 @@ function hideAddOpinionForm() {
  * Hides comment form after click button
  */
 function hideCommentForm(recomId) {
-    jQuery('#tim-comment-add-window-'+recomId).hide(300);
-    jQuery('#tim-comment-add-show-'+recomId).show(300);
+    jQuery('#tim-comment-add-window-' + recomId).hide(300);
+    jQuery('#tim-comment-add-show-' + recomId).show(300);
 }

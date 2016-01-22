@@ -50,13 +50,13 @@ if (!empty($commentLimitCharacters['max'])) {
     <div class="tim-opinion-media">
         <?php if (!empty($opinionData['images'])): ?>
         <div class="tim-opinion-photo">
-            <a class="tim-readmore" href="#"><?php echo $this->__('See photos'); ?></a>
+            <a class="tim-readmore" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></a>
             <!-- button for displaying user added photos in overlay -->
         </div>
         <?php endif; ?>
         <?php if (!empty($opinionData['movie_url'])): ?>
             <div class="tim-opinion-movie">
-                <a class="tim-readmore" href="#"><?php echo $this->__('See footage'); ?></a>
+                <a class="tim-readmore" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See footage'); ?></a>
                 <!-- button for displaying movie in overlay (movie source: YouTube)  -->
             </div>
         <?php endif; ?>
@@ -166,7 +166,7 @@ if (!empty($commentLimitCharacters['max'])) {
         <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt" onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
     </div>
 </div>
-<div class="tim-all-photo-popup">
+<div class="tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>">
     <div class="tim-all-photo-popup-bg"></div>
     <div class="tim-all-photo-popup-container">
         <input type="button" class="tim-popup-close" value="x"/>
@@ -179,7 +179,7 @@ if (!empty($commentLimitCharacters['max'])) {
         <?php endif; ?>
     </div>
 </div>
-<div class="tim-video-popup">
+<div class="tim-video-popup" id="tim-video-popup-<?php echo $recomId ?>">
     <div class="tim-video-popup-bg"></div>
     <div class="tim-video-popup-container">
         <input type="button" class="tim-popup-close" value="x"/>
