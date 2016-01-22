@@ -393,6 +393,24 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
+     * Parses youtube url and return video ID
+     * @param $url
+     * @return bool|mixed
+     */
+    public function parseYoutubeUrl($url){
+        $urlElements = parse_url($url);
+        if($host = $urlElements['host'] == 'www.youtube.com'){
+            $videoId = substr($urlElements['query'], 2);
+
+        }elseif($host = $urlElements['host'] == 'youtu.be'){
+            $videoId = substr($urlElements['path'], 1);
+        }else{
+            return false;
+        }
+        return $videoId;
+    }
+
+    /**
      * @return Tim_Recommendation_Helper_Data
      */
     public function getHelper()

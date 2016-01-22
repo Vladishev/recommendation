@@ -6,6 +6,7 @@ $customerHostName = $this->getHost($customerIp);
 $productId = Mage::registry('current_product')->getId();
 $recomId = $this->opinion['recom_id'];
 $opinionData = $this->getOpinionData($recomId);
+$youtubeVideoId = $this->parseYoutubeUrl($opinionData['movie_url']);
 $qtyComments = count($opinionData['comments']);
 $malpracticeUrl = $this->getUrl('recommendation/index/saveMalpractice');
 $commentLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacters('comment');
@@ -46,11 +47,6 @@ if (!empty($commentLimitCharacters['max'])) {
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
         <!-- place for read more if necessary -->
     </div>
-    <?php if (!empty($opinionData['images'])): ?>
-        <?php foreach ($opinionData['images'] as $image): ?>
-            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $image ?>" width="50" height="50" alt="img"/>
-        <?php endforeach; ?>
-    <?php endif; ?>
     <div class="tim-opinion-media">
         <?php if (!empty($opinionData['images'])): ?>
         <div class="tim-opinion-photo">
@@ -60,7 +56,7 @@ if (!empty($commentLimitCharacters['max'])) {
         <?php endif; ?>
         <?php if (!empty($opinionData['movie_url'])): ?>
             <div class="tim-opinion-movie">
-                <a class="tim-readmore" href="<?php echo $opinionData['movie_url'] ?>" target="_blank"><?php echo $this->__('See footage'); ?></a>
+                <a class="tim-readmore" href="#"><?php echo $this->__('See footage'); ?></a>
                 <!-- button for displaying movie in overlay (movie source: YouTube)  -->
             </div>
         <?php endif; ?>
@@ -168,6 +164,30 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
 <!-- button to submit abuse call -->
         <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt" onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
+    </div>
+</div>
+<div class="tim-all-photo-popup">
+    <div class="tim-all-photo-popup-bg"></div>
+    <div class="tim-all-photo-popup-container">
+        <input type="button" class="tim-popup-close" value="x"/>
+        <?php if (!empty($opinionData['images'])): ?>
+            <?php foreach ($opinionData['images'] as $image): ?>
+                <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $image ?>" width="100" height="100" alt="img"/>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?php echo $this->__('Don\'t have an images'); ?>
+        <?php endif; ?>
+    </div>
+</div>
+<div class="tim-video-popup">
+    <div class="tim-video-popup-bg"></div>
+    <div class="tim-video-popup-container">
+        <input type="button" class="tim-popup-close" value="x"/>
+        <?php if($youtubeVideoId): ?>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId ?>"></iframe>
+        <?php else : ?>
+            <?php echo $this->__('User have added video not from the youtube.'); ?>
+        <?php endif; ?>
     </div>
 </div>
 
