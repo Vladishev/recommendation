@@ -18,6 +18,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     public function addAction()
     {
         $params = $this->getRequest()->getParams();
+        $response = array();
         $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
         $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
 
@@ -43,10 +44,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
-            Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Opinion was successfully added.'));
+            $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add opinion.'));
+            $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
         }
 
         if (!empty($params['link_to_youtube'])) {
@@ -59,6 +60,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
         foreach ((array)$files as $file) {
             if ($file['error'] == 0) {
+                $file['name'] = str_replace(' ', '_', $file['name']);
                 $fileName = time() . $file['name'];
                 $mediaModel = Mage::getModel('tim_recommendation/media')
                     ->setRecomId($recomId)
@@ -68,7 +70,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     $saveMedia = $mediaModel->save();
                 } catch (Exception $e) {
                     Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                    Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']));
+                    $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
                 }
                 if ($saveMedia) {
                     $this->saveImage($fileName, $folderForFiles, $file);
@@ -82,7 +84,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $event = array('opinion_data' => $eventData);
             Mage::dispatchEvent('controller_index_add_opinion_data', $event);
         }
-        $this->_redirectReferer();
+
+        echo json_encode($response);
     }
 
     /**
@@ -231,6 +234,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     public function addCommentAction()
     {
         $params = $this->getRequest()->getParams();
+        $response = array();
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($params['customer_id'])
             ->setParent($params['recom_id'])//recommendation ID
@@ -241,10 +245,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         try {
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
-            Mage::getSingleton('core/session')->addSuccess(Mage::helper('tim_recommendation')->__('Comment was successfully added.'));
+            $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            Mage::getSingleton('core/session')->addError(Mage::helper('tim_recommendation')->__('Can\'t add comment.'));
+            $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add comment. Please try again.');
         }
         if (!empty($recomId)) {
             $this->saveMd5($recomId);
@@ -253,7 +257,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             Mage::dispatchEvent('controller_index_add_comment_data', $event);
         }
 
-        $this->_redirectReferer();
+        echo json_encode($response);
     }
 
     public function landingAction()
