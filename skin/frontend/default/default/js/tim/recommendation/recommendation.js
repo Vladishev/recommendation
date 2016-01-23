@@ -198,14 +198,14 @@ function addOpinionAjax(){
  * Save comment by AJAX
  */
 function addCommentAjax(){
-    jQuery("#form-validate-comment").ajaxForm({
+    jQuery(".comment-form").ajaxForm({
         beforeSend: function() {
             jQuery('#add-ajax-comment').prop('disabled', true);
             jQuery('#loading-frontend-mask').show(300);
         },
         success: function(response) {
             displayAjaxCommentPopupResponse(response);
-            jQuery("#form-validate-comment")[0].reset();
+            jQuery('.tim-opinion-comment').val('');
         },
         error: function(response) {
             displayAjaxCommentPopupResponse(response);

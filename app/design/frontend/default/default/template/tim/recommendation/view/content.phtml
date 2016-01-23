@@ -79,7 +79,6 @@ if (!empty($commentLimitCharacters['max'])) {
     <!-- for each comment (start) -->
     <?php $i = 1; ?>
     <?php foreach ($opinionData['comments'] as $comment): ?>
-
         <div class="tim-comment-container <?php if($i > 5) echo 'tim-comment-display-none-'. $recomId ?>" <?php if($i > 5) echo 'style="display:none;"' ?>>
             <div class="tim-comment-container-title">
                 <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
@@ -119,7 +118,7 @@ if (!empty($commentLimitCharacters['max'])) {
             onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">
         <?php echo $this->__("Add your own comment"); ?></button>
 </div>
-<form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" id="form-validate-comment" autocomplete="off">
+<form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" class="comment-form" id="form-validate-comment" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
     <input type="hidden" name="recom_id" value="<?php echo $recomId ?>"/>
     <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
@@ -130,7 +129,7 @@ if (!empty($commentLimitCharacters['max'])) {
             <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
         <div class="tim-opinion-content tim-add-opinion">
-            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="<?php echo $commentClass ?>input-text required-entry validate-no-html-tags"  onclick="placeholderAction(this)"></textarea>
+            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="<?php echo $commentClass ?>input-text required-entry validate-no-html-tags tim-opinion-comment"  onclick="placeholderAction(this)"></textarea>
             <div id="ph-tim-opinion-comment" class="placeholder-div">
                 <?php echo $commentPlaceholder; ?>
             </div>
@@ -152,12 +151,6 @@ if (!empty($commentLimitCharacters['max'])) {
         </button>
     </div>
 </form>
-<div id="loading-frontend-mask">
-    <p class="loader" id="loading_mask_loader">
-        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
-             alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
-        <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
-</div>
 <div class="tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>">
     <div class="tim-all-photo-popup-bg"></div>
     <div class="tim-all-photo-popup-container">
