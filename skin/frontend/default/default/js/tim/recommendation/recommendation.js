@@ -43,6 +43,10 @@ jQuery(document).ready(function () {
         if (e.keyCode == 27) {
             jQuery('.tim-all-photo-popup').hide();
             jQuery('.tim-video-popup').hide();
+            jQuery('.tim-userlogin-popup').hide();
+            jQuery('.tim-add-comment-popup').hide();
+            jQuery('.tim-add-opinion-popup').hide();
+            jQuery('.tim-markabuse-popup').hide();
         }
     });
 });
@@ -78,17 +82,6 @@ function hideComments(recomId) {
 function checkIfUserIsLoggedIn() {
     /* function open modal when submit button is pressed without validation yet */
     jQuery('.tim-userlogin-popup').show(300);
-
-    /* function to close modal login area */
-    jQuery('#tim-userlogin-popup-close').on('click', function () {
-        jQuery('.tim-userlogin-popup').hide();
-    });
-    /* function to close modal login area by escape button*/
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-userlogin-popup').hide();
-        }
-    });
 }
 /**
  * Variables for sendParams() method
@@ -108,34 +101,27 @@ var siteUrl;
  * @param url
  */
 function markUserAbuse(id, customerId, ip, url, hostName) {
-    jQuery('.tim-markabuse-popup').show(300);
-    //console.log(url);
-    jQuery('#tim-markabuse-popup-close').on('click', function () {
-        jQuery('.tim-markabuse-popup').hide();
-        jQuery('#tim-abuse-application').show();
-        jQuery('#tim-abuse-application-sendbt').show();
-    });
-    jQuery('#tim-abuse-application-sendbt').on('click', function () {
-        jQuery('#tim-abuse-application').hide().val('');
-        jQuery('#tim-abuse-application-sendbt').hide();
-        jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora');
-    });
     recomId = id;
     userId = customerId;
     customerIp = ip;
     customerHostName = hostName;
     siteUrl = url;
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-markabuse-popup').hide();
-        }
+
+    jQuery('.tim-markabuse-popup').show(300);
+    jQuery('#tim-abuse-application').show();
+    jQuery('#tim-abuse-application-sendbt').show();
+    jQuery('.tim-markabuse-popup-container p').text('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.');
+
+    jQuery('#tim-abuse-application-sendbt').on('click', function () {
+        jQuery('#tim-abuse-application').hide().val('');
+        jQuery('#tim-abuse-application-sendbt').hide();
+        jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora');
     });
 }
 /**
  * Send customer parameters to controller
  */
 function sendParams() {
-
     var comment = jQuery('#tim-abuse-application').val();
     var param = {
         userId: userId,
@@ -206,15 +192,6 @@ function addOpinionAjax(){
             displayAjaxOpinionPopupResponse(response);
         }
     });
-
-    jQuery('#tim-add-opinion-popup-close').on('click', function () {
-        jQuery('.tim-add-opinion-popup').hide();
-    });
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-add-opinion-popup').hide();
-        }
-    });
 }
 
 /**
@@ -232,15 +209,6 @@ function addCommentAjax(){
         },
         error: function(response) {
             displayAjaxCommentPopupResponse(response);
-        }
-    });
-
-    jQuery('#tim-add-comment-popup-close').on('click', function () {
-        jQuery('.tim-add-comment-popup').hide();
-    });
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-add-comment-popup').hide();
         }
     });
 }

@@ -210,9 +210,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                     <input type="text" name="link_to_youtube" id="link_to_youtube"
                            class="input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Podaj link z serwisu Youtube') ?>" style="color:#949090;"
-                           onfocus="{ this.value = ''; }"
-                           onblur="if(this.placeholder == '') { this.placeholder = 'Podaj link z serwisu Youtube'; }"
-                        <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
+                        <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <!-- place for user input - add movie - url to youtube -->
                 </div>
 
@@ -249,7 +247,7 @@ if (!empty($opinionLimitCharacters['max'])) {
 <div class="tim-add-opinion-popup">
     <div class="tim-add-opinion-popup-bg"></div>
     <div class="tim-add-opinion-popup-container">
-        <input type="button" class="tim-add-opinion-popup-bt-close" value="x" id="tim-add-opinion-popup-close"/>
+        <input type="button" class="tim-popup-close" value="x" id="tim-add-opinion-popup-close"/>
         <p></p>
     </div>
 </div>

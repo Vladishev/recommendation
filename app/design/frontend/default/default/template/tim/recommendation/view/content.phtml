@@ -63,7 +63,7 @@ if (!empty($commentLimitCharacters['max'])) {
     </div>
     <?php if ($isLoggedIn): ?>
     <div class="tim-abuse-button-position-opinion">
-        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $opinionData['recom_id'] . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $recomId . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
             <?php echo $this->__('Zgłoś nadużycie') ?>
         </button>
     </div>
@@ -121,7 +121,7 @@ if (!empty($commentLimitCharacters['max'])) {
 </div>
 <form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" id="form-validate-comment" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
-    <input type="hidden" name="recom_id" value="<?php echo $opinionData['recom_id'] ?>"/>
+    <input type="hidden" name="recom_id" value="<?php echo $recomId ?>"/>
     <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
     <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
     <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
@@ -157,25 +157,6 @@ if (!empty($commentLimitCharacters['max'])) {
         <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
              alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
         <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
-</div>
-<div class="tim-add-comment-popup">
-    <div class="tim-add-comment-popup-bg"></div>
-    <div class="tim-add-comment-popup-container">
-        <input type="button" class="tim-add-comment-popup-bt-close" value="x" id="tim-add-comment-popup-close"/>
-        <p></p>
-    </div>
-</div>
-<div class="tim-markabuse-popup">
-    <div class="tim-markabuse-popup-bg"></div>
-    <div class="tim-markabuse-popup-container">
-        <input type="button" class="tim-userlogin-popup-bt-close" value="x" id="tim-markabuse-popup-close"/>
-        <p><?php echo $this->__('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.') ?></p>
-        <div class="tim-opinion-content tim-add-opinion">
-            <textarea name="tim-abuse-application" id="tim-abuse-application" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
-        </div>
-<!-- button to submit abuse call -->
-        <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt" onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
-    </div>
 </div>
 <div class="tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>">
     <div class="tim-all-photo-popup-bg"></div>

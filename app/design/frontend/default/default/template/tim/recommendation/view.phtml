@@ -26,4 +26,29 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
             </div>
         <?php endforeach ?>
     </div>
+    <div id="loading-frontend-mask">
+        <p class="loader" id="loading_mask_loader">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
+                 alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
+            <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
+    </div>
+    <div class="tim-add-comment-popup">
+        <div class="tim-add-comment-popup-bg"></div>
+        <div class="tim-add-comment-popup-container">
+            <input type="button" class="tim-popup-close" value="x"/>
+            <p></p>
+        </div>
+    </div>
+    <div class="tim-markabuse-popup">
+        <div class="tim-markabuse-popup-bg"></div>
+        <div class="tim-markabuse-popup-container">
+            <input type="button" class="tim-popup-close" value="x"/>
+            <p></p>
+            <div class="tim-opinion-content tim-add-opinion">
+                <textarea name="tim-abuse-application" id="tim-abuse-application" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
+            </div>
+            <!-- button to submit abuse call -->
+            <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt" onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
+        </div>
+    </div>
 <?php endif; ?>
