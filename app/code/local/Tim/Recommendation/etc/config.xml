@@ -120,6 +120,15 @@
                     </send_opinion_email>
                 </observers>
             </controller_index_add_comment_data>
+            <controller_index_add_malpractice_data>
+                <observers>
+                    <send_malpractice_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendMalpracticeEmail</method>
+                    </send_malpractice_email>
+                </observers>
+            </controller_index_add_malpractice_data>
         </events>
         <template>
             <email>
@@ -133,6 +142,16 @@
                     <file>confirmComment.html</file>
                     <type>html</type>
                 </comment_template>
+                <malpractice_template>
+                    <label>Malpractice message</label>
+                    <file>malpracticeMessage.html</file>
+                    <type>html</type>
+                </malpractice_template>
+                <user_template>
+                    <label>Message for user</label>
+                    <file>userMessage.html</file>
+                    <type>html</type>
+                </user_template>
             </email>
         </template>
     </global>

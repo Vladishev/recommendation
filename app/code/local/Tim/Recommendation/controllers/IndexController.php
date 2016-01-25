@@ -331,6 +331,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $model->setTimHost($params['customerHostName']);
         try {
             $model->save();
+            $eventData = $params;
+            $event = array('malpractice_data' => $eventData);
+            Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
         }
