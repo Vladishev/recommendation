@@ -119,7 +119,7 @@ class Tim_Recommendation_Model_Observer
         $status = (integer)Mage::getStoreConfig('tim_settings/confirm_opinion/tim_enabled');
         if ($status == 1 and !empty($email))
         {
-                $this->sendEmail($email, $opinionData, 'Opinion');
+            $this->sendEmail($email, $opinionData, 'Opinion');
         }
     }
 

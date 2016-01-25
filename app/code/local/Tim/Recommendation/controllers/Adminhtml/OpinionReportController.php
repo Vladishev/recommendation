@@ -48,6 +48,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
             foreach ($commentsId as $item) {
                 $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
                 $recommendationModel->setAcceptance(1);
+                $recommendationModel->setPublicationDate(date('Y-m-d H:i:s'));
                 $recommendationModel->save();
             }
             $this->_addAlert('allowed', $commentsId);
