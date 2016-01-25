@@ -129,8 +129,10 @@ if (!empty($commentLimitCharacters['max'])) {
             <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
         <div class="tim-opinion-content tim-add-opinion">
-            <textarea name="opinion-comment" id="tim-opinion-comment" cols="5" rows="3" class="<?php echo $commentClass ?>input-text required-entry validate-no-html-tags"  onclick="placeholderAction(this)"></textarea>
-            <div id="ph-tim-opinion-comment" class="placeholder-comment-div">
+            <textarea name="opinion-comment" id="tim-opinion-comment-<?php echo $recomId ?>" cols="5" rows="3"
+                      class="<?php echo $commentClass ?> input-text required-entry validate-no-html-tags"
+                      onclick="commentPlaceholderAction(<?php echo $recomId ?>)"></textarea>
+            <div id="ph-tim-opinion-comment-<?php echo $recomId ?>" class="placeholder-comment-div">
                 <?php echo $commentPlaceholder; ?>
             </div>
         </div>

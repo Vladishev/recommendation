@@ -246,6 +246,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $recommendationModel->save();
             $recomId = $recommendationModel->getRecomId();
             $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
+            $response['commentRecomId'] = $params['recom_id'];
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add comment. Please try again.');

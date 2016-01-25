@@ -138,15 +138,14 @@ function sendParams() {
 }
 
 /**
- * Provide show and hide placeholder for text area.
- * @param (this)elem
+ * Provide show and hide placeholder for comments textarea
+ * @param recomId
  */
-function placeholderAction(elem) {
-    var id = jQuery(elem).attr('id');
-    jQuery('#ph-' + id).hide();
-    jQuery('#' + id).focusout(function () {
-        if (!jQuery('#' + id).val()) {
-            jQuery('#ph-' + id).show();
+function commentPlaceholderAction(recomId) {
+    jQuery('#ph-tim-opinion-comment-' + recomId).hide();
+    jQuery('#tim-opinion-comment-' + recomId).focusout(function () {
+        if (!jQuery('#tim-opinion-comment-' + recomId).val()) {
+            jQuery('#ph-tim-opinion-comment-' + recomId).show();
         }
     });
 }
@@ -233,7 +232,6 @@ function addCommentAjax(){
         },
         success: function(response) {
             displayAjaxCommentPopupResponse(response);
-            jQuery('.tim-opinion-comment').val('');
         },
         error: function(response) {
             displayAjaxCommentPopupResponse(response);
@@ -254,5 +252,7 @@ function displayAjaxCommentPopupResponse(response){
     jQuery('.tim-add-comment-popup').show(300);
     var response = JSON.parse(response);
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
+    jQuery('#tim-opinion-comment-' + response['commentRecomId']).val('');
+    jQuery('#ph-tim-opinion-comment-' + response['commentRecomId']).show();
     jQuery('#add-ajax-comment').prop('disabled', false);
 }
