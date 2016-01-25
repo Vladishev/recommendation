@@ -536,6 +536,19 @@ span.tim-chart-boolean-active {
 
 .placeholder-div{
     position: absolute;
+    top: 35px;
+    left: 20px;
+    color: #a5a5a5;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.placeholder-comment-div{
+    position: absolute;
     top: 20px;
     left: 20px;
     color: #a5a5a5;
