@@ -95,6 +95,13 @@
         </reference>
     </customer_account>
     <recommendation_user_edit>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/dist/cropper.js</name></action>
+            <!--<action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/demo/js/main.js</name></action>-->
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/tim/recommendation/cropper-master/dist/cropper.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
+        </reference>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper"> <!-- target parent block -->
             <block type="customer/form_edit" name="customer_edit" template="tim/recommendation/profile/recommendation_tab.phtml"/>

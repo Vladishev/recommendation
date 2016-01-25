@@ -20,16 +20,24 @@
         <li>
             <label for="banner"><?php echo $_helper->__('Banner') ?></label>
             <div class="input-box">
-                <input type="file" name="banner" id="banner" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png" />
+                <input type="file" name="banner" id="banner" class="upload-buttons" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png" />
+                <input type="hidden" name="banner-hide" id="banner-hide"  value="" />
             </div>
             <?php if($_helper->getCustomerBanner()): ?>
                 <label for="banner-checkbox"><?php echo $_helper->__('Delete') ?></label>
                 <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
             <div class="recommendation-image">
-                <img src="<?php echo $_helper->getCustomerBanner(); ?>" width="860" height="500" alt="banner" />
+                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" width="860" height="500" alt="banner" />
             </div>
             <?php endif ?>
         </li>
+<!--   ----------------------------------------------------------------------------     -->
+<!--        <div>-->
+<!--            <input type="file" name="upload-image" id="upload-image" title="--><?php //echo $_helper->__('Allowed file types: jpeg, png.') ?><!--" accept="image/jpeg,image/png" />-->
+<!--            <input type="hidden" name="tim-cropped-image-path" id="tim-cropped-image-path"  value="" />-->
+<!--            <img src="" id="tim-avatar-preview" alt="Preview"/>-->
+<!--        </div>-->
+<!--   ----------------------------------------------------------------------------     -->
         <li>
             <label><?php echo $_helper->__('Avatar') ?></label><br>
             <div class="avatar">
@@ -44,13 +52,14 @@
                 </div>
                 <label for="image"><?php echo $_helper->__('Add your avatar') ?></label>
                 <div class="input-box">
-                    <input type="file" name="image" id="avatar" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png"/>
+                    <input type="file" name="avatar" id="avatar" class="upload-buttons" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png"/>
+                    <input type="hidden" name="avatar-hide" id="avatar-hide"  value="" />
                 </div>
                 <?php if($_helper->getCustomerAvatar()): ?>
                     <label for="avatar-checkbox"><?php echo $_helper->__('Delete') ?></label>
                     <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
                     <div class="recommendation-image">
-                        <img src="<?php echo $_helper->getCustomerAvatar(); ?>" width="290" height="180" alt="avatar" />
+                        <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" width="290" height="180" alt="avatar" />
                     </div>
                 <?php endif ?>
             </div>
@@ -86,8 +95,119 @@
     <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Save')) ?>" class="button" ><span><span><?php echo $this->__('Save') ?></span></span></button>
 </div>
 </form>
+<!---------------------------------------------------------------------------------------->
+
+<div class="tim-crop-image">
+    <div class="tim-crop-image-bg"></div>
+    <div class="tim-crop-image-container">
+        <input type="button" class="tim-popup-close" value="x"/>
+        <img id="image-test" src="" width="300" height="300" alt="banner" />
+        <button type="button" id="test-btn" class="btn btn-primary docs-buttons" data-method="getCroppedCanvas">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)">
+              Get Cropped Canvas
+            </span>
+        </button>
+    </div>
+</div>
+<!---------------------------------------------------------------------------------------->
 <script type="text/javascript">
     //<![CDATA[
+
+//    -------------------------------------------------------------------------------------
+
+    var $image = jQuery('#image-test');
+
+    $image.cropper({
+        minCropBoxWidth: 200,
+        aspectRatio: 5 / 5,
+        crop: function(e) {}
+    });
+
+    var $inputImage = jQuery('.upload-buttons');
+    $inputImage.on('click', function () {
+        $inputImage = jQuery(this);
+    });
+//    var $inputImage = jQuery('#banner');
+    var URL = window.URL || window.webkitURL;
+    var blobURL;
+    var $popUp = jQuery('.tim-crop-image');
+
+    if (URL) {
+        $inputImage.change(function () {
+            var files = this.files;
+            var file;
+
+            if (!$image.data('cropper')) {
+                return;
+            }
+            $popUp.show(300);
+            if (files && files.length) {
+                file = files[0];
+
+                if (/^image\/\w+$/.test(file.type)) {
+                    blobURL = URL.createObjectURL(file);
+                    $image.one('built.cropper', function () {
+
+                        // Revoke when load complete
+                        URL.revokeObjectURL(blobURL);
+                    }).cropper('reset').cropper('replace', blobURL);
+                    $inputImage.val('');
+                } else {
+                    window.alert('Please choose an image file.');
+                }
+            }
+        });
+    } else {
+        $inputImage.prop('disabled', true).parent().addClass('disabled');
+    }
+
+    // Methods
+    jQuery('.docs-buttons').on('click', function () {
+        var $this = jQuery(this);
+        var data = $this.data();
+        var $target;
+        var result;
+        var date = new Date();
+        var buttonType = $inputImage.attr('id');
+
+        if ($this.prop('disabled') || $this.hasClass('disabled')) {
+            return;
+        }
+
+        if ($image.data('cropper') && data.method) {
+
+            data = jQuery.extend({}, data); // Clone a new one
+            if (typeof data.target !== 'undefined') {
+
+                $target = jQuery(data.target);
+                if (typeof data.option === 'undefined') {
+                    try {
+                        data.option = JSON.parse($target.val());
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                }
+            }
+
+            result = $image.cropper(data.method, data.option, data.secondOption);
+            var sendData = {data: result.toDataURL(), typeOfImage: buttonType, customerId: <?php echo Mage::helper('customer')->getCustomer()->getEntityId() ?>};
+
+            jQuery.ajax({
+                url: "<?php echo $this->getUrl('recommendation/user/saveCropImage') ?>",
+                type: "post",
+                data: sendData,
+                success: function(response){
+                    var response = JSON.parse(response);
+                    var $preview = jQuery('#tim-'+buttonType+'-image');
+                    $preview.attr('src', response['path']+'?'+date.getTime());
+                    jQuery('#'+buttonType+'-hide').attr('value', response['formData']);
+                    $popUp.hide();
+                }
+            });
+        }
+    });
+
+//    ---------------------------------------------------------------------------------------
     var dataForm = new VarienForm('form-validate', true);
     Validation.add('custom-url-validate', 'Please enter a valid URL. For example http://www.example.com or www.example.com or example.com', function () {
         var url = document.getElementById("tim-form-url").value;

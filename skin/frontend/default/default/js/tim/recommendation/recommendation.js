@@ -21,6 +21,11 @@ jQuery(document).ready(function () {
         }
     });
 
+    jQuery('.tim-popup-close').click(function () {
+        var popupClass = '.' + jQuery(this).parents().get(1).className;
+        jQuery(popupClass).hide();
+    });
+
 });
 
 /* function to show place for adding comment */
