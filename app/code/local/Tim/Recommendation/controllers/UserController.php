@@ -230,9 +230,11 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         list(, $imageData)      = explode(',', $imageData);
         $imageData = base64_decode($imageData);
         $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName;
+
         if (!is_dir($folderForImage)) {
             mkdir($folderForImage, 0777, true);
         }
+
         try {
             file_put_contents($folderForImage . DS . $imageName, $imageData);
             echo json_encode($imagePath);
