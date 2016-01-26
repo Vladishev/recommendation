@@ -37,6 +37,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                     <?php echo $opinionPlaceholder; ?>
                 </div>
             </div>
+            <div class="char-count" id="char-count-tim-opinion-advantages"><span>0</span></div>
 
             <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad <?php echo $requiredFields['defects']? 'required' : '' ?>">
                 <?php echo $requiredFields['defects']? '<em>*</em>' : '' ?>
@@ -49,6 +50,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                     <?php echo $opinionPlaceholder; ?>
                 </div>
             </div>
+            <div class="char-count" id="char-count-tim-opinion-disadvantages"><span>0</span></div>
 
             <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary <?php echo $requiredFields['summary']? 'required' : '' ?>">
                 <?php echo $requiredFields['summary']? '<em>*</em>' : '' ?>
@@ -61,6 +63,8 @@ if (!empty($opinionLimitCharacters['max'])) {
                     <?php echo $opinionPlaceholder; ?>
                 </div>
             </div>
+            <div class="char-count" id="char-count-tim-opinion-summary"><span>0</span></div>
+
             <div class="tim-rating-input-container">
                 <div class="tim-secondary-title"><?php echo $this->__('OCEŃ WALORY PRODUKTU') ?></div>
                 <?php $options = array(5, 4, 3, 2, 1); ?>
@@ -282,6 +286,15 @@ if (!empty($opinionLimitCharacters['max'])) {
             theme_advanced_buttons1 : "bold,italic,underline,jbimages",
             plugins : "jbimages,inlinepopups,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
             setup : function(ed) {
+                var text = '';
+                var span = jQuery('#char-count-'+ ed.id).children("span");
+                    ed.onKeyUp.add(function(ed, e) {
+                        text = ed.getContent().replace(/<\/?[^>]+>/gi, '');
+                        text = text.replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/&nbsp;/g, ' ');
+                        var charCount = text.length;
+                        span.text(charCount);
+                    });
+
                 //Action on event focusout
                 ed.onInit.add(function(ed, evt) {
                     tinymce.dom.Event.add(ed.getDoc(), 'focusout', function(e) {

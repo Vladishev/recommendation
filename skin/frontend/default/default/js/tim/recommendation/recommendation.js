@@ -256,3 +256,9 @@ function displayAjaxCommentPopupResponse(response){
     jQuery('#ph-tim-opinion-comment-' + response['commentRecomId']).show();
     jQuery('#add-ajax-comment').prop('disabled', false);
 }
+
+function countCommentChar(commentId){
+    var text = jQuery('#tim-opinion-comment-' + commentId).val();
+    var charCount = text.length;
+    jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
+}

@@ -547,6 +547,10 @@ span.tim-chart-boolean-active {
     user-select: none;
 }
 
+.char-count {
+    float: right;
+}
+
 .placeholder-comment-div{
     position: absolute;
     top: 20px;
