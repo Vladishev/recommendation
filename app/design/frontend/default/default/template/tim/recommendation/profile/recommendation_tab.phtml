@@ -94,10 +94,15 @@
     <div class="tim-crop-image-bg"></div>
     <div class="tim-crop-image-container">
         <input type="button" class="tim-popup-close" value="x"/>
-        <img id="image-test" src="" width="300" height="300" alt="banner" />
+        <img id="tim-crop-image" src="" width="300" height="300" alt="banner" />
         <button type="button" id="test-btn" class="btn btn-primary docs-buttons" data-method="getCroppedCanvas">
             <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)">
               Get Cropped Canvas
+            </span>
+        </button>
+        <button type="button" class="btn btn-primary" id="drag-mode" data-method="setDragMode" data-option="move" title="Move">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;move&quot;)">
+              <span class="fa fa-arrows">Move</span>
             </span>
         </button>
     </div>
@@ -107,7 +112,7 @@
 
 //    --------------------------- Cropper functionality --------------------------------
 
-    var $image = jQuery('#image-test');
+    var $image = jQuery('#tim-crop-image');
 
     $image.cropper({
         minCropBoxWidth: 200,
@@ -165,6 +170,10 @@
     } else {
         $inputImage.prop('disabled', true).parent().addClass('disabled');
     }
+
+    jQuery('#drag-mode').click(function (){
+        $image.cropper("setDragMode", "move");
+    });
 
     // Methods
     jQuery('.docs-buttons').on('click', function () {

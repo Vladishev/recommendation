@@ -211,6 +211,10 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         return true;
     }
 
+    /**
+     * Saves cropped image and returns path to it
+     * @return bool or json_encode data
+     */
     public function saveCropImageAction()
     {
         $data = $this->getRequest()->getParams();
