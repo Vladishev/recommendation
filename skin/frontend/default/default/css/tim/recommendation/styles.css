@@ -528,6 +528,10 @@ span.tim-chart-boolean-active {
 	padding:0;
 }
 
+#tim-add-opinion-layout {
+	display: none;
+}
+
 /* add opinion */
 
 .tim-add-opinion {
