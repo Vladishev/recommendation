@@ -47,7 +47,8 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $avatar = null;
         $banner = null;
         $siteUrl = null;
-        $nick = null;
+        $nick = false;
+        $defaultAvatar = null;
         $postData = $this->getRequest()->getPost();
         if (!empty($postData['selected_avatar'])) {
             $avatar = $postData['selected_avatar'];
@@ -55,6 +56,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         }
         if (!empty($postData['avatar-hide'])) {
             $avatar = $postData['avatar-hide'];
+            $defaultAvatar = false;
         }
         if (!empty($postData['banner-hide'])) {
             $banner = $postData['banner-hide'];
@@ -83,7 +85,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
         if (!is_null($avatar)) {
             try {
-                if (empty($defaultAvatar)) {
+                if ($defaultAvatar == false) {
                     if (!empty($userData)) {
                         $user->setAvatar($avatar);
                     } else {
@@ -212,7 +214,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
     public function saveCropImageAction()
     {
         $data = $this->getRequest()->getParams();
-        $customerId = $data['customerId'];
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $typeOfImage = $data['typeOfImage'];
         $folderName = $typeOfImage;
         $imageData = $data['data'];
