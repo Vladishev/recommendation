@@ -76,6 +76,7 @@
                     </ul>
                 </div>
             </div>
+            <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('tim/recommendation/rating/product_list.phtml')->toHtml(); ?>
         </li>
     <?php endforeach; ?>
     </ol>
