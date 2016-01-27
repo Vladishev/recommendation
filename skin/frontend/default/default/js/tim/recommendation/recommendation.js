@@ -191,7 +191,7 @@ jQuery(document).ready(function () {
                     var response = JSON.parse(response);
                     var $preview = jQuery('#tim-'+buttonType+'-image');
                     $preview.attr('src', response['path']+'?'+date.getTime());
-                    jQuery('#'+buttonType+'-hide').attr('value', response['formData']+'|'+response['tmpFolder']);
+                    jQuery('#'+buttonType+'-hide').attr('value', response['formData']+'|'+response['tmpFolder']+'|'+response['imgFolder']);
                     $popUp.hide();
                 }
             });

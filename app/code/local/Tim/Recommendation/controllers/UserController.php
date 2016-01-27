@@ -86,13 +86,14 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         if (!is_null($avatar)) {
             try {
                 if ($defaultAvatar == false) {
+                    $this->_cleanDirectory($avatar[2]);
+                    $time = time();
+                    rename($avatar[1], $avatar[0].'-'.$time);
                     if (!empty($userData)) {
-                        rename($avatar[1], $avatar[0]);
-                        $user->setAvatar($avatar[0]);
+                        $user->setAvatar($avatar[0].'-'.$time);
                     } else {
-                        rename($avatar[1], $avatar[0]);
                         $user->setCustomerId($customerId);
-                        $user->setAvatar($avatar[0]);
+                        $user->setAvatar($avatar[0].'-'.$time);
                     }
                 } else {
                     $dbPath = '/media/tim/recommendation/' . $avatar;
@@ -110,13 +111,14 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         }
         if (!is_null($banner)) {
             try {
+                $this->_cleanDirectory($banner[2]);
+                $time = time();
+                rename($banner[1], $banner[0].'-'.$time);
                 if (!empty($userData)) {
-                    rename($banner[1], $banner[0]);
-                    $user->setAd($banner[0]);
+                    $user->setAd($banner[0].'-'.$time);
                 } else {
-                    rename($avatar[1], $banner[0]);
                     $user->setCustomerId($customerId);
-                    $user->setAd($banner[0]);
+                    $user->setAd($banner[0].'-'.$time);
                 }
                 $user->save();
             } catch (Exception $e) {
@@ -183,6 +185,20 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
     }
 
     /**
+     * Removes all files from directory
+     * @param (str)$path
+     */
+    protected function _cleanDirectory($path)
+    {
+        $oldFiles = glob($path.'*');
+        if ($oldFiles) {
+            foreach ($oldFiles as $oldFile) {
+                unlink($oldFile);
+            }
+        }
+    }
+
+    /**
      * Check file type
      * @param string $fileType
      * @return bool
@@ -232,6 +248,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $imagePath['path'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . DS . 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . 'tmp' . DS . $imageName;
         $imagePath['formData'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $imageName;
         $imagePath['tmpFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . 'tmp' . DS . $imageName;
+        $imagePath['imgFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS;
         list(, $imageData)      = explode(',', $imageData);
         $imageData = base64_decode($imageData);
         $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . 'tmp';
