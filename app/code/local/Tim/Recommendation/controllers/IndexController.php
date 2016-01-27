@@ -166,7 +166,6 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         $eventData['confirm_url'] = $this->getConfirmUrl($recomId, '0');
-        $eventData['moderate_url'] = $this->getConfirmUrl($recomId, '1');
 
         return $eventData;
     }
@@ -174,7 +173,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     /**
      * Returns url with data
      * $status = 0 - to make accept url
-     * $status = 1 - to make moderate url
+     * $status = 1 - can use for extend current functionality
      * @param (int)$recomId
      * @param (str)$status
      * @return string
