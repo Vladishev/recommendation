@@ -290,7 +290,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 var span = jQuery('#char-count-'+ ed.id).children("span");
                     ed.onKeyUp.add(function(ed, e) {
                         text = ed.getContent().replace(/<\/?[^>]+>/gi, '');
-                        text = text.replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/&nbsp;/g, ' ');
+                        text = text.replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         var charCount = text.length;
                         span.text(charCount);
                     });

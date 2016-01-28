@@ -245,16 +245,24 @@ function displayAjaxOpinionPopupResponse(response){
     var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
+    jQuery('#char-count-tim-opinion-advantages span').text('0');
+    jQuery('#ph-tim-opinion-advantages').show();
+    jQuery('#char-count-tim-opinion-disadvantages span').text(0);
+    jQuery('#ph-tim-opinion-disadvantages').show();
+    jQuery('#char-count-tim-opinion-summary span').text(0);
+    jQuery('#ph-tim-opinion-summary').show();
 }
 
 function displayAjaxCommentPopupResponse(response){
     jQuery('#loading-frontend-mask').hide();
     jQuery('.tim-add-comment-popup').show(300);
     var response = JSON.parse(response);
+    var commentRecomId = response['commentRecomId'];
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
-    jQuery('#tim-opinion-comment-' + response['commentRecomId']).val('');
-    jQuery('#ph-tim-opinion-comment-' + response['commentRecomId']).show();
+    jQuery('#tim-opinion-comment-' + commentRecomId).val('');
+    jQuery('#ph-tim-opinion-comment-' + commentRecomId).show();
     jQuery('#add-ajax-comment').prop('disabled', false);
+    jQuery('#char-count-comment-' + commentRecomId).children('span').text(0);
 }
 
 function countCommentChar(commentId){
