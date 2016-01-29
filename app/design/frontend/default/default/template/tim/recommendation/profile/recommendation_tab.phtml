@@ -26,10 +26,10 @@
             <?php if($_helper->getCustomerBanner()): ?>
                 <label for="banner-checkbox"><?php echo $_helper->__('Delete') ?></label>
                 <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
-            <div class="recommendation-image">
-                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" width="860" height="500" alt="banner" />
-            </div>
             <?php endif ?>
+            <div class="recommendation-image">
+                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" width="860" height="500" alt="<?php echo ($_helper->getCustomerBanner()) ? 'banner': '' ?>" />
+            </div>
         </li>
         <li>
             <label><?php echo $_helper->__('Avatar') ?></label><br>
@@ -51,10 +51,10 @@
                 <?php if($_helper->getCustomerAvatar()): ?>
                     <label for="avatar-checkbox"><?php echo $_helper->__('Delete') ?></label>
                     <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
-                    <div class="recommendation-image">
-                        <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" width="290" height="180" alt="avatar" />
-                    </div>
                 <?php endif ?>
+                <div class="recommendation-image">
+                    <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" width="290" height="180" alt="<?php echo ($_helper->getCustomerAvatar()) ? 'avatar': '' ?>" />
+                </div>
             </div>
         </li>
         <li>
