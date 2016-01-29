@@ -76,6 +76,7 @@
                     </ul>
                 </div>
             </div>
+            <?php echo $this->getLayout()->createBlock('tim_recommendation/rating')->setTemplate('tim/recommendation/rating/product_list.phtml')->setData('product', $_product)->toHtml(); ?>
         </li>
     <?php endforeach; ?>
     </ol>
@@ -113,6 +114,7 @@
                         <?php endif; ?>
                     </ul>
                 </div>
+                <?php echo $this->getLayout()->createBlock('tim_recommendation/rating')->setTemplate('tim/recommendation/rating/product_list.phtml')->setData('product', $_product)->toHtml(); ?>
             </li>
         <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
         </ul>
