@@ -19,7 +19,7 @@ if (!empty($commentLimitCharacters['max'])) {
     $commentClass .= 'max-length-comment ';
 }
 ?>
-<div class="tim-opinion"> <!-- main container for opinion -->
+<div id="tim-scroll-ancor" class="tim-opinion"> <!-- main container for opinion -->
     <div class="tim-opinion-date">
         <!-- place for date when opinion was added -->
         <?php echo $this->__('Opinia z dnia: <span>%s</span>', $opinionData['date_add']); ?>

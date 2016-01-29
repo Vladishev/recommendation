@@ -13,10 +13,11 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     /**
      * Returns opinions info for product
      * @param (int)$productId
-     * @return (array)mixed
+     * @return array
      */
     public function getOpinionsInfo($productId)
     {
+        $productData = array();
         $productData['opinions_count'] = $this->_getOpinionCount($productId);
         $productData['rating'] = $this->_getProductRating($productId);
         return $productData;
@@ -38,7 +39,7 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     /**
      * Returns average product rating based on product's opinions
      * @param (int)$productId
-     * @return float
+     * @return float))
      */
     protected function _getProductRating($productId)
     {
@@ -68,6 +69,13 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
         $opinionCollection->addFieldToFilter('product_id', $productId);
         $opinionCollection->addFieldToFilter('acceptance', 1);
         $opinionCollection->addFieldToFilter('parent', array('null' => true));
+        $opinionCollection->addFieldToSelect(array(
+            'rating_price',
+            'rating_durability',
+            'rating_failure',
+            'rating_service',
+            'recom_id'
+        ));
         return $opinionCollection;
     }
 }
