@@ -18,7 +18,7 @@
     </tabs>
     <sections>
         <tim_recommendation translate="label">
-            <label>Recommendation</label>
+            <label>Type and user level</label>
             <tab>tim_tab</tab>
             <sort_order>20</sort_order>
             <show_in_default>1</show_in_default>
