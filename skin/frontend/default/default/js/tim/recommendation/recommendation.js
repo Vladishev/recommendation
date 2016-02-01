@@ -150,6 +150,21 @@ function commentPlaceholderAction(recomId) {
     });
 }
 
+//temporary, while not finding solution with validation tinyMCE fields
+/**
+ * Provide show and hide placeholder for text area.
+ * @param elem
+ */
+function placeholderAction(elem) {
+    var id = jQuery(elem).attr('id');
+    jQuery('#ph-' + id).hide();
+    jQuery('#' + id).focusout(function () {
+        if (!jQuery('#' + id).val()) {
+            jQuery('#ph-' + id).show();
+        }
+    });
+}
+
 /**
  * Hide placeholder on tinyMce
  * @param data
