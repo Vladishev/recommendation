@@ -93,7 +93,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Trwałość produktu:') ?>
+                        <?php echo $this->__('Production quality') ?>:
                         <?php if($requiredFields['product_durability']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -114,7 +114,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Awaryjność produktu:') ?>
+                        <?php echo $this->__('Durability and reliability') ?>:
                         <?php if($requiredFields['product_failure']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -135,7 +135,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Łatwość montażu:') ?>
+                        <?php echo $this->__('Easy to install') ?>:
                         <?php if($requiredFields['easy_installation']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -156,7 +156,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Czy używasz tego produktu:') ?>
+                        <?php echo $this->__('Do you use this product') ?>:
                         <?php if($requiredFields['use_product']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -174,7 +174,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Czy polecasz ten produkt:') ?>
+                        <?php echo $this->__('Do you recommend this product') ?>:
                         <?php if($requiredFields['recommend_product']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -192,7 +192,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Tutaj możesz dodać zdjęcia:') ?>
+                        <?php echo $this->__('Here you can add photos') ?>:
                         <?php if($requiredFields['add_photo']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -205,14 +205,14 @@ if (!empty($opinionLimitCharacters['max'])) {
                 </div>
                 <div class="tim-rating-input-url">
                     <p>
-                        <?php echo $this->__('Tutaj możesz dodać film:') ?>
+                        <?php echo $this->__('Here you can add video') ?>:
                         <?php if($requiredFields['add_video']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
                     </p>
                     <input type="text" name="link_to_youtube" id="link_to_youtube"
                            class="input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
-                           placeholder="<?php echo $this->__('Podaj link z serwisu Youtube') ?>" style="color:#949090;"
+                           placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
                         <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <!-- place for user input - add movie - url to youtube -->
                 </div>
@@ -230,10 +230,10 @@ if (!empty($opinionLimitCharacters['max'])) {
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
                 <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" id="add-ajax-opinion"
-                value="<?php echo $this->__('Dodaj opinię') ?>"/>
+                value="<?php echo $this->__('Add opinion') ?>"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
-                    <span><span><?php echo $this->__('Dodaj opinię') ?></span></span>
+                    <span><span><?php echo $this->__('Add opinion') ?></span></span>
                 </button>
             <?php endif; ?>
         </div>
