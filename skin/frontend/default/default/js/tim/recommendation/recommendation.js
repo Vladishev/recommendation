@@ -24,6 +24,14 @@ jQuery(document).ready(function () {
         }
     });
 
+    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
+    jQuery('#tim-scroll').click(function(){
+        jQuery('html, body').animate({
+            scrollTop: jQuery( jQuery(this).attr('href') ).offset().top
+        }, 500);
+        return false;
+    });
+    
     jQuery('.tim-opinion-photo a').click(function (e) {
         e.preventDefault();
         var recomId = e.target.id;

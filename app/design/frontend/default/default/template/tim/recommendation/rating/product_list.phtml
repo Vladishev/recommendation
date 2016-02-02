@@ -1,0 +1,9 @@
+<?php
+$product = $this->getProduct();
+$productData = $this->getProductOpinionInfo($product->getEntityId());
+?>
+<?php if ($productData['opinions_count']): ?>
+<div>
+    <span><?php echo $this->__('Opinions about the product: ') . $productData['opinions_count'] . ' | ' . $this->__('Rating: ') . $productData['rating'] . '/5'; ?></span>
+</div>
+<?php endif ?>

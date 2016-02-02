@@ -1,0 +1,12 @@
+<?php
+$product_id = Mage::registry('current_product')->getId();
+$productData = $this->getProductOpinionInfo($product_id);
+?>
+<?php if ($productData['opinions_count']): ?>
+    <div>
+        <span><?php echo $this->__('Product rating: ') . $productData['rating'] . '/5'; ?></span>
+    </div>
+    <div>
+        <a id="tim-scroll" href="#tim-scroll-ancor"><?php echo $this->__('see more') . ' >' ?></a>
+    </div>
+<?php endif ?>
