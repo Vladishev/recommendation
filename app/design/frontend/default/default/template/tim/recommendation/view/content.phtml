@@ -29,28 +29,28 @@ if (!empty($commentLimitCharacters['max'])) {
     <div class="tim-opinion-content-subtitle tim-icon-good"><?php echo $this->__('Product highlights'); ?>:</div>
     <div class="tim-opinion-content">
         <!-- place for text from textarea (user input) -->
-        <?php echo $opinionData['advantages'] ?>
+        <span class="tim-opinion-advantages-toolbar"><?php echo $opinionData['advantages'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
         <!-- place for read more if necessary -->
     </div>
     <div class="tim-opinion-content-subtitle tim-icon-bad"><?php echo $this->__('Product defects'); ?>:</div>
     <div class="tim-opinion-content">
         <!-- place for text from textarea (user input) -->
-        <?php echo $opinionData['defects'] ?>
+        <span class="tim-opinion-defects-toolbar"><?php echo $opinionData['defects'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
         <!-- place for read more if necessary -->
     </div>
     <div class="tim-opinion-content-subtitle tim-icon-summary"><?php echo $this->__('Summary'); ?>:</div>
     <div class="tim-opinion-content">
         <!-- place for text from textarea (user input) -->
-        <?php echo $opinionData['conclusion'] ?>
+        <span class="tim-opinion-conclusion-toolbar"><?php echo $opinionData['conclusion'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
         <!-- place for read more if necessary -->
     </div>
     <div class="tim-opinion-media">
         <?php if (!empty($opinionData['images'])): ?>
         <div class="tim-opinion-photo">
-            <a class="tim-readmore" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></a>
+            <a class="tim-readmore tim-opinion-photo-link" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></a>
             <!-- button for displaying user added photos in overlay -->
         </div>
         <?php endif; ?>

@@ -10,19 +10,22 @@
 class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 {
     /**
-     * Returns list of opinions
+     * Returns recom_id list of opinions
      * @param $productId
+     * @param $order
+     * @param $field
      * @param int $limit - opinions count per page
      * @param int $curPage - current page
      * @return bool or array
      */
-    public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1)
+    public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NULL');
-        $collection->setOrder('date_add', 'DESC');
+        $collection->addFieldToSelect('recom_id');
+        $collection->setOrder($field, $order);
         $collection->setPageSize($limit); // It can be use for pagination
         $collection->setCurPage($curPage); // It can be use for pagination
         $data = $collection->getData();

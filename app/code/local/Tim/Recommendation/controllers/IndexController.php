@@ -21,6 +21,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $response = array();
         $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
         $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
+        $averageRating = $this->_getAverageRating($params);
 
         if (!is_dir($folderForFiles)) {
             mkdir($folderForFiles, 0777, true);
@@ -36,6 +37,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setRatingDurability($params['itemDurability'])
             ->setRatingFailure($params['itemFailure'])
             ->setRatingService($params['itemEaseofinstall'])
+            ->setAverageRating($averageRating)
             ->setRecommend($params['itemDoyourecommend'])
             ->setTimIp($params['customer_ip_address'])
             ->setTimHost($params['customer_host_name'])
@@ -87,6 +89,22 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         echo json_encode($response);
+    }
+
+    /**
+     * Returns average rating for product
+     * @param (arr)$params
+     * @return float
+     */
+    protected function _getAverageRating($params)
+    {
+        $rating = array();
+        $rating[] = $params['itemValuetomoney'];
+        $rating[] = $params['itemDurability'];
+        $rating[] = $params['itemFailure'];
+        $rating[] = $params['itemEaseofinstall'];
+        $average = round(array_sum($rating) / count($rating), 1);
+        return $average;
     }
 
     /**

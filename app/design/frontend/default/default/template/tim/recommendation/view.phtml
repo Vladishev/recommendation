@@ -1,6 +1,7 @@
 <?php
 $productId = Mage::registry('current_product')->getId();
 $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct($productId);
+$k = 0;
 ?>
 <?php if ($opinionsSet): ?>
     <div>
@@ -15,7 +16,7 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
                 <?php echo $this->getChildHtml('left.recommendation.view', false) ?>
             </div>
             <!-- Main (middle) column: -->
-            <div class="tim-comm-main-column">
+            <div class="tim-comm-main-column tim-opinion-<?php echo $k ?>">
                 <?php $this->getChild('content.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
             </div>
@@ -24,7 +25,7 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
                 <?php $this->getChild('right.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('right.recommendation.view', false) ?>
             </div>
-        <?php endforeach ?>
+        <?php $k++; endforeach ?>
     </div>
     <div id="loading-frontend-mask">
         <p class="loader" id="loading_mask_loader">

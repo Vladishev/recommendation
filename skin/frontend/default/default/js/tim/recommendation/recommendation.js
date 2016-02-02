@@ -1,6 +1,7 @@
 jQuery(document).ready(function () {
     addOpinionAjax();
     addCommentAjax();
+    sorting();
 
     /* function to put value into html content right to rating stars and switch userlogin details*/
 
@@ -50,6 +51,57 @@ jQuery(document).ready(function () {
         }
     });
 });
+
+function sorting() {
+    jQuery('.tim-toolbar').change(function (){
+        var $sort = jQuery('.tim-comm-sortingselect');
+        var dataSet = jQuery('#tim-controller').data();
+        var sortBy = $sort.val();
+        var url = dataSet.url;
+        var productId = dataSet.product;
+        var param = {sortBy: sortBy, productId: productId};
+        jQuery.ajax({
+            url: url,
+            type: "post",
+            data: param,
+            success: function(response){
+                //alert('Ok!');
+                var response = JSON.parse(response);
+                renderOpinionsList(response);
+            }
+        });
+    });
+}
+
+function renderOpinionsList(response) {
+    response.forEach(function(item, i){
+        //console.log(item['recom_id']);
+        var recomId = item['recom_id'];
+        var opinionData = item['opinionData'];
+        var $parentEl = jQuery('.tim-opinion-'+i);
+
+        //Change date
+        $parentEl.find('.tim-opinion-date').html('Opinia z dnia: <span>'+opinionData['date_add']+'</span> '+recomId);
+        //Change advantages
+        $parentEl.find('.tim-opinion-advantages-toolbar').html(opinionData['advantages']);
+        //Change defects
+        $parentEl.find('.tim-opinion-defects-toolbar').html(opinionData['defects']);
+        //Change conclusion
+        $parentEl.find('.tim-opinion-conclusion-toolbar').html(opinionData['conclusion']);
+        //Change images
+        $parentEl.find('.tim-opinion-photo').remove();
+        $parentEl.find('.tim-opinion-movie').remove();
+        if ((typeof opinionData['images'][0] != 'undefined') && (typeof opinionData['movie_url'] != 'undefined')) {
+            $parentEl.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="'+recomId+'">Zobacz zdjęcia</a></div><div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="'+recomId+'">Zobacz materiał filmowy</a></div>');
+        } else if (typeof opinionData['movie_url'] != 'undefined') {
+            $parentEl.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="'+recomId+'">Zobacz materiał filmowy</a></div>');
+        } else {
+            $parentEl.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="'+recomId+'">Zobacz zdjęcia</a></div>');
+        }
+
+
+    });
+}
 
 /**
  * function to show place for adding comment

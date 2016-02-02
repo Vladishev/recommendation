@@ -7,13 +7,18 @@
         <div class="tim-comm-addopinion">
             <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button> <!-- button for adding totaly new opinion -->
         </div>
+        <input
+            type="hidden"
+            id="tim-controller"
+            data-url="<?php echo $this->getUrl('recommendation/timToolbar/show') ?>"
+            data-product="<?php echo Mage::registry('current_product')->getId() ?>"/>
         <div class="tim-comm-sorting">
             <span><?php echo $this->__("Criterion sorting"); ?></span>
-            <select class="tim-comm-sortingselect">
+            <select class="tim-comm-sortingselect tim-toolbar">
                 <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
-                <option value=""><?php echo $this->__("Latest"); ?></option>
-                <option value=""><?php echo $this->__("Top rated"); ?></option>
-                <option value=""><?php echo $this->__("The lowest assessment"); ?></option>
+                <option value="latest"><?php echo $this->__("Latest"); ?></option>
+                <option value="topRated"><?php echo $this->__("Top rated"); ?></option>
+                <option value="lowRated"><?php echo $this->__("The lowest assessment"); ?></option>
             </select>
         </div>
     </div>

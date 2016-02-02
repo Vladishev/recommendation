@@ -142,7 +142,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Calculates the average rating of the last added opinion to the product
-     * @param int $productId
+     * @param int $recomId
      * @return float
      */
     public function getProductEvaluation($recomId)
