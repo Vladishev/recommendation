@@ -25,6 +25,9 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NULL');
         $collection->addFieldToSelect('recom_id');
+        $collection->addFieldToSelect('tim_ip');
+        $collection->addFieldToSelect('tim_host');
+        $collection->addFieldToSelect('user_id');
         $collection->setOrder($field, $order);
         $collection->setPageSize($limit); // It can be use for pagination
         $collection->setCurPage($curPage); // It can be use for pagination

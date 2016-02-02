@@ -61,6 +61,14 @@ if (!empty($commentLimitCharacters['max'])) {
             </div>
         <?php endif; ?>
     </div>
+    <input
+        class="tim-user-log-info"
+        type="hidden"
+        data-log="<?php echo ($isLoggedIn)? 1 : 0; ?>"
+        data-malpractice="<?php echo $malpracticeUrl ?>"
+        data-id="<?php echo $customerId ?>"
+        data-ip="<?php echo $customerIp ?>"
+        data-host="<?php echo $customerHostName ?>"/>
     <?php if ($isLoggedIn): ?>
     <div class="tim-abuse-button-position-opinion">
         <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $recomId . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
@@ -68,7 +76,7 @@ if (!empty($commentLimitCharacters['max'])) {
         </button>
     </div>
     <?php else: ?>
-    <div class="tim-abuse-button-position-opinion">
+    <div class="tim-abuse-button-position-opinion" data-log="0">
         <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
             <?php echo $this->__('Zgłoś nadużycie') ?>
         </button>
@@ -113,14 +121,14 @@ if (!empty($commentLimitCharacters['max'])) {
     </div>
 <?php endif; ?>
 <!-- next div/button always visible -->
-<div class="tim-comment-add">
-    <button type="button" class="tim-comment-button-add" id="tim-comment-add-show-<?php echo $recomId ?>"
+<div class="tim-comment-add tim-comment-add-main">
+    <button type="button" class="tim-comment-button-add " id="tim-comment-add-show-<?php echo $recomId ?>"
             onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">
         <?php echo $this->__("Add your own comment"); ?></button>
 </div>
 <form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" class="comment-form" id="form-validate-comment" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
-    <input type="hidden" name="recom_id" value="<?php echo $recomId ?>"/>
+    <input type="hidden" name="recom_id" class="form-recom-id" value="<?php echo $recomId ?>"/>
     <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
     <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
     <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
@@ -132,7 +140,7 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
         <div class="tim-opinion-content tim-add-opinion">
             <textarea name="opinion-comment" id="tim-opinion-comment-<?php echo $recomId ?>" cols="5" rows="3"
-                      class="<?php echo $commentClass ?> input-text required-entry validate-no-html-tags"
+                      class="<?php echo $commentClass ?> input-text required-entry validate-no-html-tags tim-opinion-comment-timtoolbar"
                       onclick="commentPlaceholderAction(<?php echo $recomId ?>)"></textarea>
             <div id="ph-tim-opinion-comment-<?php echo $recomId ?>" class="placeholder-comment-div">
                 <?php echo $commentPlaceholder; ?>
@@ -150,18 +158,18 @@ if (!empty($commentLimitCharacters['max'])) {
             <?php endif; ?>
         </div>
         <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close form')) ?>"
-                class="tim-comment-button-add" onclick="hideCommentForm(<?php echo $recomId ?>)">
+                class="tim-comment-button-add tim-comment-close-form" onclick="hideCommentForm(<?php echo $recomId ?>)">
             <span><span><?php echo $this->__('Close form') ?></span></span>
         </button>
     </div>
 </form>
-<div class="tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>">
+<div class="tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>" data-imgurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>">
     <div class="tim-all-photo-popup-bg"></div>
     <div class="tim-all-photo-popup-container">
         <input type="button" class="tim-popup-close" value="x"/>
         <?php if (!empty($opinionData['images'])): ?>
             <?php foreach ($opinionData['images'] as $image): ?>
-                <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $image ?>" width="100" height="100" alt="img"/>
+                <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $image ?>" class="tim-all-photo-popup-images-size" alt="img"/>
             <?php endforeach; ?>
         <?php else: ?>
             <?php echo $this->__('Don\'t have an images'); ?>
@@ -173,7 +181,7 @@ if (!empty($commentLimitCharacters['max'])) {
     <div class="tim-video-popup-container">
         <input type="button" class="tim-popup-close" value="x"/>
         <?php if($youtubeVideoId): ?>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId ?>"></iframe>
+        <iframe class="iframe-video-popup" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId ?>"></iframe>
         <?php else : ?>
             <?php echo $this->__('User have added video not from the youtube.'); ?>
         <?php endif; ?>

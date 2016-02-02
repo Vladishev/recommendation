@@ -40,6 +40,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         foreach ($recomIdSet as $opinion) {
             $recommendationBlock =$this->getLayout()->createBlock('tim_recommendation/recommendation');
             $recomIdSet[$i]['opinionData'] = $recommendationBlock->getOpinionData($opinion['recom_id']);
+            $recomIdSet[$i]['opinionData']['youtubeVideoId'] = $recommendationBlock->parseYoutubeUrl($recomIdSet[$i]['opinionData']['movie_url']);
             $i++;
         }
         return $recomIdSet;
