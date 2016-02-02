@@ -278,15 +278,16 @@ function displayAjaxCommentPopupResponse(response) {
  */
 function displayFilename(id) {
     var images = '';
+    var maxSize = parseInt(jQuery('#recommendation-img').attr('max-size'),10);
     jQuery.each(jQuery('#' + id).prop('files'), function (idx, file) {
-        if (checkImgSize(file['size'], 419430)) {
+        if (checkImgSize(file['size'], maxSize)) {
             if (checkImgType(file)) {
                 images += ' ' + file['name'] + '<br>';
             } else {
                 alert('Nie można przesłać pliku: ' + file['name'] + '. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
             }
         } else {
-            alert("Nie można przesłać pliku: " + file['name'] + ". Maksymalny rozmiar to 400 kb.");
+            alert("Nie można przesłać pliku: " + file['name'] + ". Maksymalny rozmiar to 5 mb.");
         }
     });
     jQuery('#downloaded-imgs').html(images);

@@ -197,7 +197,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
                     </p>
-                    <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/*" multiple="multiple"
+                    <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/jpeg, image/png" max-size="5242880" multiple="multiple"
                            class="tim-comm-button-smal <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn(); return false;"' : ''?>
                         onchange="displayFilename(this.id)"/>
