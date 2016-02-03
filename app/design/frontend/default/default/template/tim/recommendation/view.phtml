@@ -2,6 +2,9 @@
 $productId = Mage::registry('current_product')->getId();
 $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct($productId);
 ?>
+    <div class="tim-comm-addopinion">
+        <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button> <!-- button for adding totaly new opinion -->
+    </div>
 <?php if ($opinionsSet): ?>
     <div>
         <!-- Header -->
