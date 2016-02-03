@@ -111,6 +111,15 @@
                     </send_opinion_email>
                 </observers>
             </controller_index_add_opinion_data>
+            <controller_index_allow_opinion_data>
+                <observers>
+                    <send_opinion_confirmation_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendAcceptConfirmationEmail</method>
+                    </send_opinion_confirmation_email>
+                </observers>
+            </controller_index_allow_opinion_data>
             <controller_index_add_comment_data>
                 <observers>
                     <send_opinion_email>
@@ -152,6 +161,11 @@
                     <file>userMessage.html</file>
                     <type>html</type>
                 </user_template>
+                <confirmation_for_user_template>
+                    <label>Confirmation for user</label>
+                    <file>confirmationForUser.html</file>
+                    <type>html</type>
+                </confirmation_for_user_template>
             </email>
         </template>
     </global>

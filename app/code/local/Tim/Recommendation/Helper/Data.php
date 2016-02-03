@@ -101,7 +101,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $avatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
-        if(!empty($avatar)) {
+        if (!empty($avatar)) {
             $avatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $avatar;
             return $avatar;
         } else {
@@ -319,7 +319,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $avatars = array();
         for ($i = 1; $i <= 5; $i++) {
             $fileName = Mage::getStoreConfig('tim_avatar_settings/default_avatars/avatar' . $i);
-            if($fileName){
+            if ($fileName) {
                 $avatars[] = $path . $fileName;
             }
         }
@@ -335,7 +335,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $avatars = array();
         for ($i = 1; $i <= 5; $i++) {
             $fileName = Mage::getStoreConfig('tim_avatar_settings/default_avatars/avatar' . $i);
-            if($fileName){
+            if ($fileName) {
                 $avatars[] = $fileName;
             }
         }
@@ -379,5 +379,20 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $limit['min'] = Mage::getStoreConfig('tim_settings/max_min_length/tim_' . $type . '_min');
 
         return $limit;
+    }
+
+    /**
+     * Check opinion or comment by recom_id
+     * @param $recomId
+     * @return string
+     */
+    function checkOpinionOrComment($recomId)
+    {
+        $parent = Mage::getModel('tim_recommendation/recommendation')->load($recomId)->getParent();
+        if ($parent) {
+            return 'comment';
+        } else {
+            return 'opinion';
+        }
     }
 }

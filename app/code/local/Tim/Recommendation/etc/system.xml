@@ -181,7 +181,7 @@
                         <tim_opinion_confirm_label>
                             <label><![CDATA[<strong>Opinia</strong>]]></label>
                             <frontend_type>label</frontend_type>
-                            <sort_order>1</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -190,7 +190,7 @@
                             <label>Enabled</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>2</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -200,7 +200,7 @@
                             <frontend_type>text</frontend_type>
                             <comment>Please, put only one address</comment>
                             <validate>validate-email</validate>
-                            <sort_order>3</sort_order>
+                            <sort_order>15</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -209,7 +209,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>text</frontend_type>
                             <comment>Comma-separated</comment>
-                            <sort_order>4</sort_order>
+                            <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -218,7 +218,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/methods</source_model>
-                            <sort_order>5</sort_order>
+                            <sort_order>25</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -227,16 +227,25 @@
                             <label>Send confirmation to add opinion</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>6</sort_order>
+                            <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </tim_opinion_inform>
+                        <tim_send_confirmation_opinion>
+                            <label>Send confirmation of acceptance opinion</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_send_confirmation_opinion>
                         <!--Comment field set-->
                         <tim_comment_confirm_label>
                             <label><![CDATA[<strong>Komentarz</strong>]]></label>
                             <frontend_type>label</frontend_type>
-                            <sort_order>7</sort_order>
+                            <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -245,7 +254,7 @@
                             <label>Enabled</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>8</sort_order>
+                            <sort_order>45</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -255,7 +264,7 @@
                             <frontend_type>text</frontend_type>
                             <comment>Please, put only one address</comment>
                             <validate>validate-email</validate>
-                            <sort_order>9</sort_order>
+                            <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -264,7 +273,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>text</frontend_type>
                             <comment>Comma-separated</comment>
-                            <sort_order>10</sort_order>
+                            <sort_order>55</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -273,7 +282,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/methods</source_model>
-                            <sort_order>11</sort_order>
+                            <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -282,16 +291,25 @@
                             <label>Send confirmation to add comment</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>12</sort_order>
+                            <sort_order>65</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </tim_comment_inform>
+                        <tim_send_confirmation_comment>
+                            <label>Send confirmation of acceptance comment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>tim_recommendation/options</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tim_send_confirmation_comment>
                         <!--Malpractice field set-->
                         <tim_malpractice_confirm_label>
                             <label><![CDATA[<strong>Nadużycie</strong>]]></label>
                             <frontend_type>label</frontend_type>
-                            <sort_order>13</sort_order>
+                            <sort_order>75</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -300,7 +318,7 @@
                             <label>Enabled</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>14</sort_order>
+                            <sort_order>80</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -310,7 +328,7 @@
                             <frontend_type>text</frontend_type>
                             <comment>Please, put only one address</comment>
                             <validate>validate-email</validate>
-                            <sort_order>15</sort_order>
+                            <sort_order>85</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -319,7 +337,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>text</frontend_type>
                             <comment>Comma-separated</comment>
-                            <sort_order>16</sort_order>
+                            <sort_order>90</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -328,7 +346,7 @@
                             <label>Send order email copy to</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/methods</source_model>
-                            <sort_order>17</sort_order>
+                            <sort_order>95</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -337,7 +355,7 @@
                             <label>Send confirmation to add malpractice</label>
                             <frontend_type>select</frontend_type>
                             <source_model>tim_recommendation/options</source_model>
-                            <sort_order>18</sort_order>
+                            <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
