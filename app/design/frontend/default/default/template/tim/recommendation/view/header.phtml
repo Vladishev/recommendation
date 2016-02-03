@@ -16,7 +16,8 @@
             <span><?php echo $this->__("Criterion sorting"); ?></span>
             <select class="tim-comm-sortingselect tim-toolbar">
                 <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
-                <option value="latest"><?php echo $this->__("Latest"); ?></option>
+                <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
+                <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
                 <option value="topRated"><?php echo $this->__("Top rated"); ?></option>
                 <option value="lowRated"><?php echo $this->__("The lowest assessment"); ?></option>
             </select>

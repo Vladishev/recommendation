@@ -227,6 +227,11 @@ a.tim-readmore:hover {
 	float:left;
 }
 
+.tim-user-photo-tag {
+    width:269px;
+    height:168px;
+}
+
 .tim-user-photo {
 	width:269px;
 	height:168px;

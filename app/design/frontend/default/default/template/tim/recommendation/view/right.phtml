@@ -13,7 +13,7 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
     <div class="tim-rating-score-part">
         <?php echo $this->__('Value for money'); ?>:
         <div class="tim-chart tim-pricequality">
-            <div class="tim-chart-stars tim-stars-<?php echo $opinionData['rating_price'] ?>">
+            <div class="tim-rating-price tim-chart-stars tim-stars-<?php echo $opinionData['rating_price'] ?>">
                 <?php echo $opinionData['rating_price'] ?>/5
             </div>
         </div>
@@ -21,7 +21,7 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
     <div class="tim-rating-score-part">
         <?php echo $this->__('Product durability'); ?>:
         <div class="tim-chart tim-durability">
-            <div class="tim-chart-stars tim-stars-<?php echo $opinionData['rating_durability'] ?>">
+            <div class="tim-rating-durability tim-chart-stars tim-stars-<?php echo $opinionData['rating_durability'] ?>">
                 <?php echo $opinionData['rating_durability'] ?>/5
             </div>
         </div>
@@ -29,7 +29,7 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
     <div class="tim-rating-score-part">
         <?php echo $this->__('Product failure'); ?>:
         <div class="tim-chart tim-failure">
-            <div class="tim-chart-stars tim-stars-<?php echo $opinionData['rating_failure'] ?>">
+            <div class="tim-rating-failure tim-chart-stars tim-stars-<?php echo $opinionData['rating_failure'] ?>">
                 <?php echo $opinionData['rating_failure'] ?>/5
             </div>
         </div>
@@ -37,7 +37,7 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
     <div class="tim-rating-score-part">
         <?php echo $this->__('Easy to install'); ?>:
         <div class="tim-chart tim-assembly">
-            <div class="tim-chart-stars tim-stars-<?php echo $opinionData['rating_service'] ?>">
+            <div class="tim-rating-service tim-chart-stars tim-stars-<?php echo $opinionData['rating_service'] ?>">
                 <?php echo $opinionData['rating_service'] ?>/5
             </div>
         </div>

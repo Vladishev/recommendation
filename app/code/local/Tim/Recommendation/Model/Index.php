@@ -18,7 +18,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
      * @param int $curPage - current page
      * @return bool or array
      */
-    public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
+    public function getOpinionsForProduct($productId, $limit = 2, $curPage = 1, $order = 'DESC', $field = 'date_add')
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('product_id', $productId);

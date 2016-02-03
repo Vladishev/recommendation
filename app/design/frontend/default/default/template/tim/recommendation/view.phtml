@@ -9,9 +9,10 @@ $k = 0;
         <div class="tim-comm-header">
             <?php echo $this->getChildHtml('header.recommendation.view') ?>
         </div>
+        <div id="tim-main-container-for-all-opinions">
         <?php foreach($opinionsSet as $opinion): ?>
             <!-- Left column: -->
-            <div class="tim-comm-left-column">
+            <div class="tim-comm-left-column tim-opinion-user-block-<?php echo $k ?>">
                 <?php $this->getChild('left.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('left.recommendation.view', false) ?>
             </div>
@@ -21,11 +22,12 @@ $k = 0;
                 <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
             </div>
             <!-- Right column: -->
-            <div class="tim-comm-right-column">
+            <div class="tim-comm-right-column tim-opinion-rating-block-<?php echo $k ?>">
                 <?php $this->getChild('right.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('right.recommendation.view', false) ?>
             </div>
         <?php $k++; endforeach ?>
+        </div>
     </div>
     <div id="loading-frontend-mask">
         <p class="loader" id="loading_mask_loader">
