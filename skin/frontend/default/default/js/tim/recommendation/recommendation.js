@@ -593,7 +593,10 @@ function addCommentAjax(){
             jQuery('#loading-frontend-mask').show(300);
         },
         success: function(response) {
+            var response = JSON.parse(response);
             displayAjaxCommentPopupResponse(response);
+            jQuery('#tim-comment-add-window-'+response['commentRecomId']).hide();
+            jQuery('#tim-comment-add-show-'+response['commentRecomId']).show();
         },
         error: function(response) {
             displayAjaxCommentPopupResponse(response);
@@ -604,7 +607,6 @@ function addCommentAjax(){
 function displayAjaxOpinionPopupResponse(response){
     jQuery('#loading-frontend-mask').hide();
     jQuery('.tim-add-opinion-popup').show(300);
-    var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
 }
@@ -612,7 +614,6 @@ function displayAjaxOpinionPopupResponse(response){
 function displayAjaxCommentPopupResponse(response){
     jQuery('#loading-frontend-mask').hide();
     jQuery('.tim-add-comment-popup').show(300);
-    var response = JSON.parse(response);
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
     jQuery('#tim-opinion-comment-' + response['commentRecomId']).val('');
     jQuery('#ph-tim-opinion-comment-' + response['commentRecomId']).show();
