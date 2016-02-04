@@ -37,4 +37,20 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         }
         return $data;
     }
+
+    /**
+     * Returns count of accepted opinions for product
+     * @param $productId
+     * @return int
+     */
+    public function getOpinionCount($productId)
+    {
+        $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('acceptance', 1);
+        $collection->getSelect()->where('parent IS NULL');
+        $collection->addFieldToSelect('recom_id');
+        $count = count($collection->getData());
+        return $count;
+    }
 }

@@ -1,7 +1,9 @@
 jQuery(document).ready(function () {
     addOpinionAjax();
     addCommentAjax();
-    getTimToolbarData();
+    changeSortCondition();
+    changeCountAndPager();
+    getDataOnEnterEvent();
     showPhotos();
     showVideo();
     closePopup();
@@ -14,7 +16,6 @@ jQuery(document).ready(function () {
         var inputChangeNameSpan = 'span.' + inputChangeName
         /* alert(inputChangeName+inputChangeValue)         */
         jQuery(inputChangeNameSpan).html(inputChangeValue);
-        //console.log(inputChangeName);
 
         if (inputChangeName == 'userHaveaccount') {
             if (inputChangeValue == 'TAK') {
@@ -73,26 +74,139 @@ function closePopup() {
 }
 
 /**
+ * Get data when Enter button was pressed
+ */
+function getDataOnEnterEvent() {
+
+    var $increaseButton = jQuery('.tim-pager-increase-button');
+    var $decreaseButton = jQuery('.tim-pager-decrease-button');
+    var $pageBox = jQuery('.tim-pager-box');
+    $pageBox.keyup(function(e){
+        if(e.keyCode == 13) {
+            var currentPage = parseInt($pageBox.val());
+            var maxPage = parseInt(jQuery('.tim-pager-total').text());
+            if (currentPage < 1) {
+                currentPage = 1;
+                $decreaseButton.hide();
+                $increaseButton.show();
+            }
+            if (currentPage > maxPage) {
+                currentPage = maxPage;
+                $increaseButton.hide();
+                $decreaseButton.show();
+            }
+            if (isNaN(currentPage)) {
+                currentPage = 1;
+                $decreaseButton.hide();
+                $increaseButton.show();
+            }
+            $pageBox.val(currentPage);
+            getTimToolbarData();
+        }
+    });
+}
+
+/**
+ * Gets 'number per page' and 'current page' data
+ * @param el
+ */
+function changeCountAndPager(el) {
+    if (typeof el != 'undefined') {
+        var classList = jQuery(el).attr('class').split(/\s+/);
+        var $increaseButton = jQuery('.tim-pager-increase-button');
+        var $decreaseButton = jQuery('.tim-pager-decrease-button');
+        var $pageBox = jQuery('.tim-pager-box');
+        var maxPage = parseInt(jQuery('.tim-pager-total').text());
+        var currentPage = parseInt($pageBox.val());
+        jQuery.each(classList, function(index, item) {
+            switch (item) {
+                case 'tim-toolbar-count':
+                    jQuery('.'+item).attr('class', 'tim-toolbar-count');
+                    jQuery(el).addClass('count-active');
+                    break;
+                case 'tim-pager-increase-button':
+                    currentPage = currentPage + 1;
+                    if (currentPage >= maxPage) {
+                        currentPage = maxPage;
+                        $increaseButton.hide();
+                    } else if (currentPage <= 1) {
+                        currentPage = 2;
+                    } else {
+                        $increaseButton.show();
+                    }
+                    $decreaseButton.show();
+                    $pageBox.val(currentPage);
+                    break;
+                case 'tim-pager-decrease-button':
+                    currentPage = currentPage - 1;
+                    if (currentPage <= 1) {
+                        currentPage = 1;
+                        $decreaseButton.hide();
+                    } else if (currentPage > maxPage) {
+                        currentPage = maxPage;
+                    } else {
+                        $decreaseButton.show();
+                    }
+                    $increaseButton.show();
+                    $pageBox.val(currentPage);
+                    break;
+            }
+        });
+        getTimToolbarData();
+    }
+}
+
+/**
+ * Provides onchange event for Sorting
+ */
+function changeSortCondition() {
+    jQuery('.tim-toolbar-select').change(function (){
+        getTimToolbarData();
+    });
+}
+
+/**
  * Gets data from Tim Toolbar and send it to controller
  */
 function getTimToolbarData() {
-    jQuery('.tim-toolbar').change(function (){
-        var $sort = jQuery('.tim-comm-sortingselect');
-        var dataSet = jQuery('#tim-controller').data();
-        var sortBy = $sort.val();
-        var url = dataSet.url;
-        var productId = dataSet.product;
-        var param = {sortBy: sortBy, productId: productId};
-        jQuery.ajax({
-            url: url,
-            type: "post",
-            data: param,
-            success: function(response){
-                //alert('Ok!');
-                var response = JSON.parse(response);
-                renderOpinionsList(response);
+    var dataSet = jQuery('#tim-controller').data();
+    var url = dataSet.url;
+    var productId = dataSet.product;
+    //collect sort data
+    var sortBy = jQuery('.tim-comm-sortingselect').val();
+    //collect count per page
+    var countPerPage = jQuery('.count-active').text();
+    //collect page number
+    var pageNumber = jQuery('.tim-pager-box').val();
+    //create params array
+    var param = {
+        sortBy: sortBy,
+        productId: productId,
+        countPerPage: countPerPage,
+        pageNumber: pageNumber
+    };
+
+    jQuery.ajax({
+        url: url,
+        type: "post",
+        data: param,
+        success: function(response){
+            var response = JSON.parse(response);
+            //set pages count
+            var $pageBox = jQuery('.tim-pager-box');
+            var $pagesTotal = jQuery('.tim-pager-total');
+            var maxPage = parseInt($pagesTotal.text());
+            var $increaseButton = jQuery('.tim-pager-increase-button');
+            if ($pageBox.val() > response[0]['pagesCount']) {
+                $pageBox.val(response[0]['pagesCount']);
+                $increaseButton.hide();
             }
-        });
+            if ($pageBox.val() < response[0]['pagesCount']) {
+                $increaseButton.show();
+            }
+            $pagesTotal.html(response[0]['pagesCount']);
+            renderOpinionsList(response);
+        }
     });
 }
 
@@ -133,7 +247,7 @@ function renderOpinionsList(response) {
         //Render middle part - view/content.phtml
         //Change date
 
-        $parentContent.find('.tim-opinion-date').html('Opinia z dnia: <span>'+opinionData['date_add']+'</span> '+recomId);
+        $parentContent.find('.tim-opinion-date').html('Opinia z dnia: <span>'+opinionData['date_add']+'</span>');
         //Change advantages
         $parentContent.find('.tim-opinion-advantages-toolbar').html(opinionData['advantages']);
         //Change defects

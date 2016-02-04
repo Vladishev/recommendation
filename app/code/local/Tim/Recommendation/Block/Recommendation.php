@@ -330,6 +330,17 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
+     * Returns count of accepted opinions for current product
+     * @return mixed
+     */
+    public function getOpinionCount()
+    {
+        $productId = Mage::registry('current_product')->getId();
+        $opinionCount = Mage::getModel('tim_recommendation/index')->getOpinionCount($productId);
+        return $opinionCount;
+    }
+
+    /**
      * Get acceptance status from last added opinion to the product
      * @param int $productId
      * @return int

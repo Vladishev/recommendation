@@ -529,6 +529,20 @@ span.tim-chart-boolean-active {
 	border: 1px solid #D7D5D5;
 }
 
+.count-active {
+    color:#000;
+    background-color:#ffdd00;
+    border: 1px solid #D7D5D5;
+}
+
+.tim-toolbar-count:hover {
+    cursor: pointer;
+}
+
+.tim-pager-decrease-button {
+    display: none;
+}
+
 .tim-advert {
 	padding:0;
 }
@@ -1075,7 +1089,9 @@ label.tim-rating-button-boolean-label {
 	float:left;
 }
 
-
+.tim-count-per-page ul, li {
+    display: inline;
+}
 
 .tim-opinion-list-header-howmuchshow ul, .tim-opinion-list-header-howmuchshow p {
     display: inline-block;

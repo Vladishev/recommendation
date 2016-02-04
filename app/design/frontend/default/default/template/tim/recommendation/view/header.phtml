@@ -1,3 +1,7 @@
+<?php
+$opinionCount = $this->getOpinionCount();
+$pagesCount = ceil($opinionCount / 2);
+?>
 <div class="tim-comm-header">
     <div class="tim-comm-header-left">
         <div class="tim-comm-header-title">Lorem epsilum...</div>
@@ -12,9 +16,34 @@
             id="tim-controller"
             data-url="<?php echo $this->getUrl('recommendation/timToolbar/show') ?>"
             data-product="<?php echo Mage::registry('current_product')->getId() ?>"/>
+        <div class="tim-pager">
+            <input
+                type="text"
+                class="tim-pager-box"
+                value="1"/>
+             z
+            <span class="tim-pager-total"><?php echo $pagesCount ?></span>
+            <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)"> <</button>
+            <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
+        </div>
+        <div class="tim-count-per-page">
+            <span><?php echo $this->__('Display'); ?>:</span>
+            <ul>
+                <li>
+                    <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">2</span>
+                </li>
+                <li>
+                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">4</span>
+                </li>
+                <li>
+                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">10</span>
+                </li>
+            </ul>
+            <span><?php echo $this->__('products'); ?></span>
+        </div>
         <div class="tim-comm-sorting">
             <span><?php echo $this->__("Criterion sorting"); ?></span>
-            <select class="tim-comm-sortingselect tim-toolbar">
+            <select class="tim-comm-sortingselect tim-toolbar-select">
                 <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
                 <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
                 <option value="oldest"><?php echo $this->__("Oldest"); ?></option>

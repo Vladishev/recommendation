@@ -148,8 +148,11 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment"
-                        class="tim-comment-button-add" value="<?php echo $this->__('Add your own comment') ?>"/>
+                <input
+                    type="submit"
+                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment"
+                    class="tim-comment-button-add tim-toolbar-button-add" value="<?php echo $this->__('Add your own comment') ?>"
+                    onclick="addCommentAjax()"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
                         class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">

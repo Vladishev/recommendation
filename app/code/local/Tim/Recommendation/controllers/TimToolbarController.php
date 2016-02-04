@@ -10,11 +10,14 @@
  */
 class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front_Action
 {
+    /**
+     * Gets params for creating right array and sends it by json
+     */
     public function showAction()
     {
         $params = $this->getRequest()->getParams();
-        $limit = 10;
-        $curPage = 1;
+        $limit = $params['countPerPage'];
+        $curPage = $params['pageNumber'];
         switch ($params['sortBy']) {
             case 'topRated':
                 $order = 'DESC';
@@ -34,10 +37,16 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         }
         $recomIdSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct($params['productId'], $limit, $curPage, $order, $field);
         $opinionsArray = $this->_getOpinionsArray($recomIdSet);
-Mage::log($opinionsArray);
+        $opinionsCount = Mage::getModel('tim_recommendation/index')->getOpinionCount($params['productId']);
+        $opinionsArray[0]['pagesCount'] = ceil($opinionsCount / $limit);
         die(json_encode($opinionsArray));
     }
 
+    /**
+     * Collect array of opinions
+     * @param (arr) $recomIdSet
+     * @return (arr) mixed
+     */
     protected function _getOpinionsArray($recomIdSet)
     {
         $i = 0;
