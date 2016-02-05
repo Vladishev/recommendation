@@ -87,13 +87,12 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
             try {
                 if ($defaultAvatar == false) {
                     $this->_cleanDirectory($avatar[2]);
-                    $time = time();
-                    rename($avatar[1], $avatar[0].'-'.$time);
+                    rename($avatar[1], $avatar[0]);
                     if (!empty($userData)) {
-                        $user->setAvatar($avatar[0].'-'.$time);
+                        $user->setAvatar($avatar[0]);
                     } else {
                         $user->setCustomerId($customerId);
-                        $user->setAvatar($avatar[0].'-'.$time);
+                        $user->setAvatar($avatar[0]);
                     }
                 } else {
                     $dbPath = '/media/tim/recommendation/' . $avatar;
@@ -112,13 +111,12 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         if (!is_null($banner)) {
             try {
                 $this->_cleanDirectory($banner[2]);
-                $time = time();
-                rename($banner[1], $banner[0].'-'.$time);
+                rename($banner[1], $banner[0]);
                 if (!empty($userData)) {
-                    $user->setAd($banner[0].'-'.$time);
+                    $user->setAd($banner[0]);
                 } else {
                     $user->setCustomerId($customerId);
-                    $user->setAd($banner[0].'-'.$time);
+                    $user->setAd($banner[0]);
                 }
                 $user->save();
             } catch (Exception $e) {
@@ -245,19 +243,20 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         list($typeData, $imageData) = explode(';', $imageData);
         $imageType = substr($typeData, 11);
         $imageName = $typeOfImage . '-' . $customerId .'.' . $imageType;
-        $imagePath['path'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . DS . 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . 'tmp' . DS . $imageName;
-        $imagePath['formData'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $imageName;
-        $imagePath['tmpFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . 'tmp' . DS . $imageName;
-        $imagePath['imgFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS;
+        $imagePath['path'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . DS . 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp' . DS . $imageName;
+        $imagePath['formData'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . $imageName;
+        $imagePath['tmpFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp' . DS . $imageName;
+        $imagePath['imgFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS;
         list(, $imageData)      = explode(',', $imageData);
         $imageData = base64_decode($imageData);
-        $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . 'tmp';
+        $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp';
 
         if (!is_dir($folderForImage)) {
             mkdir($folderForImage, 0777, true);
         }
 
         try {
+            $this->_cleanDirectory($folderForImage);
             file_put_contents($folderForImage . DS . $imageName, $imageData);
             echo json_encode($imagePath);
         } catch (Exception $e) {
