@@ -24,7 +24,7 @@ if (!empty($commentLimitCharacters['max'])) {
 <div id="tim-scroll-ancor" class="tim-opinion"> <!-- main container for opinion -->
     <div class="tim-opinion-date">
         <!-- place for date when opinion was added -->
-        <?php echo $this->__('Opinia z dnia: <span>%s</span>', $opinionData['date_add']); ?>
+        <?php echo $this->__('Opinia z dnia: <span>%s</span>', $opinionData['date_add']) . ' - '.$recomId; ?>
     </div>
     <div class="tim-opinion-content-subtitle tim-icon-good"><?php echo $this->__('Product highlights'); ?>:</div>
     <div class="tim-opinion-content">
@@ -118,7 +118,7 @@ if (!empty($commentLimitCharacters['max'])) {
             onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">
         <?php echo $this->__("Add your own comment"); ?></button>
 </div>
-<form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" class="comment-form" id="form-validate-comment" autocomplete="off">
+<form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" class="comment-form" id="form-validate-comment-<?php echo $recomId ?>" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
     <input type="hidden" name="recom_id" value="<?php echo $recomId ?>"/>
     <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
@@ -142,8 +142,15 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment"
-                        class="tim-comment-button-add" value="<?php echo $this->__('Add your own comment') ?>"/>
+                <input
+                    type="submit"
+                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment"
+                    class="tim-comment-button-add tim-validate-comment-button" value="<?php echo $this->__('Add your own comment') ?>"
+                    data-formid="form-validate-comment-<?php echo $recomId ?>"
+                    data-mincharacters="<?php echo ($commentLimitCharacters['min']) ? $commentLimitCharacters['min'] : 0 ?>"
+                    data-maxcharacters="<?php echo ($commentLimitCharacters['max']) ? $commentLimitCharacters['max'] : 0 ?>"
+                    data-commentmin="<?php echo $this->__('The minimum number of characters is ') . $commentLimitCharacters['min'] ?>"
+                    data-commentmax="<?php echo $this->__('The maximum number of characters is ') . $commentLimitCharacters['max'] ?>"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
                         class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
@@ -184,26 +191,6 @@ if (!empty($commentLimitCharacters['max'])) {
 
 <script type="text/javascript">
 //<![CDATA[
-var dataForm = new VarienForm('form-validate-comment');
-
-Validation.add('min-length-comment', '<?php echo $this->__('The minimum number of characters is ') . $commentLimitCharacters['min'] ?>', function (v) {
-    var min = <?php echo ($commentLimitCharacters['min']) ? $commentLimitCharacters['min'] : 0 ?>;
-    if (min) {
-        if (v.length < min) {
-            return false;
-        }
-    }
-    return true;
-});
-
-Validation.add('max-length-comment', '<?php echo $this->__('The maximum number of characters is ') . $commentLimitCharacters['max'] ?>', function (v) {
-    var max = <?php echo ($commentLimitCharacters['max']) ? $commentLimitCharacters['max'] : 0 ?>;
-    if (max) {
-        if (v.length > max) {
-            return false;
-        }
-    }
-    return true;
-});
+var dataForm = new VarienForm('form-validate-comment-<?php echo $recomId ?>');
 //]]>
 </script>
