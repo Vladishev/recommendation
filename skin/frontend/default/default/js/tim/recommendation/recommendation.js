@@ -67,6 +67,8 @@ jQuery(document).ready(function () {
                         'padding':'20px 20px 50px'
                     });
                     $info.html('Cropped image have to be not more then cropper window');
+                    //set banner file name
+                    jQuery('.tim-banner-file-name').html(checkFile.name);
                     break;
                 case 'avatar':
                     $image.cropper('destroy');
@@ -81,6 +83,8 @@ jQuery(document).ready(function () {
                         'padding':'20px 20px 50px'
                     });
                     $info.html('Cropped image have to be not more then cropper window');
+                    //set avatar file name
+                    jQuery('.tim-avatar-file-name').html(checkFile.name);
                     break;
             }
 

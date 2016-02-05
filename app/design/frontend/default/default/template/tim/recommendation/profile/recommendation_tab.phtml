@@ -19,7 +19,9 @@
         </li>
         <li>
             <label for="banner"><?php echo $_helper->__('Banner') ?></label>
-            <div class="input-box">
+            <div class="input-box tim-rating-input">
+                <label for="banner"><?php echo $_helper->__('Upload image') ?></label>
+                <span class="tim-banner-file-name"></span>
                 <input type="file" name="banner" id="banner" class="upload-buttons" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png" />
                 <input type="hidden" name="banner-hide" id="banner-hide"  value="" />
             </div>
@@ -44,7 +46,9 @@
                     <?php $i++; endforeach;?>
                 </div>
                 <label for="image"><?php echo $_helper->__('Add your avatar') ?></label>
-                <div class="input-box">
+                <div class="input-box tim-rating-input">
+                    <label for="avatar"><?php echo $_helper->__('Upload image') ?></label>
+                    <span class="tim-avatar-file-name"></span>
                     <input type="file" name="avatar" id="avatar" class="upload-buttons" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png"/>
                     <input type="hidden" name="avatar-hide" id="avatar-hide"  value="" />
                 </div>
