@@ -180,6 +180,7 @@ jQuery(document).ready(function () {
             }
 
             result = $image.cropper(data.method, data.option, data.secondOption);
+
             var sendData = {data: result.toDataURL(), typeOfImage: buttonType};
             var url = data.url;
 

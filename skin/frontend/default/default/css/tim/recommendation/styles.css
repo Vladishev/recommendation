@@ -1144,3 +1144,13 @@ label.tim-rating-button-boolean-label {
 }
 
 #form-validate label.required em { color: #eb340a; }
+
+#tim-avatar-image {
+    width: 290px!important;
+    height: 180px!important;
+}
+
+#tim-banner-image {
+    width: 860px!important;
+    height: 500px!important;
+}
