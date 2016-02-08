@@ -10,24 +10,21 @@
  */
 class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Action
 {
-    public function indexAction()
-    {
-
-    }
-
     public function addAction()
     {
         $params = $this->getRequest()->getParams();
         $response = array();
         $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
         $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
+        $customerId = $params['customer_id'];
+        $userModel = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
 
         if (!is_dir($folderForFiles)) {
             mkdir($folderForFiles, 0777, true);
         }
 
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
-            ->setUserId($params['customer_id'])
+            ->setUserId($customerId)
             ->setProductId($params['product_id'])
             ->setAdvantages($params['opinion-advantages'])
             ->setDefects($params['opinion-disadvantages'])
@@ -44,6 +41,13 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setAddMethod($params['add_method']);
         try {
             $recommendationModel->save();
+            //adds point for adding opinion
+            $userModel->setPoints($userModel->getPoints() + Mage::helper('tim_recommendation')->getAddOpinionPoint());
+            try {
+                $userModel->save();
+            } catch (Exception $i) {
+                Mage::log($i->getMessage(), null, 'tim_recommendation.log');
+            }
             $recomId = $recommendationModel->getRecomId();
             $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
         } catch (Exception $e) {
@@ -57,6 +61,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setName($params['link_to_youtube'])
                 ->setType('url/youtube')
                 ->save();
+            //adds point for movie to the opinion
+            $userModel->setPoints($userModel->getPoints() + Mage::helper('tim_recommendation')->getAddOpinionMoviePoint())->save();
         }
 
         foreach ((array)$files as $file) {
@@ -69,15 +75,21 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     ->setType($file['type']);
                 try {
                     $saveMedia = $mediaModel->save();
+                    $imageSaved = true;
                 } catch (Exception $e) {
                     Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
                     $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
                 }
-                if ($saveMedia) {
+                if (isset($saveMedia)) {
                     $this->saveImage($fileName, $folderForFiles, $file);
                 }
             }
         }
+        //adds point for image to the opinion
+        if (isset($imageSaved)) {
+            $userModel->setPoints($userModel->getPoints() + Mage::helper('tim_recommendation')->getAddOpinionImagePoint())->save();
+        }
+
 
         if (!empty($recomId)) {
             $this->saveMd5($recomId);
@@ -242,6 +254,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $params = $this->getRequest()->getParams();
         $response = array();
+        $userModel = Mage::getModel('tim_recommendation/user')->load($params['customer_id'],'customer_id');
+        $qtyOfPoints = $userModel->getPoints();
+
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
             ->setUserId($params['customer_id'])
             ->setParent($params['recom_id'])//recommendation ID
@@ -252,6 +267,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             ->setAddMethod($params['add_method']);
         try {
             $recommendationModel->save();
+            //add points for comment to opinion
+            $userModel->setPoints($qtyOfPoints + Mage::helper('tim_recommendation')->getAddComentPoint())->save();
+
             $recomId = $recommendationModel->getRecomId();
             $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
             $response['commentRecomId'] = $params['recom_id'];

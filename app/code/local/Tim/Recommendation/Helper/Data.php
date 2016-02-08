@@ -319,7 +319,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $avatars = array();
         for ($i = 1; $i <= 5; $i++) {
             $fileName = Mage::getStoreConfig('tim_avatar_settings/default_avatars/avatar' . $i);
-            if($fileName){
+            if ($fileName) {
                 $avatars[] = $path . $fileName;
             }
         }
@@ -335,7 +335,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $avatars = array();
         for ($i = 1; $i <= 5; $i++) {
             $fileName = Mage::getStoreConfig('tim_avatar_settings/default_avatars/avatar' . $i);
-            if($fileName){
+            if ($fileName) {
                 $avatars[] = $fileName;
             }
         }
@@ -379,5 +379,45 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $limit['min'] = Mage::getStoreConfig('tim_settings/max_min_length/tim_' . $type . '_min');
 
         return $limit;
+    }
+
+    /**
+     * Gets points for adding opinion
+     * @return int
+     */
+    public function getAddOpinionPoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/add_opinion');
+        return (int)$points;
+    }
+
+    /**
+     * Gets points for adding image to the opinion
+     * @return int
+     */
+    public function getAddOpinionImagePoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/image_to_opinion');
+        return (int)$points;
+    }
+
+    /**
+     * Gets points for adding movie to the opinion
+     * @return int
+     */
+    public function getAddOpinionMoviePoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/movie_to_opinion');
+        return (int)$points;
+    }
+
+    /**
+     * Gets points for adding comment to the opinion
+     * @return int
+     */
+    public function getAddComentPoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/add_comment');
+        return (int)$points;
     }
 }

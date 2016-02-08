@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.1.8</version>
+            <version>0.1.9</version>
         </Tim_Recommendation>
     </modules>
     <global>
@@ -244,6 +244,12 @@
                 <tim_comment_min>0</tim_comment_min>
                 <tim_comment_max>0</tim_comment_max>
             </max_min_length>
+            <customer_points>
+                <add_opinion>3</add_opinion>
+                <image_to_opinion>1</image_to_opinion>
+                <movie_to_opinion>1</movie_to_opinion>
+                <add_comment>1</add_comment>
+            </customer_points>
         </tim_settings>
     </default>
 </config>
