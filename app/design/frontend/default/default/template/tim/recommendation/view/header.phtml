@@ -15,7 +15,9 @@ $pagesCount = ceil($opinionCount / 10);
             type="hidden"
             id="tim-controller"
             data-url="<?php echo $this->getUrl('recommendation/timToolbar/show') ?>"
-            data-product="<?php echo Mage::registry('current_product')->getId() ?>"/>
+            data-product="<?php echo Mage::registry('current_product')->getId() ?>"
+            data-userid="0"
+            data-page="productList"/>
         <div class="tim-pager">
             <input
                 type="text"
