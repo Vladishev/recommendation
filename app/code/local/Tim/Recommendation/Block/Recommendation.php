@@ -280,34 +280,16 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Returns custom opinion data
-     * @param (int)$userId
+     * @param $userId
+     * @param int $limit
+     * @param int $curPage
+     * @param string $order
+     * @param string $field
      * @return array
      */
-    public function getUserOpinionData($userId)
+    public function getUserOpinionData($userId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
     {
-        $ratingFields = array('rating_price', 'rating_durability', 'rating_failure', 'rating_service');
-        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $opinionCollection->getSelect()->where('parent IS NULL')->where('user_id = ' . $userId);
-        $opinionCollection->setOrder('date_add', 'DESC');
-        $opinionData = $opinionCollection->getData();
-
-
-        $userOpinionData = array();
-        $i = 0;
-        foreach ($opinionData as $item) {
-            $rating = 0;
-            $productId = $item['product_id'];
-            $productCollection = Mage::getModel('catalog/product');
-            $userOpinionData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
-            $userOpinionData[$i]['url'] = $productCollection->load($productId)->getProductUrl();
-            $userOpinionData[$i]['name'] = $productCollection->load($productId)->getName();
-            foreach ($ratingFields as $field) {
-                $rating += $item[$field] / 5;
-            }
-            $userOpinionData[$i]['rating'] = round($rating, 1);
-
-            $i++;
-        }
+        $userOpinionData = Mage::getModel('tim_recommendation/index')->getUserOpinionData($userId, $limit, $curPage, $order, $field);
         return $userOpinionData;
     }
 
@@ -425,5 +407,16 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getRequiredFields()
     {
         return $this->getHelper()->getOpinionRequiredFields();
+    }
+
+    /**
+     * Returns count of user's opinions
+     * @param $userId
+     * @return mixed
+     */
+    public function getUserOpinionCount($userId)
+    {
+        $opinionCount = Mage::getModel('tim_recommendation/index')->getUserOpinionCount($userId);
+        return $opinionCount;
     }
 }

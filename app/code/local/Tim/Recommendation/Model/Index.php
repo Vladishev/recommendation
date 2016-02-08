@@ -31,4 +31,56 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         }
         return $data;
     }
+
+    /**
+     * Returns count of user's opinions
+     * @param $userId
+     * @return int
+     */
+    public function getUserOpinionCount($userId)
+    {
+        $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $collection->addFieldToFilter('user_id', $userId);
+        $collection->addFieldToFilter('parent', array('null' => true));
+        $collection->addFieldToFilter('acceptance', 1);
+        $collection->addFieldToSelect('recom_id');
+        $count = count($collection->getData());
+        return $count;
+    }
+
+    /**
+     * Returns custom opinion data
+     * @param $userId
+     * @param $limit
+     * @param $curPage
+     * @param $order
+     * @param $field
+     * @return array
+     */
+    public function getUserOpinionData($userId, $limit, $curPage, $order, $field)
+    {
+        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToFilter('user_id', $userId);
+        $opinionCollection->addFieldToFilter('parent', array('null' => true));
+        $opinionCollection->addFieldToFilter('acceptance', 1);
+        $opinionCollection->setOrder($field, $order);
+        $opinionCollection->setPageSize($limit);
+        $opinionCollection->setCurPage($curPage);
+        $opinionData = $opinionCollection->getData();
+
+        $userOpinionData = array();
+        $i = 0;
+        foreach ($opinionData as $item) {
+            $productId = $item['product_id'];
+            $product = Mage::getModel('catalog/product')->load($productId);
+            $userOpinionData[$i]['image'] = $product->getImageUrl();
+            $userOpinionData[$i]['url'] = $product->getProductUrl();
+            $userOpinionData[$i]['name'] = $product->getName();
+            $userOpinionData[$i]['recom_id'] = $item['recom_id'];
+            $userOpinionData[$i]['rating'] = $item['average_rating'];
+
+            $i++;
+        }
+        return $userOpinionData;
+    }
 }

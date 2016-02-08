@@ -3,6 +3,9 @@ $userId = $this->getRequest()->getParam('id');
 $userData = $this->getUserData($userId);
 $userOpinionData = $this->getUserOpinionData($userId);
 $opinionComments = $this->getOpinionComment($userId);
+$opinionCount = $this->getUserOpinionCount($userId);
+$limitPerPage = 10;
+$pagesCount = ceil($opinionCount / $limitPerPage);
 $site = $userData['www'];
 if(!empty($site)){
     if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
@@ -74,33 +77,43 @@ if(!empty($site)){
     <div class="tim-opinion-list">
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("OPINIE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
         <div class="tim-opinion-list-header">
+            <input
+                type="hidden"
+                id="tim-controller"
+                data-url="<?php echo $this->getUrl('recommendation/timToolbar/sortUserPage') ?>"
+                data-product="0"
+                data-userid="<?php echo $userId; ?>"
+                data-page="userPage"/>
             <div class="tim-opinion-list-header-pagecount">
-                <input value="1" type="text">
-                <p><?php echo $this->__('z XXX') ?></p><!-- go to page X from all -->
-                <button class="tim-opinion-nextbutton"></button>
+                <input class="tim-pager-box" value="1" type="text">
+                <p><?php echo $this->__('z ') ?></p><!-- go to page X from all -->
+                <span class="tim-pager-total"><?php echo $pagesCount ?></span>
+                <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)">< </button>
+                <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
             </div>
             <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
                 <p><?php echo $this->__('Wyświetl:') ?></p>
                 <ul>
-                    <li class="active">
-                        <a href="#">10</a>
+                    <li>
+                        <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">10</span>
                     </li>
                     <li>
-                        <a href="#">20</a>
+                        <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">20</span>
                     </li>
                     <li>
-                        <a href="#">30</a>
+                        <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">30</span>
                     </li>
                 </ul>
                 <p><?php echo $this->__('opinii:') ?></p>
             </div>
             <div class="tim-comm-sorting">
                 <p><?php echo $this->__("Criterion sorting"); ?></p>
-                <select class="tim-comm-sortingselect">
+                <select class="tim-comm-sortingselect tim-toolbar-select">
                     <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
-                    <option value=""><?php echo $this->__("Latest"); ?></option>
-                    <option value=""><?php echo $this->__("Top rated"); ?></option>
-                    <option value=""><?php echo $this->__("The lowest assessment"); ?></option>
+                    <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
+                    <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
+                    <option value="topRated"><?php echo $this->__("Top rated"); ?></option>
+                    <option value="lowRated"><?php echo $this->__("The lowest assessment"); ?></option>
                 </select>
             </div>
         </div>
@@ -111,23 +124,26 @@ if(!empty($site)){
                 <div class="tim-list-col2"><?php echo $this->__('Średnia Ocena') ?></div>
             </div>
             <!-- for each company -->
-            <?php $i = 1; ?>
+            <div id="tim-list-container">
+            <?php $i = 0; ?>
             <?php foreach ($userOpinionData as $itemData): ?>
-                <?php if ($i > 10) break; ?>
-                <div class="tim-comm-list-bulk-positions">
+                <?php if ($i > ($limitPerPage - 1)) break; ?>
+                <div class="tim-comm-list-bulk-positions tim-products-opinion-list-<?php echo $i ?>">
                     <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
-                        <a href="<?php echo $itemData['url']; ?>"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
+                        <a class="tim-a-tag" href="<?php echo $itemData['url']; ?>"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
                     </div>
                     <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
                         <div class="tim-comm-list-bulk-rating-bar">
                             <div class="tim-comm-list-bulk-rating-barinner">
-                                <?php echo $this->__($itemData['rating']) ?><!-- random number generator for example only --><span><?php echo $this->__('/5') ?></span>
+                                <?php echo $this->__($itemData['rating']) ?>
+                                <span><?php echo $this->__('/5') ?></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php $i++; ?>
             <?php endforeach; ?>
+            </div>
             <!-- end for each -->
         </div>
     </div>
@@ -150,15 +166,3 @@ if(!empty($site)){
         <!-- for each comment (end) -->
     </div>
 </div>
-<script>
-    /* function to get value from rating field and make graph bar */
-    jQuery('.tim-comm-list-bulk-rating-barinner').each(function () {
-        var ratingValue = jQuery(this).contents().filter(function () {
-            return this.nodeType == 3;
-        }).text();
-        var ratingValuePercent = ((ratingValue * 20) / 100) * 100;
-//        console.log(ratingValuePercent);
-        jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
-        jQuery(this).animate({opacity: '1',}, 1000);
-    });
-</script>
