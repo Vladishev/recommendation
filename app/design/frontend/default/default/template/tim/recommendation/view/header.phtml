@@ -1,6 +1,6 @@
 <?php
 $opinionCount = $this->getOpinionCount();
-$pagesCount = ceil($opinionCount / 2);
+$pagesCount = ceil($opinionCount / 10);
 ?>
 <div class="tim-comm-header">
     <div class="tim-comm-header-left">
@@ -34,13 +34,13 @@ $pagesCount = ceil($opinionCount / 2);
             <span><?php echo $this->__('Display'); ?>:</span>
             <ul>
                 <li>
-                    <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">2</span>
+                    <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">10</span>
                 </li>
                 <li>
-                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">4</span>
+                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">20</span>
                 </li>
                 <li>
-                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">10</span>
+                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">30</span>
                 </li>
             </ul>
             <span><?php echo $this->__('products'); ?></span>
