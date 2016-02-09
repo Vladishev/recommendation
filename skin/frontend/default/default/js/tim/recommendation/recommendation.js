@@ -129,7 +129,7 @@ function changeCountAndPager(el) {
                     if (currentPage >= maxPage) {
                         currentPage = maxPage;
                         $increaseButton.hide();
-                    } else if (currentPage <= 1) {
+                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
                         currentPage = 2;
                     } else {
                         $increaseButton.show();
@@ -139,7 +139,7 @@ function changeCountAndPager(el) {
                     break;
                 case 'tim-pager-decrease-button':
                     currentPage = currentPage - 1;
-                    if (currentPage <= 1) {
+                    if ((currentPage <= 1) || (!$pageBox.val())) {
                         currentPage = 1;
                         $decreaseButton.hide();
                     } else if (currentPage > maxPage) {
@@ -177,7 +177,15 @@ function getTimToolbarData() {
     //collect count per page
     var countPerPage = jQuery('.count-active').text();
     //collect page number
-    var pageNumber = jQuery('.tim-pager-box').val();
+    var $pageBox = jQuery('.tim-pager-box');
+    var pageNumber;
+
+    if (!$pageBox.val()) {
+        pageNumber = 1;
+        $pageBox.val(1);
+    } else {
+        pageNumber = $pageBox.val();
+    }
     //create params array
     var param = {
         sortBy: sortBy,
@@ -197,12 +205,26 @@ function getTimToolbarData() {
             var $pagesTotal = jQuery('.tim-pager-total');
             var maxPage = parseInt($pagesTotal.text());
             var $increaseButton = jQuery('.tim-pager-increase-button');
-            if ($pageBox.val() > response[0]['pagesCount']) {
-                $pageBox.val(response[0]['pagesCount']);
+            var $decreaseButton = jQuery('.tim-pager-decrease-button');
+            var pagesCount = response[0]['pagesCount'];
+            var curPage = response[0]['curPage'];
+
+            if (curPage > pagesCount) {
+                $pageBox.val(pagesCount);
                 $increaseButton.hide();
             }
-            if ($pageBox.val() < response[0]['pagesCount']) {
+            if ((1 < curPage) && (curPage < pagesCount)) {
                 $increaseButton.show();
+                $decreaseButton.show();
+            }
+            if (curPage == 1) {
+                $increaseButton.show();
+                $decreaseButton.hide();
+            }
+            if (pagesCount == 1) {
+                $pageBox.val(1);
+                $increaseButton.hide();
+                $decreaseButton.hide();
             }
             $pagesTotal.html(response[0]['pagesCount']);
             renderOpinionsList(response);

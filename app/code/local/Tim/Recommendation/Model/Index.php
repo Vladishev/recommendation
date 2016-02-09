@@ -29,8 +29,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection->addFieldToSelect('tim_host');
         $collection->addFieldToSelect('user_id');
         $collection->setOrder($field, $order);
-        $collection->setPageSize($limit); // It can be use for pagination
-        $collection->setCurPage($curPage); // It can be use for pagination
+        $collection->setPageSize($limit);
+        $collection->setCurPage($curPage);
         $data = $collection->getData();
         if (empty($data)) {
             return false;

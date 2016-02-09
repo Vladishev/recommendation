@@ -39,6 +39,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $opinionsArray = $this->_getOpinionsArray($recomIdSet);
         $opinionsCount = Mage::getModel('tim_recommendation/index')->getOpinionCount($params['productId']);
         $opinionsArray[0]['pagesCount'] = ceil($opinionsCount / $limit);
+        $opinionsArray[0]['curPage'] = $curPage;
         die(json_encode($opinionsArray));
     }
 
