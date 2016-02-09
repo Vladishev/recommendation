@@ -21,7 +21,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('acceptance', 1);
-        $collection->getSelect()->where('parent IS NULL');
+        $collection->addFieldToFilter('parent', array('null' => true));
         $collection->setOrder('date_add', 'DESC');
         $collection->setPageSize($limit); // It can be use for pagination
         $collection->setCurPage($curPage); // It can be use for pagination
@@ -82,5 +82,34 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
             $i++;
         }
         return $userOpinionData;
+    }
+
+    /**
+     * Returns user's comments
+     * @param $userId
+     * @return mixed
+     */
+    public function getOpinionComment($userId)
+    {
+        $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $recommendationCollection->addFieldToFilter('acceptance', 1);
+        $recommendationCollection->addFieldToFilter('user_id', $userId);
+        $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL' ));
+        $recommendationCollection->addFieldToSelect('comment');
+        $recommendationCollection->addFieldToSelect('date_add');
+        $recommendationCollection->addFieldToSelect('product_id');
+        $recommendationCollection->setOrder('date_add', 'DESC');
+        $comments = $recommendationCollection->getData();
+
+        $i = 0;
+        foreach ($comments as $comment) {
+            $productId = $comment['product_id'];
+            $product = Mage::getModel('catalog/product')->load($productId);
+            $comments[$i]['name'] = $product->getName();
+            $comments[$i]['url'] = $product->getProductUrl();
+            $i++;
+        }
+
+        return $comments;
     }
 }

@@ -40,6 +40,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $opinionData = $recommendationBlock->getUserOpinionData($params['userId'], $limit, $curPage, $order, $field);
         $opinionsCount = $recommendationBlock->getUserOpinionCount($params['userId']);
         $opinionData[0]['pagesCount'] = ceil($opinionsCount / $limit);
+        $opinionData[0]['curPage'] = $curPage;
         die(json_encode($opinionData));
     }
 }

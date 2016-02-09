@@ -156,6 +156,8 @@ if(!empty($site)){
                 <div class="tim-comment-container-title">
                     <?php echo $this->__("Comment added"); ?>
                     <span><?php echo $comment['date_add']; ?></span>
+                    <?php echo $this->__(" for product reviews: "); ?>
+                    <span class="tim-comm-list-bulk-name"><a href="<?php echo $comment['url'] ?>"><?php echo $comment['name'] ?></a></span>
                 </div>
                 <div class="tim-comment-container-content">
                     <!-- content of comment -->

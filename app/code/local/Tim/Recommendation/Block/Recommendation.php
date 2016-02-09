@@ -294,20 +294,13 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * Returns customer comments and date
+     * Returns user's comments
      * @param (int)$userId
      * @return mixed
      */
     public function getOpinionComment($userId)
     {
-        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $opinionCollection->addFieldToFilter('acceptance', 1);
-        $opinionCollection->getSelect()->where('parent IS NOT NULL')->where('user_id = ' . $userId);
-        $opinionCollection->addFieldToSelect('comment');
-        $opinionCollection->addFieldToSelect('date_add');
-        $opinionCollection->setOrder('date_add', 'DESC');
-        $result = $opinionCollection->getData();
-
+        $result = Mage::getModel('tim_recommendation/index')->getOpinionComment($userId);
         return $result;
     }
 
