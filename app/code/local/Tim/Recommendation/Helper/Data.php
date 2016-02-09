@@ -101,7 +101,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
         $avatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
-        if(!empty($avatar)) {
+        if (!empty($avatar)) {
             $avatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $avatar;
             return $avatar;
         } else {
@@ -419,5 +419,59 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $points = Mage::getStoreConfig('tim_settings/customer_points/add_comment');
         return (int)$points;
+    }
+
+    /**
+     * Gets info about user level for client
+     * @return array
+     */
+    public function getUserLevelClient()
+    {
+        $data = unserialize(Mage::getStoreConfig('tim_recommendation/user_level/client'));
+        return $data;
+    }
+
+    /**
+     * Gets info about user level for expert
+     * @return array
+     */
+    public function getUserLevelExpert()
+    {
+        $data = array();
+        $values = unserialize(Mage::getStoreConfig('tim_recommendation/user_level/expert'));
+        $i = 0;
+        foreach ($values as $item) {
+            $data[$i]['point'] = $item['point'];
+            $data[$i]['email_addresses'] = explode(',', str_replace(' ', '', $item['email_addresses']));
+            $i++;
+        }
+        return $data;
+    }
+
+    /**
+     * Gets user score
+     * @param $customerEmail
+     * @param $opinionQty
+     * @return string
+     */
+    public function getUserScore($customerEmail, $opinionQty)
+    {
+        $userLevelsClient = $this->getUserLevelClient();
+        $userLevelsExpert = $this->getUserLevelExpert();
+        $point = '';
+        foreach ($userLevelsExpert as $userLevel) {
+            if (in_array($customerEmail, $userLevel['email_addresses'])) {
+                $point = $userLevel['point'];
+            }
+        }
+        if (empty($point)) {
+            foreach ($userLevelsClient as $userLevel) {
+                if ($opinionQty >= $userLevel['from'] && $opinionQty <= $userLevel['to']) {
+                    $point = $userLevel['point'];
+                    break;
+                }
+            }
+        }
+        return $point;
     }
 }

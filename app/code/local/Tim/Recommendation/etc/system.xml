@@ -49,14 +49,39 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <level_values translate="label">
-                            <frontend_model>tim_recommendation/system_config_userLevel</frontend_model>
-                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                        <client_label>
+                            <label><![CDATA[<strong style="margin-left: 205px;">Client</strong>]]></label>
+                            <frontend_type>label</frontend_type>
                             <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </level_values>
+                        </client_label>
+                        <client translate="label">
+                            <frontend_model>tim_recommendation/system_config_userLevelClient</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </client>
+                        <expert_label>
+                            <label><![CDATA[<strong style="margin-left: 205px;">Expert</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expert_label>
+                        <expert translate="label">
+                            <frontend_model>tim_recommendation/system_config_userLevelExpert</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <comment>The email-addresses must be separated by a comma</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expert>
                     </fields>
                 </user_level>
             </groups>

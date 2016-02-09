@@ -18,11 +18,13 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getUserData($customerId)
     {
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+        $customer = Mage::getModel('customer/customer')->load($customerId);
         $userData = $user->getData();
         $userData['user_type_name'] = $this->getHelper()->getUserTypeName($user['user_type']);
         $userData['customer_name'] = $this->getHelper()->getCustomerNameOrNick($customerId);
         $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);
         $userData['opinion_qty'] = $this->getHelper()->getOpinionQty($customerId);
+        $userData['user_score'] = $this->getHelper()->getUserScore($customer->getEmail(), $userData['opinion_qty']);
 
         return $userData;
     }
@@ -376,8 +378,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerInfo = array();
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
             $_helper = $this->getHelper();
-            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+            $customerId = $customer->getId();
             $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
             $customerInfo['customerName'] = $_helper->getCustomerName($customerId);
             $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
@@ -386,6 +389,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $customerId;
             $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
             $customerInfo['engage'] = $user->getEngage();
+            $customerInfo['user_score'] = $_helper->getUserScore($customer->getEmail(), $customerInfo['opinionQty']);
             return $customerInfo;
         } else {
             return false;
