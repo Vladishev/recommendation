@@ -4,7 +4,8 @@ jQuery(document).ready(function () {
     getDataOnEnterEvent();
     changeSortCondition();
     lightRatings();
-    getCommentsToolbarData();
+    changeSortConditionComments();
+    getCommentDataOnEnterEvent();
 
     /* function to put value into html content right to rating stars and switch userlogin details*/
 
@@ -163,7 +164,7 @@ function getTimToolbarData() {
     var url = dataSet.url;
     var productId = dataSet.product;
     //collect sort data
-    var sortBy = jQuery('.tim-comm-sortingselect').val();
+    var sortBy = jQuery('.tim-toolbar-select').val();
     //collect count per page
     var countPerPage = jQuery('.count-active').text();
     //collect page number
@@ -196,7 +197,6 @@ function getTimToolbarData() {
             //set pages count
             var $pageBox = jQuery('.tim-pager-box');
             var $pagesTotal = jQuery('.tim-pager-total');
-            var maxPage = parseInt($pagesTotal.text());
             var $increaseButton = jQuery('.tim-pager-increase-button');
             var $decreaseButton = jQuery('.tim-pager-decrease-button');
             var pagesCount = response[0]['pagesCount'];
@@ -259,16 +259,110 @@ function renderProductOpinionList(response) {
 }
 
 //---------------------------- Comments toolbar start ---------------------------------------------
+/**
+ * Get data when Enter button was pressed
+ */
+function getCommentDataOnEnterEvent() {
 
+    var $increaseButton = jQuery('.tim-pager-comment-increase-button');
+    var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
+    var $pageBox = jQuery('.tim-comment-pager-box');
+    $pageBox.keyup(function(e){
+        if(e.keyCode == 13) {
+            var currentPage = parseInt($pageBox.val());
+            var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
+            if (currentPage < 1) {
+                currentPage = 1;
+                $decreaseButton.hide();
+                $increaseButton.show();
+            }
+            if (currentPage > maxPage) {
+                currentPage = maxPage;
+                $increaseButton.hide();
+                $decreaseButton.show();
+            }
+            if (isNaN(currentPage)) {
+                currentPage = 1;
+                $decreaseButton.hide();
+                $increaseButton.show();
+            }
+            $pageBox.val(currentPage);
+            getCommentsToolbarData()
+        }
+    });
+}
+
+/**
+ * Gets 'number per page' and 'current page' data for Comments Toolbar
+ * @param el
+ */
+function changeCountAndPagerComments(el) {
+    if (typeof el != 'undefined') {
+        var classList = jQuery(el).attr('class').split(/\s+/);
+        var $increaseButton = jQuery('.tim-pager-comment-increase-button');
+        var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
+        var $pageBox = jQuery('.tim-comment-pager-box');
+        var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
+        var currentPage = parseInt($pageBox.val());
+        jQuery.each(classList, function(index, item) {
+            switch (item) {
+                case 'tim-toolbar-count-comment':
+                    jQuery('.'+item).attr('class', 'tim-toolbar-count-comment');
+                    jQuery(el).addClass('count-active-comment');
+                    break;
+                case 'tim-pager-comment-increase-button':
+                    currentPage = currentPage + 1;
+                    if (currentPage >= maxPage) {
+                        currentPage = maxPage;
+                        $increaseButton.hide();
+                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
+                        currentPage = 2;
+                    } else {
+                        $increaseButton.show();
+                    }
+                    $decreaseButton.show();
+                    $pageBox.val(currentPage);
+                    break;
+                case 'tim-pager-comment-decrease-button':
+                    currentPage = currentPage - 1;
+                    if ((currentPage <= 1) || (!$pageBox.val())) {
+                        currentPage = 1;
+                        $decreaseButton.hide();
+                    } else if (currentPage > maxPage) {
+                        currentPage = maxPage;
+                    } else {
+                        $decreaseButton.show();
+                    }
+                    $increaseButton.show();
+                    $pageBox.val(currentPage);
+                    break;
+            }
+        });
+        getCommentsToolbarData();
+    }
+}
+
+/**
+ * Provides onchange event for Sorting comments
+ */
+function changeSortConditionComments() {
+    jQuery('.tim-toolbar-comment-select').change(function (){
+        getCommentsToolbarData();
+    });
+}
+
+/**
+ * Gets data from Comments Tim Toolbar and send it to controller
+ */
 function getCommentsToolbarData() {
     var dataSet = jQuery('#comments-controller').data();
     var url = dataSet.url;
     //collect sort data
-    var sortBy = jQuery('.tim-comm-sortingselect').val();
+    var sortBy = jQuery('.tim-toolbar-comment-select').val();
     //collect count per page
-    var countPerPage = jQuery('.count-active').text();
+    var countPerPage = jQuery('.count-active-comment').text();
     //collect page number
-    var $pageBox = jQuery('.tim-pager-box');
+    var $pageBox = jQuery('.tim-comment-pager-box');
     var pageNumber;
 
     if (!$pageBox.val()) {
@@ -282,24 +376,23 @@ function getCommentsToolbarData() {
     //create params array
     var param = {
         sortBy: sortBy,
-        productId: productId,
         countPerPage: countPerPage,
         pageNumber: pageNumber,
         userId: userId
     };
-    console.log(param);
+
     jQuery.ajax({
         url: url,
         type: "post",
         data: param,
         success: function(response){
             var response = JSON.parse(response);
+            console.log(response);
             //set pages count
-            var $pageBox = jQuery('.tim-pager-box');
-            var $pagesTotal = jQuery('.tim-pager-total');
-            var maxPage = parseInt($pagesTotal.text());
-            var $increaseButton = jQuery('.tim-pager-increase-button');
-            var $decreaseButton = jQuery('.tim-pager-decrease-button');
+            var $pageBox = jQuery('.tim-comment-pager-box');
+            var $pagesTotal = jQuery('.tim-comment-pager-total');
+            var $increaseButton = jQuery('.tim-pager-comment-increase-button');
+            var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
             var pagesCount = response[0]['pagesCount'];
             var curPage = response[0]['curPage'];
 
@@ -321,11 +414,6 @@ function getCommentsToolbarData() {
                 $decreaseButton.hide();
             }
             $pagesTotal.html(response[0]['pagesCount']);
-            if (dataSet.page == 'userPage') {
-                renderProductOpinionList(response);
-            } else {
-                renderOpinionsList(response);
-            }
         }
     });
 }

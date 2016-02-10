@@ -43,4 +43,24 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $opinionData[0]['curPage'] = $curPage;
         die(json_encode($opinionData));
     }
+
+    public function sortUserCommentsAction()
+    {
+        $params = $this->getRequest()->getParams();
+        $limit = $params['countPerPage'];
+        $curPage = $params['pageNumber'];
+
+        switch ($params['sortBy']) {
+            case 'oldest':
+                $order = 'ASC';
+                break;
+            default:
+                $order = 'DESC';
+        }
+
+        $recommendationBlock =$this->getLayout()->createBlock('tim_recommendation/recommendation');
+        $commentData = $recommendationBlock->getOpinionComment($params['userId'], $limit, $curPage, $order);
+
+        die(json_encode($commentData));
+    }
 }

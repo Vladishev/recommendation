@@ -295,12 +295,15 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Returns user's comments
-     * @param (int)$userId
+     * @param $userId
+     * @param int $limit
+     * @param int $curPage
+     * @param string $order
      * @return mixed
      */
-    public function getOpinionComment($userId)
+    public function getOpinionComment($userId, $limit = 10, $curPage = 1, $order = 'DESC')
     {
-        $result = Mage::getModel('tim_recommendation/index')->getOpinionComment($userId);
+        $result = Mage::getModel('tim_recommendation/index')->getOpinionComment($userId, $limit, $curPage, $order);
         return $result;
     }
 

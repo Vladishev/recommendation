@@ -87,9 +87,12 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     /**
      * Returns user's comments
      * @param $userId
+     * @param $limit
+     * @param $curPage
+     * @param $order
      * @return mixed
      */
-    public function getOpinionComment($userId)
+    public function getOpinionComment($userId, $limit, $curPage, $order)
     {
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $recommendationCollection->addFieldToFilter('acceptance', 1);
@@ -98,7 +101,9 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection->addFieldToSelect('comment');
         $recommendationCollection->addFieldToSelect('date_add');
         $recommendationCollection->addFieldToSelect('product_id');
-        $recommendationCollection->setOrder('date_add', 'DESC');
+        $recommendationCollection->setOrder('date_add', $order);
+        $recommendationCollection->setPageSize($limit);
+        $recommendationCollection->setCurPage($curPage);
         $comments = $recommendationCollection->getData();
 
         $i = 0;
@@ -110,6 +115,26 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
             $i++;
         }
 
+        $count = $this->_getCommentsCount($userId);
+        $comments[0]['pagesCount'] = ceil($count / $limit);
+        $comments[0]['curPage'] = $curPage;
+
         return $comments;
+    }
+
+    /**
+     * Evaluates comments count for particular user
+     * @param $userId
+     * @return int
+     */
+    protected function _getCommentsCount($userId)
+    {
+        $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $recommendationCollection->addFieldToFilter('acceptance', 1);
+        $recommendationCollection->addFieldToFilter('user_id', $userId);
+        $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL' ));
+        $count = count($recommendationCollection->getData());
+
+        return $count;
     }
 }

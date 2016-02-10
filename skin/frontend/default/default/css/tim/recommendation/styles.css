@@ -1111,7 +1111,7 @@ label.tim-rating-button-boolean-label {
     cursor: pointer;
 }
 
-.tim-opinion-list-header-howmuchshow ul li span.count-active {
+.tim-opinion-list-header-howmuchshow ul li span.count-active, .tim-opinion-list-header-howmuchshow ul li span.count-active-comment {
     background: #FFFF00;
 }
 
