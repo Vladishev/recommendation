@@ -162,7 +162,7 @@ function getTimToolbarData() {
     var url = dataSet.url;
     var productId = dataSet.product;
     //collect sort data
-    var sortBy = jQuery('.tim-comm-sortingselect').val();
+    var sortBy = jQuery('.tim-toolbar-select').val();
     //collect count per page
     var countPerPage = jQuery('.count-active').text();
     //collect page number
