@@ -177,11 +177,11 @@ function placeholderAction(elem) {
  * Hide placeholder on tinyMce
  * @param data
  */
-function hidePlaceholder(data){
+function hidePlaceholder(data) {
     var id = jQuery(data).attr('id');
-    var placeholder = jQuery('#ph-'+ id);
+    var placeholder = jQuery('#ph-' + id);
     placeholder.hide();
-    jQuery('#' + id + '_ifr').focusout(function(){
+    jQuery('#' + id + '_ifr').focusout(function () {
         if (!placeholder.val()) {
             placeholder.show();
         }
@@ -192,11 +192,11 @@ function hidePlaceholder(data){
  * Show placeholder on tinyMce
  * @param ed
  */
-function showPlaceholder(ed){
+function showPlaceholder(ed) {
     var id = jQuery(ed).attr('id');
-    var placeholder = jQuery('#ph-'+ id);
+    var placeholder = jQuery('#ph-' + id);
     tinyMCE.triggerSave();
-    if (!jQuery('#'+id).val()) {
+    if (!jQuery('#' + id).val()) {
         placeholder.show();
     }
 }
@@ -228,17 +228,17 @@ function hideCommentForm(recomId) {
 /**
  * Save opinion by AJAX
  */
-function addOpinionAjax(){
+function addOpinionAjax() {
     jQuery("#form-validate").ajaxForm({
-        beforeSend: function() {
+        beforeSend: function () {
             jQuery('#add-ajax-opinion').prop('disabled', true);
             jQuery('#loading-frontend-mask').show(300);
         },
-        success: function(response) {
+        success: function (response) {
             displayAjaxOpinionPopupResponse(response);
             jQuery("#form-validate")[0].reset();
         },
-        error: function(response) {
+        error: function (response) {
             displayAjaxOpinionPopupResponse(response);
         }
     });
@@ -247,22 +247,22 @@ function addOpinionAjax(){
 /**
  * Save comment by AJAX
  */
-function addCommentAjax(){
+function addCommentAjax() {
     jQuery(".comment-form").ajaxForm({
-        beforeSend: function() {
+        beforeSend: function () {
             jQuery('#add-ajax-comment').prop('disabled', true);
             jQuery('#loading-frontend-mask').show(300);
         },
-        success: function(response) {
+        success: function (response) {
             displayAjaxCommentPopupResponse(response);
         },
-        error: function(response) {
+        error: function (response) {
             displayAjaxCommentPopupResponse(response);
         }
     });
 }
 
-function displayAjaxOpinionPopupResponse(response){
+function displayAjaxOpinionPopupResponse(response) {
     jQuery('#loading-frontend-mask').hide();
     jQuery('.tim-add-opinion-popup').show(300);
     var response = JSON.parse(response);
@@ -276,7 +276,7 @@ function displayAjaxOpinionPopupResponse(response){
     jQuery('#ph-tim-opinion-summary').show();
 }
 
-function displayAjaxCommentPopupResponse(response){
+function displayAjaxCommentPopupResponse(response) {
     jQuery('#loading-frontend-mask').hide();
     jQuery('.tim-add-comment-popup').show(300);
     var response = JSON.parse(response);
@@ -286,6 +286,54 @@ function displayAjaxCommentPopupResponse(response){
     jQuery('#ph-tim-opinion-comment-' + commentRecomId).show();
     jQuery('#add-ajax-comment').prop('disabled', false);
     jQuery('#char-count-comment-' + commentRecomId).children('span').text(0);
+}
+
+/**
+ * Display filename and check on image rules
+ * @param id
+ */
+function displayFilename(id) {
+    var images = '';
+    var maxSize = parseInt(jQuery('#recommendation-img').attr('max-size'),10);
+    jQuery.each(jQuery('#' + id).prop('files'), function (idx, file) {
+        if (checkImgSize(file['size'], maxSize)) {
+            if (checkImgType(file)) {
+                images += ' ' + file['name'] + '<br>';
+            } else {
+                alert('Nie można przesłać pliku: ' + file['name'] + '. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
+            }
+        } else {
+            alert("Nie można przesłać pliku: " + file['name'] + ". Maksymalny rozmiar to 5 mb.");
+        }
+    });
+    jQuery('#downloaded-imgs').html(images);
+}
+/**
+ * Check image size
+ * @param fileSize
+ * @param limit
+ * @returns {boolean}
+ */
+function checkImgSize(fileSize, limit) {
+    if (fileSize < limit) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Check image type
+ * @param file
+ * @returns {boolean}
+ */
+function checkImgType(file) {
+    switch (file['type']) {
+        case 'image/png':
+        case 'image/jpeg':
+            return true;
+        default:
+            return false;
+    }
 }
 
 function countCommentChar(commentId){
