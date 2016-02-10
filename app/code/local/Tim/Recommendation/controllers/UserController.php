@@ -47,29 +47,19 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $avatar = null;
         $banner = null;
         $siteUrl = null;
-        $nick = null;
+        $nick = false;
+        $defaultAvatar = null;
         $postData = $this->getRequest()->getPost();
         if (!empty($postData['selected_avatar'])) {
             $avatar = $postData['selected_avatar'];
             $defaultAvatar = true;
         }
-        if (empty($avatar)) {
-            if (!empty($_FILES['image']['name'])) {
-                if (!$this->checkFileSize($_FILES['image']['size'], 419430) ||
-                    !$this->checkFileType($_FILES['image']['type'])) {
-                    $this->_redirect('*/*/edit');
-                    return;
-                }
-                $avatar = time() . $_FILES['image']['name'];
-            }
+        if (!empty($postData['avatar-hide'])) {
+            $avatar = explode('|', $postData['avatar-hide']);
+            $defaultAvatar = false;
         }
-        if (!empty($_FILES['banner']['name'])) {
-            if (!$this->checkFileSize($_FILES['banner']['size'], 419430) ||
-                !$this->checkFileType($_FILES['banner']['type'])) {
-                $this->_redirect('*/*/edit');
-                return;
-            }
-            $banner = time() . $_FILES['banner']['name'];
+        if (!empty($postData['banner-hide'])) {
+            $banner = explode('|', $postData['banner-hide']);
         }
         $siteUrl = $postData['url'];
         if (!is_null($postData['description'])) {
@@ -95,15 +85,23 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
         if (!is_null($avatar)) {
             try {
-                if (empty($defaultAvatar)) {
-                    Mage::helper('tim_recommendation')->saveImage($avatar, $path, 'image');
-                }
-                $dbPath = '/media/tim/recommendation/' . $avatar;
-                if (!empty($userData)) {
-                    $user->setAvatar($dbPath);
+                if ($defaultAvatar == false) {
+                    $this->_cleanDirectory($avatar[2]);
+                    rename($avatar[1], $avatar[0]);
+                    if (!empty($userData)) {
+                        $user->setAvatar($avatar[0]);
+                    } else {
+                        $user->setCustomerId($customerId);
+                        $user->setAvatar($avatar[0]);
+                    }
                 } else {
-                    $user->setCustomerId($customerId);
-                    $user->setAvatar($dbPath);
+                    $dbPath = '/media/tim/recommendation/' . $avatar;
+                    if (!empty($userData)) {
+                        $user->setAvatar($dbPath);
+                    } else {
+                        $user->setCustomerId($customerId);
+                        $user->setAvatar($dbPath);
+                    }
                 }
                 $user->save();
             } catch (Exception $e) {
@@ -112,13 +110,13 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         }
         if (!is_null($banner)) {
             try {
-                Mage::helper('tim_recommendation')->saveImage($banner, $path, 'banner');
-                $dbPath = '/media/tim/recommendation/' . $banner;
+                $this->_cleanDirectory($banner[2]);
+                rename($banner[1], $banner[0]);
                 if (!empty($userData)) {
-                    $user->setAd($dbPath);
+                    $user->setAd($banner[0]);
                 } else {
                     $user->setCustomerId($customerId);
-                    $user->setAd($dbPath);
+                    $user->setAd($banner[0]);
                 }
                 $user->save();
             } catch (Exception $e) {
@@ -185,6 +183,20 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
     }
 
     /**
+     * Removes all files from directory
+     * @param (str)$path
+     */
+    protected function _cleanDirectory($path)
+    {
+        $oldFiles = glob($path.'*');
+        if ($oldFiles) {
+            foreach ($oldFiles as $oldFile) {
+                unlink($oldFile);
+            }
+        }
+    }
+
+    /**
      * Check file type
      * @param string $fileType
      * @return bool
@@ -215,5 +227,42 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
             return false;
         }
         return true;
+    }
+
+    /**
+     * Saves cropped image and returns path to it
+     * @return bool or json_encode data
+     */
+    public function saveCropImageAction()
+    {
+        $data = $this->getRequest()->getParams();
+        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $typeOfImage = $data['typeOfImage'];
+        $folderName = $typeOfImage;
+        $imageData = $data['data'];
+        list($typeData, $imageData) = explode(';', $imageData);
+        $imageType = substr($typeData, 11);
+        $imageName = $typeOfImage . '-' . $customerId .'.' . $imageType;
+        $imagePath['path'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . DS . 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp' . DS . $imageName;
+        $imagePath['formData'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . $imageName;
+        $imagePath['tmpFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp' . DS . $imageName;
+        $imagePath['imgFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS;
+        list(, $imageData)      = explode(',', $imageData);
+        $imageData = base64_decode($imageData);
+        $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp';
+
+        if (!is_dir($folderForImage)) {
+            mkdir($folderForImage, 0777, true);
+        }
+
+        try {
+            $this->_cleanDirectory($folderForImage);
+            file_put_contents($folderForImage . DS . $imageName, $imageData);
+            echo json_encode($imagePath);
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            return false;
+        }
+
     }
 }

@@ -734,7 +734,7 @@ label.tim-rating-button-boolean-label {
 }
 
 /* popup window when user needs to login */
-.tim-userlogin-popup, .tim-markabuse-popup, .tim-all-photo-popup, .tim-video-popup, .tim-add-opinion-popup, .tim-add-comment-popup{
+.tim-userlogin-popup, .tim-markabuse-popup, .tim-all-photo-popup, .tim-video-popup, .tim-add-opinion-popup, .tim-add-comment-popup, .tim-crop-image{
     position:fixed;
     top:0;
     left:0;
@@ -744,7 +744,7 @@ label.tim-rating-button-boolean-label {
     display:none; 
 }
  
-.tim-userlogin-popup-bg, .tim-markabuse-popup-bg, .tim-all-photo-popup-bg, .tim-video-popup-bg, .tim-add-opinion-popup-bg, .tim-add-comment-popup-bg {
+.tim-userlogin-popup-bg, .tim-markabuse-popup-bg, .tim-all-photo-popup-bg, .tim-video-popup-bg, .tim-add-opinion-popup-bg, .tim-add-comment-popup-bg, .tim-crop-image-bg {
     position:absolute;
     top:0;
     left:0;
@@ -755,7 +755,7 @@ label.tim-rating-button-boolean-label {
     opacity: 0.6;
 }
  
-.tim-userlogin-popup-container, .tim-markabuse-popup-container, .tim-all-photo-popup-container, .tim-video-popup-container, .tim-add-opinion-popup-container, .tim-add-comment-popup-container {
+.tim-userlogin-popup-container, .tim-markabuse-popup-container, .tim-all-photo-popup-container, .tim-video-popup-container, .tim-add-opinion-popup-container, .tim-add-comment-popup-container, .tim-crop-image-container {
     width:600px;
     height: auto;
     position:absolute;
@@ -1193,3 +1193,13 @@ label.tim-rating-button-boolean-label {
 }
 
 #form-validate label.required em { color: #eb340a; }
+
+#tim-avatar-image {
+    width: 290px!important;
+    height: 180px!important;
+}
+
+#tim-banner-image {
+    width: 860px!important;
+    height: 500px!important;
+}
