@@ -63,8 +63,25 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $opinion['images'] = $this->getImages($opinion['recom_id']);
         $opinion['comments'] = $this->getOpinionComments($opinion['recom_id']);
         $opinion['name'] = $this->getHelper()->getCustomerNameOrNick($opinion['user_id']);
+        $this->_fillAverageField();
 
         return $opinion;
+    }
+
+    /**
+     * DON'T MERGE THIS METHOD TO TMP BRANCH!!!
+     */
+    private function _fillAverageField()
+    {
+        $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+
+        foreach ($collection as $row) {
+            if (!$row->getAverageRating()) {
+                $row->setAverageRating(rand(0, 5));
+                $row->save();
+            }
+        }
+
     }
 
     /**
