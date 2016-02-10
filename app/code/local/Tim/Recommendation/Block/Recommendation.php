@@ -399,10 +399,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      */
     public function parseYoutubeUrl($url){
         $urlElements = parse_url($url);
-        if($host = $urlElements['host'] == 'www.youtube.com'){
+        $host = $urlElements['host'];
+        if($host == 'www.youtube.com'){
             $videoId = substr($urlElements['query'], 2);
 
-        }elseif($host = $urlElements['host'] == 'youtu.be'){
+        }elseif($host == 'youtu.be'){
             $videoId = substr($urlElements['path'], 1);
         }else{
             return false;

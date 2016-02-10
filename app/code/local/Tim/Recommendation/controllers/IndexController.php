@@ -226,6 +226,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     ->setPublicationDate(date('Y-m-d H:i:s'));
                 try {
                     $opinion->save();
+                    Mage::dispatchEvent('controller_index_allow_opinion_data', array('opinion_id' => $requestArray['id']));
                     echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!') . '</h2>';
                 } catch (Exception $e) {
                     Mage::log($e->getMessage(), null, 'tim_recommendation.log');

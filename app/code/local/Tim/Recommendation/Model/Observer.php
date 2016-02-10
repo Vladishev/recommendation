@@ -127,6 +127,33 @@ class Tim_Recommendation_Model_Observer
     }
 
     /**
+     * Send email with information about acceptance opinion | comment
+     * @param (obj)$observer
+     */
+    public function sendAcceptConfirmationEmail($observer)
+    {
+        $opinionId = $observer->getEvent()->getOpinionId();
+        $customerId = Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getUserId();
+        $customerInfo = Mage::getModel('customer/customer')->load($customerId)->getData();
+        $customerEmail = $customerInfo['email'];
+        $type = Mage::helper('tim_recommendation')->checkOpinionOrComment($opinionId);
+        if ($type == 'opinion') {
+            $customerSubject = 'Opinion accepted';
+            $customerInfo['subject'] = Mage::helper('tim_recommendation')->__($customerSubject);
+            $customerInfo['type'] = Mage::helper('tim_recommendation')->__('opinion');
+        } else {
+            $customerSubject = 'Comment accepted';
+            $customerInfo['subject'] = Mage::helper('tim_recommendation')->__($customerSubject);
+            $customerInfo['type'] = Mage::helper('tim_recommendation')->__('comment');
+        }
+
+        $sendConfirmationToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_send_confirmation_' . $type);
+        if ($sendConfirmationToUser == 1) {
+            $this->sendEmail($customerEmail, $customerInfo, $customerSubject);
+        }
+    }
+
+    /**
      * Send email with information about person who added comment | sends email to user
      * @param (obj)$observer
      */
@@ -170,7 +197,6 @@ class Tim_Recommendation_Model_Observer
      */
     public function sendEmail($toEmail, $templateVar, $subject)
     {
-
         switch ($subject) {
             case 'Opinion':
                 $templateId = 'opinion_template';
@@ -188,6 +214,11 @@ class Tim_Recommendation_Model_Observer
                 $templateId = 'user_template';
                 $subject = ucfirst($templateVar['subject']);
                 break;
+            case 'Opinion accepted':
+            case 'Comment accepted':
+                $templateId = 'confirmation_for_user_template';
+                $subject = ucfirst($templateVar['subject']);
+                break;
         }
         $emailTemplate = Mage::getModel('core/email_template')->loadDefault($templateId);
         $processedTemplate = $emailTemplate->getProcessedTemplate($templateVar);
@@ -198,7 +229,6 @@ class Tim_Recommendation_Model_Observer
             ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
             ->setType('html');
         if (!empty($copyTo[0])) {
-
             switch ($subject) {
                 case 'Opinion':
                     $method = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_copy_method');
@@ -210,7 +240,6 @@ class Tim_Recommendation_Model_Observer
                     $method = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_copy_method');
                     break;
             }
-
             switch ($method) {
                 case 1:
                     $mail->setCc($copyTo);
@@ -221,8 +250,7 @@ class Tim_Recommendation_Model_Observer
             }
         }
 
-        if ($subject == 'Opinion')
-        {
+        if ($subject == 'Opinion') {
             $mail->send($templateVar);
         } else {
             $mail->send();

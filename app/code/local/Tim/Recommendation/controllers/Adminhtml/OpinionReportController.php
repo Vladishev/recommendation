@@ -50,6 +50,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
                 $recommendationModel->setAcceptance(1);
                 $recommendationModel->setPublicationDate(date('Y-m-d H:i:s'));
                 $recommendationModel->save();
+                Mage::dispatchEvent('controller_index_allow_opinion_data', array('opinion_id' => $item));
             }
             $this->_addAlert('allowed', $commentsId);
         }
