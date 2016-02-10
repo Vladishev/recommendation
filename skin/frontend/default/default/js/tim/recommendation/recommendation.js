@@ -1,6 +1,7 @@
 jQuery(document).ready(function () {
     addOpinionAjax();
     addCommentAjax();
+    validateCommentForm();
 
     /* function to put value into html content right to rating stars and switch userlogin details*/
 
@@ -237,6 +238,36 @@ jQuery(document).ready(function () {
 //    ---------------------------- End of cropper functionality ------------------------
 
 });
+
+function validateCommentForm() {
+    jQuery('.tim-validate-comment-button').on('click', this, function() {
+        var data = jQuery(this).data();
+        var minChar = data.mincharacters;
+        var maxChar = data.maxcharacters;
+        var commentMin = data.commentmin;
+        var commentMax = data.commentmax;
+
+        Validation.add('min-length-comment', commentMin, function (v) {
+            var min = minChar;
+            if (min) {
+                if (v.length < min) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        Validation.add('max-length-comment', commentMax, function (v) {
+            var max = maxChar;
+            if (max) {
+                if (v.length > max) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    });
+}
 
 /**
  * function to show place for adding comment
