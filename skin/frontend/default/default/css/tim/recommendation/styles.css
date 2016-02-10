@@ -800,7 +800,7 @@ label.tim-rating-button-boolean-label {
     background: transparent url(../../../images/tim_button_close.png)  no-repeat scroll -33px 0px;
 }
 
-#loading-frontend-mask {
+#loading-frontend-mask-opinion, #loading-frontend-mask-comment {
 	display: none;
 	position:absolute;
 	color:#d85909;
@@ -812,7 +812,7 @@ label.tim-rating-button-boolean-label {
 	z-index:500;
 }
 
-#loading-frontend-mask .loader {
+#loading-frontend-mask-opinion .loader, #loading-frontend-mask-comment .loader {
 	position:fixed;
 	top:45%;
 	left:50%;
@@ -1192,7 +1192,7 @@ label.tim-rating-button-boolean-label {
     bottom: -20px;
 }
 
-#form-validate label.required em { color: #eb340a; }
+#form-validate-opinion label.required em { color: #eb340a; }
 
 #tim-avatar-image {
     width: 290px!important;

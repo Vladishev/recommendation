@@ -113,6 +113,7 @@
     </customer_account>
     <recommendation_user_edit>
         <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/dist/cropper.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_css</type><name>js/tim/recommendation/cropper-master/dist/cropper.css</name></action>

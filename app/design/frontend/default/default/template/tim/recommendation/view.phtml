@@ -26,7 +26,7 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
             </div>
         <?php endforeach ?>
     </div>
-    <div id="loading-frontend-mask">
+    <div id="loading-frontend-mask-comment">
         <p class="loader" id="loading_mask_loader">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
                  alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />

@@ -21,7 +21,7 @@ if (!empty($opinionLimitCharacters['max'])) {
     $opinionClass .= ' max-length-opinion';
 }
 ?>
-<form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate"
+<form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate-opinion"
       autocomplete="off" enctype="multipart/form-data">
     <fieldset>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
@@ -248,7 +248,7 @@ if (!empty($opinionLimitCharacters['max'])) {
         </button>
     </fieldset>
 </form>
-<div id="loading-frontend-mask">
+<div id="loading-frontend-mask-opinion">
     <p class="loader" id="loading_mask_loader">
         <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
              alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
@@ -263,7 +263,7 @@ if (!empty($opinionLimitCharacters['max'])) {
 </div>
 <script type="text/javascript">
     //<![CDATA[
-    var dataForm = new VarienForm('form-validate', true);
+    var dataForm = new VarienForm('form-validate-opinion', true);
 
     Validation.add('min-length-opinion', '<?php echo $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] ?>', function (v) {
         var min = <?php echo ($opinionLimitCharacters['min']) ? $opinionLimitCharacters['min'] : 0 ?>;

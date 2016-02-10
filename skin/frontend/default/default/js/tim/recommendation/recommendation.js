@@ -408,14 +408,14 @@ function hideCommentForm(recomId) {
  * Save opinion by AJAX
  */
 function addOpinionAjax() {
-    jQuery("#form-validate").ajaxForm({
+    jQuery("#form-validate-opinion").ajaxForm({
         beforeSend: function () {
             jQuery('#add-ajax-opinion').prop('disabled', true);
-            jQuery('#loading-frontend-mask').show(300);
+            jQuery('#loading-frontend-mask-opinion').show(300);
         },
         success: function (response) {
             displayAjaxOpinionPopupResponse(response);
-            jQuery("#form-validate")[0].reset();
+            jQuery("#form-validate-opinion")[0].reset();
         },
         error: function (response) {
             displayAjaxOpinionPopupResponse(response);
@@ -430,7 +430,7 @@ function addCommentAjax() {
     jQuery(".comment-form").ajaxForm({
         beforeSend: function () {
             jQuery('#add-ajax-comment').prop('disabled', true);
-            jQuery('#loading-frontend-mask').show(300);
+            jQuery('#loading-frontend-mask-comment').show(300);
         },
         success: function (response) {
             displayAjaxCommentPopupResponse(response);
@@ -442,7 +442,7 @@ function addCommentAjax() {
 }
 
 function displayAjaxOpinionPopupResponse(response) {
-    jQuery('#loading-frontend-mask').hide();
+    jQuery('#loading-frontend-mask-opinion').hide();
     jQuery('.tim-add-opinion-popup').show(300);
     var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
@@ -456,7 +456,7 @@ function displayAjaxOpinionPopupResponse(response) {
 }
 
 function displayAjaxCommentPopupResponse(response) {
-    jQuery('#loading-frontend-mask').hide();
+    jQuery('#loading-frontend-mask-comment').hide();
     jQuery('.tim-add-comment-popup').show(300);
     var response = JSON.parse(response);
     var commentRecomId = response['commentRecomId'];
