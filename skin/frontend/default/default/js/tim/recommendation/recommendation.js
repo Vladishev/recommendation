@@ -4,6 +4,7 @@ jQuery(document).ready(function () {
     getDataOnEnterEvent();
     changeSortCondition();
     lightRatings();
+    getCommentsToolbarData();
 
     /* function to put value into html content right to rating stars and switch userlogin details*/
 
@@ -256,6 +257,80 @@ function renderProductOpinionList(response) {
     });
     lightRatings();
 }
+
+//---------------------------- Comments toolbar start ---------------------------------------------
+
+function getCommentsToolbarData() {
+    var dataSet = jQuery('#comments-controller').data();
+    var url = dataSet.url;
+    //collect sort data
+    var sortBy = jQuery('.tim-comm-sortingselect').val();
+    //collect count per page
+    var countPerPage = jQuery('.count-active').text();
+    //collect page number
+    var $pageBox = jQuery('.tim-pager-box');
+    var pageNumber;
+
+    if (!$pageBox.val()) {
+        pageNumber = 1;
+        $pageBox.val(1);
+    } else {
+        pageNumber = $pageBox.val();
+    }
+    //collect user id(for user page)
+    var userId = dataSet.userid;
+    //create params array
+    var param = {
+        sortBy: sortBy,
+        productId: productId,
+        countPerPage: countPerPage,
+        pageNumber: pageNumber,
+        userId: userId
+    };
+    console.log(param);
+    jQuery.ajax({
+        url: url,
+        type: "post",
+        data: param,
+        success: function(response){
+            var response = JSON.parse(response);
+            //set pages count
+            var $pageBox = jQuery('.tim-pager-box');
+            var $pagesTotal = jQuery('.tim-pager-total');
+            var maxPage = parseInt($pagesTotal.text());
+            var $increaseButton = jQuery('.tim-pager-increase-button');
+            var $decreaseButton = jQuery('.tim-pager-decrease-button');
+            var pagesCount = response[0]['pagesCount'];
+            var curPage = response[0]['curPage'];
+
+            if (curPage > pagesCount) {
+                $pageBox.val(pagesCount);
+                $increaseButton.hide();
+            }
+            if ((1 < curPage) && (curPage < pagesCount)) {
+                $increaseButton.show();
+                $decreaseButton.show();
+            }
+            if (curPage == 1) {
+                $increaseButton.show();
+                $decreaseButton.hide();
+            }
+            if (pagesCount == 1) {
+                $pageBox.val(1);
+                $increaseButton.hide();
+                $decreaseButton.hide();
+            }
+            $pagesTotal.html(response[0]['pagesCount']);
+            if (dataSet.page == 'userPage') {
+                renderProductOpinionList(response);
+            } else {
+                renderOpinionsList(response);
+            }
+        }
+    });
+}
+
+//---------------------------- Comments toolbar end -----------------------------------------------
 
 /**
  * Lighted rating boxes
