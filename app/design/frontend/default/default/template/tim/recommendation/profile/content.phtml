@@ -74,6 +74,7 @@ if(!empty($site)){
         <?php endif ?>
     </div>
     <!-- start of user's opinion list -->
+    <?php if (!empty($userOpinionData)): ?>
     <div class="tim-opinion-list">
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("OPINIE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
         <div class="tim-opinion-list-header">
@@ -149,6 +150,8 @@ if(!empty($site)){
             <!-- end for each -->
         </div>
     </div>
+    <?php endif ?>
+    <?php if ($opinionComments[0]['product_id']): ?>
     <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("KOMENTARZE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
 <!--  Start comments toolbar  -->
     <div class="tim-opinion-list-header">
@@ -193,21 +196,23 @@ if(!empty($site)){
 <!--  End comments toolbar  -->
     <!-- start of user's comments list -->
     <div class="tim-comment">
+        <?php $k = 0 ?>
         <?php foreach ($opinionComments as $comment): ?>
             <!-- for each comment owned by user (start) -->
-            <div class="tim-comment-container">
+            <div class="tim-comment-container-<?php echo $k ?>">
                 <div class="tim-comment-container-title">
                     <?php echo $this->__("Comment added"); ?>
-                    <span><?php echo $comment['date_add']; ?></span>
+                    <span class="comment-date-add"><?php echo $comment['date_add']; ?></span>
                     <?php echo $this->__(" for product reviews: "); ?>
-                    <span class="tim-comm-list-bulk-name"><a href="<?php echo $comment['url'] ?>"><?php echo $comment['name'] ?></a></span>
+                    <span class="tim-comm-list-bulk-name"><a class="tim-comment-name-link" href="<?php echo $comment['url'] ?>"><?php echo $comment['name'] ?></a></span>
                 </div>
                 <div class="tim-comment-container-content">
                     <!-- content of comment -->
                     <?php echo $this->__($comment['comment']); ?>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php $k++; endforeach; ?>
         <!-- for each comment (end) -->
     </div>
+    <?php endif ?>
 </div>

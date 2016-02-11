@@ -64,6 +64,7 @@ jQuery(document).ready(function () {
     });
 });
 
+//-------------------- Tim Toolbar start (recommendation/user/profile and recommendation/product/view) ----
 /**
  * Get data when Enter button was pressed
  */
@@ -236,7 +237,6 @@ function getTimToolbarData() {
 function renderProductOpinionList(response) {
     var $mainContainer = jQuery('#tim-list-container');
 
-//console.log(response);
     response.forEach(function(item, i) {
         //cloning blocks
         var $parentList = jQuery('.tim-products-opinion-list-0').clone();
@@ -257,8 +257,9 @@ function renderProductOpinionList(response) {
     });
     lightRatings();
 }
+//---------------------------- Tim Toolbar end ------------------------------------------------------
 
-//---------------------------- Comments toolbar start ---------------------------------------------
+//---------------------------- Comments toolbar start (recommendation/user/profile)------------------
 /**
  * Get data when Enter button was pressed
  */
@@ -387,7 +388,7 @@ function getCommentsToolbarData() {
         data: param,
         success: function(response){
             var response = JSON.parse(response);
-            console.log(response);
+            //console.log(response);
             //set pages count
             var $pageBox = jQuery('.tim-comment-pager-box');
             var $pagesTotal = jQuery('.tim-comment-pager-total');
@@ -399,6 +400,7 @@ function getCommentsToolbarData() {
             if (curPage > pagesCount) {
                 $pageBox.val(pagesCount);
                 $increaseButton.hide();
+                $decreaseButton.show();
             }
             if ((1 < curPage) && (curPage < pagesCount)) {
                 $increaseButton.show();
@@ -414,10 +416,34 @@ function getCommentsToolbarData() {
                 $decreaseButton.hide();
             }
             $pagesTotal.html(response[0]['pagesCount']);
+            renderCommentsList(response);
         }
     });
 }
 
+/**
+ * Renders comments list
+ * @param response
+ */
+function renderCommentsList(response) {
+    var $mainContainer = jQuery('.tim-comment');
+
+    response.forEach(function(item, i) {
+        //cloning blocks
+        var $parentList = jQuery('.tim-comment-container-0').clone();
+        //cleaning main div
+        if (i == 0) {
+            $mainContainer.empty();
+        }
+
+        $parentList.attr('class', 'tim-comment-container-'+i);
+        $mainContainer.append($parentList);
+        //filling row
+        $parentList.find('.comment-date-add').html(item['date_add']);
+        $parentList.find('.tim-comment-name-link').attr('href', item['url']).html(item['name']);
+        $parentList.find('.tim-comment-container-content').html(item['comment']);
+    });
+}
 //---------------------------- Comments toolbar end -----------------------------------------------
 
 /**
