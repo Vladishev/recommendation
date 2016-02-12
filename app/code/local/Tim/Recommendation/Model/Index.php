@@ -115,7 +115,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
             $i++;
         }
 
-        $count = $this->_getCommentsCount($userId);
+        $count = $this->getCommentsCount($userId);
         $comments[0]['pagesCount'] = ceil($count / $limit);
         $comments[0]['curPage'] = $curPage;
 
@@ -127,7 +127,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
      * @param $userId
      * @return int
      */
-    protected function _getCommentsCount($userId)
+    public function getCommentsCount($userId)
     {
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $recommendationCollection->addFieldToFilter('acceptance', 1);

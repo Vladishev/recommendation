@@ -1194,3 +1194,7 @@ label.tim-rating-button-boolean-label {
 }
 
 #form-validate label.required em { color: #eb340a; }
+
+.tim-opinion-list-header-pagecount .tim-pager-decrease-button, .tim-opinion-list-header-pagecount .tim-pager-comment-decrease-button {
+    display: none;
+}

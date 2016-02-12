@@ -4,8 +4,10 @@ $userData = $this->getUserData($userId);
 $userOpinionData = $this->getUserOpinionData($userId);
 $opinionComments = $this->getOpinionComment($userId);
 $opinionCount = $this->getUserOpinionCount($userId);
+$commentsCount = $this->getCommentsCount($userId);
 $limitPerPage = 10;
 $pagesCount = ceil($opinionCount / $limitPerPage);
+$commentsPagesCount = ceil($commentsCount / $limitPerPage);
 $site = $userData['www'];
 if(!empty($site)){
     if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
@@ -163,7 +165,7 @@ if(!empty($site)){
         <div class="tim-opinion-list-header-pagecount">
             <input class="tim-comment-pager-box" value="1" type="text">
             <p><?php echo $this->__('z ') ?></p><!-- go to page X from all -->
-            <span class="tim-comment-pager-total"><?php echo $pagesCount ?></span>
+            <span class="tim-comment-pager-total"><?php echo $commentsPagesCount ?></span>
             <?php if ($pagesCount > 1):  ?>
                 <button class="tim-pager-comment-decrease-button" onclick="changeCountAndPagerComments(this)">< </button>
                 <button class="tim-pager-comment-increase-button" onclick="changeCountAndPagerComments(this)"> ></button>

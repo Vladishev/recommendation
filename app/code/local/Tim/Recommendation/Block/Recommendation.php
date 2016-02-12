@@ -415,4 +415,15 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $opinionCount = Mage::getModel('tim_recommendation/index')->getUserOpinionCount($userId);
         return $opinionCount;
     }
+
+    /**
+     * Evaluates comments count for particular user
+     * @param $userId
+     * @return int
+     */
+    public function getCommentsCount($userId)
+    {
+        $commentsCount = Mage::getModel('tim_recommendation/index')->getCommentsCount($userId);
+        return $commentsCount;
+    }
 }
