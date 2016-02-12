@@ -250,7 +250,7 @@ function renderProductOpinionList(response) {
         $mainContainer.append($parentList);
 
         //filling row
-        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name'] + ' - ' + item['recom_id']);
+        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name']);
         $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function(){
             return this.nodeType == 3;
         })[0].nodeValue = item['rating'];
