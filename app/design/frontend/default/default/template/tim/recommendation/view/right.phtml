@@ -60,13 +60,13 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
     var recommend = <?php echo $recommend; ?>;
     var recomId = <?php echo $recomId ?>;
     if (byIt) {
-        jQuery('.byIt-yes-'+recomId).addClass('tim-chart-boolean-active');
+        jQuery('.byIt-yes-'+ recomId).addClass('tim-chart-boolean-active');
     } else {
-        jQuery('.byIt-no-'+recomId).addClass('tim-chart-boolean-active');
+        jQuery('.byIt-no-'+ recomId).addClass('tim-chart-boolean-active');
     }
     if (recommend) {
-        jQuery('.recommend-yes-'+recomId).addClass('tim-chart-boolean-active');
+        jQuery('.recommend-yes-'+ recomId).addClass('tim-chart-boolean-active');
     } else {
-        jQuery('.recommend-no-'+recomId).addClass('tim-chart-boolean-active');
+        jQuery('.recommend-no-'+ recomId).addClass('tim-chart-boolean-active');
     }
 </script>

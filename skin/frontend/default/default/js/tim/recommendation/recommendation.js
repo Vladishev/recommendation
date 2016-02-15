@@ -34,9 +34,9 @@ jQuery(document).ready(function () {
     });
 
     // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
-    jQuery('#tim-scroll').click(function(){
+    jQuery('#tim-scroll').click(function () {
         jQuery('html, body').animate({
-            scrollTop: jQuery( jQuery(this).attr('href') ).offset().top
+            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
         }, 500);
         return false;
     });
@@ -101,11 +101,11 @@ jQuery(document).ready(function () {
                     height = 500;
                     ratio = 1.72 / 1;
                     $conteiner.css({
-                        'width':'900',
-                        'height':'550',
-                        'top':'25%',
-                        'left':'37%',
-                        'padding':'20px 20px 50px'
+                        'width': '900',
+                        'height': '550',
+                        'top': '25%',
+                        'left': '37%',
+                        'padding': '20px 20px 50px'
                     });
                     $info.html('Cropped image have to be not more then cropper window');
                     //set banner file name
@@ -117,11 +117,11 @@ jQuery(document).ready(function () {
                     height = 180;
                     ratio = 1.61 / 1;
                     $conteiner.css({
-                        'width':'330',
-                        'height':'230',
-                        'top':'50%',
-                        'left':'58%',
-                        'padding':'20px 20px 50px'
+                        'width': '330',
+                        'height': '230',
+                        'top': '50%',
+                        'left': '58%',
+                        'padding': '20px 20px 50px'
                     });
                     $info.html('Cropped image have to be not more then cropper window');
                     //set avatar file name
@@ -133,8 +133,8 @@ jQuery(document).ready(function () {
                 aspectRatio: ratio,
                 minCropBoxWidth: width,
                 minCropBoxHeight: height,
-                built: function(){
-                    $image.cropper('setCropBoxData',{
+                built: function () {
+                    $image.cropper('setCropBoxData', {
                         width: width,
                         height: height
                     });
@@ -180,7 +180,7 @@ jQuery(document).ready(function () {
         $inputImage.prop('disabled', true).parent().addClass('disabled');
     }
 
-    jQuery('.manage-buttons').click(function (){
+    jQuery('.manage-buttons').click(function () {
         var data = jQuery(this).data();
 
         switch (data.method) {
@@ -233,11 +233,11 @@ jQuery(document).ready(function () {
                 url: url,
                 type: "post",
                 data: sendData,
-                success: function(response){
+                success: function (response) {
                     var response = JSON.parse(response);
-                    var $preview = jQuery('#tim-'+buttonType+'-image');
-                    $preview.attr('src', response['path']+'?'+date.getTime());
-                    jQuery('#'+buttonType+'-hide').attr('value', response['formData']+'|'+response['tmpFolder']+'|'+response['imgFolder']);
+                    var $preview = jQuery('#tim-' + buttonType + '-image');
+                    $preview.attr('src', response['path'] + '?' + date.getTime());
+                    jQuery('#' + buttonType + '-hide').attr('value', response['formData'] + '|' + response['tmpFolder'] + '|' + response['imgFolder']);
                     $popUp.hide();
                 }
             });
@@ -256,8 +256,8 @@ function getDataOnEnterEvent() {
     var $increaseButton = jQuery('.tim-pager-increase-button');
     var $decreaseButton = jQuery('.tim-pager-decrease-button');
     var $pageBox = jQuery('.tim-pager-box');
-    $pageBox.keyup(function(e){
-        if(e.keyCode == 13) {
+    $pageBox.keyup(function (e) {
+        if (e.keyCode == 13) {
             var currentPage = parseInt($pageBox.val());
             var maxPage = parseInt(jQuery('.tim-pager-total').text());
             if (currentPage < 1) {
@@ -293,10 +293,10 @@ function changeCountAndPager(el) {
         var $pageBox = jQuery('.tim-pager-box');
         var maxPage = parseInt(jQuery('.tim-pager-total').text());
         var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function(index, item) {
+        jQuery.each(classList, function (index, item) {
             switch (item) {
                 case 'tim-toolbar-count':
-                    jQuery('.'+item).attr('class', 'tim-toolbar-count');
+                    jQuery('.' + item).attr('class', 'tim-toolbar-count');
                     jQuery(el).addClass('count-active');
                     break;
                 case 'tim-pager-increase-button':
@@ -335,7 +335,7 @@ function changeCountAndPager(el) {
  * Provides onchange event for Sorting
  */
 function changeSortCondition() {
-    jQuery('.tim-toolbar-select').change(function (){
+    jQuery('.tim-toolbar-select').change(function () {
         getTimToolbarData();
     });
 }
@@ -376,7 +376,7 @@ function getTimToolbarData() {
         url: url,
         type: "post",
         data: param,
-        success: function(response){
+        success: function (response) {
             var response = JSON.parse(response);
             //set pages count
             var $pageBox = jQuery('.tim-pager-box');
@@ -420,7 +420,7 @@ function getTimToolbarData() {
 function renderProductOpinionList(response) {
     var $mainContainer = jQuery('#tim-list-container');
 
-    response.forEach(function(item, i) {
+    response.forEach(function (item, i) {
         //cloning blocks
         var $parentList = jQuery('.tim-products-opinion-list-0').clone();
         //cleaning main div
@@ -429,12 +429,12 @@ function renderProductOpinionList(response) {
         }
 
         //assigning right class for cloned block and appending it to main div
-        $parentList.attr('class', 'tim-comm-list-bulk-positions tim-products-opinion-list-'+i);
+        $parentList.attr('class', 'tim-comm-list-bulk-positions tim-products-opinion-list-' + i);
         $mainContainer.append($parentList);
 
         //filling row
         $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name']);
-        $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function(){
+        $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function () {
             return this.nodeType == 3;
         })[0].nodeValue = item['rating'];
     });
@@ -447,12 +447,11 @@ function renderProductOpinionList(response) {
  * Get data when Enter button was pressed
  */
 function getCommentDataOnEnterEvent() {
-
     var $increaseButton = jQuery('.tim-pager-comment-increase-button');
     var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
     var $pageBox = jQuery('.tim-comment-pager-box');
-    $pageBox.keyup(function(e){
-        if(e.keyCode == 13) {
+    $pageBox.keyup(function (e) {
+        if (e.keyCode == 13) {
             var currentPage = parseInt($pageBox.val());
             var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
             if (currentPage < 1) {
@@ -488,10 +487,10 @@ function changeCountAndPagerComments(el) {
         var $pageBox = jQuery('.tim-comment-pager-box');
         var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
         var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function(index, item) {
+        jQuery.each(classList, function (index, item) {
             switch (item) {
                 case 'tim-toolbar-count-comment':
-                    jQuery('.'+item).attr('class', 'tim-toolbar-count-comment');
+                    jQuery('.' + item).attr('class', 'tim-toolbar-count-comment');
                     jQuery(el).addClass('count-active-comment');
                     break;
                 case 'tim-pager-comment-increase-button':
@@ -530,7 +529,7 @@ function changeCountAndPagerComments(el) {
  * Provides onchange event for Sorting comments
  */
 function changeSortConditionComments() {
-    jQuery('.tim-toolbar-comment-select').change(function (){
+    jQuery('.tim-toolbar-comment-select').change(function () {
         getCommentsToolbarData();
     });
 }
@@ -569,9 +568,8 @@ function getCommentsToolbarData() {
         url: url,
         type: "post",
         data: param,
-        success: function(response){
+        success: function (response) {
             var response = JSON.parse(response);
-            //console.log(response);
             //set pages count
             var $pageBox = jQuery('.tim-comment-pager-box');
             var $pagesTotal = jQuery('.tim-comment-pager-total');
@@ -611,7 +609,7 @@ function getCommentsToolbarData() {
 function renderCommentsList(response) {
     var $mainContainer = jQuery('.tim-comment');
 
-    response.forEach(function(item, i) {
+    response.forEach(function (item, i) {
         //cloning blocks
         var $parentList = jQuery('.tim-comment-container-0').clone();
         //cleaning main div
@@ -619,7 +617,7 @@ function renderCommentsList(response) {
             $mainContainer.empty();
         }
 
-        $parentList.attr('class', 'tim-comment-container-'+i);
+        $parentList.attr('class', 'tim-comment-container-' + i);
         $mainContainer.append($parentList);
         //filling row
         $parentList.find('.comment-date-add').html(item['date_add']);
@@ -638,7 +636,6 @@ function lightRatings() {
             return this.nodeType == 3;
         }).text();
         var ratingValuePercent = ((ratingValue * 19.2) / 100) * 100;
-//        console.log(ratingValuePercent);
         jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
         jQuery(this).animate({opacity: '1'}, 1000);
     });
@@ -651,7 +648,7 @@ function lightRatings() {
 function renderOpinionsList(response) {
     var $mainContainer = jQuery('#tim-main-container-for-all-opinions');
 
-    response.forEach(function(item, i){
+    response.forEach(function (item, i) {
         //cloning blocks
         var $parentContent = jQuery('.tim-opinion-0').clone();
         var $parentLeft = jQuery('.tim-opinion-user-block-0').clone();
@@ -662,9 +659,9 @@ function renderOpinionsList(response) {
         }
 
         //assigning right classes for cloned blocks and appending it to main div
-        $parentLeft.attr('class', 'tim-comm-left-column tim-opinion-user-block-'+i);
-        $parentContent.attr('class', 'tim-comm-main-column tim-opinion-'+i);
-        $parentRight.attr('class', 'tim-comm-right-column tim-opinion-rating-block-'+i);
+        $parentLeft.attr('class', 'tim-comm-left-column tim-opinion-user-block-' + i);
+        $parentContent.attr('class', 'tim-comm-main-column tim-opinion-' + i);
+        $parentRight.attr('class', 'tim-comm-right-column tim-opinion-rating-block-' + i);
         $mainContainer.append($parentLeft);
         $mainContainer.append($parentContent);
         $mainContainer.append($parentRight);
@@ -681,7 +678,7 @@ function renderOpinionsList(response) {
         //Render middle part - view/content.phtml
         //Change date
 
-        $parentContent.find('.tim-opinion-date').html('Opinia z dnia: <span>'+opinionData['date_add']+'</span>');
+        $parentContent.find('.tim-opinion-date').html('Opinia z dnia: <span>' + opinionData['date_add'] + '</span>');
         //Change advantages
         $parentContent.find('.tim-opinion-advantages-toolbar').html(opinionData['advantages']);
         //Change defects
@@ -693,95 +690,100 @@ function renderOpinionsList(response) {
         $parentContent.find('.tim-opinion-movie').remove();
         if ((typeof opinionData['images'][0] != 'undefined') && (typeof opinionData['movie_url'] != 'undefined')) {
             //preparing links
-            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="'+recomId+'">Zobacz zdjęcia</a></div><div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="'+recomId+'">Zobacz materiał filmowy</a></div>');
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="' + recomId + '">Zobacz zdjęcia</a></div><div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="' + recomId + '">Zobacz materiał filmowy</a></div>');
             //preparing popups - set id
-            $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-'+recomId);
-            $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-'+recomId);
+            $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-' + recomId);
+            $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-' + recomId);
             //preparing popups - set content to photo
             $parentContent.find('.tim-all-photo-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             var photoContent = '';
             var imgUrl = $parentContent.find('.tim-all-photo-popup').data().imgurl;
-            opinionData['images'].forEach(function(item, i){
-                photoContent += '<img class="tim-all-photo-popup-images-size" src="'+imgUrl+item+'" alt="img"/>';
+            opinionData['images'].forEach(function (item, i) {
+                photoContent += '<img class="tim-all-photo-popup-images-size" src="' + imgUrl + item + '" alt="img"/>';
             });
             $parentContent.find('.tim-all-photo-popup-container').append(photoContent);
             //preparing popups - set content to video
             $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
-                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/'+opinionData['youtubeVideoId']+'"></iframe>');
+                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + opinionData['youtubeVideoId'] + '"></iframe>');
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
         } else if (typeof opinionData['movie_url'] != 'undefined') {
             //preparing link
-            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="'+recomId+'">Zobacz materiał filmowy</a></div>');
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="' + recomId + '">Zobacz materiał filmowy</a></div>');
             //preparing popup - set id
-            $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-'+recomId);
+            $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-' + recomId);
             //preparing popup - set content
             $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
-                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/'+opinionData['youtubeVideoId']+'"></iframe>');
+                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + opinionData['youtubeVideoId'] + '"></iframe>');
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
         } else if (typeof opinionData['images'][0] != 'undefined') {
             //preparing link
-            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="'+recomId+'">Zobacz zdjęcia</a></div>');
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="' + recomId + '">Zobacz zdjęcia</a></div>');
             //preparing popup - set id
-            $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-'+recomId);
+            $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-' + recomId);
             //preparing popup - set content
             $parentContent.find('.tim-all-photo-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             var photoContent = '';
             var imgUrl = $parentContent.find('.tim-all-photo-popup').data().imgurl;
-            opinionData['images'].forEach(function(item, i){
-                photoContent += '<img class="tim-all-photo-popup-images-size" src="'+imgUrl+item+'" alt="img"/>';
+            opinionData['images'].forEach(function (item, i) {
+                photoContent += '<img class="tim-all-photo-popup-images-size" src="' + imgUrl + item + '" alt="img"/>';
             });
             $parentContent.find('.tim-all-photo-popup-container').append(photoContent);
         }
         //render abuse button for opinion
         if (isLoggedIn == '1') {
-            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse('+recomId+','+userId+',\''+userIp+'\',\''+abuseController+'\',\''+userHost+'\')">Zgłoś nadużycie</button>');
+            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
         } else {
             $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
         }
         //render comments
         $parentContent.find('.tim-comment-container').remove();
-        opinionData['comments'].forEach(function(item, i){
+        opinionData['comments'].forEach(function (item, i) {
             if (i > 4) {
-                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-display-none-'+recomId+' tim-comment-number-'+i+'" style="display:none;"></div>');
+                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-display-none-' + recomId + ' tim-comment-number-' + i + '" style="display:none;"></div>');
             } else {
-                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-number-'+i+'"></div>');
+                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-number-' + i + '"></div>');
             }
-            $parentContent.find('.tim-comment-number-'+i).append('<div class="tim-comment-container-title tim-comment-title-number-'+i+'"></div>');
-            $parentContent.find('.tim-comment-title-number-'+i).append('Comment added <span>' + item['date_add'] + '</span>, user: <span class="tim-last-span'+i+'">' + item['name'] + '</span>');
+            $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-title tim-comment-title-number-' + i + '"></div>');
+            $parentContent.find('.tim-comment-title-number-' + i).append('Comment added <span>' + item['date_add'] + '</span>, user: <span class="tim-last-span' + i + '">' + item['name'] + '</span>');
             //render abuse button for comment
             if (isLoggedIn == '1') {
-                $parentContent.find('.tim-last-span'+i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse('+item['recom_id']+','+userId+',\''+userIp+'\',\''+abuseController+'\',\''+userHost+'\')">Zgłoś nadużycie</button>');
+                $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
             } else {
-                $parentContent.find('.tim-last-span'+i).append(' | <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
+                $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
             }
             //render comment text
-            $parentContent.find('.tim-comment-number-'+i).append('<div class="tim-comment-container-content">' + item['comment'] + '</div>');
+            $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-content">' + item['comment'] + '</div>');
         });
         //render links 'See more comments' and 'Hide comments'
         $parentContent.find('.tim-comment-seemore').remove();
         if (opinionData['comments'].size() > 5) {
-            $parentContent.find('.tim-comment').after('<div class="tim-comment-seemore tim-comment-link-'+ recomId +'">Opinia posiada <span>'+opinionData['comments'].size()+'</span> komentarzy. <a class="tim-readmore" href="#!" onclick="seeAllComments('+ recomId +')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-'+ recomId +'" style="display: none"><a class="tim-readmore" href="#!" onclick="hideComments('+ recomId +')">Ukryj te komentarze</a></div>');
+            $parentContent.find('.tim-comment').after('<div class="tim-comment-seemore tim-comment-link-' + recomId + '">Opinia posiada <span>' + opinionData['comments'].size() + '</span> komentarzy. <a class="tim-readmore" href="#!" onclick="seeAllComments(' + recomId + ')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-' + recomId + '" style="display: none"><a class="tim-readmore" href="#!" onclick="hideComments(' + recomId + ')">Ukryj te komentarze</a></div>');
         }
         //render 'Add comment' button
-        $parentContent.find('.tim-comment-add-main').html('<button type="button" class="tim-comment-button-add" id="tim-comment-add-show-'+ recomId +'" onclick="">Add your own comment</button>');
+        $parentContent.find('.tim-comment-add-main').html('<button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Add your own comment</button>');
         if (isLoggedIn == '1') {
-            $parentContent.find('#tim-comment-add-show-'+ recomId).attr('onclick', 'showAddComment('+ recomId +')');
+            $parentContent.find('#tim-comment-add-show-' + recomId).attr('onclick', 'showAddComment(' + recomId + ')');
         } else {
-            $parentContent.find('#tim-comment-add-show-'+ recomId).attr('onclick', 'checkIfUserIsLoggedIn()');
+            $parentContent.find('#tim-comment-add-show-' + recomId).attr('onclick', 'checkIfUserIsLoggedIn()');
         }
         //change data in .comment-form
         var $commentForm = jQuery($parentContent.find('.comment-form'));
         $commentForm.find('.form-recom-id').attr('value', recomId);
-        $commentForm.find('.tim-comment-add-window').attr('id', 'tim-comment-add-window-'+recomId);
-        $commentForm.find('.tim-opinion-comment-timtoolbar').attr({id: 'tim-opinion-comment-'+recomId, onclick: 'commentPlaceholderAction('+ recomId +')'});
-        $commentForm.find('.placeholder-comment-div').attr('id', 'ph-tim-opinion-comment-'+recomId);
-        $commentForm.find('.tim-comment-close-form').attr('onclick', 'hideCommentForm('+recomId+')');
+        $commentForm.find('.tim-comment-add-window').attr('id', 'tim-comment-add-window-' + recomId);
+        $commentForm.find('.tim-opinion-comment-timtoolbar').attr({
+            id: 'tim-opinion-comment-' + recomId,
+            onclick: 'commentPlaceholderAction(' + recomId + ')',
+            onkeyup: 'countCommentChar(' + recomId + ')'
+        });
+        $commentForm.find('.char-count').attr('id', 'char-count-comment-' + recomId);
+        $commentForm.find('.placeholder-comment-div').attr('id', 'ph-tim-opinion-comment-' + recomId);
+        $commentForm.find('.tim-comment-close-form').attr('onclick', 'hideCommentForm(' + recomId + ')');
 
         //Render left part - view/left.phtml
         var userData = item['userData'];
@@ -833,7 +835,7 @@ function renderOpinionsList(response) {
 }
 
 function validateCommentForm() {
-    jQuery('.tim-validate-comment-button').on('click', this, function() {
+    jQuery('.tim-validate-comment-button').on('click', this, function () {
         var data = jQuery(this).data();
         var minChar = data.mincharacters;
         var maxChar = data.maxcharacters;
@@ -1056,13 +1058,14 @@ function addCommentAjax() {
             jQuery('#add-ajax-comment').prop('disabled', true);
             jQuery('#loading-frontend-mask-comment').show(300);
         },
-        success: function(response) {
+        success: function (response) {
             var response = JSON.parse(response);
             displayAjaxCommentPopupResponse(response);
-            jQuery('#tim-comment-add-window-'+response['commentRecomId']).hide();
-            jQuery('#tim-comment-add-show-'+response['commentRecomId']).show();
+            jQuery('#tim-comment-add-window-' + response['commentRecomId']).hide();
+            jQuery('#tim-comment-add-show-' + response['commentRecomId']).show();
         },
         error: function (response) {
+            var response = JSON.parse(response);
             displayAjaxCommentPopupResponse(response);
         }
     });
@@ -1071,6 +1074,7 @@ function addCommentAjax() {
 function displayAjaxOpinionPopupResponse(response) {
     jQuery('#loading-frontend-mask-opinion').hide();
     jQuery('.tim-add-opinion-popup').show(300);
+    var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
     jQuery('#char-count-tim-opinion-advantages span').text('0');
@@ -1084,7 +1088,6 @@ function displayAjaxOpinionPopupResponse(response) {
 function displayAjaxCommentPopupResponse(response) {
     jQuery('#loading-frontend-mask-comment').hide();
     jQuery('.tim-add-comment-popup').show(300);
-    var response = JSON.parse(response);
     var commentRecomId = response['commentRecomId'];
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
     jQuery('#tim-opinion-comment-' + commentRecomId).val('');
@@ -1099,7 +1102,7 @@ function displayAjaxCommentPopupResponse(response) {
  */
 function displayFilename(id) {
     var images = '';
-    var maxSize = parseInt(jQuery('#recommendation-img').attr('max-size'),10);
+    var maxSize = parseInt(jQuery('#recommendation-img').attr('max-size'), 10);
     jQuery.each(jQuery('#' + id).prop('files'), function (idx, file) {
         if (checkImgSize(file['size'], maxSize)) {
             if (checkImgType(file)) {
@@ -1145,4 +1148,36 @@ function countCommentChar(commentId) {
     var text = jQuery('#tim-opinion-comment-' + commentId).val();
     var charCount = text.length;
     jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
+}
+
+/**
+ * Check click action and show popup with opinion photo
+ */
+function showPhotos() {
+    jQuery(document).on('click', '.tim-opinion-photo a', function (e) {
+        e.preventDefault();
+        var recomId = e.target.id;
+        jQuery('#tim-all-photo-popup-' + recomId).show(300);
+    });
+}
+
+/**
+ * Check click action and show popup with opinion video
+ */
+function showVideo() {
+    jQuery(document).on('click', '.tim-opinion-movie a', function (e) {
+        e.preventDefault();
+        var recomId = e.target.id;
+        jQuery('#tim-video-popup-' + recomId).show(300);
+    });
+}
+
+/**
+ * Close popup action
+ */
+function closePopup() {
+    jQuery(document).on('click', '.tim-popup-close', function () {
+        var popupClass = '.' + jQuery(this).parents().get(1).className;
+        jQuery(popupClass).hide();
+    });
 }
