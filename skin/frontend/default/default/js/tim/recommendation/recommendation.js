@@ -952,7 +952,7 @@ function checkImgType(file) {
     }
 }
 
-function countCommentChar(commentId){
+function countCommentChar(commentId) {
     var text = jQuery('#tim-opinion-comment-' + commentId).val();
     var charCount = text.length;
     jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
