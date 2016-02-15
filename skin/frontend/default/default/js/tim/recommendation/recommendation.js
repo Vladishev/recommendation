@@ -7,6 +7,10 @@ jQuery(document).ready(function () {
     lightRatings();
     changeSortConditionComments();
     getCommentDataOnEnterEvent();
+    changeCountAndPager();
+    showPhotos();
+    showVideo();
+    closePopup();
 
     /* function to put value into html content right to rating stars and switch userlogin details*/
 
@@ -16,7 +20,6 @@ jQuery(document).ready(function () {
         var inputChangeNameSpan = 'span.' + inputChangeName;
         /* alert(inputChangeName+inputChangeValue)         */
         jQuery(inputChangeNameSpan).html(inputChangeValue);
-        //console.log(inputChangeName);
 
         if (inputChangeName == 'userHaveaccount') {
             if (inputChangeValue == 'TAK') {
@@ -641,8 +644,192 @@ function lightRatings() {
     });
 }
 
+/**
+ * Renders opinion list on product_view after it sorted/paginated
+ * @param response
+ */
 function renderOpinionsList(response) {
-//    merge here method from #4113
+    var $mainContainer = jQuery('#tim-main-container-for-all-opinions');
+
+    response.forEach(function(item, i){
+        //cloning blocks
+        var $parentContent = jQuery('.tim-opinion-0').clone();
+        var $parentLeft = jQuery('.tim-opinion-user-block-0').clone();
+        var $parentRight = jQuery('.tim-opinion-rating-block-0').clone();
+        //cleaning main div
+        if (i == 0) {
+            $mainContainer.empty();
+        }
+
+        //assigning right classes for cloned blocks and appending it to main div
+        $parentLeft.attr('class', 'tim-comm-left-column tim-opinion-user-block-'+i);
+        $parentContent.attr('class', 'tim-comm-main-column tim-opinion-'+i);
+        $parentRight.attr('class', 'tim-comm-right-column tim-opinion-rating-block-'+i);
+        $mainContainer.append($parentLeft);
+        $mainContainer.append($parentContent);
+        $mainContainer.append($parentRight);
+
+        var recomId = item['recom_id'];
+        var opinionData = item['opinionData'];
+        var abuseData = jQuery('.tim-user-log-info').data();
+        var isLoggedIn = abuseData.log;
+        var abuseController = abuseData.malpractice;
+        var userId = abuseData.id;
+        var userIp = abuseData.ip;
+        var userHost = abuseData.host;
+
+        //Render middle part - view/content.phtml
+        //Change date
+
+        $parentContent.find('.tim-opinion-date').html('Opinia z dnia: <span>'+opinionData['date_add']+'</span>');
+        //Change advantages
+        $parentContent.find('.tim-opinion-advantages-toolbar').html(opinionData['advantages']);
+        //Change defects
+        $parentContent.find('.tim-opinion-defects-toolbar').html(opinionData['defects']);
+        //Change conclusion
+        $parentContent.find('.tim-opinion-conclusion-toolbar').html(opinionData['conclusion']);
+        //Change images
+        $parentContent.find('.tim-opinion-photo').remove();
+        $parentContent.find('.tim-opinion-movie').remove();
+        if ((typeof opinionData['images'][0] != 'undefined') && (typeof opinionData['movie_url'] != 'undefined')) {
+            //preparing links
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="'+recomId+'">Zobacz zdjęcia</a></div><div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="'+recomId+'">Zobacz materiał filmowy</a></div>');
+            //preparing popups - set id
+            $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-'+recomId);
+            $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-'+recomId);
+            //preparing popups - set content to photo
+            $parentContent.find('.tim-all-photo-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
+            var photoContent = '';
+            var imgUrl = $parentContent.find('.tim-all-photo-popup').data().imgurl;
+            opinionData['images'].forEach(function(item, i){
+                photoContent += '<img class="tim-all-photo-popup-images-size" src="'+imgUrl+item+'" alt="img"/>';
+            });
+            $parentContent.find('.tim-all-photo-popup-container').append(photoContent);
+            //preparing popups - set content to video
+            $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
+            if (opinionData['youtubeVideoId']) {
+                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/'+opinionData['youtubeVideoId']+'"></iframe>');
+            } else {
+                $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
+            }
+        } else if (typeof opinionData['movie_url'] != 'undefined') {
+            //preparing link
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="'+recomId+'">Zobacz materiał filmowy</a></div>');
+            //preparing popup - set id
+            $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-'+recomId);
+            //preparing popup - set content
+            $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
+            if (opinionData['youtubeVideoId']) {
+                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/'+opinionData['youtubeVideoId']+'"></iframe>');
+            } else {
+                $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
+            }
+        } else if (typeof opinionData['images'][0] != 'undefined') {
+            //preparing link
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="'+recomId+'">Zobacz zdjęcia</a></div>');
+            //preparing popup - set id
+            $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-'+recomId);
+            //preparing popup - set content
+            $parentContent.find('.tim-all-photo-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
+            var photoContent = '';
+            var imgUrl = $parentContent.find('.tim-all-photo-popup').data().imgurl;
+            opinionData['images'].forEach(function(item, i){
+                photoContent += '<img class="tim-all-photo-popup-images-size" src="'+imgUrl+item+'" alt="img"/>';
+            });
+            $parentContent.find('.tim-all-photo-popup-container').append(photoContent);
+        }
+        //render abuse button for opinion
+        if (isLoggedIn == '1') {
+            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse('+recomId+','+userId+',\''+userIp+'\',\''+abuseController+'\',\''+userHost+'\')">Zgłoś nadużycie</button>');
+        } else {
+            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
+        }
+        //render comments
+        $parentContent.find('.tim-comment-container').remove();
+        opinionData['comments'].forEach(function(item, i){
+            if (i > 4) {
+                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-display-none-'+recomId+' tim-comment-number-'+i+'" style="display:none;"></div>');
+            } else {
+                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-number-'+i+'"></div>');
+            }
+            $parentContent.find('.tim-comment-number-'+i).append('<div class="tim-comment-container-title tim-comment-title-number-'+i+'"></div>');
+            $parentContent.find('.tim-comment-title-number-'+i).append('Comment added <span>' + item['date_add'] + '</span>, user: <span class="tim-last-span'+i+'">' + item['name'] + '</span>');
+            //render abuse button for comment
+            if (isLoggedIn == '1') {
+                $parentContent.find('.tim-last-span'+i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse('+item['recom_id']+','+userId+',\''+userIp+'\',\''+abuseController+'\',\''+userHost+'\')">Zgłoś nadużycie</button>');
+            } else {
+                $parentContent.find('.tim-last-span'+i).append(' | <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
+            }
+            //render comment text
+            $parentContent.find('.tim-comment-number-'+i).append('<div class="tim-comment-container-content">' + item['comment'] + '</div>');
+        });
+        //render links 'See more comments' and 'Hide comments'
+        $parentContent.find('.tim-comment-seemore').remove();
+        if (opinionData['comments'].size() > 5) {
+            $parentContent.find('.tim-comment').after('<div class="tim-comment-seemore tim-comment-link-'+ recomId +'">Opinia posiada <span>'+opinionData['comments'].size()+'</span> komentarzy. <a class="tim-readmore" href="#!" onclick="seeAllComments('+ recomId +')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-'+ recomId +'" style="display: none"><a class="tim-readmore" href="#!" onclick="hideComments('+ recomId +')">Ukryj te komentarze</a></div>');
+        }
+        //render 'Add comment' button
+        $parentContent.find('.tim-comment-add-main').html('<button type="button" class="tim-comment-button-add" id="tim-comment-add-show-'+ recomId +'" onclick="">Add your own comment</button>');
+        if (isLoggedIn == '1') {
+            $parentContent.find('#tim-comment-add-show-'+ recomId).attr('onclick', 'showAddComment('+ recomId +')');
+        } else {
+            $parentContent.find('#tim-comment-add-show-'+ recomId).attr('onclick', 'checkIfUserIsLoggedIn()');
+        }
+        //change data in .comment-form
+        var $commentForm = jQuery($parentContent.find('.comment-form'));
+        $commentForm.find('.form-recom-id').attr('value', recomId);
+        $commentForm.find('.tim-comment-add-window').attr('id', 'tim-comment-add-window-'+recomId);
+        $commentForm.find('.tim-opinion-comment-timtoolbar').attr({id: 'tim-opinion-comment-'+recomId, onclick: 'commentPlaceholderAction('+ recomId +')'});
+        $commentForm.find('.placeholder-comment-div').attr('id', 'ph-tim-opinion-comment-'+recomId);
+        $commentForm.find('.tim-comment-close-form').attr('onclick', 'hideCommentForm('+recomId+')');
+
+        //Render left part - view/left.phtml
+        var userData = item['userData'];
+        //getting magento url
+        var imgPath = $parentLeft.find('.tim-user-photo-tag').data().imgurl;
+        //setting avatar
+        $parentLeft.find('.tim-user-photo-tag').attr('src', imgPath + userData['avatar']);
+        //setting customer name
+        $parentLeft.find('.tim-user-name').empty().html('<p>Użytkownik</p><p>' + userData['customer_name'] + '</p>');
+        //setting user icon
+        var skinUrl = $parentLeft.find('.tim-user-type-icon-tag').data().skinurl;
+        $parentLeft.find('.tim-user-type-icon-tag').attr('src', skinUrl + 'images/media/userstatus_icon_timworker.png');
+        //setting user type
+        $parentLeft.find('.tim-user-type-name').html(userData['user_type_name']);
+        //setting opinion quantity
+        $parentLeft.find('.tim-user-scoregraph').html(userData['opinion_qty'] + ' opinii');
+        //setting link to user page
+        var baseUrl = $parentLeft.find('.tim-user-about-link').data().baseurl;
+        $parentLeft.find('.tim-user-about-link').attr('href', baseUrl + 'recommendation/user/profile/id/' + userData['customer_id']);
+
+        //Render right part - view/right.phtml
+        //setting average rating
+        $parentRight.find('.tim-rating-score-main').html(opinionData['average_rating'] + '<span>/5<span>');
+        //setting price rating
+        $parentRight.find('.tim-rating-price').attr('class', 'tim-rating-price tim-chart-stars tim-stars-' + opinionData['rating_price']).html(opinionData['rating_price'] + '<span>/5<span>');
+        //setting durability rating
+        $parentRight.find('.tim-rating-durability').attr('class', 'tim-rating-durability tim-chart-stars tim-stars-' + opinionData['rating_durability']).html(opinionData['rating_durability'] + '<span>/5<span>');
+        //setting failure rating
+        $parentRight.find('.tim-rating-failure').attr('class', 'tim-rating-failure tim-chart-stars tim-stars-' + opinionData['rating_failure']).html(opinionData['rating_failure'] + '<span>/5<span>');
+        //setting service rating
+        $parentRight.find('.tim-rating-service').attr('class', 'tim-rating-service tim-chart-stars tim-stars-' + opinionData['rating_service']).html(opinionData['rating_service'] + '<span>/5<span>');
+        //setting purchased result
+        $parentRight.find('.byIt-yes-' + recomId).attr('class', 'byIt-yes-' + recomId);
+        $parentRight.find('.byIt-no-' + recomId).attr('class', 'byIt-no-' + recomId);
+        if (opinionData['by_it'] != null) {
+            $parentRight.find('.byIt-yes-' + recomId).addClass('tim-chart-boolean-active');
+        } else {
+            $parentRight.find('.byIt-no-' + recomId).addClass('tim-chart-boolean-active');
+        }
+        //setting recommend result
+        $parentRight.find('.recommend-yes-' + recomId).attr('class', 'recommend-yes-' + recomId);
+        $parentRight.find('.recommend-no-' + recomId).attr('class', 'recommend-no-' + recomId);
+        if (opinionData['recommend'] == 1) {
+            $parentRight.find('.recommend-yes-' + recomId).addClass('tim-chart-boolean-active');
+        } else {
+            $parentRight.find('.recommend-no-' + recomId).addClass('tim-chart-boolean-active');
+        }
+    });
 }
 
 function validateCommentForm() {
@@ -869,8 +1056,11 @@ function addCommentAjax() {
             jQuery('#add-ajax-comment').prop('disabled', true);
             jQuery('#loading-frontend-mask-comment').show(300);
         },
-        success: function (response) {
+        success: function(response) {
+            var response = JSON.parse(response);
             displayAjaxCommentPopupResponse(response);
+            jQuery('#tim-comment-add-window-'+response['commentRecomId']).hide();
+            jQuery('#tim-comment-add-show-'+response['commentRecomId']).show();
         },
         error: function (response) {
             displayAjaxCommentPopupResponse(response);
@@ -881,7 +1071,6 @@ function addCommentAjax() {
 function displayAjaxOpinionPopupResponse(response) {
     jQuery('#loading-frontend-mask-opinion').hide();
     jQuery('.tim-add-opinion-popup').show(300);
-    var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
     jQuery('#char-count-tim-opinion-advantages span').text('0');

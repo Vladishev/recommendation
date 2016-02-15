@@ -10,21 +10,27 @@
 class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 {
     /**
-     * Returns list of opinions
+     * Returns recom_id list of opinions
      * @param $productId
+     * @param $order
+     * @param $field
      * @param int $limit - opinions count per page
      * @param int $curPage - current page
      * @return bool or array
      */
-    public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1)
+    public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('product_id', $productId);
         $collection->addFieldToFilter('acceptance', 1);
-        $collection->addFieldToFilter('parent', array('null' => true));
-        $collection->setOrder('date_add', 'DESC');
-        $collection->setPageSize($limit); // It can be use for pagination
-        $collection->setCurPage($curPage); // It can be use for pagination
+        $collection->getSelect()->where('parent IS NULL');
+        $collection->addFieldToSelect('recom_id');
+        $collection->addFieldToSelect('tim_ip');
+        $collection->addFieldToSelect('tim_host');
+        $collection->addFieldToSelect('user_id');
+        $collection->setOrder($field, $order);
+        $collection->setPageSize($limit);
+        $collection->setCurPage($curPage);
         $data = $collection->getData();
         if (empty($data)) {
             return false;
@@ -135,6 +141,22 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL' ));
         $count = count($recommendationCollection->getData());
 
+        return $count;
+    }
+
+    /**
+     * Returns count of accepted opinions for product
+     * @param $productId
+     * @return int
+     */
+    public function getOpinionCount($productId)
+    {
+        $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('acceptance', 1);
+        $collection->getSelect()->where('parent IS NULL');
+        $collection->addFieldToSelect('recom_id');
+        $count = count($collection->getData());
         return $count;
     }
 }

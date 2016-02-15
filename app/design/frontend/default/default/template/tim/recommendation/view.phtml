@@ -1,6 +1,7 @@
 <?php
 $productId = Mage::registry('current_product')->getId();
 $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct($productId);
+$k = 0;
 ?>
     <div class="tim-comm-addopinion">
         <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button> <!-- button for adding totaly new opinion -->
@@ -11,23 +12,25 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
         <div class="tim-comm-header">
             <?php echo $this->getChildHtml('header.recommendation.view') ?>
         </div>
+        <div id="tim-main-container-for-all-opinions">
         <?php foreach($opinionsSet as $opinion): ?>
             <!-- Left column: -->
-            <div class="tim-comm-left-column">
+            <div class="tim-comm-left-column tim-opinion-user-block-<?php echo $k ?>">
                 <?php $this->getChild('left.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('left.recommendation.view', false) ?>
             </div>
             <!-- Main (middle) column: -->
-            <div class="tim-comm-main-column">
+            <div class="tim-comm-main-column tim-opinion-<?php echo $k ?>">
                 <?php $this->getChild('content.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
             </div>
             <!-- Right column: -->
-            <div class="tim-comm-right-column">
+            <div class="tim-comm-right-column tim-opinion-rating-block-<?php echo $k ?>">
                 <?php $this->getChild('right.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('right.recommendation.view', false) ?>
             </div>
-        <?php endforeach ?>
+        <?php $k++; endforeach ?>
+        </div>
     </div>
     <div id="loading-frontend-mask-comment">
         <p class="loader" id="loading_mask_loader">

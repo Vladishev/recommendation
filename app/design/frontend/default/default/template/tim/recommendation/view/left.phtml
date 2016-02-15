@@ -6,7 +6,7 @@ $userData = $this->getUserData($userId);
 ?>
 <div class="tim-user"> <!-- main container for user details -->
     <div class="tim-user-photo">
-        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" width="269" height="168" alt="user-photo"/>
+        <img class="tim-user-photo-tag" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" alt="user-photo" data-imgurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>"/>
         <!-- place for user photo -->
     </div>
     <div class="tim-user-name">
@@ -16,12 +16,15 @@ $userData = $this->getUserData($userId);
     </div>
     <div class="tim-user-type">
         <div class="tim-user-type-icon">
-            <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>"
-                 alt="user-status"/>
+            <img
+                class="tim-user-type-icon-tag"
+                data-skinurl="<?php echo $this->getSkinUrl(); ?>"
+                src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>"
+                alt="user-status"/>
         </div>
         <?php echo $this->__('User type'); ?>
         <!-- place for user name and icon -->
-        <p><?php echo $userData['user_type_name']; ?></p>
+        <p class="tim-user-type-name"><?php echo $userData['user_type_name']; ?></p>
     </div>
     <div class="tim-user-involvement">
         <?php echo $this->__('User involvement'); ?>
@@ -35,7 +38,7 @@ $userData = $this->getUserData($userId);
 </div>
 <div class="tim-user-about">
     <!-- place for button that will redirect to user's profile page -->
-    <a href="<?php echo Mage::getBaseUrl() . 'recommendation/user/profile/id/' . $userId; ?>">
+    <a class="tim-user-about-link" data-baseurl="<?php echo Mage::getBaseUrl() ?>" href="<?php echo Mage::getBaseUrl() . 'recommendation/user/profile/id/' . $userId; ?>">
         <button type="button" class="tim-comm-button-smal"><?php echo $this->__('View user\'s profile'); ?></button>
     </a>
 </div>

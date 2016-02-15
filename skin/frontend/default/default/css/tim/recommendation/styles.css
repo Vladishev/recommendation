@@ -228,6 +228,11 @@ a.tim-readmore:hover {
 	float:left;
 }
 
+.tim-user-photo-tag {
+    width:269px;
+    height:168px;
+}
+
 .tim-user-photo {
 	width:269px;
 	height:168px;
@@ -525,6 +530,20 @@ span.tim-chart-boolean-active {
 	border: 1px solid #D7D5D5;
 }
 
+.count-active {
+    color:#000;
+    background-color:#ffdd00;
+    border: 1px solid #D7D5D5;
+}
+
+.tim-toolbar-count:hover {
+    cursor: pointer;
+}
+
+.tim-pager-decrease-button {
+    display: none;
+}
+
 .tim-advert {
 	padding:0;
 }
@@ -775,6 +794,16 @@ label.tim-rating-button-boolean-label {
 	padding:20px;
 	font-size:14px;
 	color:#000;
+}
+
+.tim-all-photo-popup-images-size {
+    width: 100px;
+    height: 100px;
+}
+
+.iframe-video-popup {
+    width: 560px;
+    height: 315px;
 }
 
 .tim-userlogin-area-info span {
@@ -1065,7 +1094,9 @@ label.tim-rating-button-boolean-label {
 	float:left;
 }
 
-
+.tim-count-per-page ul, li {
+    display: inline;
+}
 
 .tim-opinion-list-header-howmuchshow ul, .tim-opinion-list-header-howmuchshow p {
     display: inline-block;
