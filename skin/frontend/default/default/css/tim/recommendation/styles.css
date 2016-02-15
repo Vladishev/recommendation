@@ -1090,7 +1090,7 @@ label.tim-rating-button-boolean-label {
     margin: 0px;
 }
 
-.tim-opinion-list-header-howmuchshow ul li a {
+.tim-opinion-list-header-howmuchshow ul li span {
     background: #d7d7d7;
     display: block;
     width: 30px;
@@ -1112,8 +1112,8 @@ label.tim-rating-button-boolean-label {
     cursor: pointer;
 }
 
-.tim-opinion-list-header-howmuchshow ul li.active a {
-    background: #b6b6b6;
+.tim-opinion-list-header-howmuchshow ul li span.count-active, .tim-opinion-list-header-howmuchshow ul li span.count-active-comment {
+    background: #FFFF00;
 }
 
 .list-toolbar .page-of input[type="text"] {
@@ -1138,7 +1138,8 @@ label.tim-rating-button-boolean-label {
 	cursor: pointer;
 		background-repeat: no-repeat;
 	background-position: right center;
-	background-image: url(../../../images/tim_arrow_right.png);
+    background-color: yellow;
+	/*background-image: url(../../../images/tim_arrow_right.png);*/
 	border:0;
 }
 
@@ -1203,4 +1204,8 @@ label.tim-rating-button-boolean-label {
 #tim-banner-image {
     width: 860px!important;
     height: 500px!important;
+}
+
+.tim-opinion-list-header-pagecount .tim-pager-decrease-button, .tim-opinion-list-header-pagecount .tim-pager-comment-decrease-button {
+	display: none;
 }
