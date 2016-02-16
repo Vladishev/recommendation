@@ -666,6 +666,9 @@ function renderOpinionsList(response) {
         $mainContainer.append($parentContent);
         $mainContainer.append($parentRight);
 
+        //Hide open comments forms if they exist
+        jQuery('.tim-comment-add-window').hide();
+
         var recomId = item['recom_id'];
         var opinionData = item['opinionData'];
         var abuseData = jQuery('.tim-user-log-info').data();
