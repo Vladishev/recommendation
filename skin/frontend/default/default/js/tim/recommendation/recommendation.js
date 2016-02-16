@@ -235,8 +235,8 @@ jQuery(document).ready(function () {
                 data: sendData,
                 success: function (response) {
                     var response = JSON.parse(response);
-                    var $preview = jQuery('#tim-' + buttonType + '-image');
-                    $preview.attr('src', response['path'] + '?' + date.getTime());
+                    var $preview = jQuery('#tim-' + buttonType + '-container');
+                    $preview.html('<img src="' +  response['path'] + '?' + date.getTime() + '" id="tim-' + buttonType + '-image" alt="\'banner\'" />');
                     jQuery('#' + buttonType + '-hide').attr('value', response['formData'] + '|' + response['tmpFolder'] + '|' + response['imgFolder']);
                     $popUp.hide();
                 }

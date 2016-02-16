@@ -29,8 +29,10 @@
                 <label for="banner-checkbox"><?php echo $_helper->__('Delete') ?></label>
                 <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
             <?php endif ?>
-            <div class="recommendation-image">
-                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" alt="<?php echo ($_helper->getCustomerBanner()) ? 'banner': '' ?>" />
+            <div class="recommendation-image" id="tim-banner-container">
+                <?php if ($_helper->getCustomerBanner()): ?>
+                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" alt="banner" />
+                <?php endif ?>
             </div>
         </li>
         <li>
@@ -56,8 +58,10 @@
                     <label for="avatar-checkbox"><?php echo $_helper->__('Delete') ?></label>
                     <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
                 <?php endif ?>
-                <div class="recommendation-image">
-                    <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" alt="<?php echo ($_helper->getCustomerAvatar()) ? 'avatar': '' ?>" />
+                <div class="recommendation-image" id="tim-avatar-container">
+                    <?php if ($_helper->getCustomerAvatar()): ?>
+                    <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" alt="avatar" />
+                    <?php endif ?>
                 </div>
             </div>
         </li>
