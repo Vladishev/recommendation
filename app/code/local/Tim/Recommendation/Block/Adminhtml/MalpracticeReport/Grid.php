@@ -63,6 +63,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'header' => Mage::helper('tim_recommendation')->__('Customer name'),
             'width' => '100',
             'index' => 'user_id',
+            'align' => 'center',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_CustomerNameNickname',
             'filter_index' => 'CONCAT(cev.value, \' \', cev1.value, \' \', tru.nick)'
         ));

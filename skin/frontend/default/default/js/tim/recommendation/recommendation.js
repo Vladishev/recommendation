@@ -943,12 +943,14 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
  */
 function sendParams() {
     var comment = jQuery('#tim-abuse-application').val();
+    var email = jQuery('#tim-abuse-email-input').val();
     var param = {
         userId: userId,
         customerHostName: customerHostName,
         customerIp: customerIp,
         recom_id: recomId,
-        comment: comment
+        comment: comment,
+        email: email
     };
 
     jQuery.ajax({
