@@ -668,7 +668,6 @@ function renderOpinionsList(response) {
 
         //Hide open comments forms if they exist
         jQuery('.tim-comment-add-window').hide();
-        $parentContent.find('.tim-opinion-comment-timtoolbar').html();
 
         var recomId = item['recom_id'];
         var opinionData = item['opinionData'];
@@ -784,8 +783,10 @@ function renderOpinionsList(response) {
             id: 'tim-opinion-comment-' + recomId,
             onclick: 'commentPlaceholderAction(' + recomId + ')',
             onkeyup: 'countCommentChar(' + recomId + ')'
-        });
+        }).val('');
+        $commentForm.find('#ph-tim-opinion-comment-' + recomId).show();
         $commentForm.find('.char-count').attr('id', 'char-count-comment-' + recomId);
+        $commentForm.find('.char-count').children('span').text(0);
         $commentForm.find('.placeholder-comment-div').attr('id', 'ph-tim-opinion-comment-' + recomId);
         $commentForm.find('.tim-comment-close-form').attr('onclick', 'hideCommentForm(' + recomId + ')');
 
