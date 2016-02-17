@@ -49,10 +49,10 @@ if (!empty($commentLimitCharacters['max'])) {
     </div>
     <div class="tim-opinion-media">
         <?php if (!empty($opinionData['images'])): ?>
-        <div class="tim-opinion-photo">
-            <a class="tim-readmore tim-opinion-photo-link" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></a>
-            <!-- button for displaying user added photos in overlay -->
-        </div>
+            <div class="tim-opinion-photo">
+                <a class="tim-readmore tim-opinion-photo-link" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></a>
+                <!-- button for displaying user added photos in overlay -->
+            </div>
         <?php endif; ?>
         <?php if (!empty($opinionData['movie_url'])): ?>
             <div class="tim-opinion-movie">
@@ -70,17 +70,17 @@ if (!empty($commentLimitCharacters['max'])) {
         data-ip="<?php echo $customerIp ?>"
         data-host="<?php echo $customerHostName ?>"/>
     <?php if ($isLoggedIn): ?>
-    <div class="tim-abuse-button-position-opinion">
-        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $recomId . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
-            <?php echo $this->__('Zgłoś nadużycie') ?>
-        </button>
-    </div>
+        <div class="tim-abuse-button-position-opinion">
+            <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $recomId . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+                <?php echo $this->__('Zgłoś nadużycie') ?>
+            </button>
+        </div>
     <?php else: ?>
-    <div class="tim-abuse-button-position-opinion" data-log="0">
-        <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
-            <?php echo $this->__('Zgłoś nadużycie') ?>
-        </button>
-    </div>
+        <div class="tim-abuse-button-position-opinion" data-log="0">
+            <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
+                <?php echo $this->__('Zgłoś nadużycie') ?>
+            </button>
+        </div>
     <?php endif ?>
 </div>
 <div class="tim-comment">
@@ -91,13 +91,13 @@ if (!empty($commentLimitCharacters['max'])) {
             <div class="tim-comment-container-title">
                 <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
                 <?php if ($isLoggedIn): ?>
-                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $comment['recom_id'] . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
-                    <?php echo $this->__('Zgłoś nadużycie') ?>
-                </button>
+                    <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo  $comment['recom_id'] . "," . $customerId . "," . "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+                        <?php echo $this->__('Zgłoś nadużycie') ?>
+                    </button>
                 <?php else: ?>
-                <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
-                    <?php echo $this->__('Zgłoś nadużycie') ?>
-                </button>
+                    <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">
+                        <?php echo $this->__('Zgłoś nadużycie') ?>
+                    </button>
                 <?php endif ?>
             </div>
             <div class="tim-comment-container-content">
@@ -133,21 +133,16 @@ if (!empty($commentLimitCharacters['max'])) {
     <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
     <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
     <input type="hidden" name="add_method" value="<?php echo $customerId ? 'Użytkownik' : null ?>"/>
-    
+
     <div class="tim-comment-add-window" id="tim-comment-add-window-<?php echo $recomId ?>">
         <div class="tim-comment-add-info">
             <?php echo $this->__('Chcesz skomentować powyższą opinię / przedstawić właśne stanowisko / zadać pytanie? Napisz:') ?>
         </div>
         <div class="tim-opinion-content tim-add-opinion">
-            <textarea
-                name="opinion-comment"
-                id="tim-opinion-comment-<?php echo $recomId ?>"
-                cols="5"
-                rows="3"
-                class="<?php echo $commentClass ?> input-text required-entry validate-no-html-tags tim-opinion-comment-timtoolbar"
-                onclick="commentPlaceholderAction(<?php echo $recomId ?>)"
-                onkeyup="countCommentChar(<?php echo $recomId ?>)">
-            </textarea>
+            <textarea name="opinion-comment" id="tim-opinion-comment-<?php echo $recomId ?>" cols="5" rows="3"
+                      class="<?php echo $commentClass ?> input-text required-entry validate-no-html-tags tim-opinion-comment-timtoolbar"
+                      onclick="commentPlaceholderAction(<?php echo $recomId ?>)"
+                      onkeyup="countCommentChar(<?php echo $recomId ?>)"></textarea>
             <div id="ph-tim-opinion-comment-<?php echo $recomId ?>" class="placeholder-comment-div">
                 <?php echo $commentPlaceholder; ?>
             </div>
@@ -196,7 +191,7 @@ if (!empty($commentLimitCharacters['max'])) {
     <div class="tim-video-popup-container">
         <input type="button" class="tim-popup-close" value="x"/>
         <?php if($youtubeVideoId): ?>
-        <iframe class="iframe-video-popup" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId ?>"></iframe>
+            <iframe class="iframe-video-popup" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId ?>"></iframe>
         <?php else : ?>
             <?php echo $this->__('User have added video not from the youtube.'); ?>
         <?php endif; ?>
@@ -204,7 +199,7 @@ if (!empty($commentLimitCharacters['max'])) {
 </div>
 
 <script type="text/javascript">
-//<![CDATA[
-var dataForm = new VarienForm('form-validate-comment-<?php echo $recomId ?>');
-//]]>
+    //<![CDATA[
+    var dataForm = new VarienForm('form-validate-comment-<?php echo $recomId ?>');
+    //]]>
 </script>
