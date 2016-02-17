@@ -668,6 +668,7 @@ function renderOpinionsList(response) {
 
         //Hide open comments forms if they exist
         jQuery('.tim-comment-add-window').hide();
+        $parentContent.find('.tim-opinion-comment-timtoolbar').html();
 
         var recomId = item['recom_id'];
         var opinionData = item['opinionData'];
