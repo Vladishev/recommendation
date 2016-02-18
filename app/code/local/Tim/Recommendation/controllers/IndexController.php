@@ -17,78 +17,83 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     public function addAction()
     {
-        $params = $this->getRequest()->getParams();
-        $response = array();
-        $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
-        $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
-        $averageRating = $this->_getAverageRating($params);
+        if ($this->getRequest()->isPost()) {
+            $params = $this->getRequest()->getParams();
+            $response = array();
+            $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
+            $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
+            $averageRating = $this->_getAverageRating($params);
 
-        if (!is_dir($folderForFiles)) {
-            mkdir($folderForFiles, 0777, true);
-        }
+            if (!is_dir($folderForFiles)) {
+                mkdir($folderForFiles, 0777, true);
+            }
 
-        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
-            ->setUserId($params['customer_id'])
-            ->setProductId($params['product_id'])
-            ->setAdvantages($params['opinion-advantages'])
-            ->setDefects($params['opinion-disadvantages'])
-            ->setConclusion($params['opinion-summary'])
-            ->setRatingPrice($params['itemValuetomoney'])
-            ->setRatingDurability($params['itemDurability'])
-            ->setRatingFailure($params['itemFailure'])
-            ->setRatingService($params['itemEaseofinstall'])
-            ->setAverageRating($averageRating)
-            ->setRecommend($params['itemDoyourecommend'])
-            ->setTimIp($params['customer_ip_address'])
-            ->setTimHost($params['customer_host_name'])
-            ->setManufacturerId($params['manufacturer_id'])
-            ->setCategoryId($params['current_category_id'])
-            ->setAddMethod($params['add_method']);
-        try {
-            $recommendationModel->save();
-            $recomId = $recommendationModel->getRecomId();
-            $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
-        } catch (Exception $e) {
-            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
-        }
+            $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+                ->setUserId($params['customer_id'])
+                ->setProductId($params['product_id'])
+                ->setAdvantages($params['opinion-advantages'])
+                ->setDefects($params['opinion-disadvantages'])
+                ->setConclusion($params['opinion-summary'])
+                ->setRatingPrice($params['itemValuetomoney'])
+                ->setRatingDurability($params['itemDurability'])
+                ->setRatingFailure($params['itemFailure'])
+                ->setRatingService($params['itemEaseofinstall'])
+                ->setAverageRating($averageRating)
+                ->setRecommend($params['itemDoyourecommend'])
+                ->setTimIp($params['customer_ip_address'])
+                ->setTimHost($params['customer_host_name'])
+                ->setManufacturerId($params['manufacturer_id'])
+                ->setCategoryId($params['current_category_id'])
+                ->setAddMethod($params['add_method']);
+            try {
+                $recommendationModel->save();
+                $recomId = $recommendationModel->getRecomId();
+                $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
+            } catch (Exception $e) {
+                Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
+            }
 
-        if (!empty($params['link_to_youtube'])) {
-            Mage::getModel('tim_recommendation/media')
-                ->setRecomId($recomId)
-                ->setName($params['link_to_youtube'])
-                ->setType('url/youtube')
-                ->save();
-        }
-
-        foreach ((array)$files as $file) {
-            if ($file['error'] == 0) {
-                $file['name'] = str_replace(' ', '_', $file['name']);
-                $fileName = time() . $file['name'];
-                $mediaModel = Mage::getModel('tim_recommendation/media')
+            if (!empty($params['link_to_youtube'])) {
+                Mage::getModel('tim_recommendation/media')
                     ->setRecomId($recomId)
-                    ->setName('/media/tim/recommendation/' . $fileName)
-                    ->setType($file['type']);
-                try {
-                    $saveMedia = $mediaModel->save();
-                } catch (Exception $e) {
-                    Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                    $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
-                }
-                if ($saveMedia) {
-                    $this->saveImage($fileName, $folderForFiles, $file);
+                    ->setName($params['link_to_youtube'])
+                    ->setType('url/youtube')
+                    ->save();
+            }
+
+            foreach ((array)$files as $file) {
+                if ($file['error'] == 0) {
+                    $file['name'] = str_replace(' ', '_', $file['name']);
+                    $fileName = time() . $file['name'];
+                    $mediaModel = Mage::getModel('tim_recommendation/media')
+                        ->setRecomId($recomId)
+                        ->setName('/media/tim/recommendation/' . $fileName)
+                        ->setType($file['type']);
+                    try {
+                        $saveMedia = $mediaModel->save();
+                    } catch (Exception $e) {
+                        Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+                        $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
+                    }
+                    if ($saveMedia) {
+                        $this->saveImage($fileName, $folderForFiles, $file);
+                    }
                 }
             }
-        }
 
-        if (!empty($recomId)) {
-            $this->saveMd5($recomId);
-            $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
-            $event = array('opinion_data' => $eventData);
-            Mage::dispatchEvent('controller_index_add_opinion_data', $event);
-        }
+            if (!empty($recomId)) {
+                $this->saveMd5($recomId);
+                $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
+                $event = array('opinion_data' => $eventData);
+                Mage::dispatchEvent('controller_index_add_opinion_data', $event);
+            }
 
-        echo json_encode($response);
+            echo json_encode($response);
+        } else {
+            $this->_redirectReferer();
+            return;
+        }
     }
 
     /**
@@ -259,33 +264,38 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      */
     public function addCommentAction()
     {
-        $params = $this->getRequest()->getParams();
-        $response = array();
-        $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
-            ->setUserId($params['customer_id'])
-            ->setParent($params['recom_id'])//recommendation ID
-            ->setProductId($params['product_id'])
-            ->setComment($params['opinion-comment'])
-            ->setTimIp($params['customer_ip_address'])
-            ->setTimHost($params['customer_host_name'])
-            ->setAddMethod($params['add_method']);
-        try {
-            $recommendationModel->save();
-            $recomId = $recommendationModel->getRecomId();
-            $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
-            $response['commentRecomId'] = $params['recom_id'];
-        } catch (Exception $e) {
-            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add comment. Please try again.');
-        }
-        if (!empty($recomId)) {
-            $this->saveMd5($recomId);
-            $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
-            $event = array('comment_data' => $eventData);
-            Mage::dispatchEvent('controller_index_add_comment_data', $event);
-        }
+        if ($this->getRequest()->isPost()) {
+            $params = $this->getRequest()->getParams();
+            $response = array();
+            $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+                ->setUserId($params['customer_id'])
+                ->setParent($params['recom_id'])//recommendation ID
+                ->setProductId($params['product_id'])
+                ->setComment($params['opinion-comment'])
+                ->setTimIp($params['customer_ip_address'])
+                ->setTimHost($params['customer_host_name'])
+                ->setAddMethod($params['add_method']);
+            try {
+                $recommendationModel->save();
+                $recomId = $recommendationModel->getRecomId();
+                $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
+                $response['commentRecomId'] = $params['recom_id'];
+            } catch (Exception $e) {
+                Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add comment. Please try again.');
+            }
+            if (!empty($recomId)) {
+                $this->saveMd5($recomId);
+                $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
+                $event = array('comment_data' => $eventData);
+                Mage::dispatchEvent('controller_index_add_comment_data', $event);
+            }
 
-        echo json_encode($response);
+            echo json_encode($response);
+        } else {
+            $this->_redirectReferer();
+            return;
+        }
     }
 
     public function landingAction()
@@ -340,21 +350,25 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      */
     public function saveMalpracticeAction()
     {
-        $params = $this->getRequest()->getParams();
-        $model = Mage::getModel('tim_recommendation/malpractice');
-        $model->setRecomId($params['recom_id']);
-        $model->setUserId($params['userId']);
-        $model->setComment($params['comment']);
-        $model->setTimIp($params['customerIp']);
-        $model->setTimHost($params['customerHostName']);
-        try {
-            $model->save();
-            $eventData = $params;
-            $event = array('malpractice_data' => $eventData);
-            Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
-        } catch (Exception $e) {
-            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        if ($this->getRequest()->isPost()) {
+            $params = $this->getRequest()->getParams();
+            $model = Mage::getModel('tim_recommendation/malpractice');
+            $model->setRecomId($params['recom_id']);
+            $model->setUserId($params['userId']);
+            $model->setComment($params['comment']);
+            $model->setTimIp($params['customerIp']);
+            $model->setTimHost($params['customerHostName']);
+            try {
+                $model->save();
+                $eventData = $params;
+                $event = array('malpractice_data' => $eventData);
+                Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
+            } catch (Exception $e) {
+                Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            }
+        } else {
+            $this->_redirectReferer();
+            return;
         }
-
     }
 }

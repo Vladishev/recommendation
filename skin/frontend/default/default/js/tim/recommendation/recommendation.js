@@ -946,6 +946,7 @@ function sendParams() {
 
     jQuery.ajax({
         url: siteUrl,
+        type: 'post',
         data: param
     });
 }
