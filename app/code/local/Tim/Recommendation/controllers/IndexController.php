@@ -241,7 +241,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
                 $opinion->setAcceptance('1')
-                    ->setPublicationDate(date('Y-m-d H:i:s'));
+                    ->setPublicationDate(date('Y-m-d H:i:s', Mage::getModel('core/date')->timestamp(time())));
                 try {
                     $opinion->save();
                     Mage::dispatchEvent('controller_index_allow_opinion_data', array('opinion_id' => $requestArray['id']));
