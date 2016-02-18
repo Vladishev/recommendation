@@ -152,14 +152,14 @@ if (!empty($commentLimitCharacters['max'])) {
             <?php if ($isLoggedIn): ?>
                 <input
                     type="submit"
-                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment"
+                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment-<?php echo $recomId ?>"
                     class="tim-comment-button-add tim-validate-comment-button tim-toolbar-button-add" value="<?php echo $this->__('Add your own comment') ?>"
                     data-formid="form-validate-comment-<?php echo $recomId ?>"
                     data-mincharacters="<?php echo ($commentLimitCharacters['min']) ? $commentLimitCharacters['min'] : 0 ?>"
                     data-maxcharacters="<?php echo ($commentLimitCharacters['max']) ? $commentLimitCharacters['max'] : 0 ?>"
                     data-commentmin="<?php echo $this->__('The minimum number of characters is ') . $commentLimitCharacters['min'] ?>"
                     data-commentmax="<?php echo $this->__('The maximum number of characters is ') . $commentLimitCharacters['max'] ?>"
-                    onclick="addCommentAjax()"/>
+                    onclick="addCommentAjax(this)"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>"
                         class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
@@ -197,9 +197,3 @@ if (!empty($commentLimitCharacters['max'])) {
         <?php endif; ?>
     </div>
 </div>
-
-<script type="text/javascript">
-//<![CDATA[
-var dataForm = new VarienForm('form-validate-comment-<?php echo $recomId ?>');
-//]]>
-</script>
