@@ -82,7 +82,7 @@ if (!empty($commentLimitCharacters['max'])) {
         <div class="tim-comment-container <?php if($i > 5) echo 'tim-comment-display-none-'. $recomId ?>" <?php if($i > 5) echo 'style="display:none;"' ?>>
             <div class="tim-comment-container-title">
                 <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
-                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $recomId ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $comment['recom_id'] ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $malpracticeUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
                     <?php echo $this->__('Zgłoś nadużycie') ?>
                 </button>
             </div>
