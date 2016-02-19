@@ -1018,7 +1018,7 @@ function showAddOpinionForm() {
  * Hides opinion form after click button
  */
 function hideAddOpinionForm() {
-    jQuery('#tim-add-opinion-layout').hide(500);
+    jQuery('#tim-add-opinion-layout').hide();
     jQuery('#tim-general-add-opinion-button').show();
 }
 
@@ -1040,6 +1040,7 @@ function addOpinionAjax() {
             jQuery('#loading-frontend-mask-opinion').show(300);
         },
         success: function (response) {
+            hideAddOpinionForm();
             displayAjaxOpinionPopupResponse(response);
             jQuery("#form-validate-opinion")[0].reset();
         },
@@ -1179,5 +1180,6 @@ function closePopup() {
     jQuery(document).on('click', '.tim-popup-close', function () {
         var popupClass = '.' + jQuery(this).parents().get(1).className;
         jQuery(popupClass).hide();
+        hideAddOpinionForm();
     });
 }
