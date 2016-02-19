@@ -1180,6 +1180,5 @@ function closePopup() {
     jQuery(document).on('click', '.tim-popup-close', function () {
         var popupClass = '.' + jQuery(this).parents().get(1).className;
         jQuery(popupClass).hide();
-        hideAddOpinionForm();
     });
 }
