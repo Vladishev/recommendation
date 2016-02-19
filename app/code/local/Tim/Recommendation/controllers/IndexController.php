@@ -28,6 +28,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+            ->setDateAdd(date('Y-m-d H:i:s'))
             ->setUserId($params['customer_id'])
             ->setProductId($params['product_id'])
             ->setAdvantages($params['opinion-advantages'])
@@ -241,7 +242,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
                 $opinion->setAcceptance('1')
-                    ->setPublicationDate(date('Y-m-d H:i:s', Mage::getModel('core/date')->timestamp(time())));
+                    ->setPublicationDate(date('Y-m-d H:i:s'));
                 try {
                     $opinion->save();
                     Mage::dispatchEvent('controller_index_allow_opinion_data', array('opinion_id' => $requestArray['id']));
@@ -262,6 +263,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $params = $this->getRequest()->getParams();
         $response = array();
         $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+            ->setDateAdd(date('Y-m-d H:i:s'))
             ->setUserId($params['customer_id'])
             ->setParent($params['recom_id'])//recommendation ID
             ->setProductId($params['product_id'])
@@ -342,6 +344,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $params = $this->getRequest()->getParams();
         $model = Mage::getModel('tim_recommendation/malpractice');
+        $model->setDateAdd(date('Y-m-d H:i:s'));
         $model->setRecomId($params['recom_id']);
         $model->setUserId($params['userId']);
         $model->setComment($params['comment']);
