@@ -14,9 +14,8 @@ class Tim_Recommendation_Block_Adminhtml_Render_CustomerNameNickname extends Mag
     {
         $customerId = $row->getData($this->getColumn()->getIndex());
         if ($customerId == 0) {
-            $name = '<strong>';
-            $name .= $row->getEmail();
-            $name .= '<br>(' . Mage::helper('tim_recommendation')->__('Not logged') . ')</strong>';
+            $name = $row->getEmail();
+            $name .= '<br>(' . Mage::helper('tim_recommendation')->__('Not logged') . ')';
         } else {
             $customerNickname = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
             $customer = Mage::getModel('customer/customer')->load($customerId);
