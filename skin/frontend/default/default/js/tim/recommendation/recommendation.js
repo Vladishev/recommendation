@@ -345,6 +345,9 @@ function changeSortCondition() {
  */
 function getTimToolbarData() {
     var dataSet = jQuery('#tim-controller').data();
+    if (dataSet.page == 'productList') {
+        hideAddOpinionForm();
+    }
     var url = dataSet.url;
     var productId = dataSet.product;
     //collect sort data
