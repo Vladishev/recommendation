@@ -1,7 +1,5 @@
 jQuery(document).ready(function () {
     addOpinionAjax();
-    addCommentAjax();
-    validateCommentForm();
     getDataOnEnterEvent();
     changeSortCondition();
     lightRatings();
@@ -778,6 +776,11 @@ function renderOpinionsList(response) {
         }
         //change data in .comment-form
         var $commentForm = jQuery($parentContent.find('.comment-form'));
+        $commentForm.attr('id', 'form-validate-comment-' + recomId);
+
+        $commentForm.find('.tim-validate-comment-button').attr('id', '#add-ajax-comment-'+recomId);
+        $commentForm.find('.tim-validate-comment-button').attr('data-formid', 'form-validate-comment-' + recomId);
+
         $commentForm.find('.form-recom-id').attr('value', recomId);
         $commentForm.find('.tim-comment-add-window').attr('id', 'tim-comment-add-window-' + recomId);
         $commentForm.find('.tim-opinion-comment-timtoolbar').attr({
@@ -840,9 +843,8 @@ function renderOpinionsList(response) {
     });
 }
 
-function validateCommentForm() {
-    jQuery('.tim-validate-comment-button').on('click', this, function () {
-        var data = jQuery(this).data();
+function validateCommentForm(el) {
+        var data = jQuery(el).data();
         var minChar = data.mincharacters;
         var maxChar = data.maxcharacters;
         var commentMin = data.commentmin;
@@ -867,7 +869,6 @@ function validateCommentForm() {
             }
             return true;
         });
-    });
 }
 
 /**
@@ -1070,10 +1071,14 @@ function addOpinionAjax() {
 /**
  * Save comment by AJAX
  */
-function addCommentAjax() {
+function addCommentAjax(el) {
+    var formId = jQuery(el).data().formid;
+    new VarienForm(formId);
+    validateCommentForm(el);
+
     jQuery(".comment-form").ajaxForm({
         beforeSend: function () {
-            jQuery('#add-ajax-comment').prop('disabled', true);
+            jQuery(el).prop('disabled', true);
             jQuery('#loading-frontend-mask-comment').show(300);
         },
         success: function (response) {
