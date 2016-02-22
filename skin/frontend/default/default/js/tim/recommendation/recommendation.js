@@ -237,7 +237,7 @@ function cropperFunctionality() {
                 success: function (response) {
                     var response = JSON.parse(response);
                     var $preview = jQuery('#tim-' + buttonType + '-container');
-                    $preview.html('<img src="' +  response['path'] + '?' + date.getTime() + '" id="tim-' + buttonType + '-image" alt="\'banner\'" />');
+                    $preview.html('<img src="' + response['path'] + '?' + date.getTime() + '" id="tim-' + buttonType + '-image" alt="\'banner\'" />');
                     jQuery('#' + buttonType + '-hide').attr('value', response['formData'] + '|' + response['tmpFolder'] + '|' + response['imgFolder']);
                     $popUp.hide();
                 }
@@ -781,7 +781,7 @@ function renderOpinionsList(response) {
         var $commentForm = jQuery($parentContent.find('.comment-form'));
         $commentForm.attr('id', 'form-validate-comment-' + recomId);
 
-        $commentForm.find('.tim-validate-comment-button').attr('id', '#add-ajax-comment-'+recomId);
+        $commentForm.find('.tim-validate-comment-button').attr('id', '#add-ajax-comment-' + recomId);
         $commentForm.find('.tim-validate-comment-button').attr('data-formid', 'form-validate-comment-' + recomId);
 
         $commentForm.find('.form-recom-id').attr('value', recomId);
@@ -847,31 +847,31 @@ function renderOpinionsList(response) {
 }
 
 function validateCommentForm(el) {
-        var data = jQuery(el).data();
-        var minChar = data.mincharacters;
-        var maxChar = data.maxcharacters;
-        var commentMin = data.commentmin;
-        var commentMax = data.commentmax;
+    var data = jQuery(el).data();
+    var minChar = data.mincharacters;
+    var maxChar = data.maxcharacters;
+    var commentMin = data.commentmin;
+    var commentMax = data.commentmax;
 
-        Validation.add('min-length-comment', commentMin, function (v) {
-            var min = minChar;
-            if (min) {
-                if (v.length < min) {
-                    return false;
-                }
+    Validation.add('min-length-comment', commentMin, function (v) {
+        var min = minChar;
+        if (min) {
+            if (v.length < min) {
+                return false;
             }
-            return true;
-        });
+        }
+        return true;
+    });
 
-        Validation.add('max-length-comment', commentMax, function (v) {
-            var max = maxChar;
-            if (max) {
-                if (v.length > max) {
-                    return false;
-                }
+    Validation.add('max-length-comment', commentMax, function (v) {
+        var max = maxChar;
+        if (max) {
+            if (v.length > max) {
+                return false;
             }
-            return true;
-        });
+        }
+        return true;
+    });
 }
 
 /**
