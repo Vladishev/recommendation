@@ -33,7 +33,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
-                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
+                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?> tim-characters-count"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionPlaceholder; ?>
@@ -48,7 +48,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
-                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
+                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?> tim-characters-count"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -63,7 +63,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
-                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
+                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?> tim-characters-count"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -283,6 +283,15 @@ if (!empty($opinionLimitCharacters['max'])) {
             }
         }
         return true;
+    });
+
+    /*REMOVE THIS METHOD AND 'tim-characters-count' CLASS AFTER ADD TINYMCE FUNCTIONALITY
+      Evaluates count of characters in text areas */
+    jQuery('.tim-characters-count').on('keyup', function(){
+        var $el = jQuery(this);
+        var id = $el.attr('id');
+        var span = jQuery('#char-count-'+ id).children("span");
+        span.html($el.val().length);
     });
 
     jQuery(function()
