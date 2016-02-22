@@ -29,6 +29,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             }
 
             $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+                ->setDateAdd(date('Y-m-d H:i:s'))
                 ->setUserId($params['customer_id'])
                 ->setProductId($params['product_id'])
                 ->setAdvantages($params['opinion-advantages'])
@@ -268,6 +269,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $params = $this->getRequest()->getParams();
             $response = array();
             $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+                ->setDateAdd(date('Y-m-d H:i:s'))
                 ->setUserId($params['customer_id'])
                 ->setParent($params['recom_id'])//recommendation ID
                 ->setProductId($params['product_id'])
@@ -353,6 +355,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         if ($this->getRequest()->isPost()) {
             $params = $this->getRequest()->getParams();
             $model = Mage::getModel('tim_recommendation/malpractice');
+            $model->setDateAdd(date('Y-m-d H:i:s'));
             $model->setRecomId($params['recom_id']);
             $model->setUserId($params['userId']);
             $model->setComment($params['comment']);
