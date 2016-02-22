@@ -217,7 +217,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                     </p>
                     <input type="text" name="link_to_youtube" id="link_to_youtube"
-                           class="input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
+                           class="validate-url-link input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
                         <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <!-- place for user input - add movie - url to youtube -->
@@ -264,6 +264,20 @@ if (!empty($opinionLimitCharacters['max'])) {
 <script type="text/javascript">
     //<![CDATA[
     var dataForm = new VarienForm('form-validate-opinion', true);
+
+    Validation.add('validate-url-link', '<?php echo $this->__('The link will not come from Youtube') ?>', function (v) {
+        var url = v;
+        if (url != '') {
+            console.log('HERE');
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&\?]*).*/;
+            var match = url.match(regExp);
+            if (!(match && match[2].length == 11)) {
+                return false;
+            }
+        }
+        return true;
+    });
+
 
     Validation.add('min-length-opinion', '<?php echo $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] ?>', function (v) {
         var min = <?php echo ($opinionLimitCharacters['min']) ? $opinionLimitCharacters['min'] : 0 ?>;
