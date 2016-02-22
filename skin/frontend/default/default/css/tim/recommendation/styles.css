@@ -1225,6 +1225,10 @@ label.tim-rating-button-boolean-label {
     bottom: -20px;
 }
 
+#tim-abuse-email {
+    display: none;
+}
+
 #form-validate-opinion label.required em { color: #eb340a; }
 
 #tim-avatar-image {

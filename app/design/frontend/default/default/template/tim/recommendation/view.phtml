@@ -50,11 +50,16 @@ $k = 0;
         <div class="tim-markabuse-popup-container">
             <input type="button" class="tim-popup-close" value="x"/>
             <p></p>
-            <div class="tim-opinion-content tim-add-opinion">
-                <textarea name="tim-abuse-application" id="tim-abuse-application" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
-            </div>
-            <!-- button to submit abuse call -->
-            <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt" onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
+            <form id="tim-abuse-popup-form">
+                <div class="tim-opinion-content tim-add-opinion">
+                    <textarea name="tim-abuse-application" id="tim-abuse-application" cols="5" rows="3" class="input-text required-entry validate-no-html-tags"></textarea>
+                </div>
+                <div id="tim-abuse-email">
+                    <input id="tim-abuse-email-input" type="text" class="" placeholder="<?php echo $this->__('Your e-mail') ?>"/>
+                </div>
+                <!-- button to submit abuse call -->
+                <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt"  onclick="sendParams()"><?php echo $this->__('Wyślij zgłoszenie') ?></button>
+            </form>
         </div>
     </div>
 <?php endif; ?>

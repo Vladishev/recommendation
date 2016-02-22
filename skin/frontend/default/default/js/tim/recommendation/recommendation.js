@@ -743,7 +743,7 @@ function renderOpinionsList(response) {
         if (isLoggedIn == '1') {
             $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
         } else {
-            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
+            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',0 ,\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
         }
         //render comments
         $parentContent.find('.tim-comment-container').remove();
@@ -759,7 +759,7 @@ function renderOpinionsList(response) {
             if (isLoggedIn == '1') {
                 $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
             } else {
-                $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="checkIfUserIsLoggedIn()">Zgłoś nadużycie</button>');
+                $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',0 ,\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
             }
             //render comment text
             $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-content">' + item['comment'] + '</div>');
@@ -925,35 +925,47 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
     customerIp = ip;
     customerHostName = hostName;
     siteUrl = url;
+    var $sendButton = jQuery('#tim-abuse-application-sendbt');
 
     jQuery('.tim-markabuse-popup').show(300);
     jQuery('#tim-abuse-application').show();
-    jQuery('#tim-abuse-application-sendbt').show();
+    $sendButton.show();
     jQuery('.tim-markabuse-popup-container p').text('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.');
 
-    jQuery('#tim-abuse-application-sendbt').on('click', function () {
-        jQuery('#tim-abuse-application').hide().val('');
-        jQuery('#tim-abuse-application-sendbt').hide();
-        jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora');
-    });
+    if (userId == '0') {
+        jQuery('#tim-abuse-email').show();
+        jQuery('#tim-abuse-email-input').attr('class', 'required-entry validate-email');
+    }
 }
 /**
  * Send customer parameters to controller
  */
 function sendParams() {
+    var abuseForm = new VarienForm('tim-abuse-popup-form');
     var comment = jQuery('#tim-abuse-application').val();
+    var email = jQuery('#tim-abuse-email-input').val();
     var param = {
         userId: userId,
         customerHostName: customerHostName,
         customerIp: customerIp,
         recom_id: recomId,
-        comment: comment
+        comment: comment,
+        email: email
     };
-
-    jQuery.ajax({
-        url: siteUrl,
-        data: param
-    });
+    if (abuseForm.validator.validate()) {
+        jQuery.ajax({
+            url: siteUrl,
+            data: param,
+            type: 'post',
+            success: function (response) {
+                jQuery('#tim-abuse-application').hide().val('');
+                jQuery('#tim-abuse-application-sendbt').hide();
+                jQuery('#tim-abuse-email').hide();
+                jQuery('#tim-abuse-email-input').val('');
+                jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora');
+            }
+        });
+    }
 }
 
 /**
