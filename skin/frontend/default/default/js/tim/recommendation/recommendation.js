@@ -12,6 +12,8 @@ jQuery(document).ready(function () {
     showVideo();
     closePopup();
 
+    cropperFunctionality();
+
     /* function to put value into html content right to rating stars and switch userlogin details*/
 
     jQuery('input').on('change', function () {
@@ -67,8 +69,9 @@ jQuery(document).ready(function () {
         }
     });
 
-    //------------------------ Cropper functionality -------------------------------
+});
 
+function cropperFunctionality() {
     'use strict';
     var $image = jQuery('#tim-crop-image');
     var $inputImage = jQuery('.upload-buttons');
@@ -235,17 +238,15 @@ jQuery(document).ready(function () {
                 data: sendData,
                 success: function (response) {
                     var response = JSON.parse(response);
-                    var $preview = jQuery('#tim-' + buttonType + '-image');
-                    $preview.attr('src', response['path'] + '?' + date.getTime());
+                    var $preview = jQuery('#tim-' + buttonType + '-container');
+                    $preview.html('<img src="' +  response['path'] + '?' + date.getTime() + '" id="tim-' + buttonType + '-image" alt="\'banner\'" />');
                     jQuery('#' + buttonType + '-hide').attr('value', response['formData'] + '|' + response['tmpFolder'] + '|' + response['imgFolder']);
                     $popUp.hide();
                 }
             });
         }
     });
-//    ---------------------------- End of cropper functionality ------------------------
-
-});
+}
 
 //-------------------- Tim Toolbar start (recommendation/user/profile and recommendation/product/view) ----
 /**
