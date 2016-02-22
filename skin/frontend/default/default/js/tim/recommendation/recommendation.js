@@ -344,6 +344,9 @@ function changeSortCondition() {
  */
 function getTimToolbarData() {
     var dataSet = jQuery('#tim-controller').data();
+    if (dataSet.page == 'productList') {
+        hideAddOpinionForm();
+    }
     var url = dataSet.url;
     var productId = dataSet.product;
     //collect sort data
@@ -1037,8 +1040,26 @@ function showAddOpinionForm() {
  * Hides opinion form after click button
  */
 function hideAddOpinionForm() {
-    jQuery('#tim-add-opinion-layout').hide(500);
+    //clean inputs
+    jQuery("#form-validate-opinion")[0].reset();
+    //add placeholders
+    jQuery('#ph-tim-opinion-advantages').show();
+    jQuery('#ph-tim-opinion-disadvantages').show();
+    jQuery('#ph-tim-opinion-summary').show();
+    //clean characters count boxes
+    jQuery('#char-count-tim-opinion-advantages span').text(0);
+    jQuery('#char-count-tim-opinion-disadvantages span').text(0);
+    jQuery('#char-count-tim-opinion-summary span').text(0);
+    //clean count of stars
+    jQuery('.itemValuetomoney').text('0');
+    jQuery('.itemDurability').text('0');
+    jQuery('.itemFailure').text('0');
+    jQuery('.itemEaseofinstall').text('0');
+    //clean downloaded files list
+    jQuery('#downloaded-imgs').empty();
+    //hide form and show general button
     jQuery('#tim-general-add-opinion-button').show();
+    jQuery('#tim-add-opinion-layout').hide();
 }
 
 /**
@@ -1059,8 +1080,8 @@ function addOpinionAjax() {
             jQuery('#loading-frontend-mask-opinion').show(300);
         },
         success: function (response) {
+            hideAddOpinionForm();
             displayAjaxOpinionPopupResponse(response);
-            jQuery("#form-validate-opinion")[0].reset();
         },
         error: function (response) {
             displayAjaxOpinionPopupResponse(response);
@@ -1100,12 +1121,6 @@ function displayAjaxOpinionPopupResponse(response) {
     var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
-    jQuery('#char-count-tim-opinion-advantages span').text('0');
-    jQuery('#ph-tim-opinion-advantages').show();
-    jQuery('#char-count-tim-opinion-disadvantages span').text(0);
-    jQuery('#ph-tim-opinion-disadvantages').show();
-    jQuery('#char-count-tim-opinion-summary span').text(0);
-    jQuery('#ph-tim-opinion-summary').show();
 }
 
 function displayAjaxCommentPopupResponse(response) {
