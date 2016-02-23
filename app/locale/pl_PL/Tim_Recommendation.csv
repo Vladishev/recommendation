@@ -76,7 +76,7 @@
 "--Select user type--","--Wybierz typ użytkownika--"
 "OCEŃ WALORY PRODUKTU","OCEŃ WALORY PRODUKTU"
 "Wczytaj zdjęcia","Wczytaj zdjęcia"
-"Add link from Youtube","Podaj link z serwisu Youtube"
+"Add link from Youtube","Podaj link z serwisu YouTube"
 "<strong>Uwag! Nie jesteś zalogowanym użytkownikiem, aby dodać opinię musisz zalogować się lub założyć konto na
 naszym serwisie. </strong><br/>Możesz to zrobić od razu podając poniżej twój adres e-mail (który będzie pełnił funkcję
 loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego podstawie). Instrukcję dalszego
@@ -243,4 +243,4 @@ postępowania otrzymasz w potwierdzającym mailu."
 "Display","Wyświetl"
 "products","produktów"
 " from"," z"
-"The link will not come from Youtube","Podany link nie pochodzi z serwisu Youtube"
+"The link will not come from Youtube","Podany link nie prowadzi do filmu z serwisu YouTube"
