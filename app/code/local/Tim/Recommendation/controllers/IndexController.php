@@ -361,6 +361,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $model->setComment($params['comment']);
             $model->setTimIp($params['customerIp']);
             $model->setTimHost($params['customerHostName']);
+            if (!empty($params['email'])) {
+                $model->setEmail($params['email']);
+            }
             try {
                 $model->save();
                 $eventData = $params;
