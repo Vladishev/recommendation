@@ -76,7 +76,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     {
         Mage::getSingleton('adminhtml/session')->addSuccess(
             Mage::helper('tim_recommendation')->__(
-                'Total of %d opinion(s) were ' . $status . '.', count($id)
+                'Total of %d comment(s) were ' . $status . '.', count($id)
             ));
     }
 
