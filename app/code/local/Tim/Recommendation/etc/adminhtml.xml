@@ -17,7 +17,7 @@
                     <title>TIM</title>
                     <children>
                         <tim_recommendation translate="title">
-                            <title>Opinion</title>
+                            <title>Opinions</title>
                             <action>adminhtml/opinionReport</action>
                         </tim_recommendation>
                         <tim_comments translate="title">
