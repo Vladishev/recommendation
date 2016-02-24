@@ -11,7 +11,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
 {
     public function indexAction()
     {
-        $this->_title($this->__('Opinion'));
+        $this->_title($this->__('Opinions'));
         $this->loadLayout();
         $this->_setActiveMenu('report/tim');
         $this->_addContent($this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport'));
