@@ -111,6 +111,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection->setPageSize($limit);
         $recommendationCollection->setCurPage($curPage);
         $comments = $recommendationCollection->getData();
+        $dateModel = Mage::getModel('core/date');
 
         $i = 0;
         foreach ($comments as $comment) {
@@ -118,6 +119,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
             $product = Mage::getModel('catalog/product')->load($productId);
             $comments[$i]['name'] = $product->getName();
             $comments[$i]['url'] = $product->getProductUrl();
+            $comments[$i]['date_add'] = date('Y-m-d H:i:s', $dateModel->timestamp($comment['date_add']));
             $i++;
         }
 
