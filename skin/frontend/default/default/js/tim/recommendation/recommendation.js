@@ -780,7 +780,6 @@ function renderOpinionsList(response) {
         //change data in .comment-form
         var $commentForm = jQuery($parentContent.find('.comment-form'));
         $commentForm.attr('id', 'form-validate-comment-' + recomId);
-
         $commentForm.find('.tim-validate-comment-button').attr('id', '#add-ajax-comment-' + recomId);
         $commentForm.find('.tim-validate-comment-button').attr('data-formid', 'form-validate-comment-' + recomId);
 
@@ -791,6 +790,7 @@ function renderOpinionsList(response) {
             onclick: 'commentPlaceholderAction(' + recomId + ')',
             onkeyup: 'countCommentChar(' + recomId + ')'
         }).val('');
+        removingValidation(jQuery('#tim-opinion-comment-' + recomId));
         $commentForm.find('#ph-tim-opinion-comment-' + recomId).show();
         $commentForm.find('.char-count').attr('id', 'char-count-comment-' + recomId);
         $commentForm.find('.char-count').children('span').text(0);
@@ -844,6 +844,24 @@ function renderOpinionsList(response) {
             $parentRight.find('.recommend-no-' + recomId).addClass('tim-chart-boolean-active');
         }
     });
+}
+
+//Removes 'validation-failed' from cloned form
+function removingValidation ($el) {
+    var classList = $el.attr('class').split(/\s+/);
+    var validationRemoved = 0;
+
+    jQuery.each(classList, function (index, item) {
+        if (item == 'validation-failed') {
+            classList.splice(index, 1);
+            validationRemoved = 1;
+        }
+    });
+
+    if (validationRemoved == 1) {
+        $el.attr('class', classList.join(' '));
+        jQuery('.validation-advice').remove();
+    }
 }
 
 function validateCommentForm(el) {
