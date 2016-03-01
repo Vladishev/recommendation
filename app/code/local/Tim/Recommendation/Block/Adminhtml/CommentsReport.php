@@ -16,7 +16,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport extends Mage_Adminhtml_B
     {
         $this->_blockGroup = 'tim_recommendation';
         $this->_controller = 'adminhtml_commentsReport';
-        $this->_headerText = Mage::helper('tim_recommendation')->__('Komentarze');
+        $this->_headerText = Mage::helper('tim_recommendation')->__('Comments');
 
         parent::__construct();
         $this->_removeButton('add');
