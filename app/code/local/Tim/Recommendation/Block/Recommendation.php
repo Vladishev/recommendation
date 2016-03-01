@@ -128,11 +128,12 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $collection->setOrder('date_add', 'DESC');
         $data = $collection->getData();
         $comments = array();
+        $dateModel = Mage::getModel('core/date');
         foreach ($data as $comment) {
             $comments[] = array(
                 'name' => $this->getHelper()->getCustomerNameOrNick($comment['user_id']),
                 'comment' => $comment['comment'],
-                'date_add' => $comment['date_add'],
+                'date_add' => date('Y-m-d H:i:s', $dateModel->timestamp($comment['date_add'])),
                 'recom_id' => $comment['recom_id'],
             );
         }
