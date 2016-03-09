@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
     showPhotos();
     showVideo();
     closePopup();
+    checkProfile();
 
     cropperFunctionality();
 
@@ -906,6 +907,35 @@ function checkIfUserIsLoggedIn() {
     /* function open modal when submit button is pressed without validation yet */
     jQuery('.tim-userlogin-popup').show(300);
 }
+
+/**
+ * Shows popup if user's profile not fill
+ */
+function checkProfile() {
+    jQuery('.check-tim-profile-status').on('click', function () {
+        var status = jQuery('#tim-profile-status').val();
+
+        if (status == '0') {
+            jQuery('.check-tim-profile-status-popup').show(300);
+            return false;
+        }
+        return true;
+    });
+}
+
+/**
+ * Shows popup if user's profile not fill for input field
+ */
+function checkProfileInputField() {
+    var status = jQuery('#tim-profile-status').val();
+
+    if (status == '0') {
+        jQuery('.check-tim-profile-status-popup').show(300);
+        return false;
+    }
+    return true;
+}
+
 /**
  * Variables for sendParams() method
  */
@@ -977,6 +1007,7 @@ function sendParams() {
  * @param recomId
  */
 function commentPlaceholderAction(recomId) {
+    checkProfileInputField();
     jQuery('#ph-tim-opinion-comment-' + recomId).hide();
     jQuery('#tim-opinion-comment-' + recomId).focusout(function () {
         if (!jQuery('#tim-opinion-comment-' + recomId).val()) {
@@ -1093,6 +1124,7 @@ function addOpinionAjax() {
  * Save comment by AJAX
  */
 function addCommentAjax(el) {
+    checkProfileInputField();
     var formId = jQuery(el).data().formid;
     new VarienForm(formId);
     validateCommentForm(el);

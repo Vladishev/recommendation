@@ -368,7 +368,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $_helper = $this->getHelper();
             $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
             $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
-            $customerInfo['customerName'] = $_helper->getCustomerName($customerId);
+            $customerInfo['customerName'] = $_helper->getCustomerNickname($customerId);
             $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
             $customerInfo['customerTypeName'] = $_helper->getUserTypeName($customerTypeId);
             $customerInfo['avatar'] = $_helper->getCustomerAvatar($customerId);
@@ -437,5 +437,29 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $commentsCount = Mage::getModel('tim_recommendation/index')->getCommentsCount($userId);
         return $commentsCount;
+    }
+
+    /**
+     * Check user profile for required fields
+     * @param $customerId
+     * @return int
+     */
+    public function getProfileStatus($customerId)
+    {
+        $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+        $fields = array();
+        if ($user) {
+            $fields[] = $user->getNick();
+            $fields[] = $user->getAvatar();
+            $fields[] = $user->getUserType();
+
+            foreach ($fields as $field) {
+                if (empty($field)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

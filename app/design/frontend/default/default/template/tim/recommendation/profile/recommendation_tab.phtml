@@ -54,10 +54,11 @@
                     <input type="file" name="avatar" id="avatar" class="upload-buttons tim-avatar-validate" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png"/>
                     <input type="hidden" name="avatar-hide" id="avatar-hide"  value="" />
                 </div>
-                <?php if($_helper->getCustomerAvatar()): ?>
-                    <label for="avatar-checkbox"><?php echo $_helper->__('Delete') ?></label>
-                    <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
-                <?php endif ?>
+                    <!-- Block for deleting avatar -->
+<!--                --><?php //if($_helper->getCustomerAvatar()): ?>
+<!--                    <label for="avatar-checkbox">--><?php //echo $_helper->__('Delete') ?><!--</label>-->
+<!--                    <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="--><?php //echo $_helper->__('Choose it if you want to delete image.') ?><!--">-->
+<!--                --><?php //endif ?>
                 <div class="recommendation-image" id="tim-avatar-container">
                     <?php if ($_helper->getCustomerAvatar()): ?>
                     <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" alt="avatar" />
