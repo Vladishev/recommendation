@@ -448,10 +448,14 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $fields = array();
+        $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
+
         if ($user) {
             $fields[] = $user->getNick();
             $fields[] = $user->getAvatar();
-            $fields[] = $user->getUserType();
+            if (!empty($userTypes)) {
+                $fields[] = $user->getUserType();
+            }
 
             foreach ($fields as $field) {
                 if (empty($field)) {
