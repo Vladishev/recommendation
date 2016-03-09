@@ -455,11 +455,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
             foreach ($fields as $field) {
                 if (empty($field)) {
-                    return false;
+                    return 0;
                 }
             }
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
 }

@@ -6,6 +6,8 @@ $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
 $profileStatus = '';
 if ($customerId) {
     $profileStatus = $this->getProfileStatus($customerId);
+} else {
+    $profileStatus = 2;
 }
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
 $customerHostName = $this->getHost($customerIp);
@@ -27,7 +29,7 @@ if (!empty($opinionLimitCharacters['max'])) {
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate-opinion"
       autocomplete="off" enctype="multipart/form-data">
-    <input type="hidden" id="tim-profile-status" value="<?php echo $profileStatus ? 1 : 0; ?>"/>
+    <input type="hidden" id="tim-profile-status" value="<?php echo $profileStatus; ?>"/>
     <fieldset>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <div class="tim-opinion">

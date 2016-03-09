@@ -65,6 +65,7 @@ jQuery(document).ready(function () {
             jQuery('.tim-add-comment-popup').hide();
             jQuery('.tim-add-opinion-popup').hide();
             jQuery('.tim-markabuse-popup').hide();
+            jQuery('.check-tim-profile-status-popup').hide();
         }
     });
 
@@ -912,7 +913,7 @@ function checkIfUserIsLoggedIn() {
  * Shows popup if user's profile not fill
  */
 function checkProfile() {
-    jQuery('.check-tim-profile-status').on('click', function () {
+    jQuery(document).on('click', '.check-tim-profile-status', function () {
         var status = jQuery('#tim-profile-status').val();
 
         if (status == '0') {
@@ -1007,7 +1008,6 @@ function sendParams() {
  * @param recomId
  */
 function commentPlaceholderAction(recomId) {
-    checkProfileInputField();
     jQuery('#ph-tim-opinion-comment-' + recomId).hide();
     jQuery('#tim-opinion-comment-' + recomId).focusout(function () {
         if (!jQuery('#tim-opinion-comment-' + recomId).val()) {
@@ -1124,7 +1124,6 @@ function addOpinionAjax() {
  * Save comment by AJAX
  */
 function addCommentAjax(el) {
-    checkProfileInputField();
     var formId = jQuery(el).data().formid;
     new VarienForm(formId);
     validateCommentForm(el);
