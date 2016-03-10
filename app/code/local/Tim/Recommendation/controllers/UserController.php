@@ -188,7 +188,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
      */
     protected function _cleanDirectory($path)
     {
-        $oldFiles = glob($path.'*');
+        $oldFiles = glob($path . '*');
         if ($oldFiles) {
             foreach ($oldFiles as $oldFile) {
                 unlink($oldFile);
@@ -242,12 +242,12 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $imageData = $data['data'];
         list($typeData, $imageData) = explode(';', $imageData);
         $imageType = substr($typeData, 11);
-        $imageName = $typeOfImage . '-' . $customerId .'.' . $imageType;
+        $imageName = $typeOfImage . '-' . $customerId . '.' . $imageType;
         $imagePath['path'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . DS . 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp' . DS . $imageName;
         $imagePath['formData'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . $imageName;
         $imagePath['tmpFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp' . DS . $imageName;
         $imagePath['imgFolder'] = 'media' . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS;
-        list(, $imageData)      = explode(',', $imageData);
+        list(, $imageData) = explode(',', $imageData);
         $imageData = base64_decode($imageData);
         $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp';
 

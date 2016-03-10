@@ -22,7 +22,7 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
     {
         $this->loadLayout();
         $this->getResponse()->setBody(
-        $this->getLayout()->createBlock('tim_recommendation/adminhtml_malpracticeReport_grid')->toHtml()
+            $this->getLayout()->createBlock('tim_recommendation/adminhtml_malpracticeReport_grid')->toHtml()
         );
     }
 
