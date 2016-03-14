@@ -126,7 +126,7 @@ if (!empty($commentLimitCharacters['max'])) {
         </div>
         <div class="tim-opinion-content tim-add-opinion">
             <textarea name="opinion-comment" id="tim-opinion-comment-<?php echo $recomId ?>" cols="5" rows="3"
-                      class="<?php echo $commentClass ?> input-text required-entry validate-no-html-tags tim-opinion-comment-timtoolbar"
+                      class="<?php echo $commentClass ?> check-tim-profile-status input-text required-entry validate-no-html-tags tim-opinion-comment-timtoolbar"
                       onclick="commentPlaceholderAction(<?php echo $recomId ?>)"
                       onkeyup="countCommentChar(<?php echo $recomId ?>)"></textarea>
             <div id="ph-tim-opinion-comment-<?php echo $recomId ?>" class="placeholder-comment-div">
@@ -139,7 +139,7 @@ if (!empty($commentLimitCharacters['max'])) {
                 <input
                     type="submit"
                     title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add your own comment')) ?>" id="add-ajax-comment-<?php echo $recomId ?>"
-                    class="tim-comment-button-add tim-validate-comment-button tim-toolbar-button-add" value="<?php echo $this->__('Add your own comment') ?>"
+                    class="check-tim-profile-status tim-comment-button-add tim-validate-comment-button tim-toolbar-button-add" value="<?php echo $this->__('Add your own comment') ?>"
                     data-formid="form-validate-comment-<?php echo $recomId ?>"
                     data-mincharacters="<?php echo ($commentLimitCharacters['min']) ? $commentLimitCharacters['min'] : 0 ?>"
                     data-maxcharacters="<?php echo ($commentLimitCharacters['max']) ? $commentLimitCharacters['max'] : 0 ?>"

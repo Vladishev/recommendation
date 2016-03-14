@@ -3,6 +3,12 @@ $product = Mage::registry('current_product');
 $isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
 $isLoggedInJs = $isLoggedIn ? 1 : 0;
 $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+$profileStatus = '';
+if ($customerId) {
+    $profileStatus = $this->getProfileStatus($customerId);
+} else {
+    $profileStatus = 2;
+}
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
 $customerHostName = $this->getHost($customerIp);
 $requiredFields = $this->getRequiredFields();
@@ -23,6 +29,7 @@ if (!empty($opinionLimitCharacters['max'])) {
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate-opinion"
       autocomplete="off" enctype="multipart/form-data">
+    <input type="hidden" id="tim-profile-status" value="<?php echo $profileStatus; ?>"/>
     <fieldset>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <div class="tim-opinion">
@@ -33,7 +40,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
-                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?> tim-characters-count"
+                          class="check-tim-profile-status <?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionPlaceholder; ?>
@@ -48,7 +55,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
-                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?> tim-characters-count"
+                          class="check-tim-profile-status <?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -63,7 +70,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
-                          class="<?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?> tim-characters-count"
+                          class="check-tim-profile-status <?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -87,7 +94,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemValuetomoney"
-                        class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
+                        class="radio tim-rating-input-span check-tim-profile-status <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemValuetomoney-1-<?php echo $option ?>" value="<?php echo $option ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemValuetomoney-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -108,7 +115,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemDurability"
-                        class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
+                        class="radio tim-rating-input-span check-tim-profile-status <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemDurability-1-<?php echo $option ?>" value="<?php echo $option ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemDurability-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -129,7 +136,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemFailure"
-                        class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
+                        class="radio tim-rating-input-span check-tim-profile-status <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemFailure-1-<?php echo $option ?>" value="<?php echo $option ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemFailure-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -150,7 +157,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                         <?php foreach ($options as $option): ?>
                         <input type="radio" name="itemEaseofinstall"
-                        class="radio tim-rating-input-span <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
+                        class="radio tim-rating-input-span check-tim-profile-status <?php echo end($options) == $option ? 'validate-one-required':'' ?>"
                         id="radio-itemEaseofinstall-1-<?php echo $option ?>" value="<?php echo $option ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                         <label for="radio-itemEaseofinstall-1-<?php echo $option ?>" class="tim-rating-star"></label>
@@ -168,11 +175,11 @@ if (!empty($opinionLimitCharacters['max'])) {
                     <?php if(!$requiredFields['use_product']) : ?>
                         <input type="hidden" name="itemDoyouuseitem" value="null"/>
                     <?php endif; ?>
-                    <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem1" value="1" class="radio tim-rating-button-boolean"
+                    <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem1" value="1" class="radio tim-rating-button-boolean check-tim-profile-status"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyouuseitem1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
                     <input type="radio" name="itemDoyouuseitem" id="radio-itemDoyouuseitem2" value="0"
-                           class="radio tim-rating-button-boolean <?php echo $requiredFields['use_product'] ? 'validate-one-required':'' ?>"
+                           class="radio tim-rating-button-boolean check-tim-profile-status <?php echo $requiredFields['use_product'] ? 'validate-one-required':'' ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyouuseitem2" class="tim-rating-button-boolean-label"><?php echo $this->__('No') ?></label>
                 </div>
@@ -186,11 +193,11 @@ if (!empty($opinionLimitCharacters['max'])) {
                     <?php if(!$requiredFields['recommend_product']) : ?>
                         <input type="hidden" name="itemDoyourecommend" value="null"/>
                     <?php endif; ?>
-                    <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend1" value="1" class="radio tim-rating-button-boolean"
+                    <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend1" value="1" class="radio tim-rating-button-boolean check-tim-profile-status"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyourecommend1" class="tim-rating-button-boolean-label"><?php echo $this->__('Yes') ?></label>
                     <input type="radio" name="itemDoyourecommend" id="radio-itemDoyourecommend2" value="0"
-                           class="radio tim-rating-button-boolean <?php echo $requiredFields['recommend_product'] ? 'validate-one-required':'' ?>"
+                           class="radio tim-rating-button-boolean check-tim-profile-status <?php echo $requiredFields['recommend_product'] ? 'validate-one-required':'' ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn()"' : ''?>/>
                     <label for="radio-itemDoyourecommend2" class="tim-rating-button-boolean-label"><?php echo $this->__('No') ?></label>
                 </div>
@@ -202,7 +209,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                     </p>
                     <input type="file" name="tim-recommendation-img[]" id="recommendation-img" accept="image/jpeg, image/png" max-size="5242880" multiple="multiple"
-                           class="tim-comm-button-smal <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"
+                           class="tim-comm-button-smal check-tim-profile-status <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn(); return false;"' : ''?>
                         onchange="displayFilename(this.id)"/>
                     <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Wczytaj zdjęcia') ?></label>
@@ -217,9 +224,9 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                     </p>
                     <input type="text" name="link_to_youtube" id="link_to_youtube"
-                           class="validate-url-link input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
+                           class="validate-url-link check-tim-profile-status input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
-                        <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>/>
+                        <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : 'onfocus="checkProfileInputField()" onclick="checkProfileInputField()"'?>/>
                     <!-- place for user input - add movie - url to youtube -->
                 </div>
 
@@ -235,7 +242,7 @@ if (!empty($opinionLimitCharacters['max'])) {
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" id="add-ajax-opinion"
+                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add check-tim-profile-status" id="add-ajax-opinion"
                 value="<?php echo $this->__('Add opinion') ?>"/>
             <?php else: ?>
                 <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">

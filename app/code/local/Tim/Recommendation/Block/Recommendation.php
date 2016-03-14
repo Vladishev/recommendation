@@ -369,11 +369,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $_helper = $this->getHelper();
             $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
             $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
-            $customerInfo['customerName'] = $_helper->getCustomerName($customerId);
+            $customerInfo['customerName'] = $_helper->getCustomerNickname($customerId);
             $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
             $customerInfo['customerTypeName'] = $_helper->getUserTypeName($customerTypeId);
             $customerInfo['avatar'] = $_helper->getCustomerAvatar($customerId);
-            $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $customerId;
+            $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation' . DS . 'user' . DS . 'edit';
             $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
             $customerInfo['engage'] = $user->getEngage();
             return $customerInfo;
@@ -438,5 +438,33 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $commentsCount = Mage::getModel('tim_recommendation/index')->getCommentsCount($userId);
         return $commentsCount;
+    }
+
+    /**
+     * Check user profile for required fields
+     * @param $customerId
+     * @return int
+     */
+    public function getProfileStatus($customerId)
+    {
+        $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+        $fields = array();
+        $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
+
+        if ($user) {
+            $fields[] = $user->getNick();
+            $fields[] = $user->getAvatar();
+            if (!empty($userTypes)) {
+                $fields[] = $user->getUserType();
+            }
+
+            foreach ($fields as $field) {
+                if (empty($field)) {
+                    return 0;
+                }
+            }
+            return 1;
+        }
+        return 0;
     }
 }

@@ -754,7 +754,7 @@ label.tim-rating-button-boolean-label {
 }
 
 /* popup window when user needs to login */
-.tim-userlogin-popup, .tim-markabuse-popup, .tim-all-photo-popup, .tim-video-popup, .tim-add-opinion-popup, .tim-add-comment-popup, .tim-crop-image{
+.tim-userlogin-popup, .tim-markabuse-popup, .tim-all-photo-popup, .tim-video-popup, .tim-add-opinion-popup, .tim-add-comment-popup, .tim-crop-image, .check-tim-profile-status-popup{
     position:fixed;
     top:0;
     left:0;

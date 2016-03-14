@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
     showPhotos();
     showVideo();
     closePopup();
+    checkProfile();
 
     cropperFunctionality();
 
@@ -64,6 +65,7 @@ jQuery(document).ready(function () {
             jQuery('.tim-add-comment-popup').hide();
             jQuery('.tim-add-opinion-popup').hide();
             jQuery('.tim-markabuse-popup').hide();
+            jQuery('.check-tim-profile-status-popup').hide();
         }
     });
 
@@ -924,6 +926,35 @@ function checkIfUserIsLoggedIn() {
     /* function open modal when submit button is pressed without validation yet */
     jQuery('.tim-userlogin-popup').show(300);
 }
+
+/**
+ * Shows popup if user's profile not fill
+ */
+function checkProfile() {
+    jQuery(document).on('click', '.check-tim-profile-status', function () {
+        var status = jQuery('#tim-profile-status').val();
+
+        if (status == '0') {
+            jQuery('.check-tim-profile-status-popup').show(300);
+            return false;
+        }
+        return true;
+    });
+}
+
+/**
+ * Shows popup if user's profile not fill for input field
+ */
+function checkProfileInputField() {
+    var status = jQuery('#tim-profile-status').val();
+
+    if (status == '0') {
+        jQuery('.check-tim-profile-status-popup').show(300);
+        return false;
+    }
+    return true;
+}
+
 /**
  * Variables for sendParams() method
  */

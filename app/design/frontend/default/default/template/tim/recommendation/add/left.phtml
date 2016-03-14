@@ -17,7 +17,7 @@
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
-            <p><?php echo $userData['engage']; ?></p>
+<!--            <p>--><?php //echo $userData['engage']; ?><!--</p>-->
             <div class="tim-user-scoregraph tim-score-2">
                 <!-- number of opinons --> <?php echo $this->__($userData['opinionQty']); ?>
             </div>
@@ -26,7 +26,7 @@
         <div class="tim-user-editprofile">
             <!-- place for button that will redirect to user's profile page where he can edit user info-->
             <a href="<?php echo $userData['editUrl']; ?>">
-                <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Edytuj swój profil') ?></button>
+                <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Edit your profile') ?></button>
             </a>
         </div>
     </div>
