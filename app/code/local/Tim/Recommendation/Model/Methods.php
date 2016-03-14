@@ -12,8 +12,8 @@ class Tim_Recommendation_Model_Methods
     public function toOptionArray()
     {
         return array(
-            array('value'=>1, 'label'=>Mage::helper('tim_recommendation')->__('Cc')),
-            array('value'=>2, 'label'=>Mage::helper('tim_recommendation')->__('Bcc')),
+            array('value' => 1, 'label' => Mage::helper('tim_recommendation')->__('Cc')),
+            array('value' => 2, 'label' => Mage::helper('tim_recommendation')->__('Bcc')),
         );
     }
 }

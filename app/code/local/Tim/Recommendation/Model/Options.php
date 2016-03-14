@@ -12,8 +12,8 @@ class Tim_Recommendation_Model_Options
     public function toOptionArray()
     {
         return array(
-            array('value'=>1, 'label'=>Mage::helper('tim_recommendation')->__('Yes')),
-            array('value'=>0, 'label'=>Mage::helper('tim_recommendation')->__('No')),
+            array('value' => 1, 'label' => Mage::helper('tim_recommendation')->__('Yes')),
+            array('value' => 0, 'label' => Mage::helper('tim_recommendation')->__('No')),
         );
     }
 }

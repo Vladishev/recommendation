@@ -36,7 +36,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
                 $field = 'date_add';
         }
 
-        $recommendationBlock =$this->getLayout()->createBlock('tim_recommendation/recommendation');
+        $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
         $opinionData = $recommendationBlock->getUserOpinionData($params['userId'], $limit, $curPage, $order, $field);
         $opinionsCount = $recommendationBlock->getUserOpinionCount($params['userId']);
         $opinionData[0]['pagesCount'] = ceil($opinionsCount / $limit);
@@ -92,7 +92,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
             $order = 'DESC';
         }
 
-        $recommendationBlock =$this->getLayout()->createBlock('tim_recommendation/recommendation');
+        $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
         $commentData = $recommendationBlock->getOpinionComment($params['userId'], $limit, $curPage, $order);
 
         die(json_encode($commentData));
@@ -107,7 +107,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
     {
         $i = 0;
         foreach ($recomIdSet as $opinion) {
-            $recommendationBlock =$this->getLayout()->createBlock('tim_recommendation/recommendation');
+            $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
             $recomIdSet[$i]['opinionData'] = $recommendationBlock->getOpinionData($opinion['recom_id']);
             $recomIdSet[$i]['opinionData']['youtubeVideoId'] = $recommendationBlock->parseYoutubeUrl($recomIdSet[$i]['opinionData']['movie_url']);
             $recomIdSet[$i]['userData'] = $recommendationBlock->getUserData($recomIdSet[$i]['opinionData']['user_id']);

@@ -103,7 +103,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $recommendationCollection->addFieldToFilter('acceptance', 1);
         $recommendationCollection->addFieldToFilter('user_id', $userId);
-        $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL' ));
+        $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
         $recommendationCollection->addFieldToSelect('comment');
         $recommendationCollection->addFieldToSelect('date_add');
         $recommendationCollection->addFieldToSelect('product_id');
@@ -140,7 +140,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $recommendationCollection->addFieldToFilter('acceptance', 1);
         $recommendationCollection->addFieldToFilter('user_id', $userId);
-        $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL' ));
+        $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
         $count = count($recommendationCollection->getData());
 
         return $count;

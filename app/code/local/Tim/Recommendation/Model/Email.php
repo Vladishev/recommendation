@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -39,24 +40,24 @@ class Tim_Recommendation_Model_Email extends Aschroder_SMTPPro_Model_Email
             ->addTo($this->getToEmail(), $this->getToName())
             ->setSubject($this->getSubject());
 //Add Cc and Bcc functionality
-         if ($this->getBcc()) {
-             $mail->addBcc($this->getBcc());
-         }
-         if ($this->getCc()) {
-             $mail->addCc($this->getCc());
-         }
+        if ($this->getBcc()) {
+            $mail->addBcc($this->getBcc());
+        }
+        if ($this->getCc()) {
+            $mail->addCc($this->getCc());
+        }
 //Add attachment functionality
-         if(isset($templateVar['image_name0'])) {
-             $i = 0;
-             while($templateVar['image_name'.$i]) {
-                 $attachment = $mail->createAttachment(file_get_contents(Mage::getBaseDir() . $templateVar['image_name'.$i]));
-                 $attachment->type = $templateVar['image_type'.$i];
-                 $attachment->disposition = Zend_Mime::DISPOSITION_INLINE;
-                 $attachment->encoding = Zend_Mime::ENCODING_BASE64;
-                 $attachment->filename = 'Image';
-                 $i++;
-             }
-         }
+        if (isset($templateVar['image_name0'])) {
+            $i = 0;
+            while ($templateVar['image_name' . $i]) {
+                $attachment = $mail->createAttachment(file_get_contents(Mage::getBaseDir() . $templateVar['image_name' . $i]));
+                $attachment->type = $templateVar['image_type' . $i];
+                $attachment->disposition = Zend_Mime::DISPOSITION_INLINE;
+                $attachment->encoding = Zend_Mime::ENCODING_BASE64;
+                $attachment->filename = 'Image';
+                $i++;
+            }
+        }
 
         $transport = new Varien_Object(); // for observers to set if required
         Mage::dispatchEvent('aschroder_smtppro_before_send', array(

@@ -28,7 +28,7 @@ class Tim_Recommendation_Block_System_Config_UserType extends Mage_Adminhtml_Blo
         $this->_addButtonLabel = Mage::helper('tim_recommendation')->__('Add new type');
     }
 
-    protected function  _getRenderer()
+    protected function _getRenderer()
     {
         if (!$this->_itemRenderer) {
             $this->_itemRenderer = $this->getLayout()->createBlock(

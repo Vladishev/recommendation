@@ -42,21 +42,6 @@ jQuery(document).ready(function () {
         return false;
     });
 
-    jQuery('.tim-opinion-photo a').click(function (e) {
-        e.preventDefault();
-        var recomId = e.target.id;
-        jQuery('#tim-all-photo-popup-' + recomId).show(300);
-    });
-    jQuery('.tim-opinion-movie a').click(function (e) {
-        e.preventDefault();
-        var recomId = e.target.id;
-        jQuery('#tim-video-popup-' + recomId).show(300);
-    });
-    jQuery('.tim-popup-close').click(function () {
-        var popupClass = '.' + jQuery(this).parents().get(1).className;
-        jQuery(popupClass).hide();
-    });
-
     jQuery(document).keydown(function (e) {
         if (e.keyCode == 27) {
             jQuery('.tim-all-photo-popup').hide();
@@ -849,7 +834,7 @@ function renderOpinionsList(response) {
 }
 
 //Removes 'validation-failed' from cloned form
-function removingValidation ($el) {
+function removingValidation($el) {
     var classList = $el.attr('class').split(/\s+/);
     var validationRemoved = 0;
 
