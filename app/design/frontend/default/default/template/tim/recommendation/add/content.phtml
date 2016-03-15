@@ -40,7 +40,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
-                          class="check-tim-profile-status <?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?> tim-characters-count"
+                          class="check-tim-profile-status tim-characters-count<?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionPlaceholder; ?>
@@ -55,7 +55,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
-                          class="check-tim-profile-status <?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?> tim-characters-count"
+                          class="check-tim-profile-status tim-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -63,14 +63,14 @@ if (!empty($opinionLimitCharacters['max'])) {
             </div>
             <div class="char-count" id="char-count-tim-opinion-disadvantages"><span>0</span></div>
 
-            <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary <?php echo $requiredFields['summary']? 'required' : '' ?> tim-characters-count">
+            <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary <?php echo $requiredFields['summary']? 'required' : '' ?>">
                 <?php echo $requiredFields['summary']? '<em>*</em>' : '' ?>
                 <?php echo $this->__('Podsumowanie / dodatkowe informacje / uwagi:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
-                          class="check-tim-profile-status <?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-characters-count<?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
