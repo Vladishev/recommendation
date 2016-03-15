@@ -697,7 +697,7 @@ function renderOpinionsList(response) {
             //preparing popups - set content to video
             $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
-                $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-'+recomId+'" value="https://www.youtube.com/embed/' + opinionData['youtubeVideoId'] + '">');
+                $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-' + recomId + '" value="' + opinionData['youtubeVideoId'] + '">');
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
@@ -709,7 +709,7 @@ function renderOpinionsList(response) {
             //preparing popup - set content
             $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
-                $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-'+recomId+'" value="https://www.youtube.com/embed/' + opinionData['youtubeVideoId'] + '">');
+                $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-' + recomId + '" value="' + opinionData['youtubeVideoId'] + '">');
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
@@ -1240,10 +1240,15 @@ function showVideo() {
     jQuery(document).on('click', '.tim-opinion-movie a', function (e) {
         e.preventDefault();
         var recomId = e.target.id;
-        var link = jQuery('#tim-youtube-data-' + recomId).val();
+        var youtubeVideoId = jQuery('#tim-youtube-data-' + recomId).val();
         var $popup = jQuery('#tim-video-popup-' + recomId);
-        if (typeof link != 'undefined') {
-            $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="' + link + '"></iframe>');
+        var isset = $popup.find('.iframe-video-popup');
+        if (typeof youtubeVideoId != 'undefined') {
+            if (isset.length == 0) {
+                $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + youtubeVideoId + '"></iframe>');
+            } else {
+                $popup.find('.iframe-video-popup').attr("src", "https://www.youtube.com/embed/" + youtubeVideoId);
+            }
         }
         $popup.show(300);
     });
