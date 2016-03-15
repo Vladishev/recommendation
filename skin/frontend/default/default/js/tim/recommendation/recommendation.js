@@ -1242,7 +1242,9 @@ function showVideo() {
         var recomId = e.target.id;
         var link = jQuery('#tim-youtube-data-' + recomId).val();
         var $popup = jQuery('#tim-video-popup-' + recomId);
-        $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="' + link + '"></iframe>');
+        if (typeof link != 'undefined') {
+            $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="' + link + '"></iframe>');
+        }
         $popup.show(300);
     });
 }
