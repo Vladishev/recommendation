@@ -1139,6 +1139,7 @@ function addCommentAjax(el) {
         success: function (response) {
             var response = JSON.parse(response);
             displayAjaxCommentPopupResponse(response);
+            jQuery(el).prop('disabled', false);
             jQuery('#tim-comment-add-window-' + response['commentRecomId']).hide();
             jQuery('#tim-comment-add-show-' + response['commentRecomId']).show();
         },
@@ -1164,7 +1165,6 @@ function displayAjaxCommentPopupResponse(response) {
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
     jQuery('#tim-opinion-comment-' + commentRecomId).val('');
     jQuery('#ph-tim-opinion-comment-' + commentRecomId).show();
-    jQuery('#add-ajax-comment').prop('disabled', false);
     jQuery('#char-count-comment-' + commentRecomId).children('span').text(0);
 }
 

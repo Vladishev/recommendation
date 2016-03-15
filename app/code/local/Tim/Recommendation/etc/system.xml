@@ -49,14 +49,39 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <level_values translate="label">
-                            <frontend_model>tim_recommendation/system_config_userLevel</frontend_model>
-                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                        <client_label>
+                            <label><![CDATA[<strong style="margin-left: 205px;">Klient</strong>]]></label>
+                            <frontend_type>label</frontend_type>
                             <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </level_values>
+                        </client_label>
+                        <client translate="label">
+                            <frontend_model>tim_recommendation/system_config_userLevelClient</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </client>
+                        <expert_label>
+                            <label><![CDATA[<strong style="margin-left: 205px;">Ekspert</strong>]]></label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expert_label>
+                        <expert translate="label">
+                            <frontend_model>tim_recommendation/system_config_userLevelExpert</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <comment>The email-addresses must be separated by a comma</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expert>
                     </fields>
                 </user_level>
             </groups>
@@ -531,6 +556,51 @@
                         </tim_comment_max>
                     </fields>
                 </max_min_length>
+                <customer_points translate="label">
+                    <label>Points for customer</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <add_opinion>
+                            <label>Add opinion</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </add_opinion>
+                        <image_to_opinion>
+                            <label>Add image to opinion</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image_to_opinion>
+                        <movie_to_opinion>
+                            <label>Add movie to opinion</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </movie_to_opinion>
+                        <add_comment>
+                            <label>Add comment</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-not-negative-number</validate>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </add_comment>
+                    </fields>
+                </customer_points>
             </groups>
         </tim_settings>
     </sections>

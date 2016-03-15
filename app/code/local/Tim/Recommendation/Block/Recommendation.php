@@ -23,6 +23,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $userData['customer_name'] = $this->getRecomHelper()->getCustomerNameOrNick($customerId);
         $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);
         $userData['opinion_qty'] = $this->getRecomHelper()->getOpinionQty($customerId);
+        $userData['user_score'] = $this->getRecomHelper()->getUserScore($customerId);
 
         return $userData;
     }
@@ -60,29 +61,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         if (!empty($opinionMedia['url/youtube'])) {
             $opinion['movie_url'] = $opinionMedia['url/youtube'];
         }
-        $opinion['images'] = $this->getImages($opinion['recom_id']);
+        $opinion['images'] = $this->getRecomHelper()->getImages($opinion['recom_id']);
         $opinion['comments'] = $this->getOpinionComments($opinion['recom_id']);
         $opinion['name'] = $this->getRecomHelper()->getCustomerNameOrNick($opinion['user_id']);
 
         return $opinion;
-    }
-
-    /**
-     * Gets image path without url/youtube path
-     * @param int $recomId
-     * @return array
-     */
-    public function getImages($recomId)
-    {
-        $opinionMedia = $this->getRecomHelper()->getOpinionMediaPath($recomId);
-        $images = array();
-        foreach ($opinionMedia as $key => $value) {
-            if ($key === 'url/youtube') {
-                continue;
-            }
-            $images[] .= $value;
-        }
-        return $images;
     }
 
     /**
@@ -366,8 +349,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerInfo = array();
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
             $_helper = $this->getRecomHelper();
-            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+            $customerId = $customer->getId();
             $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
             $customerInfo['customerName'] = $_helper->getCustomerNickname($customerId);
             $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
@@ -376,6 +360,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation' . DS . 'user' . DS . 'edit';
             $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
             $customerInfo['engage'] = $user->getEngage();
+            $customerInfo['user_score'] = $_helper->getUserScore($customerId);
             return $customerInfo;
         } else {
             return false;
@@ -387,15 +372,15 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * @param $url
      * @return bool|mixed
      */
-    public function parseYoutubeUrl($url){
+    public function parseYoutubeUrl($url)
+    {
         $urlElements = parse_url($url);
         $host = $urlElements['host'];
-        if($host == 'www.youtube.com'){
+        if ($host == 'www.youtube.com') {
             $videoId = substr($urlElements['query'], 2);
-
-        }elseif($host == 'youtu.be'){
+        } elseif ($host == 'youtu.be') {
             $videoId = substr($urlElements['path'], 1);
-        }else{
+        } else {
             return false;
         }
         return $videoId;

@@ -10,11 +10,6 @@
  */
 class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Action
 {
-    public function indexAction()
-    {
-
-    }
-
     public function addAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -246,6 +241,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $this->norouteAction();
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
+                //add points for adding comment or opinion by customer
+                Mage::helper('tim_recommendation')->savePointsForCustomer($opinion);
                 $opinion->setAcceptance('1')
                     ->setPublicationDate(date('Y-m-d H:i:s'));
                 try {

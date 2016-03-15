@@ -17,9 +17,9 @@
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
-<!--            <p>--><?php //echo $userData['engage']; ?><!--</p>-->
-            <div class="tim-user-scoregraph tim-score-2">
-                <!-- number of opinons --> <?php echo $this->__($userData['opinionQty']); ?>
+            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
+                <!-- number of opinons -->
+                <?php echo $this->__('%s opinii', $userData['opinionQty']); ?>
             </div>
             <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
         </div>

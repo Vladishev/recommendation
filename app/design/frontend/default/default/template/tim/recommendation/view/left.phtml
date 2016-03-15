@@ -29,7 +29,7 @@ $userData = $this->getUserData($userId);
     <div class="tim-user-involvement">
         <?php echo $this->__('User involvement'); ?>
         <!-- place for user score which will result from the number of entries -->
-        <div class="tim-user-scoregraph tim-score-2">
+        <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
             <!-- number of opinons -->
             <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
         </div>

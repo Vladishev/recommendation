@@ -60,6 +60,27 @@ class Tim_Recommendation_Model_Observer
         }
     }
 
+    public function saveUserStars()
+    {
+        if (Mage::app()->getRequest()->getParam('section') == 'tim_recommendation') {
+            $userLevelsClient = unserialize(Mage::getStoreConfig('tim_recommendation/user_level/client'));
+            $usersCollection = Mage::getModel('tim_recommendation/user')->getCollection();
+            foreach ($usersCollection as $user) {
+                $userPoints = $user->getPoints();
+                $level = 0;
+                foreach ($userLevelsClient as $userLevel) {
+                    if ($userPoints >= $userLevel['from'] && $userPoints <= $userLevel['to']) {
+                        $level = $userLevel['point'];
+                        break;
+                    }
+                }
+                if ($user->getLevel() < $level) {
+                    $user->setLevel($level)->save();
+                }
+            }
+        }
+    }
+
     /**
      * CRUD value in table tim_user_type
      */

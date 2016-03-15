@@ -12,7 +12,7 @@
 <config>
     <modules>
         <Tim_Recommendation>
-            <version>0.2.0</version>
+            <version>0.2.1</version>
         </Tim_Recommendation>
     </modules>
     <global>
@@ -91,10 +91,6 @@
                         <class>tim_recommendation/observer</class>
                         <method>saveUserType</method>
                     </save_user_type>
-                </observers>
-            </admin_system_config_changed_section_tim_recommendation>
-            <admin_system_config_changed_section_tim_recommendation>
-                <observers>
                     <save_user_level>
                         <type>singleton</type>
                         <class>tim_recommendation/observer</class>
@@ -102,6 +98,15 @@
                     </save_user_level>
                 </observers>
             </admin_system_config_changed_section_tim_recommendation>
+            <controller_action_predispatch_adminhtml_system_config_save>
+                <observers>
+                    <save_user_stars>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>saveUserStars</method>
+                    </save_user_stars>
+                </observers>
+            </controller_action_predispatch_adminhtml_system_config_save>
             <controller_index_add_opinion_data>
                 <observers>
                     <send_opinion_email>
@@ -258,6 +263,12 @@
                 <tim_comment_min>0</tim_comment_min>
                 <tim_comment_max>0</tim_comment_max>
             </max_min_length>
+            <customer_points>
+                <add_opinion>3</add_opinion>
+                <image_to_opinion>1</image_to_opinion>
+                <movie_to_opinion>1</movie_to_opinion>
+                <add_comment>1</add_comment>
+            </customer_points>
         </tim_settings>
     </default>
 </config>
