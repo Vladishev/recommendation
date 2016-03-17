@@ -10,50 +10,11 @@ jQuery(document).ready(function () {
     showVideo();
     closePopup();
     checkProfile();
-
+    displayRatingStars();
+    closePopupByEsc();
+    scrollToOpinions();
+    userLoginPopup();
     cropperFunctionality();
-
-    /* function to put value into html content right to rating stars and switch userlogin details*/
-
-    jQuery('input').on('change', function () {
-        var inputChangeName = jQuery(this).attr('name');
-        var inputChangeValue = jQuery(this).val();
-        var inputChangeNameSpan = 'span.' + inputChangeName;
-        /* alert(inputChangeName+inputChangeValue)         */
-        jQuery(inputChangeNameSpan).html(inputChangeValue);
-
-        if (inputChangeName == 'userHaveaccount') {
-            if (inputChangeValue == 'TAK') {
-                jQuery('.tim-userlogin-existuser').show();
-                jQuery('.tim-userlogin-newuser').hide();
-            }
-            if (inputChangeValue == 'NIE') {
-                jQuery('.tim-userlogin-existuser').hide();
-                jQuery('.tim-userlogin-newuser').show();
-            }
-        }
-    });
-
-    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
-    jQuery('#tim-scroll').click(function () {
-        jQuery('html, body').animate({
-            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
-        }, 500);
-        return false;
-    });
-
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-all-photo-popup').hide();
-            jQuery('.tim-video-popup').hide();
-            jQuery('.tim-userlogin-popup').hide();
-            jQuery('.tim-add-comment-popup').hide();
-            jQuery('.tim-add-opinion-popup').hide();
-            jQuery('.tim-markabuse-popup').hide();
-            jQuery('.check-tim-profile-status-popup').hide();
-        }
-    });
-
 });
 
 function cropperFunctionality() {
@@ -1261,5 +1222,64 @@ function closePopup() {
     jQuery(document).on('click', '.tim-popup-close', function () {
         var popupClass = '.' + jQuery(this).parents().get(1).className;
         jQuery(popupClass).hide();
+    });
+}
+
+/**
+ * Close popup by ESC button
+ */
+function closePopupByEsc() {
+    jQuery(document).keydown(function (e) {
+        if (e.keyCode == 27) {
+            jQuery('.tim-all-photo-popup').hide();
+            jQuery('.tim-video-popup').hide();
+            jQuery('.tim-userlogin-popup').hide();
+            jQuery('.tim-add-comment-popup').hide();
+            jQuery('.tim-add-opinion-popup').hide();
+            jQuery('.tim-markabuse-popup').hide();
+            jQuery('.check-tim-profile-status-popup').hide();
+        }
+    });
+}
+
+/**
+ * Show hide info in login popup
+ */
+function userLoginPopup() {
+    jQuery('.tim-rating-button-boolean').on('change', function () {
+        var inputChangeValue = jQuery(this).val();
+        if (inputChangeValue == 'TAK') {
+            jQuery('.tim-userlogin-existuser').show();
+            jQuery('.tim-userlogin-newuser').hide();
+        }
+        if (inputChangeValue == 'NIE') {
+            jQuery('.tim-userlogin-existuser').hide();
+            jQuery('.tim-userlogin-newuser').show();
+        }
+    });
+}
+
+/**
+ * Scrolling from product info to opinion lost
+ */
+function scrollToOpinions() {
+    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
+    jQuery('#tim-scroll').click(function () {
+        jQuery('html, body').animate({
+            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+        }, 500);
+        return false;
+    });
+}
+
+/**
+ * Display selected qty of stars on add opinion view
+ */
+function displayRatingStars() {
+    jQuery('.tim-rating-input-span').on('change', function () {
+        var inputChangeName = jQuery(this).attr('name');
+        var inputChangeValue = jQuery(this).val();
+        var inputChangeNameSpan = 'span.' + inputChangeName;
+        jQuery(inputChangeNameSpan).html(inputChangeValue);
     });
 }
