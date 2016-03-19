@@ -1,8 +1,18 @@
 /*Tim styles*/
-.note-form { height: 100px; width: 450px; }
-.grid tr.filter .range input {
-    width: 95px!important;
+.note-form {
+    height: 100px;
+    width: 450px;
 }
+
+.grid tr.filter .range input {
+    width: 95px !important;
+}
+
 .grid tr.filter .range div.date {
     min-width: 160px;
+}
+
+.tim_recommendation {
+    position: absolute;
+    margin: 110px 0 0 450px;
 }

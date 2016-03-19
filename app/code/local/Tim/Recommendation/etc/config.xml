@@ -216,8 +216,8 @@
                                         <tim_salt>
                                             <title>Salt</title>
                                         </tim_salt>
-                                        <tim_settings>
-                                            <title>Settings</title>
+                                        <tim_settings module="tim_recommendation">
+                                            <title>Tim_Settings</title>
                                         </tim_settings>
                                     </children>
                                 </config>

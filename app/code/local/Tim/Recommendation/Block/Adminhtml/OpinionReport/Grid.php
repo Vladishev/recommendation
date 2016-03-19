@@ -105,7 +105,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'filter_time' => true,
         ));
         $this->addColumn('comments', array(
-            'header' => Mage::helper('tim_recommendation')->__('Comments'),
+            'header' => Mage::helper('tim_recommendation')->__('Text of opinion'),
             'width' => '200',
             'index' => 'advantages',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_Comments',

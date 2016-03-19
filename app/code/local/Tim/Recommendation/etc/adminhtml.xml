@@ -45,16 +45,16 @@
                         <children>
                             <config>
                                 <children>
-                                    <tim_recommendation>
+                                    <tim_recommendation module="tim_recommendation">
                                         <title>Recommendation</title>
                                     </tim_recommendation>
-                                    <tim_avatar_settings>
+                                    <tim_avatar_settings module="tim_recommendation">
                                         <title>Avatar settings</title>
-                                    </tim_avatar_settings>
-                                    <tim_salt>
+                                    </tim_avatar_settings >
+                                    <tim_salt module="tim_recommendation">
                                         <title>Salt</title>
                                     </tim_salt>
-                                    <tim_settings>
+                                    <tim_settings module="tim_recommendation">
                                         <title>Settings</title>
                                     </tim_settings>
                                 </children>
@@ -66,19 +66,19 @@
                             <tim translate="title" module="tim_recommendation">
                                 <title>TIM</title>
                                 <children>
-                                    <tim_recommendation translate="title">
+                                    <tim_recommendation translate="title" module="tim_recommendation">
                                         <title>Recommendations</title>
                                         <sort_order>0</sort_order>
                                     </tim_recommendation>
-                                    <tim_comments translate="title">
-                                        <title>Comments</title>
+                                    <tim_comments translate="title" module="tim_recommendation">
+                                        <title>Tim_Comments</title>
                                         <sort_order>5</sort_order>
                                     </tim_comments>
-                                    <tim_opinion_images translate="title">
+                                    <tim_opinion_images translate="title" module="tim_recommendation">
                                         <title>Opinion images</title>
                                         <sort_order>10</sort_order>
                                     </tim_opinion_images>
-                                    <tim_malpractice translate="title">
+                                    <tim_malpractice translate="title" module="tim_recommendation">
                                         <title>Malpractices</title>
                                         <sort_order>0</sort_order>
                                     </tim_malpractice>

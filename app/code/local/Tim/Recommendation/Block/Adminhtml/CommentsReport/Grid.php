@@ -86,7 +86,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'filter_time' => true,
         ));
         $this->addColumn('comments', array(
-            'header' => Mage::helper('tim_recommendation')->__('Comment'),
+            'header' => Mage::helper('tim_recommendation')->__('Text of comment'),
             'width' => '200',
             'index' => 'comment',
         ));
