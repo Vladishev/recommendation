@@ -188,7 +188,7 @@
             </groups>
         </tim_salt>
         <tim_settings translate="label" module="tim_recommendation">
-            <label>Settings</label>
+            <label>Tim_Settings</label>
             <tab>tim_tab</tab>
             <sort_order>10</sort_order>
             <show_in_default>1</show_in_default>
