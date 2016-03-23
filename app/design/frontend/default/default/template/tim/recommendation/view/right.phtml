@@ -2,8 +2,6 @@
 $recomId = $this->opinion['recom_id'];
 $opinionData = $this->getOpinionData($recomId);
 $averageRating = $this->getProductEvaluation($recomId);
-$byIt = $opinionData['by_it'] ? 1 : 0;
-$recommend = $opinionData['recommend'] ? 1 : 0;
 ?>
 <div class="tim-rating"> <!-- main container for rating part of opinion -->
     <div class="tim-rating-title"><?php echo $this->__('EVALUATION OF PRODUCT'); ?>:</div>
@@ -54,19 +52,8 @@ $recommend = $opinionData['recommend'] ? 1 : 0;
             <span class="recommend-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="recommend-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
         </div>
     </div>
+    <input type="hidden" id="tim-user-choice-info"
+           data-byIt="<?php echo $opinionData['by_it'] ? 1 : 0; ?>"
+           data-recommend="<?php echo $opinionData['recommend'] ? 1 : 0; ?>"
+           data-recomId="<?php echo $recomId ?>"/>
 </div>
-<script type="text/javascript">
-    var byIt = <?php echo $byIt; ?>;
-    var recommend = <?php echo $recommend; ?>;
-    var recomId = <?php echo $recomId ?>;
-    if (byIt) {
-        jQuery('.byIt-yes-'+ recomId).addClass('tim-chart-boolean-active');
-    } else {
-        jQuery('.byIt-no-'+ recomId).addClass('tim-chart-boolean-active');
-    }
-    if (recommend) {
-        jQuery('.recommend-yes-'+ recomId).addClass('tim-chart-boolean-active');
-    } else {
-        jQuery('.recommend-no-'+ recomId).addClass('tim-chart-boolean-active');
-    }
-</script>

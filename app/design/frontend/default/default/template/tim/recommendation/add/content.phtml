@@ -40,7 +40,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
-                          class="check-tim-profile-status tim-characters-count<?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionPlaceholder; ?>
@@ -55,7 +55,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
-                          class="check-tim-profile-status tim-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -70,7 +70,7 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
-                          class="check-tim-profile-status tim-characters-count<?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionPlaceholder; ?>
@@ -261,48 +261,11 @@ if (!empty($opinionLimitCharacters['max'])) {
              alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
         <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
 </div>
+<input type="hidden" id="opinionLimitChars"
+       data-min="<?php echo $opinionLimitCharacters['min'] ?>"
+       data-max="<?php echo $opinionLimitCharacters['max'] ?>"/>
 <script type="text/javascript">
     //<![CDATA[
     var dataForm = new VarienForm('form-validate-opinion', true);
-
-    Validation.add('validate-url-link', '<?php echo $this->__('The link will not come from Youtube') ?>', function (v) {
-        var url = v;
-        if (url != '') {
-            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&\?]*).*/;
-            var match = url.match(regExp);
-            if (!(match && match[2].length == 11)) {
-                return false;
-            }
-        }
-        return true;
-    });
-
-
-    Validation.add('min-length-opinion', '<?php echo $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] ?>', function (v) {
-        var min = <?php echo ($opinionLimitCharacters['min']) ? $opinionLimitCharacters['min'] : 0 ?>;
-        if (min) {
-            if (v.length < min) {
-                return false;
-            }
-        }
-        return true;
-    });
-
-    Validation.add('max-length-opinion', '<?php echo $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'] ?>', function (v) {
-        var max = <?php echo ($opinionLimitCharacters['max']) ? $opinionLimitCharacters['max'] : 0 ?>;
-        if (max) {
-            if (v.length > max) {
-                return false;
-            }
-        }
-        return true;
-    });
-
-    jQuery('.tim-characters-count').on('keyup', function(){
-        var $el = jQuery(this);
-        var id = $el.attr('id');
-        var span = jQuery('#char-count-'+ id).children("span");
-        span.html($el.val().length);
-    });
     //]]>
 </script>
