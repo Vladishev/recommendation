@@ -907,25 +907,6 @@ function hideComments(recomId) {
     jQuery('.tim-comment-link-' + recomId).show();
 }
 
-function checkIfUserIsLoggedIn() {
-    /* function open modal when submit button is pressed without validation yet */
-    jQuery('.tim-userlogin-popup').show(300);
-}
-
-/**
- * Shows popup if user's profile not fill
- */
-function checkProfile() {
-    jQuery(document).on('click', '.check-tim-profile-status', function () {
-        var status = jQuery('#tim-profile-status').val();
-
-        if (status == '0') {
-            jQuery('.check-tim-profile-status-popup').show(300);
-            return false;
-        }
-        return true;
-    });
-}
 
 /**
  * Shows popup if user's profile not fill for input field
@@ -1222,27 +1203,6 @@ function countCommentChar(commentId) {
     jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
 }
 
-/**
- * Check click action and show popup with opinion photo
- */
-function showPhotos() {
-    jQuery(document).on('click', '.tim-opinion-photo a', function (e) {
-        e.preventDefault();
-        var recomId = e.target.id;
-        jQuery('#tim-all-photo-popup-' + recomId).show(300);
-    });
-}
-
-/**
- * Check click action and show popup with opinion video
- */
-function showVideo() {
-    jQuery(document).on('click', '.tim-opinion-movie a', function (e) {
-        e.preventDefault();
-        var recomId = e.target.id;
-        jQuery('#tim-video-popup-' + recomId).show(300);
-    });
-}
 
 /**
  * Close popup action
@@ -1251,5 +1211,51 @@ function closePopup() {
     jQuery(document).on('click', '.tim-popup-close', function () {
         var popupClass = '.' + jQuery(this).parents().get(1).className;
         jQuery(popupClass).hide();
+    });
+}
+
+
+
+/***** VEX based popups for recommendation *****/
+
+/* Check if user is logged in */
+function checkIfUserIsLoggedIn() {
+    /* function open modal when submit button is pressed without validation yet */
+	vex.defaultOptions.className = 'vex-theme-default';    
+    vex.dialog.alert('<strong>Uwaga!</strong> Nie jesteś zalogowanym użytkownikiem, aby dodać opinię lub komentarz musisz zalogować się lub założyć konto na naszym serwisie.');
+}
+
+/* Shows popup if user's profile not fill */
+function checkProfile() {
+     jQuery(document).on('click', '.check-tim-profile-status', function () {
+        var status = jQuery('#tim-profile-status').val();
+        if (status == '0') {
+		vex.open({
+		   	content: jQuery('.check-tim-profile-status-popup').html(),
+			className: 'vex-theme-default'
+		});
+            return false;
+        }
+        return true;
+    });
+}
+
+/* Check click action and show popup with opinion photo */
+function showPhotos() {
+	jQuery(document).on('click', '.tim-opinion-photo', function (e) {
+		vex.open({
+		   	content: jQuery('#tim-all-photo-popup-' + e.target.id).html(),
+			className: 'vex-theme-default'
+		});
+	});
+}
+
+/* Check click action and show popup with opinion video */
+function showVideo() {
+    jQuery(document).on('click', '.tim-opinion-movie', function (e) {
+		vex.open({
+		   	content: jQuery('#tim-video-popup-' + e.target.id).html(),
+			className: 'vex-theme-default'
+		});
     });
 }

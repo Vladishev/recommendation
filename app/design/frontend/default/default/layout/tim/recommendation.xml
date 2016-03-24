@@ -21,6 +21,7 @@
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/vex.combined.min.js</name></action>			
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="product.info">
@@ -49,6 +50,7 @@
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/vex.combined.min.js</name></action>			
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="content">
@@ -61,7 +63,9 @@
         </reference>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/vex.combined.min.js</name></action>			
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/vex.combined.min.js</name></action>			
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="header">
@@ -117,6 +121,7 @@
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/dist/cropper.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/vex.combined.min.js</name></action>			
             <action method="addItem"><type>skin_css</type><name>js/tim/recommendation/cropper-master/dist/cropper.css</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
