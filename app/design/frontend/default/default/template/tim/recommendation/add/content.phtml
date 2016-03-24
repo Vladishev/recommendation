@@ -224,7 +224,7 @@ if (!empty($opinionLimitCharacters['max'])) {
                         <?php endif; ?>
                     </p>
                     <input type="text" name="link_to_youtube" id="link_to_youtube"
-                           class="validate-url-link check-tim-profile-status input-text validate-url <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
+                           class="validate-url-link check-tim-profile-status input-text <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
                         <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : 'onfocus="checkProfileInputField()" onclick="checkProfileInputField()"'?>/>
                     <!-- place for user input - add movie - url to youtube -->
