@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
-    <default>
-        <reference name="head">
-            <action method="setCanLoadExtJs"><flag>1</flag></action>
-            <action method="setCanLoadTinyMce"><flag>1</flag></action>
-            <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
-            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
-            <action method="addJs"><script>lib/flex.js</script></action>
-            <action method="addJs"><script>lib/FABridge.js</script></action>
-            <action method="addJs"><script>tiny_mce/tiny_mce.js</script></action>
-            <action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
-            <action method="addJs"><script>mage/adminhtml/browser.js</script></action>
-            <action method="addJs"><script>prototype/window.js</script></action>
-            <action method="addJs"><script>prototype/prototype.js</script></action>
-            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
-        </reference>
-    </default>
     <catalog_product_view>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="product.info">
@@ -55,24 +39,25 @@
             <block type="tim_recommendation/recommendation" name="center.recommendation.profile" template="tim/recommendation/profile/content.phtml" />
         </reference>
     </recommendation_user_profile>
-    <recommendation_index_landing>
-        <reference name="root">
-            <action method="setTemplate"><template>page/1column.phtml</template></action>
-        </reference>
-        <reference name="head">
-            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
-        </reference>
-        <reference name="header">
-            <block type="page/header" name="header">
-            <action method="setTemplate"><template>tim/recommendation/landing/header.phtml</template></action>
-        </block>
-        </reference>
-        <reference name="content">
-            <block type="tim_recommendation/recommendation" name="content.recommendation.landing" template="tim/recommendation/landing/content.phtml" />
-        </reference>
-    </recommendation_index_landing>
+    <!--Not use this page yet-->
+    <!--<recommendation_index_landing>-->
+        <!--<reference name="root">-->
+            <!--<action method="setTemplate"><template>page/1column.phtml</template></action>-->
+        <!--</reference>-->
+        <!--<reference name="head">-->
+            <!--<action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>-->
+            <!--<action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>-->
+            <!--<action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>-->
+        <!--</reference>-->
+        <!--<reference name="header">-->
+            <!--<block type="page/header" name="header">-->
+            <!--<action method="setTemplate"><template>tim/recommendation/landing/header.phtml</template></action>-->
+        <!--</block>-->
+        <!--</reference>-->
+        <!--<reference name="content">-->
+            <!--<block type="tim_recommendation/recommendation" name="content.recommendation.landing" template="tim/recommendation/landing/content.phtml" />-->
+        <!--</reference>-->
+    <!--</recommendation_index_landing>-->
     <recommendation_index_view>
         <reference name="root">
             <action method="setTemplate"><template>page/3columns.phtml</template></action>
@@ -101,9 +86,6 @@
         </reference>
     </recommendation_index_confirm>
     <customer_account>
-        <reference name="head">
-            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
-        </reference>
         <reference name="customer_account_navigation">
             <action method="addLink" translate="label">
                 <name>Recommendation</name>
@@ -114,11 +96,12 @@
     </customer_account>
     <recommendation_user_edit>
         <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery-1.7.1.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
             <action method="addItem"><type>skin_css</type><name>js/tim/recommendation/cropper-master/dist/cropper.min.css</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/dist/cropper.min.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
         </reference>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper"> <!-- target parent block -->
