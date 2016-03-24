@@ -944,9 +944,9 @@ function addExtraValidation() {
     Validation.add('validate-url-link', 'Podany link nie prowadzi do filmu z serwisu YouTube', function (v) {
         var url = v;
         if (url != '') {
-            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&\?]*).*/;
+            var regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
             var match = url.match(regExp);
-            if (!(match && match[2].length == 11)) {
+            if (!match) {
                 return false;
             }
         }
