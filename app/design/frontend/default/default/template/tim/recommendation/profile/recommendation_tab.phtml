@@ -123,30 +123,6 @@
 </div>
 <script type="text/javascript">
     //<![CDATA[
-
     var dataForm = new VarienForm('form-validate-user-profile', true);
-    Validation.add('custom-url-validate', '<?php echo $this->__('Please enter a valid URL. For example http://www.example.com or www.example.com or example.com') ?>', function () {
-        var url = document.getElementById("tim-form-url").value;
-        var pattern = /([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
-        if (pattern.test(url)) {
-            return true;
-        }
-        return false;
-    });
-
-    Validation.add('tim-avatar-validate', '<?php echo $this->__('Please choose one of the options above.') ?>', function () {
-        var defaultAvatars = jQuery('input[name=selected_avatar]:checked').val();
-        var customAvatar = jQuery('#tim-avatar-container').has('img').length;
-
-        if ((typeof defaultAvatars === 'undefined') && (customAvatar == 0)) {
-            jQuery('html, body').animate({
-                scrollTop: jQuery("#tim-avatar-container").offset().top - 400
-            }, 500);
-
-            return false;
-        }
-
-        return true;
-    });
     //]]>
 </script>
