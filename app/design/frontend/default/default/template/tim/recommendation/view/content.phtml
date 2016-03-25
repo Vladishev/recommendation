@@ -50,13 +50,13 @@ if (!empty($commentLimitCharacters['max'])) {
     <div class="tim-opinion-media">
         <?php if (!empty($opinionData['images'])): ?>
             <div class="tim-opinion-photo">
-                <a class="tim-readmore tim-opinion-photo-link" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></a>
+                <div class="tim-readmore tim-opinion-photo-link" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></div>
                 <!-- button for displaying user added photos in overlay -->
             </div>
         <?php endif; ?>
         <?php if (!empty($opinionData['movie_url'])): ?>
             <div class="tim-opinion-movie">
-                <a class="tim-readmore" href="#" id="<?php echo $recomId?>"><?php echo $this->__('See footage'); ?></a>
+                <div class="tim-readmore" id="<?php echo $recomId?>"><?php echo $this->__('See footage'); ?></div>
                 <!-- button for displaying movie in overlay (movie source: YouTube)  -->
             </div>
         <?php endif; ?>

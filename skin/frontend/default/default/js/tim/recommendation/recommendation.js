@@ -945,9 +945,14 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
     customerHostName = hostName;
     siteUrl = url;
     var $sendButton = jQuery('#tim-abuse-application-sendbt');
-
-    jQuery('.tim-markabuse-popup').show(300);
-    jQuery('#tim-abuse-application').show();
+    // jQuery('.tim-markabuse-popup').show(300);
+    
+        		vex.open({
+		   	content: jQuery('.tim-markabuse-popup').html(),
+			className: 'vex-theme-default'
+		});
+    
+        jQuery('#tim-abuse-application').show();
     $sendButton.show();
     jQuery('.tim-markabuse-popup-container p').text('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.');
 
@@ -1133,7 +1138,10 @@ function addCommentAjax(el) {
 
 function displayAjaxOpinionPopupResponse(response) {
     jQuery('#loading-frontend-mask-opinion').hide();
-    jQuery('.tim-add-opinion-popup').show(300);
+    		vex.open({
+		   	content: jQuery('.tim-add-opinion-popup').html(),
+			className: 'vex-theme-default'
+		});
     var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
@@ -1141,7 +1149,10 @@ function displayAjaxOpinionPopupResponse(response) {
 
 function displayAjaxCommentPopupResponse(response) {
     jQuery('#loading-frontend-mask-comment').hide();
-    jQuery('.tim-add-comment-popup').show(300);
+        		vex.open({
+		   	content: jQuery('.tim-add-comment-popup').html(),
+			className: 'vex-theme-default'
+		});
     var commentRecomId = response['commentRecomId'];
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
     jQuery('#tim-opinion-comment-' + commentRecomId).val('');
@@ -1242,7 +1253,7 @@ function checkProfile() {
 
 /* Check click action and show popup with opinion photo */
 function showPhotos() {
-	jQuery(document).on('click', '.tim-opinion-photo', function (e) {
+	jQuery(document).on('click', '.tim-opinion-photo-link', function (e) {
 		vex.open({
 		   	content: jQuery('#tim-all-photo-popup-' + e.target.id).html(),
 			className: 'vex-theme-default'

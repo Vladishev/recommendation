@@ -24,6 +24,7 @@
 	border-radius: 3px;
 	width:300px;
 	float: right;
+    margin: 30px 0 30px 0;
 }
 
 .tim-comment-button-add {
@@ -41,6 +42,17 @@
 	text-align: left;
 	border-radius: 3px;
 	width: 200px;
+}
+
+.tim-comment-close-form {
+    background: rgba(173, 173, 173, 1);
+    background: -moz-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(173, 173, 173, 1)), color-stop(52%, rgba(163, 163, 163, 1)), color-stop(100%, rgba(173, 173, 173, 1)));
+    background: -webkit-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
+    background: -o-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
+    background: linear-gradient(to bottom, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#adadad', endColorstr='#adadad', GradientType=0);
 }
 
 .tim-comm-button-smal {
@@ -86,7 +98,7 @@
 	opacity: 0.7;
 }
 
-a.tim-readmore {
+a.tim-readmore, .tim-readmore {
 	color: #0057C1;
 	padding-right: 15px;
 	margin-left:5px;
@@ -96,7 +108,7 @@ a.tim-readmore {
 	text-decoration:none;
 }
 
-a.tim-readmore:hover {
+a.tim-readmore:hover, .tim-readmore:hover {
 	color:#000;
 	text-decoration:underline;	
 	cursor:pointer;
@@ -165,13 +177,12 @@ a.tim-readmore:hover {
 }
 
 .tim-comm-header-left {
-	width:900px;
+	width:50%;
 	float:left;
 }
 
 .tim-comm-header-right {
-	width:300px;
-	float:left;
+	float:right;
 }
 
 .tim-comm-header-title {
@@ -192,8 +203,13 @@ a.tim-readmore:hover {
 }
 
 .tim-comm-sorting {
-	margin-top:15px;
 	color:#575656;
+}
+
+.tim-count-per-page {
+        display: inline-block;
+    float: left;
+    margin-right: 40px;
 }
 
 .tim-comm-sorting select {
@@ -221,6 +237,7 @@ a.tim-readmore:hover {
 	float:left;
 	background: #f6f6f6;
 	border-right:0;
+    min-height: 475px;
 }
 
 .tim-comm-left-column-landing {
@@ -306,6 +323,8 @@ a.tim-readmore:hover {
 .tim-comm-main-column {
 	width:700px;
 	float:left;
+    min-height: 475px;
+    margin-bottom:50px;
 }
 
 .tim-comm-main-column-wide {
@@ -338,7 +357,6 @@ a.tim-readmore:hover {
 	font-size:12px;
 	margin-top: -10px;
 	color:#b0b0b0;
-	border-bottom: 1px solid #ddd;
 }
 
 .tim-opinion-date span {
@@ -542,6 +560,16 @@ span.tim-chart-boolean-active {
 
 .tim-pager-decrease-button {
     display: none;
+}
+
+.tim-pager {
+        float: left;
+    width: 120px;
+}
+
+.tim-pager-box {
+    width: 20px;
+    text-align: center;
 }
 
 .tim-advert {
@@ -775,7 +803,7 @@ label.tim-rating-button-boolean-label {
     opacity: 0.6;
 }
  
-.tim-userlogin-popup-container, .tim-markabuse-popup-container, .tim-add-opinion-popup-container, .tim-add-comment-popup-container, .tim-crop-image-container {
+.tim-crop-image-container {
     width:600px;
     height: auto;
     position:absolute;
