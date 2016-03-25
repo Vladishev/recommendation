@@ -906,15 +906,19 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
     customerHostName = hostName;
     siteUrl = url;
     
-      if (userId == '1') {
-        jQuery('input.abuse-email-input').hide();
-    }
+     
     
     
     vex.dialog.open({
         className: 'vex-theme-default',
         message: 'Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.',
-        input: "<input name=\"abusecontent\" type=\"text\" placeholder=\"treść\" required />\n<input name=\"email\" type=\"email\" placeholder=\"e-mail\" class=\"abuse-email-input\"/>",
+        
+  afterOpen: function($vexContent) {
+    if (userId == '1') {
+       $vexContent.append($el);
+    }
+  },     
+
         buttons: [
     jQuery.extend({}, vex.dialog.buttons.YES, {
                 text: 'Wyślij zgłoszenie'
