@@ -1282,3 +1282,16 @@ function displayRatingStars() {
         jQuery(inputChangeNameSpan).html(inputChangeValue);
     });
 }
+
+/**
+* Scrolling from product info to opinion lost
+*/
+function scrollToOpinions() {
+   // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
+   jQuery('#tim-scroll').click(function () {
+       jQuery('html, body').animate({
+           scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+       }, 500);
+       return false;
+   });
+}
