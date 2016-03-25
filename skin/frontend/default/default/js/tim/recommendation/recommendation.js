@@ -944,22 +944,38 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
     customerIp = ip;
     customerHostName = hostName;
     siteUrl = url;
-    var $sendButton = jQuery('#tim-abuse-application-sendbt');
-    // jQuery('.tim-markabuse-popup').show(300);
-    
-        		vex.open({
-		   	content: jQuery('.tim-markabuse-popup').html(),
-			className: 'vex-theme-default'
-		});
-    
-        jQuery('#tim-abuse-application').show();
-    $sendButton.show();
-    jQuery('.tim-markabuse-popup-container p').text('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.');
+    vex.dialog.open({
+        className: 'vex-theme-default',
+        message: 'Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.',
+        input: "<input name=\"abusecontent\" type=\"text\" placeholder=\"treść\" required />\n<input name=\"email\" type=\"email\" placeholder=\"e-mail\"/>",
+        buttons: [
+    jQuery.extend({}, vex.dialog.buttons.YES, {
+                text: 'Wyślij zgłoszenie'
+            }), jQuery.extend({}, vex.dialog.buttons.NO, {
+                text: 'Zamknij okno'
+            })
+  ],
+        callback: function (data) {
+            var param = {
+                userId: userId,
+                customerHostName: customerHostName,
+                customerIp: customerIp,
+                recom_id: recomId,
+                comment: data.abusecontent,
+                email: data.email
+            };
+            jQuery.ajax({
+                url: siteUrl,
+                data: param,
+                type: 'post',
+                success: function (response) {
+                    vex.defaultOptions.className = 'vex-theme-default';
+                    vex.dialog.alert('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora');
+                }
+            });
+        }
 
-    if (userId == '0') {
-        jQuery('#tim-abuse-email').show();
-        jQuery('#tim-abuse-email-input').attr('class', 'required-entry validate-email');
-    }
+    });
 }
 /**
  * Send customer parameters to controller
