@@ -905,10 +905,10 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
     siteUrl = url;
     vex.dialog.open({
         afterOpen: function ($vexContent) {
-            if (userId == '1') {
-                var $el = "<input name='abusecontent' id='abusecontent' type='text' placeholder='treść' required/>";
-            } else {
+            if (userId == '0') {
                 var $el = "<input name='abusecontent' id='abusecontent' type='text' placeholder='treść' required/>\n<input name='email' id='abuseemail' type='email' placeholder='e-mail' class='abuse-email-input' required/>";
+            } else {
+                var $el = "<input name='abusecontent' id='abusecontent' type='text' placeholder='treść' required/>";
             }
             return jQuery('.vex-dialog-input').append($el);
         },
