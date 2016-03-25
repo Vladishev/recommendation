@@ -925,9 +925,6 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
             if (data != false) {
                 var abuseComment = jQuery('#abusecontent').val();
                 var abuseEmail = jQuery('#abuseemail').val();
-                console.log(abuseComment);
-                console.log(abuseEmail);
-
                 var param = {
                     userId: userId,
                     customerHostName: customerHostName,
