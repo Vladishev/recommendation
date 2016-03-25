@@ -116,10 +116,10 @@
     <recommendation_user_edit>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/jquery.form.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/dist/cropper.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/tim/recommendation/cropper-master/dist/cropper.min.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/cropper-master/dist/cropper.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/recommendation.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tim/recommendation/vex.combined.min.js</name></action>			
-            <action method="addItem"><type>skin_css</type><name>js/tim/recommendation/cropper-master/dist/cropper.css</name></action>
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <update handle="customer_account"/>

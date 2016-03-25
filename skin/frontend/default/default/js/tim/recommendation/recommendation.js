@@ -10,50 +10,11 @@ jQuery(document).ready(function () {
     showVideo();
     closePopup();
     checkProfile();
-
+    displayRatingStars();
+    closePopupByEsc();
+    scrollToOpinions();
+    userLoginPopup();
     cropperFunctionality();
-
-    /* function to put value into html content right to rating stars and switch userlogin details*/
-
-    jQuery('input').on('change', function () {
-        var inputChangeName = jQuery(this).attr('name');
-        var inputChangeValue = jQuery(this).val();
-        var inputChangeNameSpan = 'span.' + inputChangeName;
-        /* alert(inputChangeName+inputChangeValue)         */
-        jQuery(inputChangeNameSpan).html(inputChangeValue);
-
-        if (inputChangeName == 'userHaveaccount') {
-            if (inputChangeValue == 'TAK') {
-                jQuery('.tim-userlogin-existuser').show();
-                jQuery('.tim-userlogin-newuser').hide();
-            }
-            if (inputChangeValue == 'NIE') {
-                jQuery('.tim-userlogin-existuser').hide();
-                jQuery('.tim-userlogin-newuser').show();
-            }
-        }
-    });
-
-    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
-    jQuery('#tim-scroll').click(function () {
-        jQuery('html, body').animate({
-            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
-        }, 500);
-        return false;
-    });
-
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-all-photo-popup').hide();
-            jQuery('.tim-video-popup').hide();
-            jQuery('.tim-userlogin-popup').hide();
-            jQuery('.tim-add-comment-popup').hide();
-            jQuery('.tim-add-opinion-popup').hide();
-            jQuery('.tim-markabuse-popup').hide();
-            jQuery('.check-tim-profile-status-popup').hide();
-        }
-    });
-
 });
 
 function cropperFunctionality() {
@@ -697,7 +658,7 @@ function renderOpinionsList(response) {
             //preparing popups - set content to video
             $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
-                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + opinionData['youtubeVideoId'] + '"></iframe>');
+                $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-' + recomId + '" value="' + opinionData['youtubeVideoId'] + '">');
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
@@ -709,7 +670,7 @@ function renderOpinionsList(response) {
             //preparing popup - set content
             $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
-                $parentContent.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + opinionData['youtubeVideoId'] + '"></iframe>');
+                $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-' + recomId + '" value="' + opinionData['youtubeVideoId'] + '">');
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
@@ -1237,6 +1198,17 @@ function countCommentChar(commentId) {
     jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
 }
 
+        var youtubeVideoId = jQuery('#tim-youtube-data-' + recomId).val();
+        var $popup = jQuery('#tim-video-popup-' + recomId);
+        var isset = $popup.find('.iframe-video-popup');
+        if (typeof youtubeVideoId != 'undefined') {
+            if (isset.length == 0) {
+                $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + youtubeVideoId + '"></iframe>');
+            } else {
+                $popup.find('.iframe-video-popup').attr("src", "https://www.youtube.com/embed/" + youtubeVideoId);
+            }
+        }
+        $popup.show(300);
 
 /**
  * Close popup action
@@ -1291,5 +1263,18 @@ function showVideo() {
 		   	content: jQuery('#tim-video-popup-' + e.target.id).html(),
 			className: 'vex-theme-default'
 		});
+        return false;
+    });
+}
+
+/**
+ * Display selected qty of stars on add opinion view
+ */
+function displayRatingStars() {
+    jQuery('.tim-rating-input-span').on('change', function () {
+        var inputChangeName = jQuery(this).attr('name');
+        var inputChangeValue = jQuery(this).val();
+        var inputChangeNameSpan = 'span.' + inputChangeName;
+        jQuery(inputChangeNameSpan).html(inputChangeValue);
     });
 }

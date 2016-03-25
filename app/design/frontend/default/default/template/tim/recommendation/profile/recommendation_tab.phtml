@@ -5,36 +5,36 @@
 <div class="fieldset">
     <h2 class="legend"><?php echo $this->__('Recommendation') ?></h2>
     <ul class="form-list">
-        <li>
-            <label for="url"><?php echo $_helper->__('WWW') ?></label>
+<!--        <li>
+            <label for="url"><?php // echo $_helper->__('WWW') ?></label>
             <div class="input-box">
-                <input type="text" name="url" id="tim-form-url" class="input-text custom-url-validate" value="<?php echo $_helper->getSiteUrl(); ?>" />
+                <input type="text" name="url" id="tim-form-url" class="input-text custom-url-validate" value="<?php // echo $_helper->getSiteUrl(); ?>" />
             </div>
-        </li>
+        </li>-->
         <li>
             <label class="required" for="nick"><em>*</em><?php echo $_helper->__('Nick') ?></label>
             <div class="input-box">
                 <input type="text" name="nick" id="nick" class="input-text required-entry" value="<?php echo $_helper->getUserNick(); ?>" />
             </div>
         </li>
-        <li>
-            <label for="banner"><?php echo $_helper->__('Banner') ?></label>
+<!--        <li>
+            <label for="banner"><?php // echo $_helper->__('Banner') ?></label>
             <div class="input-box tim-rating-input">
-                <label for="banner"><?php echo $_helper->__('Browse') ?></label>
-                <span class="tim-banner-file-name"><?php echo $_helper->__('No file selected') ?></span>
-                <input type="file" name="banner" id="banner" class="upload-buttons" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png" />
+                <label for="banner"><?php // echo $_helper->__('Browse') ?></label>
+                <span class="tim-banner-file-name"><?php // echo $_helper->__('No file selected') ?></span>
+                <input type="file" name="banner" id="banner" class="upload-buttons" title="<?php // echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png" />
                 <input type="hidden" name="banner-hide" id="banner-hide"  value="" />
             </div>
-            <?php if($_helper->getCustomerBanner()): ?>
-                <label for="banner-checkbox"><?php echo $_helper->__('Delete') ?></label>
-                <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
-            <?php endif ?>
+            <?php // if($_helper->getCustomerBanner()): ?>
+                <label for="banner-checkbox"><?php // echo $_helper->__('Delete') ?></label>
+                <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php // echo $_helper->__('Choose it if you want to delete image.') ?>">
+            <?php // endif ?>
             <div class="recommendation-image" id="tim-banner-container">
-                <?php if ($_helper->getCustomerBanner()): ?>
-                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" alt="banner" />
-                <?php endif ?>
+                <?php // if ($_helper->getCustomerBanner()): ?>
+                <img src="<?php // echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" alt="banner" />
+                <?php // endif ?>
             </div>
-        </li>
+        </li>-->
         <li>
             <label class="required"><em>*</em><?php echo $_helper->__('Avatar') ?></label><br>
             <div class="avatar">
@@ -66,12 +66,12 @@
                 </div>
             </div>
         </li>
-        <li>
-            <label for="description"><?php echo $_helper->__('Description') ?></label>
+<!--        <li>
+            <label for="description"><?php // echo $_helper->__('Description') ?></label>
             <div class="input-box">
-                <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo $_helper->getCustomerDescription(); ?></textarea>
+                <textarea name="description" id="tim-form-description" class="input-textarea"><?php // echo $_helper->getCustomerDescription(); ?></textarea>
             </div>
-        </li>
+        </li>-->
         <?php
         $userTypes = $_helper->getNonAdminUserTypes();
         $customerUserTypeId = $_helper->getCustomerUserTypeId($this->getCustomer()->getEntityId());

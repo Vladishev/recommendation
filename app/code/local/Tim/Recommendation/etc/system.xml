@@ -564,7 +564,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <add_opinion>
-                            <label>Add opinion</label>
+                            <label>Point of view</label>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry validate-not-negative-number</validate>
                             <sort_order>1</sort_order>
