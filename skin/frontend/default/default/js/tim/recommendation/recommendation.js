@@ -11,14 +11,388 @@ jQuery(document).ready(function () {
     closePopup();
     checkProfile();
     displayRatingStars();
-    closePopupByEsc();
     scrollToOpinions();
-    userLoginPopup();
     displayYesNoChoice();
     addExtraValidation();
     countOpinionChars();
 });
-//------------------------------------------- customer view start -------------------------------------------//
+
+function cropperFunctionality() {
+    'use strict';
+    var $image = jQuery('#tim-crop-image');
+    var $inputImage = jQuery('.upload-buttons');
+
+    $inputImage.on('click', function () {
+        $inputImage = jQuery(this);
+    });
+
+    var URL = window.URL || window.webkitURL;
+    var blobURL;
+    var $popUp = jQuery('.tim-crop-image');
+
+    if (URL) {
+        $inputImage.change(function () {
+            var files = this.files;
+            var checkFile = this.files[0];
+            var file;
+            var id = jQuery(this).attr('id');
+            var height;
+            var width;
+            var ratio;
+            var $conteiner = jQuery('.tim-crop-image-container');
+            var $info = jQuery('.tim-popup-info');
+
+            //Here you can change popup and cropper settings
+            switch (id) {
+                case 'banner':
+                    $image.cropper('destroy');
+                    width = 860;
+                    height = 500;
+                    ratio = 1.72 / 1;
+                    $conteiner.css({
+                        'width': '900',
+                        'height': '550',
+                        'top': '25%',
+                        'left': '37%',
+                        'padding': '20px 20px 50px'
+                    });
+                    $info.html('Cropped image have to be not more then cropper window');
+                    //set banner file name
+                    jQuery('.tim-banner-file-name').html(checkFile.name);
+                    break;
+                case 'avatar':
+                    $image.cropper('destroy');
+                    width = 290;
+                    height = 180;
+                    ratio = 1.61 / 1;
+                    $conteiner.css({
+                        'width': '330',
+                        'height': '230',
+                        'top': '50%',
+                        'left': '58%',
+                        'padding': '20px 20px 50px'
+                    });
+                    $info.html('Cropped image have to be not more then cropper window');
+                    //set avatar file name
+                    jQuery('.tim-avatar-file-name').html(checkFile.name);
+                    break;
+            }
+
+            $image.cropper({
+                aspectRatio: ratio,
+                minCropBoxWidth: width,
+                minCropBoxHeight: height,
+                built: function () {
+                    $image.cropper('setCropBoxData', {
+                        width: width,
+                        height: height
+                    });
+                }
+            });
+
+            //Checking file size and type
+            if (checkFile.size > 419430) {
+                alert('Nie można przesłać pliku. Maksymalny rozmiar to 400 kb.');
+                return;
+            }
+            switch (checkFile.type) {
+                case 'image/png':
+                case 'image/jpeg':
+                    break;
+                default:
+                    alert('Nie można przesłać pliku. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
+                    return false;
+            }
+
+            if (!$image.data('cropper')) {
+                return;
+            }
+
+            $popUp.show(300);
+            if (files && files.length) {
+                file = files[0];
+
+                if (/^image\/\w+$/.test(file.type)) {
+                    blobURL = URL.createObjectURL(file);
+                    $image.one('built.cropper', function () {
+
+                        // Revoke when load complete
+                        URL.revokeObjectURL(blobURL);
+                    }).cropper('reset').cropper('replace', blobURL);
+                    $inputImage.val('');
+                } else {
+                    window.alert('Please choose an image file.');
+                }
+            }
+        });
+    } else {
+        $inputImage.prop('disabled', true).parent().addClass('disabled');
+    }
+
+    jQuery('.manage-buttons').click(function () {
+        var data = jQuery(this).data();
+
+        switch (data.method) {
+            case 'setDragMode':
+                $image.cropper('setDragMode', 'move');
+                break;
+            case 'zoom-in':
+                $image.cropper('zoom', 0.1);
+                break;
+            case 'zoom-out':
+                $image.cropper('zoom', -0.1);
+                break;
+        }
+    });
+
+// Methods
+    jQuery('.docs-buttons').on('click', function () {
+        var $this = jQuery(this);
+        var data = $this.data();
+        var $target;
+        var result;
+        var date = new Date();
+        var buttonType = $inputImage.attr('id');
+
+        if ($this.prop('disabled') || $this.hasClass('disabled')) {
+            return;
+        }
+
+        if ($image.data('cropper') && data.method) {
+
+            data = jQuery.extend({}, data); // Clone a new one
+            if (typeof data.target !== 'undefined') {
+
+                $target = jQuery(data.target);
+                if (typeof data.option === 'undefined') {
+                    try {
+                        data.option = JSON.parse($target.val());
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                }
+            }
+
+            result = $image.cropper(data.method, data.option, data.secondOption);
+
+            var sendData = {data: result.toDataURL(), typeOfImage: buttonType};
+            var url = data.url;
+
+            jQuery.ajax({
+                url: url,
+                type: "post",
+                data: sendData,
+                success: function (response) {
+                    var response = JSON.parse(response);
+                    var $preview = jQuery('#tim-' + buttonType + '-container');
+                    $preview.html('<img src="' + response['path'] + '?' + date.getTime() + '" id="tim-' + buttonType + '-image" alt="\'banner\'" />');
+                    jQuery('#' + buttonType + '-hide').attr('value', response['formData'] + '|' + response['tmpFolder'] + '|' + response['imgFolder']);
+                    $popUp.hide();
+                }
+            });
+        }
+    });
+}
+
+//-------------------- Tim Toolbar start (recommendation/user/profile and recommendation/product/view) ----
+/**
+ * Get data when Enter button was pressed
+ */
+function getDataOnEnterEvent() {
+
+    var $increaseButton = jQuery('.tim-pager-increase-button');
+    var $decreaseButton = jQuery('.tim-pager-decrease-button');
+    var $pageBox = jQuery('.tim-pager-box');
+    $pageBox.keyup(function (e) {
+        if (e.keyCode == 13) {
+            var currentPage = parseInt($pageBox.val());
+            var maxPage = parseInt(jQuery('.tim-pager-total').text());
+            if (currentPage < 1) {
+                currentPage = 1;
+                $decreaseButton.hide();
+                $increaseButton.show();
+            }
+            if (currentPage > maxPage) {
+                currentPage = maxPage;
+                $increaseButton.hide();
+                $decreaseButton.show();
+            }
+            if (isNaN(currentPage)) {
+                currentPage = 1;
+                $decreaseButton.hide();
+                $increaseButton.show();
+            }
+            $pageBox.val(currentPage);
+            getTimToolbarData();
+        }
+    });
+}
+
+/**
+ * Gets 'number per page' and 'current page' data
+ * @param el
+ */
+function changeCountAndPager(el) {
+    if (typeof el != 'undefined') {
+        var classList = jQuery(el).attr('class').split(/\s+/);
+        var $increaseButton = jQuery('.tim-pager-increase-button');
+        var $decreaseButton = jQuery('.tim-pager-decrease-button');
+        var $pageBox = jQuery('.tim-pager-box');
+        var maxPage = parseInt(jQuery('.tim-pager-total').text());
+        var currentPage = parseInt($pageBox.val());
+        jQuery.each(classList, function (index, item) {
+            switch (item) {
+                case 'tim-toolbar-count':
+                    jQuery('.' + item).attr('class', 'tim-toolbar-count');
+                    jQuery(el).addClass('count-active');
+                    break;
+                case 'tim-pager-increase-button':
+                    currentPage = currentPage + 1;
+                    if (currentPage >= maxPage) {
+                        currentPage = maxPage;
+                        $increaseButton.hide();
+                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
+                        currentPage = 2;
+                    } else {
+                        $increaseButton.show();
+                    }
+                    $decreaseButton.show();
+                    $pageBox.val(currentPage);
+                    break;
+                case 'tim-pager-decrease-button':
+                    currentPage = currentPage - 1;
+                    if ((currentPage <= 1) || (!$pageBox.val())) {
+                        currentPage = 1;
+                        $decreaseButton.hide();
+                    } else if (currentPage > maxPage) {
+                        currentPage = maxPage;
+                    } else {
+                        $decreaseButton.show();
+                    }
+                    $increaseButton.show();
+                    $pageBox.val(currentPage);
+                    break;
+            }
+        });
+        getTimToolbarData();
+    }
+}
+
+/**
+ * Provides onchange event for Sorting
+ */
+function changeSortCondition() {
+    jQuery('.tim-toolbar-select').change(function () {
+        getTimToolbarData();
+    });
+}
+
+/**
+ * Gets data from Tim Toolbar and send it to controller
+ */
+function getTimToolbarData() {
+    var dataSet = jQuery('#tim-controller').data();
+    if (dataSet.page == 'productList') {
+        hideAddOpinionForm();
+    }
+    var url = dataSet.url;
+    var productId = dataSet.product;
+    //collect sort data
+    var sortBy = jQuery('.tim-toolbar-select').val();
+    //collect count per page
+    var countPerPage = jQuery('.count-active').text();
+    //collect page number
+    var $pageBox = jQuery('.tim-pager-box');
+    var pageNumber;
+
+    if (!$pageBox.val()) {
+        pageNumber = 1;
+        $pageBox.val(1);
+    } else {
+        pageNumber = $pageBox.val();
+    }
+    //collect user id(for user page)
+    var userId = dataSet.userid;
+    //create params array
+    var param = {
+        sortBy: sortBy,
+        productId: productId,
+        countPerPage: countPerPage,
+        pageNumber: pageNumber,
+        userId: userId
+    };
+
+    jQuery.ajax({
+        url: url,
+        type: "post",
+        data: param,
+        success: function (response) {
+            var response = JSON.parse(response);
+            //set pages count
+            var $pageBox = jQuery('.tim-pager-box');
+            var $pagesTotal = jQuery('.tim-pager-total');
+            var $increaseButton = jQuery('.tim-pager-increase-button');
+            var $decreaseButton = jQuery('.tim-pager-decrease-button');
+            var pagesCount = response[0]['pagesCount'];
+            var curPage = response[0]['curPage'];
+
+            if (curPage > pagesCount) {
+                $pageBox.val(pagesCount);
+                $increaseButton.hide();
+            }
+            if ((1 < curPage) && (curPage < pagesCount)) {
+                $increaseButton.show();
+                $decreaseButton.show();
+            }
+            if (curPage == 1) {
+                $increaseButton.show();
+                $decreaseButton.hide();
+            }
+            if (pagesCount == 1) {
+                $pageBox.val(1);
+                $increaseButton.hide();
+                $decreaseButton.hide();
+            }
+            $pagesTotal.html(response[0]['pagesCount']);
+            if (dataSet.page == 'userPage') {
+                renderProductOpinionList(response);
+            } else {
+                renderOpinionsList(response);
+            }
+        }
+    });
+}
+
+/**
+ * Renders product list and rating
+ * @param response
+ */
+function renderProductOpinionList(response) {
+    var $mainContainer = jQuery('#tim-list-container');
+
+    response.forEach(function (item, i) {
+        //cloning blocks
+        var $parentList = jQuery('.tim-products-opinion-list-0').clone();
+        //cleaning main div
+        if (i == 0) {
+            $mainContainer.empty();
+        }
+
+        //assigning right class for cloned block and appending it to main div
+        $parentList.attr('class', 'tim-comm-list-bulk-positions tim-products-opinion-list-' + i);
+        $mainContainer.append($parentList);
+
+        //filling row
+        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name']);
+        $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function () {
+            return this.nodeType == 3;
+        })[0].nodeValue = item['rating'];
+    });
+    lightRatings();
+}
+//---------------------------- Tim Toolbar end ------------------------------------------------------
+
+//---------------------------- Comments toolbar start (recommendation/user/profile)------------------
 /**
  * Get data when Enter button was pressed
  */
@@ -457,29 +831,6 @@ function hideComments(recomId) {
 }
 
 /**
- * Function trigger when customer NOT logged in, and display popup
- */
-function checkIfUserIsLoggedIn() {
-    /* function open modal when submit button is pressed without validation yet */
-    jQuery('.tim-userlogin-popup').show(300);
-}
-
-/**
- * Shows popup if user's profile not fill
- */
-function checkProfile() {
-    jQuery(document).on('click', '.check-tim-profile-status', function () {
-        var status = jQuery('#tim-profile-status').val();
-
-        if (status == '0') {
-            jQuery('.check-tim-profile-status-popup').show(300);
-            return false;
-        }
-        return true;
-    });
-}
-
-/**
  * Shows popup if user's profile not fill for input field
  */
 function checkProfileInputField() {
@@ -515,47 +866,48 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
     customerIp = ip;
     customerHostName = hostName;
     siteUrl = url;
-    var $sendButton = jQuery('#tim-abuse-application-sendbt');
-
-    jQuery('.tim-markabuse-popup').show(300);
-    jQuery('#tim-abuse-application').show();
-    $sendButton.show();
-    jQuery('.tim-markabuse-popup-container p').text('Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.');
-
-    if (userId == '0') {
-        jQuery('#tim-abuse-email').show();
-        jQuery('#tim-abuse-email-input').attr('class', 'required-entry validate-email');
-    }
-}
-/**
- * Send customer parameters to controller
- */
-function sendParams() {
-    var abuseForm = new VarienForm('tim-abuse-popup-form');
-    var comment = jQuery('#tim-abuse-application').val();
-    var email = jQuery('#tim-abuse-email-input').val();
-    var param = {
-        userId: userId,
-        customerHostName: customerHostName,
-        customerIp: customerIp,
-        recom_id: recomId,
-        comment: comment,
-        email: email
-    };
-    if (abuseForm.validator.validate()) {
-        jQuery.ajax({
-            url: siteUrl,
-            data: param,
-            type: 'post',
-            success: function (response) {
-                jQuery('#tim-abuse-application').hide().val('');
-                jQuery('#tim-abuse-application-sendbt').hide();
-                jQuery('#tim-abuse-email').hide();
-                jQuery('#tim-abuse-email-input').val('');
-                jQuery('.tim-markabuse-popup-container p').text('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora');
+    vex.dialog.open({
+        afterOpen: function ($vexContent) {
+            if (userId == '0') {
+                var $el = "<input name='abusecontent' id='abusecontent' type='text' placeholder='treść' required/>\n<input name='email' id='abuseemail' type='email' placeholder='e-mail' class='abuse-email-input' required/>";
+            } else {
+                var $el = "<input name='abusecontent' id='abusecontent' type='text' placeholder='treść' required/>";
             }
-        });
-    }
+            return jQuery('.vex-dialog-input').append($el);
+        },
+        className: 'vex-theme-default',
+        message: 'Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.',
+        buttons: [
+  jQuery.extend({}, vex.dialog.buttons.YES, {
+                text: 'Wyślij zgłoszenie'
+            }), jQuery.extend({}, vex.dialog.buttons.NO, {
+                text: 'Zamknij okno'
+            })
+],
+        callback: function (data) {
+            if (data != false) {
+                var abuseComment = jQuery('#abusecontent').val();
+                var abuseEmail = jQuery('#abuseemail').val();
+                var param = {
+                    userId: userId,
+                    customerHostName: customerHostName,
+                    customerIp: customerIp,
+                    recom_id: recomId,
+                    comment: abuseComment,
+                    email: abuseEmail
+                };
+                jQuery.ajax({
+                    url: siteUrl,
+                    data: param,
+                    type: 'post',
+                    success: function (response) {
+                        vex.defaultOptions.className = 'vex-theme-default';
+                        vex.dialog.alert('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora.');
+                    }
+                });
+            }
+        }
+    });
 }
 
 /**
@@ -710,7 +1062,10 @@ function validateCommentForm(el) {
  */
 function displayAjaxOpinionPopupResponse(response) {
     jQuery('#loading-frontend-mask-opinion').hide();
-    jQuery('.tim-add-opinion-popup').show(300);
+    		vex.open({
+		   	content: jQuery('.tim-add-opinion-popup').html(),
+			className: 'vex-theme-default'
+		});
     var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
@@ -722,7 +1077,10 @@ function displayAjaxOpinionPopupResponse(response) {
  */
 function displayAjaxCommentPopupResponse(response) {
     jQuery('#loading-frontend-mask-comment').hide();
-    jQuery('.tim-add-comment-popup').show(300);
+        		vex.open({
+		   	content: jQuery('.tim-add-comment-popup').html(),
+			className: 'vex-theme-default'
+		});
     var commentRecomId = response['commentRecomId'];
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
     jQuery('#tim-opinion-comment-' + commentRecomId).val('');
@@ -788,91 +1146,47 @@ function closePopup() {
     });
 }
 
-/**
- * Close popup by ESC button
- */
-function closePopupByEsc() {
-    jQuery(document).keydown(function (e) {
-        if (e.keyCode == 27) {
-            jQuery('.tim-all-photo-popup').hide();
-            jQuery('.tim-video-popup').hide();
-            jQuery('.tim-userlogin-popup').hide();
-            jQuery('.tim-add-comment-popup').hide();
-            jQuery('.tim-add-opinion-popup').hide();
-            jQuery('.tim-markabuse-popup').hide();
-            jQuery('.check-tim-profile-status-popup').hide();
+/***** VEX based popups for recommendation *****/
+
+/* Check if user is logged in */
+function checkIfUserIsLoggedIn() {
+    /* function open modal when submit button is pressed without validation yet */
+	vex.defaultOptions.className = 'vex-theme-default';
+    vex.dialog.alert('<strong>Uwaga!</strong> Nie jesteś zalogowanym użytkownikiem, aby dodać opinię lub komentarz musisz zalogować się lub założyć konto na naszym serwisie.');
+}
+
+/* Shows popup if user's profile not fill */
+function checkProfile() {
+     jQuery(document).on('click', '.check-tim-profile-status', function () {
+        var status = jQuery('#tim-profile-status').val();
+        if (status == '0') {
+		vex.open({
+		   	content: jQuery('.check-tim-profile-status-popup').html(),
+			className: 'vex-theme-default'
+		});
+            return false;
         }
+        return true;
     });
 }
 
-/**
- * Show hide info in login popup
- */
-function userLoginPopup() {
-    jQuery('.tim-rating-button-boolean').on('change', function () {
-        var inputChangeValue = jQuery(this).val();
-        if (inputChangeValue == 'TAK') {
-            jQuery('.tim-userlogin-existuser').show();
-            jQuery('.tim-userlogin-newuser').hide();
-        }
-        if (inputChangeValue == 'NIE') {
-            jQuery('.tim-userlogin-existuser').hide();
-            jQuery('.tim-userlogin-newuser').show();
-        }
-    });
-}
-
-/**
- * Count chars in comment textarea
- * @param commentId
- */
-function countCommentChar(commentId) {
-    var text = jQuery('#tim-opinion-comment-' + commentId).val();
-    var charCount = text.length;
-    jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
-}
-
-/**
- * Check click action and show popup with opinion photo
- */
+/* Check click action and show popup with opinion photo */
 function showPhotos() {
-    jQuery(document).on('click', '.tim-opinion-photo a', function (e) {
-        e.preventDefault();
-        var recomId = e.target.id;
-        jQuery('#tim-all-photo-popup-' + recomId).show(300);
-    });
+	jQuery(document).on('click', '.tim-opinion-photo-link', function (e) {
+		vex.open({
+		   	content: jQuery('#tim-all-photo-popup-' + e.target.id).html(),
+			className: 'vex-theme-default'
+		});
+	});
 }
 
-/**
- * Check click action and show popup with opinion video
- */
+/* Check click action and show popup with opinion video */
 function showVideo() {
-    jQuery(document).on('click', '.tim-opinion-movie a', function (e) {
-        e.preventDefault();
-        var recomId = e.target.id;
-        var youtubeVideoId = jQuery('#tim-youtube-data-' + recomId).val();
-        var $popup = jQuery('#tim-video-popup-' + recomId);
-        var isset = $popup.find('.iframe-video-popup');
-        if (typeof youtubeVideoId != 'undefined') {
-            if (isset.length == 0) {
-                $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + youtubeVideoId + '"></iframe>');
-            } else {
-                $popup.find('.iframe-video-popup').attr("src", "https://www.youtube.com/embed/" + youtubeVideoId);
-            }
-        }
-        $popup.show(300);
-    });
-}
-
-/**
- * Scrolling from product info to opinion lost
- */
-function scrollToOpinions() {
-    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
-    jQuery('#tim-scroll').click(function () {
-        jQuery('html, body').animate({
-            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
-        }, 500);
+    jQuery(document).on('click', '.tim-opinion-movie', function (e) {
+		vex.open({
+		   	content: jQuery('#tim-video-popup-' + e.target.id).html(),
+			className: 'vex-theme-default'
+		});
         return false;
     });
 }
@@ -887,6 +1201,29 @@ function displayRatingStars() {
         var inputChangeNameSpan = 'span.' + inputChangeName;
         jQuery(inputChangeNameSpan).html(inputChangeValue);
     });
+}
+
+/**
+* Scrolling from product info to opinion lost
+*/
+function scrollToOpinions() {
+   // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
+   jQuery('#tim-scroll').click(function () {
+       jQuery('html, body').animate({
+           scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+       }, 500);
+       return false;
+   });
+}
+
+/**
+ * Count chars in comment textarea
+ * @param commentId
+ */
+function countCommentChar(commentId) {
+    var text = jQuery('#tim-opinion-comment-' + commentId).val();
+    var charCount = text.length;
+    jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
 }
 
 /**
