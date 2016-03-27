@@ -3,8 +3,6 @@ jQuery(document).ready(function () {
     getDataOnEnterEvent();
     changeSortCondition();
     lightRatings();
-    changeSortConditionComments();
-    getCommentDataOnEnterEvent();
     changeCountAndPager();
     showPhotos();
     showVideo();
@@ -16,567 +14,6 @@ jQuery(document).ready(function () {
     addExtraValidation();
     countOpinionChars();
 });
-
-function cropperFunctionality() {
-    'use strict';
-    var $image = jQuery('#tim-crop-image');
-    var $inputImage = jQuery('.upload-buttons');
-
-    $inputImage.on('click', function () {
-        $inputImage = jQuery(this);
-    });
-
-    var URL = window.URL || window.webkitURL;
-    var blobURL;
-    var $popUp = jQuery('.tim-crop-image');
-
-    if (URL) {
-        $inputImage.change(function () {
-            var files = this.files;
-            var checkFile = this.files[0];
-            var file;
-            var id = jQuery(this).attr('id');
-            var height;
-            var width;
-            var ratio;
-            var $conteiner = jQuery('.tim-crop-image-container');
-            var $info = jQuery('.tim-popup-info');
-
-            //Here you can change popup and cropper settings
-            switch (id) {
-                case 'banner':
-                    $image.cropper('destroy');
-                    width = 860;
-                    height = 500;
-                    ratio = 1.72 / 1;
-                    $conteiner.css({
-                        'width': '900',
-                        'height': '550',
-                        'top': '25%',
-                        'left': '37%',
-                        'padding': '20px 20px 50px'
-                    });
-                    $info.html('Cropped image have to be not more then cropper window');
-                    //set banner file name
-                    jQuery('.tim-banner-file-name').html(checkFile.name);
-                    break;
-                case 'avatar':
-                    $image.cropper('destroy');
-                    width = 290;
-                    height = 180;
-                    ratio = 1.61 / 1;
-                    $conteiner.css({
-                        'width': '330',
-                        'height': '230',
-                        'top': '50%',
-                        'left': '58%',
-                        'padding': '20px 20px 50px'
-                    });
-                    $info.html('Cropped image have to be not more then cropper window');
-                    //set avatar file name
-                    jQuery('.tim-avatar-file-name').html(checkFile.name);
-                    break;
-            }
-
-            $image.cropper({
-                aspectRatio: ratio,
-                minCropBoxWidth: width,
-                minCropBoxHeight: height,
-                built: function () {
-                    $image.cropper('setCropBoxData', {
-                        width: width,
-                        height: height
-                    });
-                }
-            });
-
-            //Checking file size and type
-            if (checkFile.size > 419430) {
-                alert('Nie można przesłać pliku. Maksymalny rozmiar to 400 kb.');
-                return;
-            }
-            switch (checkFile.type) {
-                case 'image/png':
-                case 'image/jpeg':
-                    break;
-                default:
-                    alert('Nie można przesłać pliku. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
-                    return false;
-            }
-
-            if (!$image.data('cropper')) {
-                return;
-            }
-
-            $popUp.show(300);
-            if (files && files.length) {
-                file = files[0];
-
-                if (/^image\/\w+$/.test(file.type)) {
-                    blobURL = URL.createObjectURL(file);
-                    $image.one('built.cropper', function () {
-
-                        // Revoke when load complete
-                        URL.revokeObjectURL(blobURL);
-                    }).cropper('reset').cropper('replace', blobURL);
-                    $inputImage.val('');
-                } else {
-                    window.alert('Please choose an image file.');
-                }
-            }
-        });
-    } else {
-        $inputImage.prop('disabled', true).parent().addClass('disabled');
-    }
-
-    jQuery('.manage-buttons').click(function () {
-        var data = jQuery(this).data();
-
-        switch (data.method) {
-            case 'setDragMode':
-                $image.cropper('setDragMode', 'move');
-                break;
-            case 'zoom-in':
-                $image.cropper('zoom', 0.1);
-                break;
-            case 'zoom-out':
-                $image.cropper('zoom', -0.1);
-                break;
-        }
-    });
-
-// Methods
-    jQuery('.docs-buttons').on('click', function () {
-        var $this = jQuery(this);
-        var data = $this.data();
-        var $target;
-        var result;
-        var date = new Date();
-        var buttonType = $inputImage.attr('id');
-
-        if ($this.prop('disabled') || $this.hasClass('disabled')) {
-            return;
-        }
-
-        if ($image.data('cropper') && data.method) {
-
-            data = jQuery.extend({}, data); // Clone a new one
-            if (typeof data.target !== 'undefined') {
-
-                $target = jQuery(data.target);
-                if (typeof data.option === 'undefined') {
-                    try {
-                        data.option = JSON.parse($target.val());
-                    } catch (e) {
-                        console.log(e.message);
-                    }
-                }
-            }
-
-            result = $image.cropper(data.method, data.option, data.secondOption);
-
-            var sendData = {data: result.toDataURL(), typeOfImage: buttonType};
-            var url = data.url;
-
-            jQuery.ajax({
-                url: url,
-                type: "post",
-                data: sendData,
-                success: function (response) {
-                    var response = JSON.parse(response);
-                    var $preview = jQuery('#tim-' + buttonType + '-container');
-                    $preview.html('<img src="' + response['path'] + '?' + date.getTime() + '" id="tim-' + buttonType + '-image" alt="\'banner\'" />');
-                    jQuery('#' + buttonType + '-hide').attr('value', response['formData'] + '|' + response['tmpFolder'] + '|' + response['imgFolder']);
-                    $popUp.hide();
-                }
-            });
-        }
-    });
-}
-
-//-------------------- Tim Toolbar start (recommendation/user/profile and recommendation/product/view) ----
-/**
- * Get data when Enter button was pressed
- */
-function getDataOnEnterEvent() {
-
-    var $increaseButton = jQuery('.tim-pager-increase-button');
-    var $decreaseButton = jQuery('.tim-pager-decrease-button');
-    var $pageBox = jQuery('.tim-pager-box');
-    $pageBox.keyup(function (e) {
-        if (e.keyCode == 13) {
-            var currentPage = parseInt($pageBox.val());
-            var maxPage = parseInt(jQuery('.tim-pager-total').text());
-            if (currentPage < 1) {
-                currentPage = 1;
-                $decreaseButton.hide();
-                $increaseButton.show();
-            }
-            if (currentPage > maxPage) {
-                currentPage = maxPage;
-                $increaseButton.hide();
-                $decreaseButton.show();
-            }
-            if (isNaN(currentPage)) {
-                currentPage = 1;
-                $decreaseButton.hide();
-                $increaseButton.show();
-            }
-            $pageBox.val(currentPage);
-            getTimToolbarData();
-        }
-    });
-}
-
-/**
- * Gets 'number per page' and 'current page' data
- * @param el
- */
-function changeCountAndPager(el) {
-    if (typeof el != 'undefined') {
-        var classList = jQuery(el).attr('class').split(/\s+/);
-        var $increaseButton = jQuery('.tim-pager-increase-button');
-        var $decreaseButton = jQuery('.tim-pager-decrease-button');
-        var $pageBox = jQuery('.tim-pager-box');
-        var maxPage = parseInt(jQuery('.tim-pager-total').text());
-        var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function (index, item) {
-            switch (item) {
-                case 'tim-toolbar-count':
-                    jQuery('.' + item).attr('class', 'tim-toolbar-count');
-                    jQuery(el).addClass('count-active');
-                    break;
-                case 'tim-pager-increase-button':
-                    currentPage = currentPage + 1;
-                    if (currentPage >= maxPage) {
-                        currentPage = maxPage;
-                        $increaseButton.hide();
-                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 2;
-                    } else {
-                        $increaseButton.show();
-                    }
-                    $decreaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-                case 'tim-pager-decrease-button':
-                    currentPage = currentPage - 1;
-                    if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 1;
-                        $decreaseButton.hide();
-                    } else if (currentPage > maxPage) {
-                        currentPage = maxPage;
-                    } else {
-                        $decreaseButton.show();
-                    }
-                    $increaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-            }
-        });
-        getTimToolbarData();
-    }
-}
-
-/**
- * Provides onchange event for Sorting
- */
-function changeSortCondition() {
-    jQuery('.tim-toolbar-select').change(function () {
-        getTimToolbarData();
-    });
-}
-
-/**
- * Gets data from Tim Toolbar and send it to controller
- */
-function getTimToolbarData() {
-    var dataSet = jQuery('#tim-controller').data();
-    if (dataSet.page == 'productList') {
-        hideAddOpinionForm();
-    }
-    var url = dataSet.url;
-    var productId = dataSet.product;
-    //collect sort data
-    var sortBy = jQuery('.tim-toolbar-select').val();
-    //collect count per page
-    var countPerPage = jQuery('.count-active').text();
-    //collect page number
-    var $pageBox = jQuery('.tim-pager-box');
-    var pageNumber;
-
-    if (!$pageBox.val()) {
-        pageNumber = 1;
-        $pageBox.val(1);
-    } else {
-        pageNumber = $pageBox.val();
-    }
-    //collect user id(for user page)
-    var userId = dataSet.userid;
-    //create params array
-    var param = {
-        sortBy: sortBy,
-        productId: productId,
-        countPerPage: countPerPage,
-        pageNumber: pageNumber,
-        userId: userId
-    };
-
-    jQuery.ajax({
-        url: url,
-        type: "post",
-        data: param,
-        success: function (response) {
-            var response = JSON.parse(response);
-            //set pages count
-            var $pageBox = jQuery('.tim-pager-box');
-            var $pagesTotal = jQuery('.tim-pager-total');
-            var $increaseButton = jQuery('.tim-pager-increase-button');
-            var $decreaseButton = jQuery('.tim-pager-decrease-button');
-            var pagesCount = response[0]['pagesCount'];
-            var curPage = response[0]['curPage'];
-
-            if (curPage > pagesCount) {
-                $pageBox.val(pagesCount);
-                $increaseButton.hide();
-            }
-            if ((1 < curPage) && (curPage < pagesCount)) {
-                $increaseButton.show();
-                $decreaseButton.show();
-            }
-            if (curPage == 1) {
-                $increaseButton.show();
-                $decreaseButton.hide();
-            }
-            if (pagesCount == 1) {
-                $pageBox.val(1);
-                $increaseButton.hide();
-                $decreaseButton.hide();
-            }
-            $pagesTotal.html(response[0]['pagesCount']);
-            if (dataSet.page == 'userPage') {
-                renderProductOpinionList(response);
-            } else {
-                renderOpinionsList(response);
-            }
-        }
-    });
-}
-
-/**
- * Renders product list and rating
- * @param response
- */
-function renderProductOpinionList(response) {
-    var $mainContainer = jQuery('#tim-list-container');
-
-    response.forEach(function (item, i) {
-        //cloning blocks
-        var $parentList = jQuery('.tim-products-opinion-list-0').clone();
-        //cleaning main div
-        if (i == 0) {
-            $mainContainer.empty();
-        }
-
-        //assigning right class for cloned block and appending it to main div
-        $parentList.attr('class', 'tim-comm-list-bulk-positions tim-products-opinion-list-' + i);
-        $mainContainer.append($parentList);
-
-        //filling row
-        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name']);
-        $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function () {
-            return this.nodeType == 3;
-        })[0].nodeValue = item['rating'];
-    });
-    lightRatings();
-}
-//---------------------------- Tim Toolbar end ------------------------------------------------------
-
-//---------------------------- Comments toolbar start (recommendation/user/profile)------------------
-/**
- * Get data when Enter button was pressed
- */
-function getCommentDataOnEnterEvent() {
-    var $increaseButton = jQuery('.tim-pager-comment-increase-button');
-    var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
-    var $pageBox = jQuery('.tim-comment-pager-box');
-    $pageBox.keyup(function (e) {
-        if (e.keyCode == 13) {
-            var currentPage = parseInt($pageBox.val());
-            var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
-            if (currentPage < 1) {
-                currentPage = 1;
-                $decreaseButton.hide();
-                $increaseButton.show();
-            }
-            if (currentPage > maxPage) {
-                currentPage = maxPage;
-                $increaseButton.hide();
-                $decreaseButton.show();
-            }
-            if (isNaN(currentPage)) {
-                currentPage = 1;
-                $decreaseButton.hide();
-                $increaseButton.show();
-            }
-            $pageBox.val(currentPage);
-            getCommentsToolbarData()
-        }
-    });
-}
-
-/**
- * Gets 'number per page' and 'current page' data for Comments Toolbar
- * @param el
- */
-function changeCountAndPagerComments(el) {
-    if (typeof el != 'undefined') {
-        var classList = jQuery(el).attr('class').split(/\s+/);
-        var $increaseButton = jQuery('.tim-pager-comment-increase-button');
-        var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
-        var $pageBox = jQuery('.tim-comment-pager-box');
-        var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
-        var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function (index, item) {
-            switch (item) {
-                case 'tim-toolbar-count-comment':
-                    jQuery('.' + item).attr('class', 'tim-toolbar-count-comment');
-                    jQuery(el).addClass('count-active-comment');
-                    break;
-                case 'tim-pager-comment-increase-button':
-                    currentPage = currentPage + 1;
-                    if (currentPage >= maxPage) {
-                        currentPage = maxPage;
-                        $increaseButton.hide();
-                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 2;
-                    } else {
-                        $increaseButton.show();
-                    }
-                    $decreaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-                case 'tim-pager-comment-decrease-button':
-                    currentPage = currentPage - 1;
-                    if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 1;
-                        $decreaseButton.hide();
-                    } else if (currentPage > maxPage) {
-                        currentPage = maxPage;
-                    } else {
-                        $decreaseButton.show();
-                    }
-                    $increaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-            }
-        });
-        getCommentsToolbarData();
-    }
-}
-
-/**
- * Provides onchange event for Sorting comments
- */
-function changeSortConditionComments() {
-    jQuery('.tim-toolbar-comment-select').change(function () {
-        getCommentsToolbarData();
-    });
-}
-
-/**
- * Gets data from Comments Tim Toolbar and send it to controller
- */
-function getCommentsToolbarData() {
-    var dataSet = jQuery('#comments-controller').data();
-    var url = dataSet.url;
-    //collect sort data
-    var sortBy = jQuery('.tim-toolbar-comment-select').val();
-    //collect count per page
-    var countPerPage = jQuery('.count-active-comment').text();
-    //collect page number
-    var $pageBox = jQuery('.tim-comment-pager-box');
-    var pageNumber;
-
-    if (!$pageBox.val()) {
-        pageNumber = 1;
-        $pageBox.val(1);
-    } else {
-        pageNumber = $pageBox.val();
-    }
-    //collect user id(for user page)
-    var userId = dataSet.userid;
-    //create params array
-    var param = {
-        sortBy: sortBy,
-        countPerPage: countPerPage,
-        pageNumber: pageNumber,
-        userId: userId
-    };
-
-    jQuery.ajax({
-        url: url,
-        type: "post",
-        data: param,
-        success: function (response) {
-            var response = JSON.parse(response);
-            //set pages count
-            var $pageBox = jQuery('.tim-comment-pager-box');
-            var $pagesTotal = jQuery('.tim-comment-pager-total');
-            var $increaseButton = jQuery('.tim-pager-comment-increase-button');
-            var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
-            var pagesCount = response[0]['pagesCount'];
-            var curPage = response[0]['curPage'];
-
-            if (curPage > pagesCount) {
-                $pageBox.val(pagesCount);
-                $increaseButton.hide();
-                $decreaseButton.show();
-            }
-            if ((1 < curPage) && (curPage < pagesCount)) {
-                $increaseButton.show();
-                $decreaseButton.show();
-            }
-            if (curPage == 1) {
-                $increaseButton.show();
-                $decreaseButton.hide();
-            }
-            if (pagesCount == 1) {
-                $pageBox.val(1);
-                $increaseButton.hide();
-                $decreaseButton.hide();
-            }
-            $pagesTotal.html(response[0]['pagesCount']);
-            renderCommentsList(response);
-        }
-    });
-}
-
-/**
- * Renders comments list
- * @param response
- */
-function renderCommentsList(response) {
-    var $mainContainer = jQuery('.tim-comment');
-
-    response.forEach(function (item, i) {
-        //cloning blocks
-        var $parentList = jQuery('.tim-comment-container-0').clone();
-        //cleaning main div
-        if (i == 0) {
-            $mainContainer.empty();
-        }
-
-        $parentList.attr('class', 'tim-comment-container-' + i);
-        $mainContainer.append($parentList);
-        //filling row
-        $parentList.find('.comment-date-add').html(item['date_add']);
-        $parentList.find('.tim-comment-name-link').attr('href', item['url']).html(item['name']);
-        $parentList.find('.tim-comment-container-content').html(item['comment']);
-    });
-}
-//------------------------------------------- customer view end -------------------------------------------//
-
 //------------------------------------------- product view start -------------------------------------------//
 /**
  * Renders opinion list on product_view after it sorted/paginated
@@ -878,12 +315,12 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
         className: 'vex-theme-default',
         message: 'Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.',
         buttons: [
-  jQuery.extend({}, vex.dialog.buttons.YES, {
+            jQuery.extend({}, vex.dialog.buttons.YES, {
                 text: 'Wyślij zgłoszenie'
             }), jQuery.extend({}, vex.dialog.buttons.NO, {
                 text: 'Zamknij okno'
             })
-],
+        ],
         callback: function (data) {
             if (data != false) {
                 var abuseComment = jQuery('#abusecontent').val();
@@ -1062,10 +499,10 @@ function validateCommentForm(el) {
  */
 function displayAjaxOpinionPopupResponse(response) {
     jQuery('#loading-frontend-mask-opinion').hide();
-    		vex.open({
-		   	content: jQuery('.tim-add-opinion-popup').html(),
-			className: 'vex-theme-default'
-		});
+    vex.open({
+        content: jQuery('.tim-add-opinion-popup').html(),
+        className: 'vex-theme-default'
+    });
     var response = JSON.parse(response);
     jQuery('.tim-add-opinion-popup-container p').text(response['message']);
     jQuery('#add-ajax-opinion').prop('disabled', false);
@@ -1077,10 +514,10 @@ function displayAjaxOpinionPopupResponse(response) {
  */
 function displayAjaxCommentPopupResponse(response) {
     jQuery('#loading-frontend-mask-comment').hide();
-        		vex.open({
-		   	content: jQuery('.tim-add-comment-popup').html(),
-			className: 'vex-theme-default'
-		});
+    vex.open({
+        content: jQuery('.tim-add-comment-popup').html(),
+        className: 'vex-theme-default'
+    });
     var commentRecomId = response['commentRecomId'];
     jQuery('.tim-add-comment-popup-container p').text(response['message']);
     jQuery('#tim-opinion-comment-' + commentRecomId).val('');
@@ -1146,51 +583,6 @@ function closePopup() {
     });
 }
 
-/***** VEX based popups for recommendation *****/
-
-/* Check if user is logged in */
-function checkIfUserIsLoggedIn() {
-    /* function open modal when submit button is pressed without validation yet */
-	vex.defaultOptions.className = 'vex-theme-default';
-    vex.dialog.alert('<strong>Uwaga!</strong> Nie jesteś zalogowanym użytkownikiem, aby dodać opinię lub komentarz musisz zalogować się lub założyć konto na naszym serwisie.');
-}
-
-/* Shows popup if user's profile not fill */
-function checkProfile() {
-     jQuery(document).on('click', '.check-tim-profile-status', function () {
-        var status = jQuery('#tim-profile-status').val();
-        if (status == '0') {
-		vex.open({
-		   	content: jQuery('.check-tim-profile-status-popup').html(),
-			className: 'vex-theme-default'
-		});
-            return false;
-        }
-        return true;
-    });
-}
-
-/* Check click action and show popup with opinion photo */
-function showPhotos() {
-	jQuery(document).on('click', '.tim-opinion-photo-link', function (e) {
-		vex.open({
-		   	content: jQuery('#tim-all-photo-popup-' + e.target.id).html(),
-			className: 'vex-theme-default'
-		});
-	});
-}
-
-/* Check click action and show popup with opinion video */
-function showVideo() {
-    jQuery(document).on('click', '.tim-opinion-movie', function (e) {
-		vex.open({
-		   	content: jQuery('#tim-video-popup-' + e.target.id).html(),
-			className: 'vex-theme-default'
-		});
-        return false;
-    });
-}
-
 /**
  * Display selected qty of stars on add opinion view
  */
@@ -1204,16 +596,16 @@ function displayRatingStars() {
 }
 
 /**
-* Scrolling from product info to opinion lost
-*/
+ * Scrolling from product info to opinion lost
+ */
 function scrollToOpinions() {
-   // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
-   jQuery('#tim-scroll').click(function () {
-       jQuery('html, body').animate({
-           scrollTop: jQuery(jQuery(this).attr('href')).offset().top
-       }, 500);
-       return false;
-   });
+    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
+    jQuery('#tim-scroll').click(function () {
+        jQuery('html, body').animate({
+            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+        }, 500);
+        return false;
+    });
 }
 
 /**
@@ -1251,11 +643,11 @@ function displayYesNoChoice() {
 /**
  * Count chars in opinion's textarea
  */
-function countOpinionChars(){
-    jQuery('.tim-opinion-characters-count').on('keyup', function(){
+function countOpinionChars() {
+    jQuery('.tim-opinion-characters-count').on('keyup', function () {
         var $el = jQuery(this);
         var id = $el.attr('id');
-        var span = jQuery('#char-count-'+ id).children("span");
+        var span = jQuery('#char-count-' + id).children("span");
         span.html($el.val().length);
     });
 }
@@ -1290,7 +682,7 @@ function addExtraValidation() {
         return true;
     });
 
-    if(jQuery('#opinionLimitChars').length){
+    if (jQuery('#opinionLimitChars').length) {
         var limitCharsData = jQuery('#opinionLimitChars').data();
         var opinionLimitCharsMin = limitCharsData.min;
         var opinionLimitCharsMax = limitCharsData.max;
@@ -1316,9 +708,6 @@ function addExtraValidation() {
     }
 }
 //------------------------------------------- product view end -------------------------------------------//
-
-//------------------------------------------- multi template functions start -----------------------------//
-        /**Tim Toolbar start (recommendation/user/profile and recommendation/product/view) */
 /**
  * Get data when Enter button was pressed
  */
@@ -1513,36 +902,55 @@ function renderProductOpinionList(response) {
     });
     lightRatings();
 }
-        /**Tim Toolbar end (recommendation/user/profile and recommendation/product/view) */
+//----------------------------------------- VEX based popups for recommendation start -------------------------------//
+/**
+ * Check if user is logged in
+ */
+function checkIfUserIsLoggedIn() {
+    /* function open modal when submit button is pressed without validation yet */
+    vex.defaultOptions.className = 'vex-theme-default';
+    vex.dialog.alert('<strong>Uwaga!</strong> Nie jesteś zalogowanym użytkownikiem, aby dodać opinię lub komentarz musisz zalogować się lub założyć konto na naszym serwisie.');
+}
 
-//------------------------------------------- multi template functions end -------------------------------------------//
+/**
+ * Shows popup if user's profile not fill
+ */
+function checkProfile() {
+    jQuery(document).on('click', '.check-tim-profile-status', function () {
+        var status = jQuery('#tim-profile-status').val();
+        if (status == '0') {
+            vex.open({
+                content: jQuery('.check-tim-profile-status-popup').html(),
+                className: 'vex-theme-default'
+            });
+            return false;
+        }
+        return true;
+    });
+}
 
-//------------------------------------------- Not used functions starts -------------------------------------------//
-///**
-// * Hide placeholder on tinyMce
-// * @param data
-// */
-//function hidePlaceholder(data) {
-//    var id = jQuery(data).attr('id');
-//    var placeholder = jQuery('#ph-' + id);
-//    placeholder.hide();
-//    jQuery('#' + id + '_ifr').focusout(function () {
-//        if (!placeholder.val()) {
-//            placeholder.show();
-//        }
-//    });
-//}
+/**
+ * Check click action and show popup with opinion photo
+ */
+function showPhotos() {
+    jQuery(document).on('click', '.tim-opinion-photo-link', function (e) {
+        vex.open({
+            content: jQuery('#tim-all-photo-popup-' + e.target.id).html(),
+            className: 'vex-theme-default'
+        });
+    });
+}
 
-///**
-// * Show placeholder on tinyMce
-// * @param ed
-// */
-//function showPlaceholder(ed) {
-//    var id = jQuery(ed).attr('id');
-//    var placeholder = jQuery('#ph-' + id);
-//    tinyMCE.triggerSave();
-//    if (!jQuery('#' + id).val()) {
-//        placeholder.show();
-//    }
-//}
-//------------------------------------------- Not used functions end -------------------------------------------//
+/**
+ * Check click action and show popup with opinion video
+ */
+function showVideo() {
+    jQuery(document).on('click', '.tim-opinion-movie', function (e) {
+        vex.open({
+            content: jQuery('#tim-video-popup-' + e.target.id).html(),
+            className: 'vex-theme-default'
+        });
+        return false;
+    });
+}
+//----------------------------------------- VEX based popups for recommendation end -------------------------------//
