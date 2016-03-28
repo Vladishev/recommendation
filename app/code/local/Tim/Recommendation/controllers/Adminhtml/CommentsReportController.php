@@ -12,7 +12,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
 {
     public function indexAction()
     {
-        $this->_title($this->__('Comments'));
+        $this->_title(Mage::helper('tim_recommendation')->__('Comments'));
         $this->loadLayout();
         $this->_setActiveMenu('report/tim');
         $this->_addContent($this->getLayout()->createBlock('tim_recommendation/adminhtml_commentsReport'));

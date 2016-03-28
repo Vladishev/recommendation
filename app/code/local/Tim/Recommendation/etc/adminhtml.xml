@@ -16,19 +16,19 @@
                 <tim translate="title" module="tim_recommendation">
                     <title>TIM</title>
                     <children>
-                        <tim_recommendation translate="title">
+                        <tim_recommendation translate="title" module="tim_recommendation">
                             <title>Opinions</title>
                             <action>adminhtml/opinionReport</action>
                         </tim_recommendation>
-                        <tim_comments translate="title">
+                        <tim_comments translate="title" module="tim_recommendation">
                             <title>Comments</title>
                             <action>adminhtml/commentsReport</action>
                         </tim_comments>
-                        <tim_opinion_images translate="title">
+                        <tim_opinion_images translate="title" module="tim_recommendation">
                             <title>Opinion images</title>
                             <action>adminhtml/opinionImages</action>
                         </tim_opinion_images>
-                        <tim_malpractice translate="title">
+                        <tim_malpractice translate="title" module="tim_recommendation">
                             <title>Malpractices</title>
                             <action>adminhtml/malpracticeReport</action>
                         </tim_malpractice>
