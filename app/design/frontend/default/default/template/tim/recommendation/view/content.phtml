@@ -160,7 +160,7 @@ if (!empty($commentLimitCharacters['max'])) {
     </div>
 </form>
 
-<div class="tim-popup-hide" id="tim-all-photo-popup-<?php echo $recomId ?>" data-imgurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>">
+<div class="tim-popup-hide tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>" data-imgurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>">
     <div class="tim-all-photo-popup-container">
         <?php if (!empty($opinionData['images'])): ?>
             <?php foreach ($opinionData['images'] as $image): ?>
@@ -172,7 +172,7 @@ if (!empty($commentLimitCharacters['max'])) {
     </div>
 </div>
 
-<div class="tim-popup-hide" id="tim-video-popup-<?php echo $recomId ?>">
+<div class="tim-popup-hide tim-video-popup" id="tim-video-popup-<?php echo $recomId ?>">
     <div class="tim-video-popup-container">
         <?php if($youtubeVideoId): ?>
             <iframe class="iframe-video-popup" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId ?>"></iframe>

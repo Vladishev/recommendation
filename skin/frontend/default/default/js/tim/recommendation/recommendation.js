@@ -65,14 +65,17 @@ function renderOpinionsList(response) {
         //Change images
         $parentContent.find('.tim-opinion-photo').remove();
         $parentContent.find('.tim-opinion-movie').remove();
+        $parentContent.find('.tim-all-photo-popup-container').empty();
+        $parentContent.find('.tim-video-popup-container').empty();
+        $parentContent.find('.tim-all-photo-popup').attr('id', '');
+        $parentContent.find('.tim-video-popup').attr('id', '');
         if ((typeof opinionData['images'][0] != 'undefined') && (typeof opinionData['movie_url'] != 'undefined')) {
             //preparing links
-            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="' + recomId + '">Zobacz zdjęcia</a></div><div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="' + recomId + '">Zobacz materiał filmowy</a></div>');
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><div class="tim-readmore tim-opinion-photo-link" id="' + recomId + '">Zobacz zdjęcia</div></div><div class="tim-opinion-movie"><div class="tim-readmore" id="' + recomId + '">Zobacz materiał filmowy</div></div>');
             //preparing popups - set id
             $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-' + recomId);
             $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-' + recomId);
             //preparing popups - set content to photo
-            $parentContent.find('.tim-all-photo-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             var photoContent = '';
             var imgUrl = $parentContent.find('.tim-all-photo-popup').data().imgurl;
             opinionData['images'].forEach(function (item, i) {
@@ -80,7 +83,6 @@ function renderOpinionsList(response) {
             });
             $parentContent.find('.tim-all-photo-popup-container').append(photoContent);
             //preparing popups - set content to video
-            $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
                 $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-' + recomId + '" value="' + opinionData['youtubeVideoId'] + '">');
             } else {
@@ -88,11 +90,10 @@ function renderOpinionsList(response) {
             }
         } else if (typeof opinionData['movie_url'] != 'undefined') {
             //preparing link
-            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><a class="tim-readmore" href="#" id="' + recomId + '">Zobacz materiał filmowy</a></div>');
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><div class="tim-readmore" id="' + recomId + '">Zobacz materiał filmowy</div></div>');
             //preparing popup - set id
             $parentContent.find('.tim-video-popup').attr('id', 'tim-video-popup-' + recomId);
             //preparing popup - set content
-            $parentContent.find('.tim-video-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             if (opinionData['youtubeVideoId']) {
                 $parentContent.find('.tim-video-popup-container').append('<input type="hidden" id="tim-youtube-data-' + recomId + '" value="' + opinionData['youtubeVideoId'] + '">');
             } else {
@@ -100,11 +101,10 @@ function renderOpinionsList(response) {
             }
         } else if (typeof opinionData['images'][0] != 'undefined') {
             //preparing link
-            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><a class="tim-readmore tim-opinion-photo-link" href="#" id="' + recomId + '">Zobacz zdjęcia</a></div>');
+            $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><div class="tim-readmore tim-opinion-photo-link" id="' + recomId + '">Zobacz zdjęcia</div></div>');
             //preparing popup - set id
             $parentContent.find('.tim-all-photo-popup').attr('id', 'tim-all-photo-popup-' + recomId);
             //preparing popup - set content
-            $parentContent.find('.tim-all-photo-popup-container').html('<input type="button" class="tim-popup-close" value="x"/>');
             var photoContent = '';
             var imgUrl = $parentContent.find('.tim-all-photo-popup').data().imgurl;
             opinionData['images'].forEach(function (item, i) {
@@ -183,7 +183,7 @@ function renderOpinionsList(response) {
         //setting user type
         $parentLeft.find('.tim-user-type-name').html(userData['user_type_name']);
         //setting opinion quantity
-        $parentLeft.find('.tim-user-scoregraph').html(userData['opinion_qty'] + ' opinii');
+        $parentLeft.find('.tim-user-scoregraph').attr('class', 'tim-user-scoregraph tim-score-' + userData['user_score']).html(userData['opinion_qty'] + ' opinii');
         //setting link to user page
         var baseUrl = $parentLeft.find('.tim-user-about-link').data().baseurl;
         $parentLeft.find('.tim-user-about-link').attr('href', baseUrl + 'recommendation/user/profile/id/' + userData['customer_id']);
@@ -946,11 +946,22 @@ function showPhotos() {
  */
 function showVideo() {
     jQuery(document).on('click', '.tim-opinion-movie', function (e) {
+        var recomId = e.target.id;
+        var youtubeVideoId = jQuery('#tim-youtube-data-' + recomId).val();
+        var $popup = jQuery('#tim-video-popup-' + recomId);
+        var isset = $popup.find('.iframe-video-popup');
+        if (typeof youtubeVideoId != 'undefined') {
+            if (isset.length == 0) {
+                $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + youtubeVideoId + '"></iframe>');
+            } else {
+                $popup.find('.iframe-video-popup').attr("src", "https://www.youtube.com/embed/" + youtubeVideoId);
+            }
+        }
         vex.open({
-            content: jQuery('#tim-video-popup-' + e.target.id).html(),
+            content: $popup.html(),
             className: 'vex-theme-default'
         });
         return false;
     });
 }
-//----------------------------------------- VEX based popups for recommendation end -------------------------------//
+//--------------------------- VEX based popups for recommendation end -------------------------------//
