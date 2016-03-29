@@ -179,7 +179,7 @@ function renderOpinionsList(response) {
         $parentLeft.find('.tim-user-name').empty().html('<p>Użytkownik</p><p>' + userData['customer_name'] + '</p>');
         //setting user icon
         var skinUrl = $parentLeft.find('.tim-user-type-icon-tag').data().skinurl;
-        $parentLeft.find('.tim-user-type-icon-tag').attr('src', skinUrl + 'images/media/userstatus_icon_timworker.png');
+        $parentLeft.find('.tim-user-type-icon-tag').attr('src', skinUrl + 'media/userstatus_icon_timworker.png');
         //setting user type
         $parentLeft.find('.tim-user-type-name').html(userData['user_type_name']);
         //setting opinion quantity
