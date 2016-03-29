@@ -370,16 +370,14 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     /**
      * Parses youtube url and return video ID
      * @param $url
-     * @return bool|mixed
+     * @return bool|string
      */
-    public function parseYoutubeUrl($url)
+    public function getYoutubeVideoId($url)
     {
-        $urlElements = parse_url($url);
-        $host = $urlElements['host'];
-        if ($host == 'www.youtube.com') {
-            $videoId = substr($urlElements['query'], 2);
-        } elseif ($host == 'youtu.be') {
-            $videoId = substr($urlElements['path'], 1);
+        $regExp = "/(?<=(?:v|i)=)[a-zA-Z0-9-]+(?=&)|(?<=(?:v|i)\/)[^&\n]+|(?<=embed\/)[^\"&\n]+|(?<=(?:v|i)=)[^&\n]+|(?<=youtu.be\/)[^&\n]+/";
+        preg_match($regExp, $url, $matches);
+        if (isset($matches[0])) {
+            $videoId = $matches[0];
         } else {
             return false;
         }
@@ -490,5 +488,46 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $class .= ' max-length-opinion';
         }
         return $class;
+    }
+
+    /**
+     * Add http protocol to raw link or return null
+     * @param string $site
+     * @return null|string
+     */
+    public function getFormatSiteLink($site)
+    {
+        if (!empty($site)) {
+            if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
+                $site = 'http://' . $site;
+            }
+        } else {
+            $site = null;
+        }
+        return $site;
+    }
+
+    /**
+     * Return qty of pages for opinions
+     * @param int $opinionCount
+     * @param int $limitPerPage
+     * @return float|int
+     */
+    public function getPagesCount($opinionCount, $limitPerPage)
+    {
+        $pagesCount = ceil($opinionCount / $limitPerPage);
+        return $pagesCount;
+    }
+
+    /**
+     * Return qty of pages for comments
+     * @param int $commentsCount
+     * @param int $limitPerPage
+     * @return float|int
+     */
+    public function commentsPagesCount($commentsCount, $limitPerPage)
+    {
+        $commentsPagesCount = ceil($commentsCount / $limitPerPage);
+        return $commentsPagesCount;
     }
 }

@@ -15,7 +15,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         if ($this->getRequest()->isPost()) {
             $params = $this->getRequest()->getParams();
             $response = array();
-            $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
+            if (isset($_FILES['tim-recommendation-img'])) {
+                $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
+            }
             $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
             $averageRating = $this->_getAverageRating($params);
 
@@ -57,27 +59,28 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     ->setType('url/youtube')
                     ->save();
             }
-
-            foreach ((array)$files as $file) {
-                if ($file['error'] == 0) {
-                    $file['name'] = str_replace(' ', '_', $file['name']);
-                    $fileName = time() . $file['name'];
-                    $mediaModel = Mage::getModel('tim_recommendation/media')
-                        ->setRecomId($recomId)
-                        ->setName('/media/tim/recommendation/' . $fileName)
-                        ->setType($file['type']);
-                    try {
-                        $saveMedia = $mediaModel->save();
-                    } catch (Exception $e) {
-                        Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                        $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
-                    }
-                    if ($saveMedia) {
-                        $this->saveImage($fileName, $folderForFiles, $file);
+            if (isset($files)) {
+                foreach ((array)$files as $file) {
+                    if ($file['error'] == 0) {
+                        $file['name'] = str_replace(' ', '_', $file['name']);
+                        $fileName = time() . $file['name'];
+                        $mediaModel = Mage::getModel('tim_recommendation/media')
+                            ->setRecomId($recomId)
+                            ->setName('/media/tim/recommendation/' . $fileName)
+                            ->setType($file['type']);
+                        try {
+                            $saveMedia = $mediaModel->save();
+                            var_dump($saveMedia);
+                        } catch (Exception $e) {
+                            Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+                            $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
+                        }
+                        if (isset($saveMedia)) {
+                            $this->saveImage($fileName, $folderForFiles, $file);
+                        }
                     }
                 }
             }
-
             if (!empty($recomId)) {
                 $this->saveMd5($recomId);
                 $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');

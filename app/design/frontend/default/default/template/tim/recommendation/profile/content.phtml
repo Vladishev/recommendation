@@ -6,16 +6,9 @@ $opinionComments = $this->getOpinionComment($userId);
 $opinionCount = $this->getUserOpinionCount($userId);
 $commentsCount = $this->getCommentsCount($userId);
 $limitPerPage = 10;
-$pagesCount = ceil($opinionCount / $limitPerPage);
-$commentsPagesCount = ceil($commentsCount / $limitPerPage);
-$site = $userData['www'];
-if(!empty($site)){
-    if (!strstr($site, 'http://') && !strstr($site, 'https://')) {
-        $site = 'http://' . $site;
-    }
-} else {
-    $site = null;
-}
+$pagesCount = $this->getPagesCount($opinionCount, $limitPerPage);
+$commentsPagesCount = $this->commentsPagesCount($commentsCount, $limitPerPage);
+$site = $this->getFormatSiteLink($userData['www']);
 ?>
 <div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
     <div class="tim-user"> <!-- main container for user details -->
@@ -48,7 +41,7 @@ if(!empty($site)){
         </div>
         <div class="tim-user-email">
             <!-- place for user e-mail if he want to show that  -->
-            <?php echo $userData['email']; ?>
+            <?php echo isset($userData['email']) ? $userData['email'] : ''; ?>
         </div>
     </div>
 </div>
@@ -153,7 +146,7 @@ if(!empty($site)){
         </div>
     </div>
     <?php endif ?>
-    <?php if ($opinionComments[0]['product_id']): ?>
+    <?php if (isset($opinionComments[0]['product_id'])): ?>
     <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("KOMENTARZE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
 <!--  Start comments toolbar  -->
     <div class="tim-opinion-list-header">
