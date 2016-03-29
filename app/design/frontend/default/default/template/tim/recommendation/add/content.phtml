@@ -1,31 +1,14 @@
 <?php
 $product = Mage::registry('current_product');
 $isLoggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
-$isLoggedInJs = $isLoggedIn ? 1 : 0;
 $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
-$profileStatus = '';
-if ($customerId) {
-    $profileStatus = $this->getProfileStatus($customerId);
-} else {
-    $profileStatus = 2;
-}
+$profileStatus = $this->getProfileStatus($customerId);
 $customerIp = Mage::helper('core/http')->getRemoteAddr();
 $customerHostName = $this->getHost($customerIp);
 $requiredFields = $this->getRequiredFields();
-$productId = $product->getId();
-$manufacturerId = $product->getManufacturer();
-$currentCategoryId = $product->getCategoryId();
 $opinionLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacters('opinion');
-$opinionPlaceholder = '';
-$opinionClass = '';
-if (!empty($opinionLimitCharacters['min'])) {
-    $opinionPlaceholder .= $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
-    $opinionClass .= ' min-length-opinion';
-}
-if (!empty($opinionLimitCharacters['max'])) {
-    $opinionPlaceholder .= $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
-    $opinionClass .= ' max-length-opinion';
-}
+$opinionTextareaPlaceholder = $this->getOpinionPlaceholder($opinionLimitCharacters);
+$opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opinionLimitCharacters);
 ?>
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate-opinion"
       autocomplete="off" enctype="multipart/form-data">
@@ -39,10 +22,10 @@ if (!empty($opinionLimitCharacters['max'])) {
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
-                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
-                    <?php echo $opinionPlaceholder; ?>
+                    <?php echo $opinionTextareaPlaceholder; ?>
                 </div>
             </div>
             <div class="char-count" id="char-count-tim-opinion-advantages"><span>0</span></div>
@@ -54,10 +37,10 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
-                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
-                    <?php echo $opinionPlaceholder; ?>
+                    <?php echo $opinionTextareaPlaceholder; ?>
                 </div>
             </div>
             <div class="char-count" id="char-count-tim-opinion-disadvantages"><span>0</span></div>
@@ -69,10 +52,10 @@ if (!empty($opinionLimitCharacters['max'])) {
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
-                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
+                          class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
-                    <?php echo $opinionPlaceholder; ?>
+                    <?php echo $opinionTextareaPlaceholder; ?>
                 </div>
             </div>
             <div class="char-count" id="char-count-tim-opinion-summary"><span>0</span></div>
@@ -232,11 +215,11 @@ if (!empty($opinionLimitCharacters['max'])) {
             </div>
         </div>
         <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
-        <input type="hidden" name="product_id" value="<?php echo $productId ?>"/>
+        <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
         <input type="hidden" name="customer_ip_address" value="<?php echo $customerIp ?>"/>
         <input type="hidden" name="customer_host_name" value="<?php echo $customerHostName ?>"/>
-        <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturerId ?>"/>
-        <input type="hidden" name="current_category_id" value="<?php echo $currentCategoryId ?>"/>
+        <input type="hidden" name="manufacturer_id" value="<?php echo $product->getManufacturer() ?>"/>
+        <input type="hidden" name="current_category_id" value="<?php echo $product->getCategoryId() ?>"/>
         <input type="hidden" name="add_method" value="<?php echo $customerId ? 'Użytkownik' : null ?>"/>
 
         <div class="tim-comment-add">

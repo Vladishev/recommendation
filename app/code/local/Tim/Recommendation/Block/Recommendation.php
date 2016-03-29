@@ -432,24 +432,63 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      */
     public function getProfileStatus($customerId)
     {
-        $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
-        $fields = array();
-        $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
+        if ($customerId) {
+            $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
+            $fields = array();
+            $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
 
-        if ($user) {
-            $fields[] = $user->getNick();
-            $fields[] = $user->getAvatar();
-            if (!empty($userTypes)) {
-                $fields[] = $user->getUserType();
-            }
-
-            foreach ($fields as $field) {
-                if (empty($field)) {
-                    return 0;
+            if ($user) {
+                $fields[] = $user->getNick();
+                $fields[] = $user->getAvatar();
+                if (!empty($userTypes)) {
+                    $fields[] = $user->getUserType();
                 }
+
+                foreach ($fields as $field) {
+                    if (empty($field)) {
+                        return 0;
+                    }
+                }
+                return 1;
             }
-            return 1;
+            return 0;
+        } else {
+            //for preventing show popup "edit you profile"
+            return 2;
         }
-        return 0;
+    }
+
+    /**
+     * Prepare text for opinion placeholder
+     * @param array $opinionLimitCharacters
+     * @return string
+     */
+    public function getOpinionPlaceholder($opinionLimitCharacters)
+    {
+        $placeholderText = '';
+        if (!empty($opinionLimitCharacters['min'])) {
+            $placeholderText .= $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
+        }
+        if (!empty($opinionLimitCharacters['max'])) {
+            $placeholderText .= $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
+        }
+        return $placeholderText;
+    }
+
+    /**
+     * Prepare classes for validation opinion textareas
+     * @param array $opinionLimitCharacters
+     * @return string
+     */
+    public function getOpinionTextareaValidationClass($opinionLimitCharacters)
+    {
+        $class = '';
+        if (!empty($opinionLimitCharacters['min'])) {
+            $class .= ' min-length-opinion';
+        }
+        if (!empty($opinionLimitCharacters['max'])) {
+            $class .= ' max-length-opinion';
+        }
+        return $class;
     }
 }
