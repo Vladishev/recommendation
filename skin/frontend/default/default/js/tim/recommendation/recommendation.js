@@ -481,7 +481,6 @@ function validateCommentForm(el) {
         }
         return true;
     });
-
     Validation.add('max-length-comment', commentMax, function (v) {
         var max = maxChar;
         if (max) {
@@ -686,6 +685,7 @@ function addExtraValidation() {
         var limitCharsData = jQuery('#opinionLimitChars').data();
         var opinionLimitCharsMin = limitCharsData.min;
         var opinionLimitCharsMax = limitCharsData.max;
+
         Validation.add('min-length-opinion', 'Minimalna liczba znaków to ' + opinionLimitCharsMin, function (v) {
             var min = (opinionLimitCharsMin ? opinionLimitCharsMin : 0);
             if (min) {
@@ -695,7 +695,6 @@ function addExtraValidation() {
             }
             return true;
         });
-
         Validation.add('max-length-opinion', 'Maksymalna liczba znaków to ' + opinionLimitCharsMax, function (v) {
             var max = (opinionLimitCharsMax ? opinionLimitCharsMax : 0);
             if (max) {

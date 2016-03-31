@@ -5,7 +5,7 @@ $userData = $this->getUserData($userId);
 <div class="tim-comm-left-column">
     <div class="tim-user"> <!-- main container for user details -->
         <div class="tim-user-photo">
-            <img src="<?php echo Mage::getBaseUrl() . $userData['avatar'] ?>" width="269" height="168" alt="user-photo"/>
+            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" width="269" height="168" alt="user-photo"/>
             <!-- place for user photo -->
         </div>
         <div class="tim-user-name">
@@ -27,7 +27,7 @@ $userData = $this->getUserData($userId);
             <p><?php echo $userData['engage']; ?></p>
             <div class="tim-user-scoregraph tim-score-2">
                 <!-- number of opinons -->
-                <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
+                <?php echo $this->__('%s opinion(s)', $userData['opinion_qty']); ?>
             </div>
             <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
         </div>

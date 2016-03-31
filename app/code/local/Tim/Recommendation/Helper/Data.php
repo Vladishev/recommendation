@@ -200,6 +200,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getOpinionQty($customerId = false)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToSelect('user_id');
         $opinionCollection->getSelect()->where('parent IS NULL');
         if ($customerId) {
             $opinionCollection->addFieldToFilter('user_id', $customerId);

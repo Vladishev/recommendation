@@ -18,7 +18,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
         <div class="tim-opinion">
             <label for="tim-opinion-advantages" class="tim-opinion-content-subtitle tim-icon-good <?php echo $requiredFields['advantages']? 'required' : '' ?>">
                 <?php echo $requiredFields['advantages']? '<em>*</em>' : '' ?>
-                <?php echo $this->__('Opisz zalety produktu:') ?>
+                <?php echo $this->__('Describe the advantages of the product:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
@@ -32,7 +32,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
 
             <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad <?php echo $requiredFields['defects']? 'required' : '' ?>">
                 <?php echo $requiredFields['defects']? '<em>*</em>' : '' ?>
-                <?php echo $this->__('Opisz wady produktu:') ?>
+                <?php echo $this->__('Describe product defects:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
@@ -47,7 +47,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
 
             <label for="tim-opinion-summary" class="tim-opinion-content-subtitle tim-icon-summary <?php echo $requiredFields['summary']? 'required' : '' ?>">
                 <?php echo $requiredFields['summary']? '<em>*</em>' : '' ?>
-                <?php echo $this->__('Podsumowanie / dodatkowe informacje / uwagi:') ?>
+                <?php echo $this->__('Summary / additional information / comments:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
@@ -61,11 +61,11 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
             <div class="char-count" id="char-count-tim-opinion-summary"><span>0</span></div>
 
             <div class="tim-rating-input-container">
-                <div class="tim-secondary-title"><?php echo $this->__('OCEŃ WALORY PRODUKTU') ?></div>
+                <div class="tim-secondary-title"><?php echo $this->__('RATE QUALITY OF PRODUCT') ?></div>
                 <?php $options = array(5, 4, 3, 2, 1); ?>
                 <div class="tim-rating-input">
                     <p>
-                        <?php echo $this->__('Stosunek jakości do ceny:') ?>
+                        <?php echo $this->__('Price to quality:') ?>
                         <?php if($requiredFields['price_to_quality']) : ?>
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
@@ -194,7 +194,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                            class="tim-comm-button-smal check-tim-profile-status <?php echo $requiredFields['add_photo']? 'required-entry' : '' ?>"
                         <?php echo !$isLoggedIn ? 'onclick="checkIfUserIsLoggedIn(); return false;"' : ''?>
                         onchange="displayFilename(this.id)"/>
-                    <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Wczytaj zdjęcia') ?></label>
+                    <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Load photos') ?></label>
                     <div id="downloaded-imgs"></div>
                     <!-- place for user input - upload photos -->
                 </div>
@@ -224,15 +224,15 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <input type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add check-tim-profile-status" id="add-ajax-opinion"
+                <input type="submit" title="<?php echo $this->__('Add opinion') ?>" class="tim-comment-button-add check-tim-profile-status" id="add-ajax-opinion"
                 value="<?php echo $this->__('Add opinion') ?>"/>
             <?php else: ?>
-                <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Dodaj opinię')) ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
+                <button type="button" title="<?php echo $this->__('Add opinion') ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
                     <span><span><?php echo $this->__('Add opinion') ?></span></span>
                 </button>
             <?php endif; ?>
         </div>
-        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close form')) ?>" class="tim-comment-button-add tim-comment-close-form" onclick="hideAddOpinionForm()">
+        <button type="button" title="<?php echo $this->__('Close form') ?>" class="tim-comment-button-add tim-comment-close-form" onclick="hideAddOpinionForm()">
             <span><span><?php echo $this->__('Close form') ?></span></span>
         </button>
     </fieldset>
@@ -240,7 +240,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
 <div id="loading-frontend-mask-opinion">
     <p class="loader" id="loading_mask_loader">
         <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif',array('_secure'=>true))?>"
-             alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('adminhtml')->__('Loading...')) ?>" /><br />
+             alt="<?php echo Mage::helper('adminhtml')->__('Loading...') ?>" /><br />
         <?php echo Mage::helper('adminhtml')->__('Please wait...') ?></p>
 </div>
 <input type="hidden" id="opinionLimitChars"

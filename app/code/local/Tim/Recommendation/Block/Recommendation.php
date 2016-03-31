@@ -80,7 +80,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $opinionCollection->addFieldToFilter('acceptance', 1);
         $opinionCollection->getSelect()->where('parent IS NULL');
         $opinionCollection->setOrder('date_add', 'DESC');
-        $lastAddedOpinion = $opinionCollection->getData()[0];
+        $lastAddedOpinion = $opinionCollection->getFirstItem();
 
         return $lastAddedOpinion;
     }
@@ -105,6 +105,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     public function getOpinionComments($opinionId)
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $collection->addFieldToSelect(array('user_id', 'comment', 'date_add', 'recom_id'));
         $collection->addFieldToFilter('parent', $opinionId);
         $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NOT NULL');
@@ -143,30 +144,14 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * Checks if opinion exist
-     * @param int $productId
-     * @return bool
-     */
-    public function isOpinionExist($productId)
-    {
-        $productOpinion = Mage::getModel('tim_recommendation/recommendation')->load($productId, 'product_id');
-        $opinionData = $productOpinion->getData();
-        if (empty($opinionData)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * Gets custom opinion data
      * @return array
      */
     public function getProductOpinionData()
     {
-        $opinionCollectionForeach = Mage::getModel('tim_recommendation/recommendation');
-        $productCollection = Mage::getModel('catalog/product');
-        $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $productModel = Mage::getModel('catalog/product');
+        $opinionModel = Mage::getModel('tim_recommendation/recommendation');
+        $opinionCollection = $opinionModel->getCollection();
         $opinionCollection->addFieldToSelect('recom_id');
         $opinionCollection->getSelect()->where('parent IS NULL');
         $opinionCollection->setOrder('date_add', 'DESC');
@@ -175,11 +160,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
         $i = 0;
         foreach ($opinionDataId as $key => $value) {
-            $productId = $opinionCollectionForeach->load($value)->getProductId();
-
-            $productData[$i]['name'] = $productCollection->load($productId)->getName();
-            $productData[$i]['image'] = $productCollection->load($productId)->getImageUrl();
-            $productData[$i]['product_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $productCollection->load($productId)->getUrlPath();
+            $productId = $opinionModel->load($value)->getProductId();
+            $product = $productModel->load($productId);
+            $productData[$i]['name'] = $product->getName();
+            $productData[$i]['image'] = $product->getImageUrl();
+            $productData[$i]['product_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getUrlPath();
             $productData[$i]['average'] = $this->getAverage($value);
             $i++;
         }
@@ -196,6 +181,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $ratingFields = array('rating_price', 'rating_durability', 'rating_failure', 'rating_service');
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToSelect($ratingFields);
         $opinionCollection->getSelect()->where('parent IS NULL');
         $opinions = $opinionCollection->addFieldToFilter('recom_id', $opinionId)->getData();
         $rating = 0;
@@ -212,7 +198,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Gets information of user who writes opinions
-     * and sort it by summ of opinions.
+     * and sort it by sum of opinions.
      * @return array
      */
     public function getUserSummaryInformation()
@@ -491,6 +477,40 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
+     * Prepare text for comment placeholder
+     * @param array $commentLimitCharacters
+     * @return string
+     */
+    public function getCommentPlaceholder($commentLimitCharacters)
+    {
+        $placeholderText = '';
+        if (!empty($commentLimitCharacters['min'])) {
+            $placeholderText .= $this->__('The minimum number of characters is %s', $commentLimitCharacters['min']) . '<br>';
+        }
+        if (!empty($commentLimitCharacters['max'])) {
+            $placeholderText .= $this->__('The maximum number of characters is %s', $commentLimitCharacters['max']);
+        }
+        return $placeholderText;
+    }
+
+    /**
+     * Prepare classes for validation comment textareas
+     * @param array $commentLimitCharacters
+     * @return string
+     */
+    public function getCommentTextareaValidationClass($commentLimitCharacters)
+    {
+        $class = '';
+        if (!empty($commentLimitCharacters['min'])) {
+            $class .= ' min-length-comment';
+        }
+        if (!empty($commentLimitCharacters['max'])) {
+            $class .= ' max-length-comment';
+        }
+        return $class;
+    }
+
+    /**
      * Add http protocol to raw link or return null
      * @param string $site
      * @return null|string
@@ -513,7 +533,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * @param int $limitPerPage
      * @return float|int
      */
-    public function getPagesCount($opinionCount, $limitPerPage)
+    public function getOpinionPagesCount($opinionCount, $limitPerPage)
     {
         $pagesCount = ceil($opinionCount / $limitPerPage);
         return $pagesCount;
@@ -525,7 +545,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * @param int $limitPerPage
      * @return float|int
      */
-    public function commentsPagesCount($commentsCount, $limitPerPage)
+    public function getCommentsPagesCount($commentsCount, $limitPerPage)
     {
         $commentsPagesCount = ceil($commentsCount / $limitPerPage);
         return $commentsPagesCount;

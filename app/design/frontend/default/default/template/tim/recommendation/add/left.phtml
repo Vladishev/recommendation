@@ -6,14 +6,14 @@
         </div>
         <div class="tim-user-name">
             <?php echo $this->__('User'); ?>
-            <p><?php echo $this->__($userData['customerName']); ?><!-- place for user name {Magento: get user name} --></p>
+            <p><?php echo $userData['customerName']; ?><!-- place for user name {Magento: get user name} --></p>
         </div>
         <div class="tim-user-type">
             <div class="tim-user-type-icon">
                 <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status"/>
             </div>
             <?php echo $this->__('User type'); ?>
-            <p><?php echo $this->__($userData['customerTypeName']); ?><!-- place for user name and icon --></p>
+            <p><?php echo $userData['customerTypeName']; ?><!-- place for user name and icon --></p>
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>

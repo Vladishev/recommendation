@@ -1,6 +1,6 @@
 <?php
 $opinionCount = $this->getOpinionCount();
-$pagesCount = ceil($opinionCount / 10);
+$opinionPagesCount = $this->getOpinionPagesCount($opinionCount, 10);
 ?>
 <div class="tim-comm-header">
     <div class="tim-comm-header-left">
@@ -20,8 +20,8 @@ $pagesCount = ceil($opinionCount / 10);
                 class="tim-pager-box"
                 value="1"/>
             <?php echo $this->__(' from') ?>
-            <span class="tim-pager-total"><?php echo $pagesCount ?></span>
-            <?php if ($pagesCount > 1): ?>
+            <span class="tim-pager-total"><?php echo $opinionPagesCount ?></span>
+            <?php if ($opinionPagesCount > 1): ?>
             <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)"> <</button>
             <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
             <?php endif ?>

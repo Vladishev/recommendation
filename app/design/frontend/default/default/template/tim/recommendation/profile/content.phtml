@@ -6,8 +6,8 @@ $opinionComments = $this->getOpinionComment($userId);
 $opinionCount = $this->getUserOpinionCount($userId);
 $commentsCount = $this->getCommentsCount($userId);
 $limitPerPage = 10;
-$pagesCount = $this->getPagesCount($opinionCount, $limitPerPage);
-$commentsPagesCount = $this->commentsPagesCount($commentsCount, $limitPerPage);
+$opinionPagesCount = $this->getOpinionPagesCount($opinionCount, $limitPerPage);
+$commentsPagesCount = $this->getCommentsPagesCount($commentsCount, $limitPerPage);
 $site = $this->getFormatSiteLink($userData['www']);
 ?>
 <div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
@@ -71,7 +71,7 @@ $site = $this->getFormatSiteLink($userData['www']);
     <!-- start of user's opinion list -->
     <?php if (!empty($userOpinionData)): ?>
     <div class="tim-opinion-list">
-        <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("OPINIE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
+        <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__('OPINIONS ADDED BY CUSTOMER'); ?></div>
         <div class="tim-opinion-list-header">
             <input
                 type="hidden"
@@ -82,15 +82,15 @@ $site = $this->getFormatSiteLink($userData['www']);
                 data-page="userPage"/>
             <div class="tim-opinion-list-header-pagecount">
                 <input class="tim-pager-box" value="1" type="text">
-                <p><?php echo $this->__('z ') ?></p><!-- go to page X from all -->
-                <span class="tim-pager-total"><?php echo $pagesCount ?></span>
-                <?php if ($pagesCount > 1):  ?>
+                <p><?php echo $this->__('from ') ?></p><!-- go to page X from all -->
+                <span class="tim-pager-total"><?php echo $opinionPagesCount; ?></span>
+                <?php if ($opinionPagesCount > 1): ?>
                 <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)">< </button>
                 <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
                 <?php endif ?>
             </div>
             <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
-                <p><?php echo $this->__('Wyświetl:') ?></p>
+                <p><?php echo $this->__('Display:') ?></p>
                 <ul>
                     <li>
                         <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">10</span>
@@ -102,7 +102,7 @@ $site = $this->getFormatSiteLink($userData['www']);
                         <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">30</span>
                     </li>
                 </ul>
-                <p><?php echo $this->__('opinii:') ?></p>
+                <p><?php echo $this->__('opinion(s):') ?></p>
             </div>
             <div class="tim-comm-sorting">
                 <p><?php echo $this->__("Criterion sorting"); ?></p>
@@ -118,8 +118,8 @@ $site = $this->getFormatSiteLink($userData['www']);
         <div class="tim-comm-list-bulk tim-profile-opinion-list">
             <!-- listing of newest opinions -->
             <div class="tim-comm-list-titlebar">
-                <div class="tim-list-col1"><?php echo $this->__('Produkt') ?></div>
-                <div class="tim-list-col2"><?php echo $this->__('Średnia Ocena') ?></div>
+                <div class="tim-list-col1"><?php echo $this->__('Product') ?></div>
+                <div class="tim-list-col2"><?php echo $this->__('Average Rating') ?></div>
             </div>
             <!-- for each company -->
             <div id="tim-list-container">
@@ -128,12 +128,12 @@ $site = $this->getFormatSiteLink($userData['www']);
                 <?php if ($i > ($limitPerPage - 1)) break; ?>
                 <div class="tim-comm-list-bulk-positions tim-products-opinion-list-<?php echo $i ?>">
                     <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
-                        <a class="tim-a-tag" href="<?php echo $itemData['url']; ?>"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $this->__($itemData['name']) ?></a>
+                        <a class="tim-a-tag" href="<?php echo $itemData['url']; ?>"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $itemData['name'] ?></a>
                     </div>
                     <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
                         <div class="tim-comm-list-bulk-rating-bar">
                             <div class="tim-comm-list-bulk-rating-barinner">
-                                <?php echo $this->__($itemData['rating']) ?>
+                                <?php echo $itemData['rating'] ?>
                                 <span><?php echo $this->__('/5') ?></span>
                             </div>
                         </div>
@@ -147,7 +147,7 @@ $site = $this->getFormatSiteLink($userData['www']);
     </div>
     <?php endif ?>
     <?php if (isset($opinionComments[0]['product_id'])): ?>
-    <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("KOMENTARZE DODANE PRZEZ UŻYTKOWNIKA"); ?></div>
+    <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__('COMMENTS ADDED BY CUSTOMER'); ?></div>
 <!--  Start comments toolbar  -->
     <div class="tim-opinion-list-header">
         <input
@@ -157,15 +157,15 @@ $site = $this->getFormatSiteLink($userData['www']);
             data-userid="<?php echo $userId; ?>"/>
         <div class="tim-opinion-list-header-pagecount">
             <input class="tim-comment-pager-box" value="1" type="text">
-            <p><?php echo $this->__('z ') ?></p><!-- go to page X from all -->
+            <p><?php echo $this->__('from ') ?></p><!-- go to page X from all -->
             <span class="tim-comment-pager-total"><?php echo $commentsPagesCount ?></span>
-            <?php if ($pagesCount > 1):  ?>
+            <?php if ($commentsPagesCount > 1): ?>
                 <button class="tim-pager-comment-decrease-button" onclick="changeCountAndPagerComments(this)">< </button>
                 <button class="tim-pager-comment-increase-button" onclick="changeCountAndPagerComments(this)"> ></button>
             <?php endif ?>
         </div>
         <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
-            <p><?php echo $this->__('Wyświetl:') ?></p>
+            <p><?php echo $this->__('Display:') ?></p>
             <ul>
                 <li>
                     <span class="tim-toolbar-count-comment count-active-comment" onclick="changeCountAndPagerComments(this)">10</span>
@@ -177,7 +177,7 @@ $site = $this->getFormatSiteLink($userData['www']);
                     <span class="tim-toolbar-count-comment" onclick="changeCountAndPagerComments(this)">30</span>
                 </li>
             </ul>
-            <p><?php echo $this->__('opinii:') ?></p>
+            <p><?php echo $this->__('opinion(s):') ?></p>
         </div>
         <div class="tim-comm-sorting">
             <p><?php echo $this->__("Criterion sorting"); ?></p>
@@ -203,7 +203,7 @@ $site = $this->getFormatSiteLink($userData['www']);
                 </div>
                 <div class="tim-comment-container-content">
                     <!-- content of comment -->
-                    <?php echo $this->__($comment['comment']); ?>
+                    <?php echo $comment['comment']; ?>
                 </div>
             </div>
         <?php $k++; endforeach; ?>

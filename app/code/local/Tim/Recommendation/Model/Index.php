@@ -50,7 +50,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection->addFieldToFilter('parent', array('null' => true));
         $collection->addFieldToFilter('acceptance', 1);
         $collection->addFieldToSelect('recom_id');
-        $count = count($collection->getData());
+        $count = $collection->getSize();
+
         return $count;
     }
 
@@ -66,6 +67,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     public function getUserOpinionData($userId, $limit, $curPage, $order, $field)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
+        $opinionCollection->addFieldToSelect(array('product_id','recom_id','average_rating'));
         $opinionCollection->addFieldToFilter('user_id', $userId);
         $opinionCollection->addFieldToFilter('parent', array('null' => true));
         $opinionCollection->addFieldToFilter('acceptance', 1);
@@ -104,9 +106,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection->addFieldToFilter('acceptance', 1);
         $recommendationCollection->addFieldToFilter('user_id', $userId);
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
-        $recommendationCollection->addFieldToSelect('comment');
-        $recommendationCollection->addFieldToSelect('date_add');
-        $recommendationCollection->addFieldToSelect('product_id');
+        $recommendationCollection->addFieldToSelect(array('comment', 'date_add', 'product_id'));
         $recommendationCollection->setOrder('date_add', $order);
         $recommendationCollection->setPageSize($limit);
         $recommendationCollection->setCurPage($curPage);
@@ -141,7 +141,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $recommendationCollection->addFieldToFilter('acceptance', 1);
         $recommendationCollection->addFieldToFilter('user_id', $userId);
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
-        $count = count($recommendationCollection->getData());
+        $count = $recommendationCollection->getSize();
 
         return $count;
     }
@@ -158,7 +158,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NULL');
         $collection->addFieldToSelect('recom_id');
-        $count = count($collection->getData());
+        $count = $collection->getSize();
+
         return $count;
     }
 }
