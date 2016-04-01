@@ -70,7 +70,6 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                             ->setType($file['type']);
                         try {
                             $saveMedia = $mediaModel->save();
-                            var_dump($saveMedia);
                         } catch (Exception $e) {
                             Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
                             $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
