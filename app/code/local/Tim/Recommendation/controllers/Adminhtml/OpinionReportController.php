@@ -77,6 +77,29 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $this->_redirect('*/*/index');
     }
 
+    /**Changed data in acceptance field to 0
+     * @throws Exception
+     */
+    public function modifyOpinionAction()
+    {
+        $opinionIds = $this->getRequest()->getParam('acceptance');
+        if (!empty($opinionIds)) {
+            foreach ($opinionIds as $id) {
+                $opinion = Mage::getModel('tim_recommendation/recommendation')->load($id, 'recom_id');
+                $customer = Mage::getModel('customer/customer')->load($opinion->getUserId());
+                $product = Mage::getModel('catalog/product')->load($opinion->getProductId());
+                $templateVar = array();
+                $templateVar['customerName'] = $customer->getName();
+                $templateVar['productName'] = $product->getName();
+                $templateVar['indexTim'] = $product->getSku();
+                Mage::helper('tim_recommendation')->sendEmail($customer->getEmail(), $templateVar, 'modify_opinion_template', 'Opinia została zablokowana');
+            }
+            $this->_addAlert('modified', $opinionIds);
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
     /**
      * Added alert to user
      * @param (string)$status

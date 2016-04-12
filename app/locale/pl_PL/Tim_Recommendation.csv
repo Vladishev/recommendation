@@ -250,6 +250,7 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 " from"," z"
 "Total of %d opinion(s) were allowed.","Łącznie zostało zaakceptowanych %d opinii."
 "Total of %d opinion(s) were denied.","Łącznie zostało odrzuconych %d opinii."
+"Total of %d opinion(s) were modified.","Total of %d opinion(s) were modified."
 "Total of %d comment(s) were allowed.","Łącznie zostało zaakceptowanych %d komentarzy."
 "Total of %d comment(s) were denied.","Łącznie zostało odrzuconych %d komentarzy."
 "Tim Recommendation","Typ oraz poziom użytkownika"
@@ -296,3 +297,4 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 "Product","Produkt"
 "Average Rating","Średnia Ocena"
 "from ","z "
+"Modify","Modyfikuj"
