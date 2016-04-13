@@ -85,6 +85,14 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.confirm" template="tim/recommendation/confirm/confirm.phtml" />
         </reference>
     </recommendation_index_confirm>
+    <recommendation_index_modifyopinion>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="content.recommendation.modify" template="tim/recommendation/confirm/modify.phtml" />
+        </reference>
+    </recommendation_index_modifyopinion>
     <customer_account>
         <reference name="customer_account_navigation">
             <action method="addLink" translate="label">
