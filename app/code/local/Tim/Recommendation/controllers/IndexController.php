@@ -154,6 +154,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['rating_durability'] = $recommendationData->getRatingDurability();
             $eventData['rating_failure'] = $recommendationData->getRatingFailure();
             $eventData['rating_service'] = $recommendationData->getRatingService();
+            $eventData['modify_opinion_url'] = Mage::helper('tim_recommendation')->getModifyOpinionUrl($recomId);
 
             if ($recommendationData->getByIt() == 1) {
                 $eventData['by_it'] = Mage::helper('tim_recommendation')->__('TAK');
@@ -191,7 +192,6 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
 
         $eventData['confirm_url'] = $this->getConfirmUrl($recomId, '0');
-        $eventData['modify_opinion_url'] = Mage::helper('tim_recommendation')->getModifyOpinionUrl($recomId);
 
         return $eventData;
     }
