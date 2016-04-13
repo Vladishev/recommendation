@@ -22,7 +22,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
             $return .= '</br>';
         }
         $return .= <<<HTML
-<a target="_blank" href="{$url}">{$title}</a>
+<a href="{$url}">{$title}</a>
 HTML;
         return $return;
     }

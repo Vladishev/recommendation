@@ -35,6 +35,11 @@
             <block type="adminhtml/template" template="tim/recommendation/report/js.phtml" name="recom.report.js" as="recom_report_js"></block>
         </reference>
     </adminhtml_commentsreport_index>
+    <adminhtml_commentsreport_commentinfo>
+        <reference name="content">
+            <block type="tim_recommendation/adminhtml_commentInfo" name="comment.info" template="tim/comment_info.phtml"/>
+        </reference>
+    </adminhtml_commentsreport_commentinfo>
     <adminhtml_notereport_index>
         <reference name="head">
             <action method="addCss"><name>css/tim/recommendation/style.css</name></action>

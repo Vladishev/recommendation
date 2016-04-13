@@ -252,6 +252,7 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 "Total of %d opinion(s) were denied.","Łącznie zostało odrzuconych %d opinii."
 "Total of %d comment(s) were allowed.","Łącznie zostało zaakceptowanych %d komentarzy."
 "Total of %d comment(s) were denied.","Łącznie zostało odrzuconych %d komentarzy."
+"Total of %d opinion(s) were modified.","Total of %d comment(s) were modified."
 "Tim Recommendation","Typ oraz poziom użytkownika"
 "Send confirmation of acceptance opinion","Wyślij potwierdzenie akceptacji opinii"
 "Send confirmation of acceptance comment","Wyślij potwierdzenie akceptacji komentarza"
@@ -296,3 +297,5 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 "Product","Produkt"
 "Average Rating","Średnia Ocena"
 "from ","z "
+"Modify","Modyfikuj"
+"Comment info","Szczegóły komentarz"

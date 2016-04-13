@@ -171,6 +171,11 @@
                     <file>confirmationForUser.html</file>
                     <type>html</type>
                 </confirmation_for_user_template>
+                <modify_comment_template>
+                    <label>Modify comment</label>
+                    <file>modifyComment.html</file>
+                    <type>html</type>
+                </modify_comment_template>
             </email>
         </template>
     </global>

@@ -19,6 +19,13 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
         $this->renderLayout();
     }
 
+    public function commentInfoAction()
+    {
+        $this->_title(Mage::helper('tim_recommendation')->__('Comment info'));
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
     /**
      * Grid action
      *
@@ -71,6 +78,30 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     }
 
     /**
+     * Send email to customer about modification
+     * @throws Exception
+     */
+    public function modifyCommentAction()
+    {
+        $opinionIds = $this->getRequest()->getParam('acceptance');
+        if (!empty($opinionIds)) {
+            foreach ($opinionIds as $id) {
+                $comment = Mage::getModel('tim_recommendation/recommendation')->load($id, 'recom_id');
+                $customer = Mage::getModel('customer/customer')->load($comment->getUserId());
+                $product = Mage::getModel('catalog/product')->load($comment->getProductId());
+                $templateVar = array();
+                $templateVar['customerName'] = $customer->getName();
+                $templateVar['productName'] = $product->getName();
+                $templateVar['indexTim'] = $product->getSku();
+                Mage::helper('tim_recommendation')->sendEmail($customer->getEmail(), $templateVar, 'modify_comment_template', 'Komentarz został zablokowany');
+            }
+            $this->_addAlert('modified', $opinionIds);
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+    /**
      * Added alert to user
      * @param (string)$status
      * @param (int)$id
@@ -79,7 +110,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     {
         Mage::getSingleton('adminhtml/session')->addSuccess(
             Mage::helper('tim_recommendation')->__(
-                'Total of %d comment(s) were ' . $status . '.', count($id)
+                'Total of %d comment(s) were %s.', count($id), $status
             ));
     }
 
