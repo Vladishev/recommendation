@@ -11,8 +11,15 @@ $video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this
         <tr>
             <td style="width:50%;">
                 <h3 class="icon-head head-adminhtml-opinionInfo">
-                    <?php echo $this->__('Opinion details for product'); ?>: <?php echo $opinion['sku']; ?>
-                    </h3>
+                    <?php echo $this->__('Details of reviews for the product: %s with number: %s', $opinion['product_name'], $opinion['sku']); ?>
+                </h3>
+            </td>
+            <td class="form-buttons">
+                <?php echo $this->getBackButtonHtml() ?>
+                <?php echo $this->getAddNoteButtonHtml() ?>
+                <?php echo $this->getModifyButtonHtml() ?>
+                <?php echo $this->getNotAcceptButtonHtml() ?>
+                <?php echo $this->getAcceptButtonHtml() ?>
             </td>
         </tr>
     </table>
@@ -75,5 +82,9 @@ $video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this
     </div>
     <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/commentsReport', array('commentId' => $opinion['recom_id'])) ?>" target="_blank">
         <span><?php echo $this->__('Display comments'); ?></span>
+    </a><p>
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/noteReport', array('id' => $opinion['recom_id'])) ?>">
+        <span><?php echo $this->__('Display note'); ?></span>
     </a>
 </div>
+<input type="hidden" id="recomId" value="<?php echo $opinion['recom_id']; ?>"/>
