@@ -572,6 +572,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      * @param array $templateVar
      * @param int $templateId
      * @param string $subject
+     * @return bool
      */
     public function sendEmail($toEmail, $templateVar, $templateId, $subject)
     {
@@ -585,8 +586,21 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             ->setType('html');
         try {
             $mail->send();
+            return true;
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            return false;
         }
+    }
+
+    /**
+     * Prepare url for modification comment
+     * @param int $recomId
+     * @return string
+     */
+    public function getModifyCommentUrl($recomId)
+    {
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/modifyComment/commentId/' . $recomId;
+        return $url;
     }
 }

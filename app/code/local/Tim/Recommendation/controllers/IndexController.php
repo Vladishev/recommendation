@@ -187,7 +187,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $product = Mage::getModel('catalog/product')->load($productId);
             $eventData['product_name'] = $product->getName();
             $eventData['product_url'] = $product->getProductUrl();
-
+            $eventData['modify_comment_url'] = Mage::helper('tim_recommendation')->getModifyCommentUrl($recomId);
         }
 
         $eventData['confirm_url'] = $this->getConfirmUrl($recomId, '0');
@@ -227,6 +227,33 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $this->loadLayout();
                 $this->renderLayout();
             }
+        }
+    }
+
+    /**
+     * Send email to customer about modification from direct link
+     */
+    public function modifyCommentAction()
+    {
+        $commentId = $this->getRequest()->getParam('commentId');
+        if (!empty($commentId)) {
+            $opinion = Mage::getModel('tim_recommendation/recommendation')->load($commentId, 'recom_id');
+            $customer = Mage::getModel('customer/customer')->load($opinion->getUserId());
+            $product = Mage::getModel('catalog/product')->load($opinion->getProductId());
+            $templateVar = array();
+            $templateVar['customerName'] = $customer->getName();
+            $templateVar['productName'] = $product->getName();
+            $templateVar['indexTim'] = $product->getSku();
+            $mailResult = Mage::helper('tim_recommendation')->sendEmail($customer->getEmail(), $templateVar, 'modify_comment_template', 'Komentarz został zablokowany');
+
+            if ($mailResult) {
+                $this->loadLayout();
+                $this->renderLayout();
+            } else {
+                $this->norouteAction();
+            }
+        } else {
+            $this->norouteAction();
         }
     }
 
