@@ -13,16 +13,23 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
     public function render(Varien_Object $row)
     {
         $return = '';
-        $recomId = $row->getRecomId();
-        $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('id' => $recomId));
+        if ($row->getMalpracticeId()) {
+            $id = $row->getMalpracticeId();
+            $note = $this->getMalpracticeNote($id);
+            $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('malpracticeId' => $id));
+        } else {
+            $id = $row->getRecomId();
+            $note = $this->getRecommendationNote($id);
+            $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('recomId' => $id));
+        }
         $title = Mage::helper('tim_recommendation')->__('Display note');
-        $note = $this->getNote($recomId);
+
         if (!empty($note)) {
             $return .= $note;
             $return .= '</br>';
         }
         $return .= <<<HTML
-<a target="_blank" href="{$url}">{$title}</a>
+<a href="{$url}">{$title}</a>
 HTML;
         return $return;
     }
@@ -32,10 +39,27 @@ HTML;
      * @param $recomId
      * @return mixed
      */
-    private function getNote($recomId)
+    private function getRecommendationNote($recomId)
     {
         $note = Mage::getModel('tim_recommendation/note')->getCollection()
             ->addFieldToFilter('object_id', array('eq' => $recomId))
+            ->addFieldToFilter('object_name', array('eq' => 'tim_recommendation'))
+            ->setOrder('date_add', 'ASC')
+            ->getLastItem()
+            ->getNote();
+        return $note;
+    }
+
+    /**
+     * Gets last added note to malpractice
+     * @param $malpracticeId
+     * @return mixed
+     */
+    private function getMalpracticeNote($malpracticeId)
+    {
+        $note = Mage::getModel('tim_recommendation/note')->getCollection()
+            ->addFieldToFilter('object_id', array('eq' => $malpracticeId))
+            ->addFieldToFilter('object_name', array('eq' => 'tim_recom_malpractice'))
             ->setOrder('date_add', 'ASC')
             ->getLastItem()
             ->getNote();
