@@ -301,3 +301,5 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 "Comment info","Szczegóły komentarz"
 "Comment was modified.","Comment was modified."
 "Comment info for the product: %s with number: %s to opinion: %s.","Szczegóły komentarza dla produktu: %s o numerze: %s do opinii: %s."
+"Not accept","Odpublikuj"
+"Accept","Opublikuj"

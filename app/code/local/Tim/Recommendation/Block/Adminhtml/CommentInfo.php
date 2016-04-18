@@ -18,6 +18,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentInfo extends Mage_Adminhtml_Bloc
         $recomId = $this->getRequest()->getParam('id');
         $comment = Mage::getModel('tim_recommendation/recommendation')->load($recomId)->getData();
         $product = Mage::getModel('catalog/product')->load($comment['product_id']);
+        $comment['date_add'] = date('Y-m-d H:i:s', Mage::getModel('core/date')->timestamp($comment['date_add']));
         $comment['sku'] = $product->getSku();
         $comment['product_name'] = $product->getName();
 
