@@ -171,6 +171,11 @@
                     <file>confirmationForUser.html</file>
                     <type>html</type>
                 </confirmation_for_user_template>
+                <confirm_abuse_customer_template>
+                    <label>Confirm abuse for customer</label>
+                    <file>confirmAbuseCustomer.html</file>
+                    <type>html</type>
+                </confirm_abuse_customer_template>
             </email>
         </template>
     </global>
@@ -269,6 +274,9 @@
                 <movie_to_opinion>1</movie_to_opinion>
                 <add_comment>1</add_comment>
             </customer_points>
+            <expired_time>
+                <abuse>1</abuse>
+            </expired_time>
         </tim_settings>
     </default>
 </config>

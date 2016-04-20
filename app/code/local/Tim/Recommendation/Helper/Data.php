@@ -433,6 +433,34 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Gets info about abuse confirmation expired time
+     * @return int
+     */
+    public function getAbuseExpiredTime()
+    {
+        $data = Mage::getStoreConfig('tim_settings/expired_time/abuse');
+        return (int)$data;
+    }
+
+    /**
+     * Check expired time for abuse.
+     * @param int|float $expiredTime
+     * @param string(Y-m-d H:i:s) $abuseAddedTime
+     * @return bool
+     */
+    public function checkAbuseExpiredDate($expiredTime, $abuseAddedTime)
+    {
+        $expiredTime = $expiredTime * 3600; //prepare timestamp
+        $abuseAddedTime = Mage::getModel('core/date')->timestamp($abuseAddedTime); //prepare timestamp
+        $abuseFinishTime = $expiredTime + $abuseAddedTime;
+        if ($abuseFinishTime > Mage::getModel('core/date')->timestamp()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Gets info about user level for expert
      * @return array
      */
@@ -563,6 +591,45 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return 'comment';
         } else {
             return 'opinion';
+        }
+    }
+
+    /**
+     * Sending email
+     * @param string $toEmail
+     * @param array $templateVar
+     * @param int $templateId
+     * @param string $subject
+     */
+    public function sendEmail($toEmail, $templateVar, $templateId, $subject)
+    {
+        $emailTemplate = Mage::getModel('core/email_template')->loadDefault($templateId);
+        $processedTemplate = $emailTemplate->getProcessedTemplate($templateVar);
+        $mail = Mage::getModel('core/email')
+            ->setToEmail($toEmail)
+            ->setBody($processedTemplate)
+            ->setSubject(Mage::helper('tim_recommendation')->__($subject))
+            ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
+            ->setType('html');
+        try {
+            $mail->send();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+        }
+    }
+
+    /**
+     * Compare received salt and project salt in sha1 encoding
+     * @param sha1 string $receivedSalt
+     * @return bool
+     */
+    public function checkRecommendationSalt($receivedSalt)
+    {
+        $recommendationSalt = sha1($this->getSalt());
+        if ($recommendationSalt == $receivedSalt) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

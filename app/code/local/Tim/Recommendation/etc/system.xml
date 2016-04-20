@@ -601,6 +601,25 @@
                         </add_comment>
                     </fields>
                 </customer_points>
+                <expired_time translate="label" module="tim_recommendation">
+                    <label>Expired time</label>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <abuse>
+                            <label>Expired time for abuses</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-greater-than-zero</validate>
+                            <comment>Please set time in hours.</comment>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </abuse>
+                    </fields>
+                </expired_time>
             </groups>
         </tim_settings>
     </sections>

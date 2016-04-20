@@ -46,10 +46,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             try {
                 $recommendationModel->save();
                 $recomId = $recommendationModel->getRecomId();
-                $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
+                $response['message'] = $this->getRecomHelper()->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
             } catch (Exception $e) {
                 Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-                $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
+                $response['message'] = $this->getRecomHelper()->__('Can\'t add opinion. Please try again.');
             }
 
             if (!empty($params['link_to_youtube'])) {
@@ -72,7 +72,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                             $saveMedia = $mediaModel->save();
                         } catch (Exception $e) {
                             Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                            $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
+                            $response['message'] = $this->getRecomHelper()->__('Didn\'t save %s file.', $file['name']);
                         }
                         if (isset($saveMedia)) {
                             $this->saveImage($fileName, $folderForFiles, $file);
@@ -117,7 +117,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     public function saveMd5($recomId)
     {
         $recommendation = Mage::getModel('tim_recommendation/recommendation')->load($recomId);
-        $salt = Mage::helper('tim_recommendation')->getSalt();
+        $salt = $this->getRecomHelper()->getSalt();
         $md5hash = md5($recommendation->getUserId() . $recommendation->getDateAdd() . $recommendation->getAdvantages() . $recommendation->getComment() . $salt);
         $recommendation->setMd5($md5hash);
         try {
@@ -156,14 +156,14 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['rating_service'] = $recommendationData->getRatingService();
 
             if ($recommendationData->getByIt() == 1) {
-                $eventData['by_it'] = Mage::helper('tim_recommendation')->__('TAK');
+                $eventData['by_it'] = $this->getRecomHelper()->__('TAK');
             } else {
-                $eventData['by_it'] = Mage::helper('tim_recommendation')->__('NIE');
+                $eventData['by_it'] = $this->getRecomHelper()->__('NIE');
             }
             if ($recommendationData->getRecommend() == 1) {
-                $eventData['recommend'] = Mage::helper('tim_recommendation')->__('TAK');
+                $eventData['recommend'] = $this->getRecomHelper()->__('TAK');
             } else {
-                $eventData['recommend'] = Mage::helper('tim_recommendation')->__('NIE');
+                $eventData['recommend'] = $this->getRecomHelper()->__('NIE');
             }
             $mediaCollection = Mage::getModel('tim_recommendation/media')->getCollection();
             $mediaCollection->addFieldToFilter('recom_id', $recomId);
@@ -205,8 +205,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      */
     public function getConfirmUrl($recomId, $status)
     {
-        $salt = Mage::helper('tim_recommendation')->getSalt();
-        $md5 = Mage::helper('tim_recommendation')->getRecommendationMd5($recomId);
+        $salt = $this->getRecomHelper()->getSalt();
+        $md5 = $this->getRecomHelper()->getRecommendationMd5($recomId);
         $request = sha1($salt . $status . $md5);
         $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/confirm/request/' . $request . '/id/' . $recomId;
         return $url;
@@ -220,7 +220,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $requestArray = $this->getRequest()->getParams();
         if (!empty($requestArray)) {
-            $result = Mage::helper('tim_recommendation')->checkForNoRoute($requestArray);
+            $result = $this->getRecomHelper()->checkForNoRoute($requestArray);
             if ($result) {
                 $this->norouteAction();
             } else {
@@ -238,22 +238,22 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         $requestArray = $this->getRequest()->getParams();
         if (!empty($requestArray)) {
-            $result = Mage::helper('tim_recommendation')->checkForNoRoute($requestArray);
+            $result = $this->getRecomHelper()->checkForNoRoute($requestArray);
             if ($result) {
                 $this->norouteAction();
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
                 //add points for adding comment or opinion by customer
-                Mage::helper('tim_recommendation')->savePointsForCustomer($opinion);
+                $this->getRecomHelper()->savePointsForCustomer($opinion);
                 $opinion->setAcceptance('1')
                     ->setPublicationDate(date('Y-m-d H:i:s'));
                 try {
                     $opinion->save();
                     Mage::dispatchEvent('controller_index_allow_opinion_data', array('opinion_id' => $requestArray['id']));
-                    echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment was successfully allowed!') . '</h2>';
+                    echo '<h2>' . $this->getRecomHelper()->__('The opinion/comment was successfully allowed!') . '</h2>';
                 } catch (Exception $e) {
                     Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-                    echo '<h2>' . Mage::helper('tim_recommendation')->__('The opinion/comment wasn\'t allowed. Please try again.') . '</h2>';
+                    echo '<h2>' . $this->getRecomHelper()->__('The opinion/comment wasn\'t allowed. Please try again.') . '</h2>';
                 }
             }
         }
@@ -279,11 +279,11 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             try {
                 $recommendationModel->save();
                 $recomId = $recommendationModel->getRecomId();
-                $response['message'] = Mage::helper('tim_recommendation')->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
+                $response['message'] = $this->getRecomHelper()->__('Thank you for adding comment. Your comment has been submitted for review by the administrator.');
                 $response['commentRecomId'] = $params['recom_id'];
             } catch (Exception $e) {
                 Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-                $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add comment. Please try again.');
+                $response['message'] = $this->getRecomHelper()->__('Can\'t add comment. Please try again.');
             }
             if (!empty($recomId)) {
                 $this->saveMd5($recomId);
@@ -347,33 +347,71 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     }
 
     /**
-     * saves user data to tim_recom_malpractice table
+     * Add abuse to tim_recom_malpractice table
      */
-    public function saveMalpracticeAction()
+    public function saveAbuseAction()
+    {
+        $status = false;
+        if ($request = $this->getRequest()->getParam('request')) {
+            $requestData = unserialize(base64_decode($request));
+            $abuseExpiredStatus = $this->getRecomHelper()->checkAbuseExpiredDate($this->getRecomHelper()->getAbuseExpiredTime(), $requestData['date_add']);
+            if ($requestData['salt'] && $this->getRecomHelper()->checkRecommendationSalt($requestData['salt'])) {
+                if ($abuseExpiredStatus) {
+                    $model = Mage::getModel('tim_recommendation/malpractice');
+                    $model->setDateAdd($requestData['date_add']);
+                    $model->setRecomId($requestData['recom_id']);
+                    $model->setUserId($requestData['userId']);
+                    $model->setComment($requestData['comment']);
+                    $model->setTimIp($requestData['customerIp']);
+                    $model->setTimHost($requestData['customerHostName']);
+                    $model->setEmail($requestData['email']);
+                    try {
+                        $model->save();
+                        $eventData = $requestData;
+                        $event = array('malpractice_data' => $eventData);
+                        Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
+                        $status = true;
+                    } catch (Exception $e) {
+                        Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                    }
+                }
+            }
+            $this->loadLayout();
+            $this->getLayout()->getBlock('content.recommendation.saveAbuse')->setStatus($status);
+            $this->renderLayout();
+        } else {
+            $this->norouteAction();
+            return;
+        }
+    }
+
+    /**
+     * Send abuse confirmation mail to customer
+     */
+    public function confirmAbuseAction()
     {
         if ($this->getRequest()->isPost()) {
             $params = $this->getRequest()->getParams();
-            $model = Mage::getModel('tim_recommendation/malpractice');
-            $model->setDateAdd(date('Y-m-d H:i:s'));
-            $model->setRecomId($params['recom_id']);
-            $model->setUserId($params['userId']);
-            $model->setComment($params['comment']);
-            $model->setTimIp($params['customerIp']);
-            $model->setTimHost($params['customerHostName']);
-            if (!empty($params['email'])) {
-                $model->setEmail($params['email']);
-            }
-            try {
-                $model->save();
-                $eventData = $params;
-                $event = array('malpractice_data' => $eventData);
-                Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
-            } catch (Exception $e) {
-                Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-            }
+            $customerEmail = !empty($params['email']) ? $params['email'] : Mage::getModel('customer/customer')->load($params['userId'])->getEmail();
+            $encodedSalt = sha1($this->getRecomHelper()->getSalt());
+            $saveAbuseAction = Mage::getUrl('recommendation/index/saveAbuse');
+            $params['date_add'] = date('Y-m-d H:i:s');
+            $params['email'] = $customerEmail;
+            $params['salt'] = $encodedSalt;
+            $encodeString = base64_encode(serialize($params));
+            $templateVar['confirmAbuseUrl'] = $saveAbuseAction . 'request' . DS . $encodeString;
+            $this->getRecomHelper()->sendEmail($customerEmail, $templateVar, 'confirm_abuse_customer_template', $this->getRecomHelper()->__('Confirm abuse for customer'));
+            echo json_encode(array('status' => 'true'));
         } else {
-            $this->_redirectReferer();
-            return;
+            echo json_encode(array('status' => 'false'));
         }
+    }
+
+    /**
+     * @return Tim_Recommendation_Helper_Data
+     */
+    public function getRecomHelper()
+    {
+        return Mage::helper('tim_recommendation');
     }
 }
