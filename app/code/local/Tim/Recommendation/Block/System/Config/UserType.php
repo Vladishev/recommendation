@@ -12,6 +12,9 @@ class Tim_Recommendation_Block_System_Config_UserType extends Mage_Adminhtml_Blo
 {
     protected $_itemRenderer;
 
+    /**
+     * Prepare to render
+     */
     public function _prepareToRender()
     {
         $this->addColumn('user_type', array(
@@ -21,6 +24,7 @@ class Tim_Recommendation_Block_System_Config_UserType extends Mage_Adminhtml_Blo
 
         $this->addColumn('administrator', array(
             'label' => Mage::helper('tim_recommendation')->__('Administrator'),
+            'style' => 'width:50px',
             'renderer' => $this->_getRenderer(),
         ));
 
@@ -28,6 +32,11 @@ class Tim_Recommendation_Block_System_Config_UserType extends Mage_Adminhtml_Blo
         $this->_addButtonLabel = Mage::helper('tim_recommendation')->__('Add new type');
     }
 
+
+    /**
+     * Prepare renderer
+     * @return Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select
+     */
     protected function _getRenderer()
     {
         if (!$this->_itemRenderer) {

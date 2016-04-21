@@ -24,6 +24,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             if (!is_dir($folderForFiles)) {
                 mkdir($folderForFiles, 0777, true);
             }
+            $userAccess = Mage::helper('tim_recommendation')->getUserLevelAccess($params['customer_id']);
 
             $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
                 ->setDateAdd(date('Y-m-d H:i:s'))
@@ -43,6 +44,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setManufacturerId($params['manufacturer_id'])
                 ->setCategoryId($params['current_category_id'])
                 ->setAddMethod($params['add_method']);
+            //sets acceptance to opinion in case if admin give this opportunity for customer
+            if($userAccess['moderation']){
+                $recommendationModel->setAcceptance($userAccess['moderation']);
+            }
             try {
                 $recommendationModel->save();
                 $recomId = $recommendationModel->getRecomId();
@@ -80,7 +85,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     }
                 }
             }
-            if (!empty($recomId)) {
+            if (!empty($recomId) || $userAccess['moderation']) {
                 $this->saveMd5($recomId);
                 $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
                 $event = array('opinion_data' => $eventData);
@@ -141,6 +146,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $eventData['recom_id'] = $recomId;
         $eventData['date_add'] = $recommendationData->getDateAdd();
         $eventData['user_id'] = $recommendationData->getUserId();
+        $userAccess = Mage::helper('tim_recommendation')->getUserLevelAccess($eventData['user_id']);
+        $eventData['user_moderation'] = $userAccess['moderation'];
 
         if ($type === 'opinion') {
             $productId = $recommendationData->getProductId();
@@ -266,6 +273,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     {
         if ($this->getRequest()->isPost()) {
             $params = $this->getRequest()->getParams();
+            $userAccess = Mage::helper('tim_recommendation')->getUserLevelAccess($params['customer_id']);
             $response = array();
             $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
                 ->setDateAdd(date('Y-m-d H:i:s'))
@@ -276,6 +284,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setTimIp($params['customer_ip_address'])
                 ->setTimHost($params['customer_host_name'])
                 ->setAddMethod($params['add_method']);
+            //sets acceptance to comment in case if admin give this opportunity for customer
+            if($userAccess['moderation']){
+                $recommendationModel->setAcceptance($userAccess['moderation']);
+            }
             try {
                 $recommendationModel->save();
                 $recomId = $recommendationModel->getRecomId();
@@ -285,7 +297,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 Mage::log($e->getMessage(), null, 'tim_recommendation.log');
                 $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add comment. Please try again.');
             }
-            if (!empty($recomId)) {
+            if (!empty($recomId) || $userAccess['moderation']) {
                 $this->saveMd5($recomId);
                 $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
                 $event = array('comment_data' => $eventData);

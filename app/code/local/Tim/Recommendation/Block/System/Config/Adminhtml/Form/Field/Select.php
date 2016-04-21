@@ -13,6 +13,7 @@ class Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select extends
     {
         $options = Mage::getSingleton('adminhtml/system_config_source_yesno')
             ->toOptionArray();
+        $this->setExtraParams('style="width:50px"');
         foreach (array_reverse($options) as $option) {
             $this->addOption($option['value'], $option['label']);
         }

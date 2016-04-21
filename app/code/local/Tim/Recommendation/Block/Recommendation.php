@@ -24,6 +24,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);
         $userData['opinion_qty'] = $this->getRecomHelper()->getOpinionQty($customerId);
         $userData['user_score'] = $this->getRecomHelper()->getUserScore($customerId);
+        $userData['user_access'] = $this->getRecomHelper()->getUserLevelAccess($customerId);
 
         return $userData;
     }
