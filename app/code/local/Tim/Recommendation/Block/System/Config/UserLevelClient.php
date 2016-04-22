@@ -5,12 +5,25 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_System_Config_UserLevelClient
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Block_System_Config_UserLevelClient extends Mage_Adminhtml_Block_System_Config_Form_Field_Array_Abstract
 {
+    /**
+     * @var
+     */
     protected $_itemRenderer;
 
+    /**
+     * Prepare to render
+     */
     public function _prepareToRender()
     {
         $this->addColumn('point', array(

@@ -1,16 +1,24 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vlad Verbitskiy <vladmsu@ukr.net>
+ */
+
+/**
+ * Class Tim_Recommendation_UserController. User profile methods.
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Action
 {
-    /*Checking user id and open user_profile page*/
+    /**
+     * Checking user id and open user_profile page
+     */
     public function profileAction()
     {
         $userId = $this->getRequest()->getParam('id');
@@ -26,12 +34,18 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         }
     }
 
+    /**
+     * Load and render layout
+     */
     public function dataAction()
     {
         $this->loadLayout();
         $this->renderLayout();
     }
 
+    /**
+     * Load and render layout
+     */
     public function editAction()
     {
         $this->loadLayout();
@@ -184,7 +198,8 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
     /**
      * Removes all files from directory
-     * @param (str)$path
+     *
+     * @param string $path Path to folder
      */
     protected function _cleanDirectory($path)
     {
@@ -198,7 +213,8 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
     /**
      * Check file type
-     * @param string $fileType
+     *
+     * @param string $fileType File extension
      * @return bool
      */
     public function checkFileType($fileType)
@@ -216,8 +232,9 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
     /**
      * Check file size
-     * @param int $fileSize
-     * @param int $limit
+     *
+     * @param int $fileSize File size
+     * @param int $limit Limit size
      * @return bool
      */
     public function checkFileSize($fileSize, $limit)
@@ -231,7 +248,8 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
 
     /**
      * Saves cropped image and returns path to it
-     * @return bool or json_encode data
+     *
+     * @return bool
      */
     public function saveCropImageAction()
     {

@@ -5,7 +5,14 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_Adminhtml_NoteController. Actions for note logic.
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Adminhtml_NoteController extends Mage_Adminhtml_Controller_Action
 {
@@ -41,6 +48,11 @@ class Tim_Recommendation_Adminhtml_NoteController extends Mage_Adminhtml_Control
         }
     }
 
+    /**
+     * Check is allowed access to action
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return true;

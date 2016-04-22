@@ -1,11 +1,17 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_TimToolbarController. Sort and pagination actions.
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front_Action
@@ -100,8 +106,9 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
 
     /**
      * Collect array of opinions
-     * @param (arr) $recomIdSet
-     * @return (arr) mixed
+     *
+     * @param array $recomIdSet Array with recom_id(tim_recommendation table)
+     * @return array|mixed
      */
     protected function _getOpinionsArray($recomIdSet)
     {

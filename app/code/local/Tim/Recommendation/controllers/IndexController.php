@@ -1,15 +1,24 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_IndexController. Default controller for Recommendation module
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Action
 {
+    /**
+     * Add customer opinion
+     */
     public function addAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -96,7 +105,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Returns average rating for product
-     * @param (arr)$params
+     *
+     * @param array $params Array with rating data
      * @return float
      */
     protected function _getAverageRating($params)
@@ -112,7 +122,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Saves hash to table
-     * @param (int)$recomId
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
      */
     public function saveMd5($recomId)
     {
@@ -129,10 +140,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Returns array whith custom data for event
-     * 'opinion' and 'comment'($type) - types of confirm email
-     * @param (int)$recomId
-     * @param (obj)$recommendationModel
-     * @param (str)$type
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
+     * @param object $recommendationModel 'tim_recommendation/recommendation'
+     * @param string $type Can be 'opinion' and 'comment' - types of confirm email
      * @return array
      */
     protected function _getDataForConfirmEmail($recomId, $recommendationModel, $type)
@@ -197,10 +208,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Returns url with data
-     * $status = 0 - to make accept url
-     * $status = 1 - can use for extend current functionality
-     * @param (int)$recomId
-     * @param (str)$status
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
+     * @param string $status 0 - to make accept url
      * @return string
      */
     public function getConfirmUrl($recomId, $status)
@@ -213,8 +223,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     }
 
     /**
-     * Displays confirm/moderate links
-     * or 404 if GET data are wrong
+     * Displays confirm/moderate links or 404 if GET data are wrong
      */
     public function confirmAction()
     {
@@ -231,8 +240,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     }
 
     /**
-     * Set acceptance = 1 in tim_recommendation table
-     * for current opinion/comment
+     * Set acceptance = 1 in tim_recommendation table for current opinion/comment
      */
     public function allowAction()
     {
@@ -299,12 +307,18 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         }
     }
 
+    /**
+     * Load and render layout
+     */
     public function landingAction()
     {
         $this->loadLayout();
         $this->renderLayout();
     }
 
+    /**
+     * Load and render layout
+     */
     public function viewAction()
     {
         $this->loadLayout();
@@ -313,9 +327,10 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Save image to folder
-     * @param string $fileName
-     * @param string $path
-     * @param array $file
+     *
+     * @param string $fileName File name
+     * @param string $path Path to save
+     * @param array $file Array with file information
      */
     public function saveImage($fileName, $path, $file)
     {
@@ -333,7 +348,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Rearrange $_FILES array to clear array
-     * @param array $fileArray
+     *
+     * @param array $fileArray $_FILES array
      * @return array $newFileArray
      */
     public function reArrangeFiles($fileArray)
@@ -347,7 +363,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     }
 
     /**
-     * saves user data to tim_recom_malpractice table
+     * Saves user data to tim_recom_malpractice table
      */
     public function saveMalpracticeAction()
     {

@@ -1,16 +1,24 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_Helper_Data. Common useful methods.
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
+     * Return all user types except admin type
+     *
      * @return array
      */
     public function getNonAdminUserTypes()
@@ -23,7 +31,9 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @param string|int $customerId
+     * Return user type ID
+     *
+     * @param string|int $customerId Native Magento customer ID
      * @return string
      */
     public function getCustomerUserTypeId($customerId)
@@ -34,6 +44,11 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         return $userTypeId;
     }
 
+    /**
+     * Return recommendation/user/data handler
+     *
+     * @return string
+     */
     public function getRecommendationDataUrl()
     {
         $url = "recommendation/user/data";
@@ -42,7 +57,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets md5 hash from tim_recommendation table
-     * @param int $recomId
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
      * @return string
      */
     public function getRecommendationMd5($recomId)
@@ -54,6 +70,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Returns user site url
+     *
      * @return mixed
      */
     public function getSiteUrl()
@@ -64,8 +82,12 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * If passed $customerId - returns nick for passed id.
-     * If $customerId not passed - returns current customer nick.
+     * Returns user nick
+     *
+     * If passed $customerId - returns nick for passed id
+     * If $customerId not passed - returns current customer nick
+     *
+     * @param null $customerId Native Magento customer ID
      * @return mixed
      */
     public function getUserNick($customerId = null)
@@ -80,6 +102,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Returns user banner
+     *
      * @return bool|string
      */
     public function getCustomerBanner()
@@ -95,6 +119,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Returns user avatar
+     *
      * @return bool|string
      */
     public function getCustomerAvatar()
@@ -109,6 +135,11 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * Returns user description
+     *
+     * @return mixed
+     */
     public function getCustomerDescription()
     {
         $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
@@ -117,8 +148,9 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Concatinates customer first name and last name
-     * @param int $customerId
+     * Concatenates customer first name and last name
+     *
+     * @param int $customerId Native Magento customer ID
      * @return string
      */
     public function getCustomerName($customerId)
@@ -131,7 +163,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get customer nickname
-     * @param int $customerId
+     *
+     * @param int $customerId Native Magento customer ID
      * @return string
      */
     public function getCustomerNickname($customerId)
@@ -144,7 +177,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get customer name or nickname
-     * @param int $customerId
+     *
+     * @param int $customerId Native Magento customer ID
      * @return string
      */
     public function getCustomerNameOrNick($customerId)
@@ -159,6 +193,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get name of user type
+     *
      * @param int $userTypeId
      * @return string
      */
@@ -172,7 +207,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get paths to opinion media files
-     * @param int $opinionId
+     *
+     * @param int $opinionId ID from tim_recommendation table(recom_id)
      * @return array
      */
     public function getOpinionMediaPath($opinionId)
@@ -194,7 +230,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Counts quantity of opinions
-     * @param int|bool $customerId
+     *
+     * @param int|bool $customerId Native Magento customer ID
      * @return int
      */
     public function getOpinionQty($customerId = false)
@@ -211,9 +248,9 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Compare values from system configuration (tim_recommendation/user_type/values)
-     * and tim_recommendation/userType collection
-     * @param array $userTypes
+     * Compare values from system configuration (tim_recommendation/user_type/values) and tim_recommendation/userType collection
+     *
+     * @param array $userTypes Array with user types
      * @return array
      */
     public function getUserTypeDiffIds($userTypes)
@@ -230,9 +267,9 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Compare values from system configuration (tim_recommendation/user_level/level_values)
-     * and tim_recommendation/userLevel collection
-     * @param array $userLevel
+     * Compare values from system configuration (tim_recommendation/user_level/level_values) and tim_recommendation/userLevel collection
+     *
+     * @param array $userLevel Array with user levels
      * @return array
      */
     public function getUserLevelDiffIds($userLevel)
@@ -250,6 +287,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get salt from system configuration
+     *
      * @return string
      */
     public function getSalt()
@@ -260,7 +298,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Checking for wrong data in GET method
-     * @param (array)$requestArray
+     *
+     * @param array $requestArray Request from url
      * @return bool
      */
     public function checkForNoRoute($requestArray)
@@ -280,9 +319,10 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Save image to folder
-     * @param string $varName
-     * @param string $path
-     * @param string $postName
+     *
+     * @param string $varName Image name
+     * @param string $path Path for save
+     * @param string $postName Post name
      */
     public function saveImage($varName, $path, $postName)
     {
@@ -295,10 +335,13 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Gets row by recomId and check is it opinion or comment.
-     * If opinion - returns recomId, if comment - returns 'parent' column data.
-     * @param (int)$recomId
-     * @return integer
+     * Gets row by recomId and check is it opinion or comment
+     *
+     * If opinion - returns recomId
+     * If comment - returns 'parent' column data
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
+     * @return int
      */
     public function checkForOpinionComment($recomId)
     {
@@ -312,6 +355,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Return all path to avatars from system configuration (tim_avatar_settings/default_avatars)
+     *
      * @return array
      */
     public function getDefaultAvatarsPath()
@@ -329,6 +373,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Return all file name to avatars from system configuration (tim_avatar_settings/default_avatars)
+     *
      * @return array
      */
     public function getDefaultAvatarsFile()
@@ -345,6 +390,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets customer type name to array
+     *
      * @return array
      */
     public function getCustomerTypeName()
@@ -359,6 +405,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Get all fields from system configuration (tim_settings/required_opinion_fields)
+     *
      * @return array
      */
     public function getOpinionRequiredFields()
@@ -368,10 +415,13 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Returns Store Config data
+     *
      * Takes two types:
-     * - opinion - returns settings for opinion
-     * - comment - returns settings for comment
-     * @param (string)$type
+     * opinion - returns settings for opinion
+     * comment - returns settings for comment
+     *
+     * @param string $type
      * @return array
      */
     public function getMaxMinCharacters($type)
@@ -384,6 +434,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets points for adding opinion
+     *
      * @return int
      */
     public function getAddOpinionPoint()
@@ -394,6 +445,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets points for adding image to the opinion
+     *
      * @return int
      */
     public function getAddOpinionImagePoint()
@@ -404,6 +456,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets points for adding movie to the opinion
+     *
      * @return int
      */
     public function getAddOpinionMoviePoint()
@@ -414,6 +467,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets points for adding comment to the opinion
+     *
      * @return int
      */
     public function getAddComentPoint()
@@ -424,6 +478,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets info about user level for client
+     *
      * @return array
      */
     public function getUserLevelClient()
@@ -434,6 +489,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets info about user level for expert
+     *
      * @return array
      */
     public function getUserLevelExpert()
@@ -451,7 +507,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets user score
-     * @param $customerId
+     *
+     * @param $customerId $customerId Native Magento customer ID
      * @return string
      */
     public function getUserScore($customerId)
@@ -498,7 +555,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Gets image path without url/youtube path
-     * @param int $recomId
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
      * @return array
      */
     public function getImages($recomId)
@@ -516,6 +574,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Save points to user for adding opinion or comment
+     *
      * @param object $recommendationModel
      */
     public function savePointsForCustomer($recommendationModel)
@@ -553,7 +612,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Check opinion or comment by recom_id
-     * @param $recomId
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
      * @return string
      */
     function checkOpinionOrComment($recomId)

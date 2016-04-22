@@ -5,10 +5,20 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy (vladomsu@gmail.com)
+ */
+
+/**
+ * Class Tim_Recommendation_Adminhtml_MalpracticeReportController. Actions for malpractice grid.
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * Set general data
+     */
     public function indexAction()
     {
         $this->_title($this->__('Malpractice'));
@@ -18,6 +28,9 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
         $this->renderLayout();
     }
 
+    /**
+     * Grid action
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -26,6 +39,9 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
         );
     }
 
+    /**
+     * Export recommendation grid to CSV format
+     */
     public function exportCsvAction()
     {
         $fileName = 'malpractice.csv';
@@ -43,6 +59,11 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
 
+    /**
+     * Check is allowed access to action
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('report/tim/tim_malpractice');

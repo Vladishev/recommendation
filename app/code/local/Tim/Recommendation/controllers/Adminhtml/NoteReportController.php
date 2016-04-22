@@ -5,10 +5,20 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_Adminhtml_NoteReportController. Actions for note grid.
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Adminhtml_NoteReportController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * Set general data
+     */
     public function indexAction()
     {
         $this->_title($this->__('Notes'));
@@ -18,6 +28,9 @@ class Tim_Recommendation_Adminhtml_NoteReportController extends Mage_Adminhtml_C
         $this->renderLayout();
     }
 
+    /**
+     * Grid action
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -26,6 +39,11 @@ class Tim_Recommendation_Adminhtml_NoteReportController extends Mage_Adminhtml_C
         );
     }
 
+    /**
+     * Check is allowed access to action
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return true;
