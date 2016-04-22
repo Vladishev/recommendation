@@ -1,11 +1,18 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid
+ * Creates grid with comments to opinion
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid extends Mage_Adminhtml_Block_Widget_Grid
@@ -23,6 +30,12 @@ class Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid extends Mage_Adm
         $this->setUseAjax(true);
     }
 
+    /**
+     * Prepare grid collection object
+     *
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareCollection()
     {
         $id = $this->getRequest()->getParam('id');
@@ -41,7 +54,8 @@ class Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid extends Mage_Adm
     /**
      * Prepare grid columns
      *
-     * @return Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid
+     * @return $this
+     * @throws Exception
      */
     protected function _prepareColumns()
     {
@@ -82,8 +96,9 @@ class Tim_Recommendation_Block_Adminhtml_CommentsToOpinion_Grid extends Mage_Adm
 
     /**
      * Custom filter for acceptance field
-     * @param (obj)$collection
-     * @param (obj)$column
+     *
+     * @param object $collection
+     * @param object $column
      * @return $this
      */
     protected function _acceptanceFilter($collection, $column)

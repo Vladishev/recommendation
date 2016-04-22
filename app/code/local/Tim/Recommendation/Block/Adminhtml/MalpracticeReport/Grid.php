@@ -5,10 +5,21 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy (vladomsu@gmail.com)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid
+ * Creates grid with abuses
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
+    /**
+     * Init grid
+     */
     public function __construct()
     {
         parent::__construct();
@@ -19,6 +30,12 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         $this->setUseAjax(true);
     }
 
+    /**
+     * Prepare grid collection object
+     *
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/malpractice')->getCollection();
@@ -33,6 +50,12 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         return parent::_prepareCollection();
     }
 
+    /**
+     * Prepares columns
+     *
+     * @return $this
+     * @throws Exception
+     */
     protected function _prepareColumns()
     {
         $this->addColumn('malpractice_id', array(
@@ -117,8 +140,9 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
 
     /**
      * Custom filter for media field
-     * @param (obj)$collection
-     * @param (obj)$column
+     *
+     * @param object $collection
+     * @param object $column
      * @return $this
      */
     protected function _opinionRecomFilter($collection, $column)
@@ -137,6 +161,11 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         }
     }
 
+    /**
+     * Returns a grid URL
+     *
+     * @return string
+     */
     public function getGridUrl()
     {
         return $this->getUrl('*/*/grid', array('_current' => true));

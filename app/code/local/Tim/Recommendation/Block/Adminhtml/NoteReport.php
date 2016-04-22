@@ -5,6 +5,13 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_NoteReport
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_NoteReport extends Mage_Adminhtml_Block_Widget_Grid_Container

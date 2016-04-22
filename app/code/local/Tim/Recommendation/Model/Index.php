@@ -57,6 +57,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 
     /**
      * Returns custom opinion data
+     *
      * @param $userId
      * @param $limit
      * @param $curPage

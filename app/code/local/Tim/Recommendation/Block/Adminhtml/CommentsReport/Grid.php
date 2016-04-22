@@ -5,7 +5,15 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid
+ * Creates grid with comments
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
@@ -22,6 +30,12 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         $this->setUseAjax(true);
     }
 
+    /**
+     * Prepare grid collection object
+     *
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
@@ -50,6 +64,12 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         return parent::_prepareCollection();
     }
 
+    /**
+     * Prepares columns
+     *
+     * @return $this
+     * @throws Exception
+     */
     protected function _prepareColumns()
     {
         $this->addColumn('comment_id', array(
@@ -128,6 +148,11 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         return parent::_prepareColumns();
     }
 
+    /**
+     * Prepare grid massaction actions
+     *
+     * @return $this
+     */
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('recom_id');

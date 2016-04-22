@@ -1,18 +1,26 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Recommendation
+ * Includes common module methods and logic
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 {
     /**
      * Prepare array with user information
-     * @param int $customerId
+     *
+     * @param int $customerId Native Magento customer ID
      * @return array
      */
     public function getUserData($customerId)
@@ -30,7 +38,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Gets host name by ip
-     * @param string $ip
+     *
+     * @param string $ip IP-address
      * @return string
      */
     public function getHost($ip)
@@ -50,7 +59,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get array with opinion information
-     * @param int $recomId
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
      * @return array
      */
     public function getOpinionData($recomId)
@@ -70,7 +80,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get last added opinion by date
-     * @param int $productId
+     *
+     * @param int $productId Native Magento product ID
      * @return array
      */
     public function getLastAddedOpinion($productId)
@@ -87,7 +98,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get last added opinion id
-     * @param int $productId
+     *
+     * @param int $productId Native Magento product ID
      * @return int
      */
     public function getLastAddedOpinionId($productId)
@@ -99,7 +111,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get comments to opinion
-     * @param int $opinionId
+     *
+     * @param int $opinionId ID from tim_recommendation table(recom_id)
      * @return array
      */
     public function getOpinionComments($opinionId)
@@ -127,7 +140,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Calculates the average rating of the last added opinion to the product
-     * @param int $recomId
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
      * @return float
      */
     public function getProductEvaluation($recomId)
@@ -145,6 +159,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Gets custom opinion data
+     *
      * @return array
      */
     public function getProductOpinionData()
@@ -174,7 +189,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Calculate average from each product rating
-     * @param (int)$prodId
+     *
+     * @param int $opinionId ID from tim_recommendation table(recom_id)
      * @return float|int
      */
     public function getAverage($opinionId)
@@ -199,6 +215,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     /**
      * Gets information of user who writes opinions
      * and sort it by sum of opinions.
+     *
      * @return array
      */
     public function getUserSummaryInformation()
@@ -232,8 +249,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * return array with unique values
-     * @param (obj, arr)$data
+     * Return array with unique values
+     *
+     * @param array $data
      * @return array
      */
     private function _getUniqueArray($data)
@@ -250,11 +268,12 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Returns custom opinion data
-     * @param $userId
-     * @param int $limit
-     * @param int $curPage
-     * @param string $order
-     * @param string $field
+     *
+     * @param int $userId Native Magento customer ID
+     * @param int $limit Limit records per page
+     * @param int $curPage Current page
+     * @param string $order Sort order
+     * @param string $field Field name for sorting
      * @return array
      */
     public function getUserOpinionData($userId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
@@ -265,10 +284,11 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Returns user's comments
-     * @param $userId
-     * @param int $limit
-     * @param int $curPage
-     * @param string $order
+     *
+     * @param int $userId Native Magento customer ID
+     * @param int $limit Limit records per page
+     * @param int $curPage Current page
+     * @param string $order Sort order
      * @return mixed
      */
     public function getOpinionComment($userId, $limit = 10, $curPage = 1, $order = 'DESC')
@@ -279,6 +299,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Returns count of accepted opinions for current product
+     *
      * @return mixed
      */
     public function getOpinionCount()
@@ -290,7 +311,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get acceptance status from last added opinion to the product
-     * @param int $productId
+     *
+     * @param int $productId Native Magento product ID
      * @return int
      */
     public function opinionAcceptanceStatus($productId)
@@ -303,8 +325,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * Check GET data for wrong data.
+     * Check GET data for wrong data
      * If data true, return array with status and url
+     *
      * @return array
      * @throws Exception
      */
@@ -327,8 +350,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     }
 
     /**
-     * Returns logged in user info
-     * or false if user not logged in
+     * Returns logged in user info or false if user not logged in
+     *
      * @return array|bool
      */
     public function getPersonalUserData()
@@ -355,7 +378,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Parses youtube url and return video ID
-     * @param $url
+     *
+     * @param string $url URL
      * @return bool|string
      */
     public function getYoutubeVideoId($url)
@@ -380,6 +404,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Get all fields from system configuration (tim_settings/required_opinion_fields)
+     *
      * @return array
      */
     public function getRequiredFields()
@@ -389,7 +414,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Returns count of user's opinions
-     * @param $userId
+     *
+     * @param int $userId Native Magento customer ID
      * @return mixed
      */
     public function getUserOpinionCount($userId)
@@ -400,7 +426,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Evaluates comments count for particular user
-     * @param $userId
+     *
+     * @param int $userId Native Magento customer ID
      * @return int
      */
     public function getCommentsCount($userId)
@@ -411,7 +438,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Check user profile for required fields
-     * @param $customerId
+     *
+     * @param int $customerId Native Magento customer ID
      * @return int
      */
     public function getProfileStatus($customerId)
@@ -444,7 +472,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Prepare text for opinion placeholder
-     * @param array $opinionLimitCharacters
+     *
+     * @param array $opinionLimitCharacters Max and min limit of characters
      * @return string
      */
     public function getOpinionPlaceholder($opinionLimitCharacters)
@@ -461,7 +490,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Prepare classes for validation opinion textareas
-     * @param array $opinionLimitCharacters
+     *
+     * @param array $opinionLimitCharacters Max and min limit of characters
      * @return string
      */
     public function getOpinionTextareaValidationClass($opinionLimitCharacters)
@@ -478,7 +508,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Prepare text for comment placeholder
-     * @param array $commentLimitCharacters
+     *
+     * @param array $commentLimitCharacters Max and min limit of characters
      * @return string
      */
     public function getCommentPlaceholder($commentLimitCharacters)
@@ -495,7 +526,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Prepare classes for validation comment textareas
-     * @param array $commentLimitCharacters
+     *
+     * @param array $commentLimitCharacters Max and min limit of characters
      * @return string
      */
     public function getCommentTextareaValidationClass($commentLimitCharacters)
@@ -512,7 +544,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Add http protocol to raw link or return null
-     * @param string $site
+     *
+     * @param string $site URL
      * @return null|string
      */
     public function getFormatSiteLink($site)
@@ -529,8 +562,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Return qty of pages for opinions
-     * @param int $opinionCount
-     * @param int $limitPerPage
+     *
+     * @param int $opinionCount Count of opinions
+     * @param int $limitPerPage Records limit per page
      * @return float|int
      */
     public function getOpinionPagesCount($opinionCount, $limitPerPage)
@@ -541,8 +575,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 
     /**
      * Return qty of pages for comments
-     * @param int $commentsCount
-     * @param int $limitPerPage
+     *
+     * @param int $commentsCount Count of comments
+     * @param int $limitPerPage Records limit per page
      * @return float|int
      */
     public function getCommentsPagesCount($commentsCount, $limitPerPage)

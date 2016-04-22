@@ -1,11 +1,18 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid
+ * Creates grid with opinion images
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminhtml_Block_Widget_Grid
@@ -23,6 +30,12 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
         $this->setUseAjax(true);
     }
 
+    /**
+     * Prepare grid collection object
+     *
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/media')->getCollection();
@@ -36,7 +49,9 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
 
     /**
      * Prepare grid columns
-     * @return Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid
+     *
+     * @return $this
+     * @throws Exception
      */
     protected function _prepareColumns()
     {
@@ -72,6 +87,10 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
         return parent::_prepareColumns();
     }
 
+    /**
+     * @param $row
+     * @return string
+     */
     public function getRowUrl($row)
     {
         return $this->getUrl('*/opinionReport/opinionInfo', array('id' => $row->getRecomId()));
@@ -79,6 +98,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
 
     /**
      * Returns a grid URL
+     *
      * @return string
      */
     public function getGridUrl()
