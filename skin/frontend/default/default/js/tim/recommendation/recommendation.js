@@ -268,19 +268,6 @@ function hideComments(recomId) {
 }
 
 /**
- * Shows popup if user's profile not fill for input field
- */
-function checkProfileInputField() {
-    var status = jQuery('#tim-profile-status').val();
-
-    if (status == '0') {
-        jQuery('.check-tim-profile-status-popup').show(300);
-        return false;
-    }
-    return true;
-}
-
-/**
  * Variables for markUserAbuse() and sendParams() methods
  */
 var recomId;
@@ -907,8 +894,12 @@ function renderProductOpinionList(response) {
  */
 function checkIfUserIsLoggedIn() {
     /* function open modal when submit button is pressed without validation yet */
-    vex.defaultOptions.className = 'vex-theme-default';
-    vex.dialog.alert('<strong>Uwaga!</strong> Nie jesteś zalogowanym użytkownikiem, aby dodać opinię lub komentarz musisz zalogować się lub założyć konto na naszym serwisie.');
+    jQuery("#form-validate-opinion")[0].reset();
+    vex.open({
+        content: '<strong>Uwaga!</strong> Nie jesteś zalogowanym użytkownikiem, aby dodać opinię lub komentarz musisz zalogować się lub założyć konto na naszym serwisie.',
+        className: 'vex-theme-default'
+    });
+    return false;
 }
 
 /**
