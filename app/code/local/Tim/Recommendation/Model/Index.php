@@ -5,17 +5,25 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vlad Verbitskiy <vladmsu@ukr.net>
+ */
+
+/**
+ * Class Tim_Recommendation_Model_Index. Methods for sort and pagination.
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 {
     /**
      * Returns recom_id list of opinions
-     * @param $productId
-     * @param $order
-     * @param $field
-     * @param int $limit - opinions count per page
-     * @param int $curPage - current page
+     *
+     * @param int $productId Native Magento product ID
+     * @param string $order Sort order
+     * @param string $field Table field
+     * @param int $limit Opinions count per page
+     * @param int $curPage Current page
      * @return bool or array
      */
     public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
@@ -40,7 +48,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 
     /**
      * Returns count of user's opinions
-     * @param $userId
+     *
+     * @param int $userId Native Magento customer ID
      * @return int
      */
     public function getUserOpinionCount($userId)
@@ -58,11 +67,11 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     /**
      * Returns custom opinion data
      *
-     * @param $userId
-     * @param $limit
-     * @param $curPage
-     * @param $order
-     * @param $field
+     * @param int $userId Native Magento customer ID
+     * @param int $limit Records limit
+     * @param int $curPage Current page
+     * @param string $order Sort order
+     * @param string $field Table field
      * @return array
      */
     public function getUserOpinionData($userId, $limit, $curPage, $order, $field)
@@ -95,10 +104,11 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 
     /**
      * Returns user's comments
-     * @param $userId
-     * @param $limit
-     * @param $curPage
-     * @param $order
+     *
+     * @param int $userId Native Magento customer ID
+     * @param int $limit Records limit
+     * @param int $curPage Current page
+     * @param string $order Sort order
      * @return mixed
      */
     public function getOpinionComment($userId, $limit, $curPage, $order)
@@ -133,7 +143,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 
     /**
      * Evaluates comments count for particular user
-     * @param $userId
+     *
+     * @param int $userId Native Magento customer ID
      * @return int
      */
     public function getCommentsCount($userId)
@@ -149,7 +160,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 
     /**
      * Returns count of accepted opinions for product
-     * @param $productId
+     *
+     * @param int $productId Native Magento product ID
      * @return int
      */
     public function getOpinionCount($productId)

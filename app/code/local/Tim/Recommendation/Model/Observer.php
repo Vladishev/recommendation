@@ -1,12 +1,18 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_Model_Observer
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Model_Observer
 {
@@ -60,6 +66,9 @@ class Tim_Recommendation_Model_Observer
         }
     }
 
+    /**
+     * Saving customer frontend rating
+     */
     public function saveUserStars()
     {
         if (Mage::app()->getRequest()->getParam('section') == 'tim_recommendation') {
@@ -131,7 +140,8 @@ class Tim_Recommendation_Model_Observer
 
     /**
      * Send email with information about person who added opinion | sends email to user
-     * @param (obj)$observer
+     *
+     * @param object $observer
      */
     public function sendOpinionEmail($observer)
     {
@@ -149,7 +159,8 @@ class Tim_Recommendation_Model_Observer
 
     /**
      * Send email with information about acceptance opinion | comment
-     * @param (obj)$observer
+     *
+     * @param object $observer
      */
     public function sendAcceptConfirmationEmail($observer)
     {
@@ -176,7 +187,8 @@ class Tim_Recommendation_Model_Observer
 
     /**
      * Send email with information about person who added comment | sends email to user
-     * @param (obj)$observer
+     *
+     * @param object $observer
      */
     public function sendCommentEmail($observer)
     {
@@ -194,7 +206,8 @@ class Tim_Recommendation_Model_Observer
 
     /**
      * Sends email to admin | sends email to user
-     * @param $observer
+     *
+     * @param object $observer
      */
     public function sendMalpracticeEmail($observer)
     {
@@ -212,9 +225,10 @@ class Tim_Recommendation_Model_Observer
 
     /**
      * Sending email
-     * @param (str)$toEmail
-     * @param (arr)$templateVar
-     * @param (str)$subject
+     *
+     * @param string $toEmail Recipient
+     * @param array $templateVar Data for template
+     * @param string $subject Email subject
      */
     public function sendEmail($toEmail, $templateVar, $subject)
     {
@@ -280,8 +294,9 @@ class Tim_Recommendation_Model_Observer
 
     /**
      * Sends email to user
-     * @param (int)$userId
-     * @param (str)$userSubject
+     *
+     * @param int $userId Native Magento user ID
+     * @param string $userSubject Email subject
      */
     public function sendEmailToUser($userId, $userSubject)
     {
