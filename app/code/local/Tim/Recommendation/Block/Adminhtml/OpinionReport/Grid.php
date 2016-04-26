@@ -171,7 +171,6 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
                     array(
                         'caption' => Mage::helper('tim_recommendation')->__('Display opinion'),
                         'url' => array('base' => '*/*/opinionInfo'),
-                        'target' => '_blank',
                         'field' => 'id'
                     )
                 ),
@@ -247,8 +246,17 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'url' => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
+        $this->getMassactionBlock()->addItem('modify', array(
+            'label' => Mage::helper('tim_recommendation')->__('Modify'),
+            'url' => $this->getUrl('*/*/modifyOpinion', array('' => ''))
+        ));
 
         return $this;
+    }
+
+    public function getRowUrl($row)
+    {
+        return $this->getUrl('*/opinionReport/opinionInfo', array('id' => $row->getRecomId()));
     }
 
     /**

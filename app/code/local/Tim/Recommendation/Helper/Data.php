@@ -582,4 +582,43 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return 'opinion';
         }
     }
+
+    /**
+     * Sending email
+     * @param string $toEmail
+     * @param array $templateVar
+     * @param int $templateId
+     * @param string $subject
+     * @return bool
+     */
+    public function sendEmail($toEmail, $templateVar, $templateId, $subject)
+    {
+        $emailTemplate = Mage::getModel('core/email_template')->loadDefault($templateId);
+        $processedTemplate = $emailTemplate->getProcessedTemplate($templateVar);
+        $mail = Mage::getModel('core/email')
+            ->setToEmail($toEmail)
+            ->setBody($processedTemplate)
+            ->setSubject(Mage::helper('tim_recommendation')->__($subject))
+            ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
+            ->setType('html');
+
+        try {
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            return false;
+        }
+    }
+
+    /**
+     * Prepare url for modification opinion
+     * @param int $recomId
+     * @return string
+     */
+    public function getModifyOpinionUrl($recomId)
+    {
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/modifyOpinion/opinionId/' . $recomId;
+        return $url;
+    }
 }

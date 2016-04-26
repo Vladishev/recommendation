@@ -162,6 +162,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['rating_durability'] = $recommendationData->getRatingDurability();
             $eventData['rating_failure'] = $recommendationData->getRatingFailure();
             $eventData['rating_service'] = $recommendationData->getRatingService();
+            $eventData['modify_opinion_url'] = Mage::helper('tim_recommendation')->getModifyOpinionUrl($recomId);
 
             if ($recommendationData->getByIt() == 1) {
                 $eventData['by_it'] = Mage::helper('tim_recommendation')->__('TAK');
@@ -235,6 +236,33 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $this->loadLayout();
                 $this->renderLayout();
             }
+        }
+    }
+
+    /**
+     * Send email to customer about modification from direct link
+     */
+    public function modifyOpinionAction()
+    {
+        $opinionId = $this->getRequest()->getParam('opinionId');
+        if (!empty($opinionId)) {
+            $opinion = Mage::getModel('tim_recommendation/recommendation')->load($opinionId, 'recom_id');
+            $customer = Mage::getModel('customer/customer')->load($opinion->getUserId());
+            $product = Mage::getModel('catalog/product')->load($opinion->getProductId());
+            $templateVar = array();
+            $templateVar['customerName'] = $customer->getName();
+            $templateVar['productName'] = $product->getName();
+            $templateVar['indexTim'] = $product->getSku();
+            $mailResult = Mage::helper('tim_recommendation')->sendEmail($customer->getEmail(), $templateVar, 'modify_opinion_template', 'Opinia została zablokowana');
+
+            if ($mailResult) {
+                $this->loadLayout();
+                $this->renderLayout();
+            } else {
+                $this->norouteAction();
+            }
+        } else {
+            $this->norouteAction();
         }
     }
 
