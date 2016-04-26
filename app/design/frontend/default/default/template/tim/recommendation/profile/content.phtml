@@ -47,27 +47,30 @@ $site = $this->getFormatSiteLink($userData['www']);
 </div>
 
 <div class="tim-comm-main-column-wide tim-col-noborder">
-<!--    <div class="tim-opinion">
-        <div class="tim-opinion-content-subtitle tim-triangle-background"><?php // echo $this->__("ABOUT USER"); ?></div>
-        <div class="tim-user-about-textfield">
-             about user info based on his own input  tem 
-            <?php // echo $userData['description']; ?>
-        </div>
-        <?php // if(!empty($userData['ad'])): ?>
-        <div class="tim-user-picture">
-             graphic provided by user 
-            <img src="<?php // echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['ad']; ?>" alt="user-picture"/>
-        </div>
-        <?php // endif ?>
-        <?php // if(!empty($site)): ?>
-        <div class="tim-user-wwwpage">
-            <div class="tim-user-wwwpage-button">
-                <?php // echo $this->__("Website User"); ?>:  link to user webpage 
-                <a href="<?php // echo $site; ?>" target="_blank"><?php // echo $site; ?></a>
+    <?php if ($userData['user_access']['update_present_visit_card']): ?>
+        <div class="tim-opinion">
+            <div
+                class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__("ABOUT USER"); ?></div>
+            <div class="tim-user-about-textfield">
+                <!-- about user info based on his own input  tem -->
+                <?php echo $userData['description']; ?>
             </div>
+            <?php if (!empty($userData['ad'])): ?>
+                <div class="tim-user-picture">
+                    <!-- graphic provided by user -->
+                    <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['ad']; ?>" alt="user-picture"/>
+                </div>
+            <?php endif ?>
+            <?php if (!empty($site)): ?>
+                <div class="tim-user-wwwpage">
+                    <div class="tim-user-wwwpage-button">
+                        <?php echo $this->__("Website User"); ?>: <!--link to user webpage-->
+                        <a href="<?php // echo $site; ?>" target="_blank"><?php echo $site; ?></a>
+                    </div>
+                </div>
+            <?php endif ?>
         </div>
-        <?php // endif ?>
-    </div>-->
+    <?php endif; ?>
     <!-- start of user's opinion list -->
     <?php if (!empty($userOpinionData)): ?>
     <div class="tim-opinion-list">

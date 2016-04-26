@@ -32,7 +32,7 @@
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Czy polecisz ten produkt: <strong>{{htmlescape var=$recommend}}</strong></p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Załączone linki: </p>
                             {{block type="core/template" template="tim/recommendation/email/opinion_email.phtml" mediaLink=$media_name}}
-                            <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;"><a href="{{htmlescape var=$confirm_url}}">Opublikuj bez uwag</a></p>
+                            {{block type="core/template" template="tim/recommendation/email/confirm_link.phtml" confirmLink=$confirm_url userModeration=$user_moderation}}
                         </td>
                     </tr>
                     <tr>
