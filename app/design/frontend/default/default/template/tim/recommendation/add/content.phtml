@@ -23,7 +23,8 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
             <div class="tim-opinion-content tim-add-opinion">
                 <textarea name="opinion-advantages" id="tim-opinion-advantages" cols="5" rows="3"
                           class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['advantages']? 'required-entry' : '' ?>"
-                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
+                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"
+                    <?php echo !$isLoggedIn || !$profileStatus ? 'readonly="yes"' : ''?>></textarea>
                 <div id="ph-tim-opinion-advantages" class="placeholder-div">
                     <?php echo $opinionTextareaPlaceholder; ?>
                 </div>
@@ -38,7 +39,8 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
                           class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
-                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
+                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"
+                    <?php echo !$isLoggedIn || !$profileStatus ? 'readonly="yes"' : ''?>></textarea>
                 <div id="ph-tim-opinion-disadvantages" class="placeholder-div" >
                     <?php echo $opinionTextareaPlaceholder; ?>
                 </div>
@@ -53,7 +55,8 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                 <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
                           class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
-                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
+                          onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"
+                    <?php echo !$isLoggedIn || !$profileStatus ? 'readonly="yes"' : ''?>></textarea>
                 <div id="ph-tim-opinion-summary" class="placeholder-div" >
                     <?php echo $opinionTextareaPlaceholder; ?>
                 </div>
@@ -208,7 +211,8 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                     <input type="text" name="link_to_youtube" id="link_to_youtube"
                            class="validate-url-link check-tim-profile-status input-text <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
-                        <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>/>
+                        <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>
+                        <?php echo !$isLoggedIn || !$profileStatus ? 'readonly="yes"' : ''?>/>
                     <!-- place for user input - add movie - url to youtube -->
                 </div>
 
