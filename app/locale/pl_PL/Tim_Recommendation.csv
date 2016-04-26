@@ -93,6 +93,7 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 "Opinion has <span>%s</span> comments.","Opinia posiada <span>%s</span> komentarzy."
 "Add your own comment","Dodaj własny komentarz"
 "%s opinion(s)","%s opinii"
+"%s post(s)","%s wpisów"
 "ID","ID"
 "Customer Name","Nazwa klienta"
 "Product SKU","SKU produktu"

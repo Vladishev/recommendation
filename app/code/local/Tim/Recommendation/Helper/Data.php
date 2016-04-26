@@ -193,7 +193,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Counts quantity of opinions
+     * Counts quantity of opinions and comments
      * @param int|bool $customerId
      * @return int
      */
@@ -201,7 +201,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->addFieldToSelect('user_id');
-        $opinionCollection->getSelect()->where('parent IS NULL');
+        $opinionCollection->addFieldToFilter('acceptance', 1);
         if ($customerId) {
             $opinionCollection->addFieldToFilter('user_id', $customerId);
         }
