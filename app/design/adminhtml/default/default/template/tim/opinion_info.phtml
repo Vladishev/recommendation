@@ -73,7 +73,7 @@ $video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this
             <?php endforeach; ?>
         </div>
     </div>
-    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/commentsReport', array('commentId' => $opinion['recom_id'])) ?>" target="_blank">
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/commentsReport', array('commentId' => $opinion['recom_id'])) ?>">
         <span><?php echo $this->__('Display comments'); ?></span>
     </a>
 </div>

@@ -157,7 +157,7 @@ $numColumns = sizeof($this->getColumns());
                     <tr></tr>
                 <?php endif; ?>
                 <td>
-                    <a href="<?php echo $this->getRowUrl($_item) ?>" target="_blank"><img src="<?php echo $_item->getName() ?>" width="250" height="250" alt="img" /></a>
+                    <a href="<?php echo $this->getRowUrl($_item) ?>"><img src="<?php echo $_item->getName() ?>" width="250" height="250" alt="img" /></a>
                 </td>
                 <?php if ($_multipleRows = $this->getMultipleRows($_item)): ?>
                     <?php foreach ($_multipleRows as $_i): ?>
