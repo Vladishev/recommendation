@@ -46,7 +46,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setAddMethod($params['add_method']);
             //sets acceptance to opinion in case if admin give this opportunity for customer
             if($userAccess['moderation']){
-                $recommendationModel->setAcceptance($userAccess['moderation']);
+                $recommendationModel->setAcceptance($userAccess['moderation'])
+                    ->setPublicationDate(date('Y-m-d H:i:s'));
             }
             try {
                 $recommendationModel->save();
@@ -286,7 +287,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setAddMethod($params['add_method']);
             //sets acceptance to comment in case if admin give this opportunity for customer
             if($userAccess['moderation']){
-                $recommendationModel->setAcceptance($userAccess['moderation']);
+                $recommendationModel->setAcceptance($userAccess['moderation'])
+                    ->setPublicationDate(date('Y-m-d H:i:s'));
             }
             try {
                 $recommendationModel->save();
