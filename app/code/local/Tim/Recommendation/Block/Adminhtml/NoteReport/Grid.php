@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -24,9 +25,20 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
 
     protected function _prepareCollection()
     {
-        $id = $this->getRequest()->getParam('id');
+        //check on malpractice or recommendation
+        if ($this->getRequest()->getParam('malpracticeId')) {
+            $id = $this->getRequest()->getParam('malpracticeId');
+            $objectName = 'tim_recom_malpractice';
+        } elseif($this->getRequest()->getParam('recomId')) {
+            $id = $this->getRequest()->getParam('recomId');
+            $objectName = 'tim_recommendation';
+        }
+
         $collection = Mage::getModel('tim_recommendation/note')->getCollection();
-        $collection->addFieldToFilter('object_id',$id);
+        if (isset($id) || isset($objectName)) {
+            $collection->addFieldToFilter('object_id', $id);
+            $collection->addFieldToFilter('object_name', $objectName);
+        }
         $collection->getSelect()->joinLeft(array('au' => 'admin_user'), 'main_table.admin_id = au.user_id',
             array('username'));
         $this->setCollection($collection);

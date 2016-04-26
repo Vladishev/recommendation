@@ -20,16 +20,19 @@ class Tim_Recommendation_Block_Adminhtml_Note extends Mage_Adminhtml_Block_Widge
 
         $this->_formScripts[] = "function saveNote() {
             var recom = parent.document.getElementById('recomId');
-            var recomId = recom.value;
+            var noteInfo = parent.document.getElementById('tim-note-info').dataset;
+            var recomId = noteInfo.recomid;
             var note = document.getElementById('note');
             var adminId = document.getElementById('admin_id').value;
             var noteText = note.value;
+            var objectName = noteInfo.objectname;
             if (noteText == '') { alert('" . $this->helper('tim_recommendation')->__('Please enter note text.') . "'); return false;}
             var xmlhttp;
             xmlhttp = new XMLHttpRequest();
             var body = '?recomId=' + encodeURIComponent(recomId) +
             '&noteText=' + encodeURIComponent(noteText) +
-            '&adminId=' + encodeURIComponent(adminId);
+            '&adminId=' + encodeURIComponent(adminId) +
+            '&objectName=' + encodeURIComponent(objectName);
             var url = '" . $this->getUrl('adminhtml/note/addNote', array('_secure' => true)) . "'+body;
 
             xmlhttp.open('GET', url, true)

@@ -27,8 +27,9 @@ class Tim_Recommendation_Adminhtml_NoteController extends Mage_Adminhtml_Control
         $recomId = $this->getRequest()->getParam('recomId');
         $noteText = $this->getRequest()->getParam('noteText');
         $adminId = $this->getRequest()->getParam('adminId');
+        $objectName = $this->getRequest()->getParam('objectName');
         $noteModel = Mage::getModel('tim_recommendation/note')
-            ->setObjectName('tim_recommendation')
+            ->setObjectName($objectName)
             ->setObjectId($recomId)
             ->setNote($noteText)
             ->setAdminId($adminId);

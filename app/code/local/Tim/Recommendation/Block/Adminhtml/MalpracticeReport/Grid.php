@@ -98,11 +98,29 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'sortable' => true
         ));
         $this->addColumn('detail', array(
-            'header' => Mage::helper('tim_recommendation')->__('Detail'),
+            'header' => Mage::helper('tim_recommendation')->__('Operation'),
             'width' => '70',
             'type' => 'text',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RenderDetailActions',
             'index' => 'recom_id',
+            'filter' => false,
+            'sortable' => false,
+            'is_system' => true,
+        ));
+        $this->addColumn('add_note', array(
+            'header' => Mage::helper('tim_recommendation')->__('Operation'),
+            'width' => '50',
+            'index' => 'recom_id',
+            'filter' => false,
+            'sortable' => false,
+            'is_system' => true,
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_AddNote',
+        ));
+        $this->addColumn('display_note', array(
+            'header' => Mage::helper('tim_recommendation')->__('Operation'),
+            'width' => '70',
+            'index' => 'recom_id',
+            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_DisplayNote',
             'filter' => false,
             'sortable' => false,
             'is_system' => true,
@@ -134,6 +152,15 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             }
         } else {
             return $collection;
+        }
+    }
+
+    public function getRowUrl($row)
+    {
+        if($row->getParent()){
+            return $this->getUrl('*/commentsReport/commentInfo', array('id' => $row->getRecomId()));
+        }else{
+            return $this->getUrl('*/opinionReport/opinionInfo', array('id' => $row->getRecomId()));
         }
     }
 

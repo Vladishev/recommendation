@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -12,6 +13,9 @@ class Tim_Recommendation_Block_Adminhtml_Render_AddNote extends Mage_Adminhtml_B
     public function render(Varien_Object $row)
     {
         $recomId = $row->getRecomId();
+        if ($row->getMalpracticeId()) {
+            $recomId = $row->getMalpracticeId();
+        }
         return '<a id="recomId_' . $recomId . '" href="javascript:addNotePopup(' . $recomId . ');">' . Mage::helper('tim_recommendation')->__('Add note') . '</a>';
     }
 }
