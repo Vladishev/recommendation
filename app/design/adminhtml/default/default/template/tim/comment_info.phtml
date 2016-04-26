@@ -1,0 +1,38 @@
+<?php
+$comment = $this->getCommentData();
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="width:50%;">
+                <h3 class="icon-head head-adminhtml-commentInfo">
+                    <?php echo $this->__('Comment info for the product: %s with number: %s to opinion: %s.', $comment['product_name'], $comment['sku'], $comment['parent']); ?>
+                </h3>
+            </td>
+            <td class="form-buttons">
+                <?php echo $this->getBackButtonHtml() ?>
+                <?php echo $this->getAddNoteButtonHtml() ?>
+                <?php echo $this->getModifyButtonHtml() ?>
+                <?php echo $this->getNotAcceptButtonHtml() ?>
+                <?php echo $this->getAcceptButtonHtml() ?>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <div class="tim-text-commet">
+        <b><?php echo $this->__('Text of comment'); ?>:</b>
+        <?php echo $comment['comment']; ?>
+    </div><p>
+    <div class="tim-date-add">
+        <b><?php echo $this->__('Date Added'); ?>:</b>
+        <?php echo $comment['date_add']; ?>
+    </div><p>
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/opinionReport/opinionInfo', array('id' => $comment['parent'])) ?>">
+    <span><?php echo $this->__('Display opinion'); ?></span>
+    </a><p>
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/noteReport', array('id' => $comment['recom_id'])) ?>">
+        <span><?php echo $this->__('Display note'); ?></span>
+    </a>
+</div>
+<input type="hidden" id="recomId" value="<?php echo $comment['recom_id']; ?>"/>

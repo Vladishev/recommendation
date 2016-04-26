@@ -90,6 +90,15 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.modify" template="tim/recommendation/confirm/modifyOpinion.phtml" />
         </reference>
     </recommendation_index_modifyopinion>
+    <recommendation_index_modifycomment>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="content.recommendation.modify.comment" template="tim/recommendation/confirm/modifyComment.phtml" />
+        </reference>
+    </recommendation_index_modifycomment>
+
     <customer_account>
         <reference name="customer_account_navigation">
             <action method="addLink" translate="label">

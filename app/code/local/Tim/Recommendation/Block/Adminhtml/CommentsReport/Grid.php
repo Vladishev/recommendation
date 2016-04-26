@@ -105,6 +105,24 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'type' => 'options',
             'options' => array(0 => $this->__('No'), 1 => $this->__('Yes')),
         ));
+        $this->addColumn('display_comment',
+            array(
+                'header' => Mage::helper('tim_recommendation')->__('Operation'),
+                'width' => '70',
+                'type' => 'action',
+                'getter' => 'getId',
+                'actions' => array(
+                    array(
+                        'caption' => Mage::helper('tim_recommendation')->__('Display comment'),
+                        'url' => array('base' => '*/*/commentInfo'),
+                        'field' => 'id'
+                    )
+                ),
+                'filter' => false,
+                'sortable' => false,
+                'index' => 'stores',
+                'is_system' => true,
+            ));
         $this->addColumn('add_note', array(
             'header' => Mage::helper('tim_recommendation')->__('Action'),
             'width' => '50',
@@ -143,8 +161,17 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'url' => $this->getUrl('*/*/massAcceptanceNo', array('' => '')),
             'confirm' => Mage::helper('tim_recommendation')->__('Are you sure?')
         ));
+        $this->getMassactionBlock()->addItem('modify', array(
+            'label' => Mage::helper('tim_recommendation')->__('Modify'),
+            'url' => $this->getUrl('*/*/modifyComment', array('' => ''))
+        ));
 
         return $this;
+    }
+
+    public function getRowUrl($row)
+    {
+        return $this->getUrl('*/commentsReport/commentInfo', array('id' => $row->getRecomId()));
     }
 
     /**

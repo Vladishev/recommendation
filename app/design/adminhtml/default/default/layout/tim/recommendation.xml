@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout version="0.1.0">
-    <adminhtml_opinionreport_opinioninfo>
-        <reference name="content">
-            <block type="tim_recommendation/adminhtml_opinionInfo" name="opinion.info" template="tim/opinion_info.phtml"/>
-        </reference>
-    </adminhtml_opinionreport_opinioninfo>
     <adminhtml_opinionreport_index>
         <reference name="head">
             <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
@@ -46,10 +41,32 @@
                 <name>lib/prototype/windows/themes/magento.css</name>
             </action>
         </reference>
+        <reference name="content">
+            <block type="tim_recommendation/adminhtml_opinionInfo" name="opinion.info" template="tim/opinion_info.phtml"/>
+        </reference>
         <reference name="js">
             <block type="adminhtml/template" template="tim/recommendation/report/js.phtml" name="recom.report.js" as="recom_report_js"></block>
         </reference>
     </adminhtml_opinionreport_opinioninfo>
+    <adminhtml_commentsreport_commentinfo>
+        <reference name="head">
+            <action method="addCss"><name>css/tim/recommendation/style.css</name></action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addCss">
+                <name>lib/prototype/windows/themes/magento.css</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/adminhtml_commentInfo" name="comment.info" template="tim/comment_info.phtml"/>
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/template" template="tim/recommendation/report/js.phtml" name="recom.report.js" as="recom_report_js"></block>
+        </reference>
+    </adminhtml_commentsreport_commentinfo>
+
     <adminhtml_notereport_index>
         <reference name="head">
             <action method="addCss"><name>css/tim/recommendation/style.css</name></action>

@@ -7,30 +7,22 @@
  * @copyright  Copyright (c) 2016 Tim (http://tim.pl)
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
-class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Block_Template
+class Tim_Recommendation_Block_Adminhtml_CommentInfo extends Mage_Adminhtml_Block_Template
 {
     /**
-     * Get array with opinion data
+     * Get array with comment data
      * @return array
      */
-    public function getOpinionData()
+    public function getCommentData()
     {
         $recomId = $this->getRequest()->getParam('id');
-        $checkedId = Mage::helper('tim_recommendation')->checkForOpinionComment($recomId);
-        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($checkedId)->getData();
-        $opinionMedia = Mage::helper('tim_recommendation')->getOpinionMediaPath($checkedId);
-        $product = Mage::getModel('catalog/product')->load($opinion['product_id']);
-        $opinion['date_add'] = date('Y-m-d H:i:s', Mage::getModel('core/date')->timestamp($opinion['date_add']));
-        $opinion['sku'] = $product->getSku();
-        $opinion['product_name'] = $product->getName();
-        $opinion['movie_url'] = '';
-        if (!empty($opinionMedia['url/youtube'])) {
-            $opinion['movie_url'] = $opinionMedia['url/youtube'];
-            unset($opinionMedia['url/youtube']);
-        }
-        $opinion['images'] = $opinionMedia;
+        $comment = Mage::getModel('tim_recommendation/recommendation')->load($recomId)->getData();
+        $product = Mage::getModel('catalog/product')->load($comment['product_id']);
+        $comment['date_add'] = date('Y-m-d H:i:s', Mage::getModel('core/date')->timestamp($comment['date_add']));
+        $comment['sku'] = $product->getSku();
+        $comment['product_name'] = $product->getName();
 
-        return $opinion;
+        return $comment;
     }
 
     protected function _prepareLayout()
@@ -57,7 +49,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Bloc
             $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setData(array(
                     'label' => Mage::helper('tim_recommendation')->__('Modify'),
-                    'onclick' => 'window.location = \'' . $this->getUrl('*/*/modifyOpinion', array(
+                    'onclick' => 'window.location = \'' . $this->getUrl('*/*/modifyComment', array(
                             'acceptance' => $this->getRequest()->getParam('id')
                         )) . '\'',
                     'class' => 'task'

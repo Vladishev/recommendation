@@ -601,7 +601,6 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             ->setSubject(Mage::helper('tim_recommendation')->__($subject))
             ->setFromName(Mage::getStoreConfig('trans_email/ident_general/name'))
             ->setType('html');
-
         try {
             $mail->send();
             return true;
@@ -612,13 +611,13 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Prepare url for modification opinion
+     * Prepare url for modification comment
      * @param int $recomId
      * @return string
      */
-    public function getModifyOpinionUrl($recomId)
+    public function getModifyCommentUrl($recomId)
     {
-        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/modifyOpinion/opinionId/' . $recomId;
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/modifyComment/commentId/' . $recomId;
         return $url;
     }
 }
