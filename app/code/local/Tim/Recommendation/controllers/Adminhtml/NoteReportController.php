@@ -11,7 +11,7 @@ class Tim_Recommendation_Adminhtml_NoteReportController extends Mage_Adminhtml_C
 {
     public function indexAction()
     {
-        $this->_title($this->__('Notes'));
+        $this->_title(Mage::helper('tim_recommendation')->__('Notes'));
         $this->loadLayout();
         $this->_setActiveMenu('report/tim');
         $this->_addContent($this->getLayout()->createBlock('tim_recommendation/adminhtml_noteReport'));

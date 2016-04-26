@@ -87,10 +87,10 @@
     </recommendation_index_confirm>
     <customer_account>
         <reference name="customer_account_navigation">
-            <action method="addLink" translate="label">
-                <name>Recommendation</name>
+            <action method="addLink" translate="label name">
+                <name>Account Settings opinion</name>
                 <path>recommendation/user/edit</path>
-                <label>Recommendation</label>
+                <label>Account Settings opinion</label>
             </action>
         </reference>
     </customer_account>
