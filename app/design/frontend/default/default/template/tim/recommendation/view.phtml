@@ -4,13 +4,13 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
 $k = 0;
 $userData = $this->getPersonalUserData();
 ?>
-    <div class="tim-comm-addopinion">
+    <div class="tim-comm-addopinion" id="add-opinion">
         <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button> <!-- button for adding totaly new opinion -->
     </div>
 <?php if ($opinionsSet): ?>
     <div>
         <!-- Header -->
-        <div class="tim-comm-header" id="tim-scroll-ancor">
+        <div class="tim-comm-header" id="tim-scroll-anchor">
             <?php echo $this->getChildHtml('header.recommendation.view') ?>
         </div>
         <div id="tim-main-container-for-all-opinions">
