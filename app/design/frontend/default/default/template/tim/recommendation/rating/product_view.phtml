@@ -4,9 +4,16 @@ $productData = $this->getProductOpinionInfo($product_id);
 ?>
 <?php if ($productData['opinions_count']): ?>
     <div>
-        <span><?php echo $this->__('Product rating: ') . $productData['rating'] . '/5'; ?></span>
+        <span><?php echo $this->__('Product rating') . ': ' . $productData['rating'] . '/5'; ?></span>
     </div>
     <div>
         <a id="tim-scroll" href="#tim-scroll-ancor"><?php echo $this->__('see more') . ' >' ?></a>
     </div>
-<?php endif ?>
+<?php else: ?>
+    <div>
+        <span><?php echo $this->__('Product rating'); ?>:</span>
+    </div>
+    <div>
+        <a id="tim-scroll-add-opinion" href="#tim-add-opinion-layout"><?php echo $this->__('add opinion') ?></a>
+    </div>
+<?php endif; ?>

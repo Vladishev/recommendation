@@ -13,7 +13,7 @@ $commentLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacter
 $commentTextareaPlaceholder = $this->getCommentPlaceholder($commentLimitCharacters);
 $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($commentLimitCharacters);
 ?>
-<div id="tim-scroll-ancor" class="tim-opinion"> <!-- main container for opinion -->
+<div class="tim-opinion"> <!-- main container for opinion -->
     <div class="tim-opinion-date">
         <!-- place for date when opinion was added -->
         <?php echo $this->__("Opinion on: <span>%s</span>", $opinionData['date_add']); ?>
