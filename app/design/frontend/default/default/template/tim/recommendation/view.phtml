@@ -5,27 +5,23 @@ $k = 0;
 $userData = $this->getPersonalUserData();
 ?>
     <div class="tim-comm-addopinion">
-        <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button> <!-- button for adding totaly new opinion -->
+        <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button>
     </div>
 <?php if ($opinionsSet): ?>
     <div>
-        <!-- Header -->
         <div class="tim-comm-header">
             <?php echo $this->getChildHtml('header.recommendation.view') ?>
         </div>
         <div id="tim-main-container-for-all-opinions">
         <?php foreach($opinionsSet as $opinion): ?>
-            <!-- Left column: -->
             <div class="tim-comm-left-column tim-opinion-user-block-<?php echo $k ?>">
                 <?php $this->getChild('left.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('left.recommendation.view', false) ?>
             </div>
-            <!-- Main (middle) column: -->
             <div class="tim-comm-main-column tim-opinion-<?php echo $k ?>">
                 <?php $this->getChild('content.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
             </div>
-            <!-- Right column: -->
             <div class="tim-comm-right-column tim-opinion-rating-block-<?php echo $k ?>">
                 <?php $this->getChild('right.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('right.recommendation.view', false) ?>
@@ -54,7 +50,6 @@ $userData = $this->getPersonalUserData();
                 <div id="tim-abuse-email">
                     <input id="tim-abuse-email-input" type="text" class="" placeholder="<?php echo $this->__('Your e-mail') ?>"/>
                 </div>
-                <!-- button to submit abuse call -->
                 <button type="button" class="tim-comm-button-smal" id="tim-abuse-application-sendbt"  onclick="sendParams()"><?php echo $this->__('Send report') ?></button>
             </form>
         </div>

@@ -12,7 +12,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_AdminUsername extends Mage_Admin
 {
     public function render(Varien_Object $row)
     {
-        $adminId = $row->getData($this->getColumn()->getIndex());
+        $adminId = (int) $row->getData($this->getColumn()->getIndex());
         $adminUsername = Mage::getModel('admin/user')->load($adminId)->getUsername();
 
         return $adminUsername;

@@ -16,7 +16,7 @@ class Tim_Recommendation_Block_Rating extends Mage_Core_Block_Template
      */
     public function getProductOpinionInfo($productId)
     {
-        $productData = Mage::getModel('tim_recommendation/rating')->getOpinionsInfo($productId);
+        $productData = Mage::getModel('tim_recommendation/rating')->getOpinionsInfo((int) $productId);
         return $productData;
     }
 }

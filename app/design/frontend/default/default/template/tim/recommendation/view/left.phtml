@@ -4,14 +4,12 @@ $opinionData = $this->getOpinionData($recomId);
 $userId = $opinionData['user_id'];
 $userData = $this->getUserData($userId);
 ?>
-<div class="tim-user"> <!-- main container for user details -->
+<div class="tim-user">
     <div class="tim-user-photo">
         <img class="tim-user-photo-tag" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" alt="user-photo" data-imgurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>"/>
-        <!-- place for user photo -->
     </div>
     <div class="tim-user-name">
         <p><?php echo $this->__('User'); ?></p>
-        <!-- place for user name -->
         <p><?php echo $userData['customer_name'] ?></p>
     </div>
     <div class="tim-user-type">
@@ -23,21 +21,16 @@ $userData = $this->getUserData($userId);
                 alt="user-status"/>
         </div>
         <?php echo $this->__('User type'); ?>
-        <!-- place for user name and icon -->
         <p class="tim-user-type-name"><?php echo $userData['user_type_name']; ?></p>
     </div>
     <div class="tim-user-involvement">
         <?php echo $this->__('User involvement'); ?>
-        <!-- place for user score which will result from the number of entries -->
         <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
-            <!-- number of opinons -->
             <?php echo $this->__('%s opinion(s)', $userData['opinion_qty']); ?>
         </div>
-        <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
     </div>
 </div>
 <div class="tim-user-about">
-    <!-- place for button that will redirect to user's profile page -->
     <a class="tim-user-about-link" data-baseurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $userId; ?>">
         <button type="button" class="tim-comm-button-smal"><?php echo $this->__('View user\'s profile'); ?></button>
     </a>

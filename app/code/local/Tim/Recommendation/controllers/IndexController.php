@@ -242,7 +242,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             if ($result) {
                 $this->norouteAction();
             } else {
-                $opinion = Mage::getModel('tim_recommendation/recommendation')->load($requestArray['id']);
+                $opinion = Mage::getModel('tim_recommendation/recommendation')->load((int) $requestArray['id']);
                 //add points for adding comment or opinion by customer
                 Mage::helper('tim_recommendation')->savePointsForCustomer($opinion);
                 $opinion->setAcceptance('1')

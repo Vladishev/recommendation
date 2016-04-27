@@ -12,7 +12,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_RecommendDesc extends Mage_Admin
 {
     public function render(Varien_Object $row)
     {
-        $recommendationId = $row->getData($this->getColumn()->getIndex());
+        $recommendationId = (int) $row->getData($this->getColumn()->getIndex());
         $opinion = Mage::getModel('tim_recommendation/recommendation')->load($recommendationId);
 
         $description = '<p align="center">' . $recommendationId;

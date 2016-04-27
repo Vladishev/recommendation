@@ -4,7 +4,7 @@ $opinionPagesCount = $this->getOpinionPagesCount($opinionCount, 10);
 ?>
 <div class="tim-comm-header">
     <div class="tim-comm-header-left">
-        <div class="tim-comm-header-title">Lorem epsilum...</div>
+        <div class="tim-comm-header-title"></div>
     </div>
     <div class="tim-comm-header-right">
         <input
@@ -44,7 +44,6 @@ $opinionPagesCount = $this->getOpinionPagesCount($opinionCount, 10);
         <div class="tim-comm-sorting">
             <span><?php echo $this->__("Criterion sorting"); ?></span>
             <select class="tim-comm-sortingselect tim-toolbar-select">
-                <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
                 <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
                 <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
                 <option value="topRated"><?php echo $this->__("Top rated"); ?></option>

@@ -29,13 +29,11 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                 </div>
             </div>
             <div class="char-count" id="char-count-tim-opinion-advantages"><span>0</span></div>
-
             <label for="tim-opinion-disadvantages" class="tim-opinion-content-subtitle tim-icon-bad <?php echo $requiredFields['defects']? 'required' : '' ?>">
                 <?php echo $requiredFields['defects']? '<em>*</em>' : '' ?>
                 <?php echo $this->__('Describe product defects:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
-                <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-disadvantages" id="tim-opinion-disadvantages" cols="5" rows="3"
                           class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['defects']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
@@ -50,7 +48,6 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                 <?php echo $this->__('Summary / additional information / comments:') ?>
             </label>
             <div class="tim-opinion-content tim-add-opinion">
-                <!--onclick temporary, while not finding solution with validation tinyMCE fields-->
                 <textarea name="opinion-summary" id="tim-opinion-summary" cols="5" rows="3"
                           class="check-tim-profile-status tim-opinion-characters-count <?php echo $opinionTextareaValidationClass ?> <?php echo $requiredFields['summary']? 'required-entry' : '' ?>"
                           onclick="<?php echo !$isLoggedIn ? 'checkIfUserIsLoggedIn();' : ''?> placeholderAction(this)"></textarea>
@@ -196,7 +193,6 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                         onchange="displayFilename(this.id)"/>
                     <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Load photos') ?></label>
                     <div id="downloaded-imgs"></div>
-                    <!-- place for user input - upload photos -->
                 </div>
                 <div class="tim-rating-input-url">
                     <p>
@@ -209,7 +205,6 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                            class="validate-url-link check-tim-profile-status input-text <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
                         <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : 'onfocus="checkProfileInputField()" onclick="checkProfileInputField()"'?>/>
-                    <!-- place for user input - add movie - url to youtube -->
                 </div>
 
             </div>

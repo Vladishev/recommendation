@@ -3,7 +3,7 @@ $recomId = $this->opinion['recom_id'];
 $opinionData = $this->getOpinionData($recomId);
 $averageRating = $this->getProductEvaluation($recomId);
 ?>
-<div class="tim-rating"> <!-- main container for rating part of opinion -->
+<div class="tim-rating">
     <div class="tim-rating-title"><?php echo $this->__('EVALUATION OF PRODUCT'); ?>:</div>
     <div class="tim-rating-score-main">
         <?php echo $averageRating ?><span>/5<span>

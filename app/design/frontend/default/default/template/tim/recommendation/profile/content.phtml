@@ -11,15 +11,13 @@ $commentsPagesCount = $this->getCommentsPagesCount($commentsCount, $limitPerPage
 $site = $this->getFormatSiteLink($userData['www']);
 ?>
 <div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
-    <div class="tim-user"> <!-- main container for user details -->
+    <div class="tim-user">
         <div class="tim-user-photo">
             <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" width="269" height="168"
                  alt="user-photo"/>
-            <!-- place for user photo -->
         </div>
         <div class="tim-user-name">
             <p><?php echo $this->__('User'); ?></p>
-            <!-- place for user name -->
             <p><?php echo $userData['customer_nick']; ?></p>
         </div>
         <div class="tim-user-type">
@@ -27,20 +25,15 @@ $site = $this->getFormatSiteLink($userData['www']);
                 <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status"/>
             </div>
             <?php echo $this->__('User type'); ?>
-            <!-- place for user name and icon -->
             <p><?php echo $userData['user_type_name']; ?></p>
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
-            <!-- place for user score which will result from the number of entries -->
             <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
-                <!-- number of opinons -->
                 <?php echo $this->__('%s opinii', $userData['opinion_qty']); ?>
             </div>
-            <!-- place for graphic presentation of score for example +1 element will be highlighted for every 100 posts -->
         </div>
         <div class="tim-user-email">
-            <!-- place for user e-mail if he want to show that  -->
             <?php echo isset($userData['email']) ? $userData['email'] : ''; ?>
         </div>
     </div>
@@ -68,7 +61,6 @@ $site = $this->getFormatSiteLink($userData['www']);
         </div>
         <?php // endif ?>
     </div>-->
-    <!-- start of user's opinion list -->
     <?php if (!empty($userOpinionData)): ?>
     <div class="tim-opinion-list">
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__('OPINIONS ADDED BY CUSTOMER'); ?></div>
@@ -82,14 +74,14 @@ $site = $this->getFormatSiteLink($userData['www']);
                 data-page="userPage"/>
             <div class="tim-opinion-list-header-pagecount">
                 <input class="tim-pager-box" value="1" type="text">
-                <p><?php echo $this->__('from ') ?></p><!-- go to page X from all -->
+                <p><?php echo $this->__('from ') ?></p>
                 <span class="tim-pager-total"><?php echo $opinionPagesCount; ?></span>
                 <?php if ($opinionPagesCount > 1): ?>
                 <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)">< </button>
                 <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
                 <?php endif ?>
             </div>
-            <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
+            <div class="tim-opinion-list-header-howmuchshow">
                 <p><?php echo $this->__('Display:') ?></p>
                 <ul>
                     <li>
@@ -107,7 +99,6 @@ $site = $this->getFormatSiteLink($userData['www']);
             <div class="tim-comm-sorting">
                 <p><?php echo $this->__("Criterion sorting"); ?></p>
                 <select class="tim-comm-sortingselect tim-toolbar-select">
-                    <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
                     <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
                     <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
                     <option value="topRated"><?php echo $this->__("Top rated"); ?></option>
@@ -116,21 +107,19 @@ $site = $this->getFormatSiteLink($userData['www']);
             </div>
         </div>
         <div class="tim-comm-list-bulk tim-profile-opinion-list">
-            <!-- listing of newest opinions -->
             <div class="tim-comm-list-titlebar">
                 <div class="tim-list-col1"><?php echo $this->__('Product') ?></div>
                 <div class="tim-list-col2"><?php echo $this->__('Average Rating') ?></div>
             </div>
-            <!-- for each company -->
             <div id="tim-list-container">
             <?php $i = 0; ?>
             <?php foreach ($userOpinionData as $itemData): ?>
                 <?php if ($i > ($limitPerPage - 1)) break; ?>
                 <div class="tim-comm-list-bulk-positions tim-products-opinion-list-<?php echo $i ?>">
-                    <div class="tim-comm-list-bulk-name tim-list-col1"> <!-- company name -->
+                    <div class="tim-comm-list-bulk-name tim-list-col1">
                         <a class="tim-a-tag" href="<?php echo $itemData['url']; ?>"><img src="<?php echo $itemData['image']; ?>" alt="Zdjęcie produktu"/><?php echo $itemData['name'] ?></a>
                     </div>
-                    <div class="tim-comm-list-bulk-rating tim-list-col2"><!-- company rating -->
+                    <div class="tim-comm-list-bulk-rating tim-list-col2">
                         <div class="tim-comm-list-bulk-rating-bar">
                             <div class="tim-comm-list-bulk-rating-barinner">
                                 <?php echo $itemData['rating'] ?>
@@ -142,13 +131,11 @@ $site = $this->getFormatSiteLink($userData['www']);
                 <?php $i++; ?>
             <?php endforeach; ?>
             </div>
-            <!-- end for each -->
         </div>
     </div>
     <?php endif ?>
     <?php if (isset($opinionComments[0]['product_id'])): ?>
     <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__('COMMENTS ADDED BY CUSTOMER'); ?></div>
-<!--  Start comments toolbar  -->
     <div class="tim-opinion-list-header">
         <input
             type="hidden"
@@ -157,14 +144,14 @@ $site = $this->getFormatSiteLink($userData['www']);
             data-userid="<?php echo $userId; ?>"/>
         <div class="tim-opinion-list-header-pagecount">
             <input class="tim-comment-pager-box" value="1" type="text">
-            <p><?php echo $this->__('from ') ?></p><!-- go to page X from all -->
+            <p><?php echo $this->__('from ') ?></p>
             <span class="tim-comment-pager-total"><?php echo $commentsPagesCount ?></span>
             <?php if ($commentsPagesCount > 1): ?>
                 <button class="tim-pager-comment-decrease-button" onclick="changeCountAndPagerComments(this)">< </button>
                 <button class="tim-pager-comment-increase-button" onclick="changeCountAndPagerComments(this)"> ></button>
             <?php endif ?>
         </div>
-        <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
+        <div class="tim-opinion-list-header-howmuchshow">
             <p><?php echo $this->__('Display:') ?></p>
             <ul>
                 <li>
@@ -182,18 +169,14 @@ $site = $this->getFormatSiteLink($userData['www']);
         <div class="tim-comm-sorting">
             <p><?php echo $this->__("Criterion sorting"); ?></p>
             <select class="tim-comm-sortingselect tim-toolbar-comment-select">
-                <!-- sort existed opinions based on things like date added, higest/lowest score etc. -->
                 <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
                 <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
             </select>
         </div>
     </div>
-<!--  End comments toolbar  -->
-    <!-- start of user's comments list -->
     <div class="tim-comment">
         <?php $k = 0 ?>
         <?php foreach ($opinionComments as $comment): ?>
-            <!-- for each comment owned by user (start) -->
             <div class="tim-comment-container-<?php echo $k ?>">
                 <div class="tim-comment-container-title">
                     <?php echo $this->__("Comment added"); ?>
@@ -202,12 +185,10 @@ $site = $this->getFormatSiteLink($userData['www']);
                     <span class="tim-comm-list-bulk-name"><a class="tim-comment-name-link" href="<?php echo $comment['url'] ?>"><?php echo $comment['name'] ?></a></span>
                 </div>
                 <div class="tim-comment-container-content">
-                    <!-- content of comment -->
                     <?php echo $comment['comment']; ?>
                 </div>
             </div>
         <?php $k++; endforeach; ?>
-        <!-- for each comment (end) -->
     </div>
     <?php endif ?>
 </div>

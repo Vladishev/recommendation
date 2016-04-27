@@ -13,7 +13,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
     /*Checking user id and open user_profile page*/
     public function profileAction()
     {
-        $userId = $this->getRequest()->getParam('id');
+        $userId = (int) $this->getRequest()->getParam('id');
         $model = Mage::getModel('customer/customer');
         if ($model->load($userId)->getEntityId() != null) {
             $userData = $model->load($userId);
@@ -68,7 +68,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         if (!is_null($postData['nick'])) {
             $nick = $postData['nick'];
         }
-        $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
+        $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
         $path = Mage::getBaseDir('media') . '/tim/recommendation';
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();

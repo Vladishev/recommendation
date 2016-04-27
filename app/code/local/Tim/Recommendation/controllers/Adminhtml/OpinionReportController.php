@@ -47,7 +47,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $commentsId = $this->getRequest()->getParam('acceptance');
         if (!empty($commentsId)) {
             foreach ($commentsId as $item) {
-                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
+                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((int) $item, 'recom_id');
                 //add points for opinion by customer
                 Mage::helper('tim_recommendation')->savePointsForCustomer($recommendationModel);
                 $recommendationModel->setAcceptance(1);
@@ -68,7 +68,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $commentsId = $this->getRequest()->getParam('acceptance');
         if (!empty($commentsId)) {
             foreach ($commentsId as $item) {
-                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$item, 'recom_id');
+                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((int) $item, 'recom_id');
                 $recommendationModel->setAcceptance(0);
                 $recommendationModel->save();
             }

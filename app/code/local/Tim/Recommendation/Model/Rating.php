@@ -18,8 +18,8 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     public function getOpinionsInfo($productId)
     {
         $productData = array();
-        $productData['opinions_count'] = $this->_getOpinionCount($productId);
-        $productData['rating'] = $this->_getProductRating($productId);
+        $productData['opinions_count'] = $this->_getOpinionCount((int) $productId);
+        $productData['rating'] = $this->_getProductRating((int) $productId);
         return $productData;
     }
 
@@ -30,7 +30,7 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
      */
     protected function _getOpinionCount($productId)
     {
-        $opinionCollection = $this->_getOpinionCollection($productId);
+        $opinionCollection = $this->_getOpinionCollection((int) $productId);
         $opinionCollection->addFieldToSelect('recom_id');
         $count = count($opinionCollection->getData());
         return $count;
@@ -43,8 +43,8 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
      */
     protected function _getProductRating($productId)
     {
-        $opinionCollection = $this->_getOpinionCollection($productId);
-        $opinionCount = $this->_getOpinionCount($productId);
+        $opinionCollection = $this->_getOpinionCollection((int) $productId);
+        $opinionCount = $this->_getOpinionCount((int) $productId);
         $average = 0;
         foreach ($opinionCollection as $row) {
             $ratings = array();
@@ -66,7 +66,7 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     protected function _getOpinionCollection($productId)
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $opinionCollection->addFieldToFilter('product_id', $productId);
+        $opinionCollection->addFieldToFilter('product_id', (int) $productId);
         $opinionCollection->addFieldToFilter('acceptance', 1);
         $opinionCollection->addFieldToFilter('parent', array('null' => true));
         $opinionCollection->addFieldToSelect(array(

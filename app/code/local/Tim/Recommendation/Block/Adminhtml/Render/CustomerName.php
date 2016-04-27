@@ -12,7 +12,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_CustomerName extends Mage_Adminh
 {
     public function render(Varien_Object $row)
     {
-        $customerId = $row->getData($this->getColumn()->getIndex());
+        $customerId = (int) $row->getData($this->getColumn()->getIndex());
         $customer = Mage::getModel('customer/customer')->load($customerId);
         $name = $customer->getFirstname() . ' ' . $customer->getLastname();
 

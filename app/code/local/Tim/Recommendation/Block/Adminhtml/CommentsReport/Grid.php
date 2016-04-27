@@ -25,10 +25,10 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        if ($parentId = $this->getRequest()->getParam('commentId')) {
+        if ($parentId = (int) $this->getRequest()->getParam('commentId')) {
             $collection->addFieldToFilter('parent', array( array('eq' => $parentId)));
         }
-        if ($recomId = $this->getRequest()->getParam('recomId')) {
+        if ($recomId = (int) $this->getRequest()->getParam('recomId')) {
             $collection->addFieldToFilter('recom_id', array( array('eq' => $recomId)));
         }
         $collection->getSelect()->join(array('val' => 'customer_entity_varchar'),

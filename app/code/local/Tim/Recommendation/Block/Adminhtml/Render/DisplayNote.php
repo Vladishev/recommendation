@@ -13,7 +13,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
     public function render(Varien_Object $row)
     {
         $return = '';
-        $recomId = $row->getRecomId();
+        $recomId = (int) $row->getRecomId();
         $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('id' => $recomId));
         $title = Mage::helper('tim_recommendation')->__('Display note');
         $note = $this->getNote($recomId);
