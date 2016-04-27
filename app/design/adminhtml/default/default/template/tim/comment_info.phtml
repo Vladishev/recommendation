@@ -19,7 +19,7 @@ $comment = $this->getCommentData();
         </tr>
     </table>
 </div>
-<div>
+<div id="tim_recommendation_info_page">
     <div class="tim-text-commet">
         <b><?php echo $this->__('Text of comment'); ?>:</b>
         <?php echo $comment['comment']; ?>
@@ -31,7 +31,7 @@ $comment = $this->getCommentData();
     <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/opinionReport/opinionInfo', array('id' => $comment['parent'])) ?>">
     <span><?php echo $this->__('Display opinion'); ?></span>
     </a><p>
-    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/noteReport', array('id' => $comment['recom_id'])) ?>">
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/noteReport', array('recomId' => $comment['recom_id'])) ?>">
         <span><?php echo $this->__('Display note'); ?></span>
     </a>
 </div>

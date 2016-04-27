@@ -14,15 +14,14 @@
                     <tr>
                         <td valign="top">
                             <h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;">Witaj administratorze!</h1>
-                            <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Pojawia się nowa komentarz wymagająca sprawdzenia:</p>
+                            <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Pojawił się nowy komentarz, wymagający sprawdzenia:</p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Produkt:</p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">{{htmlescape var=$product_name}}</p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;"><a href="{{htmlescape var=$product_url}}">Przejdź do karty produktu</a></p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;"><strong>Komentarz:</strong></p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">{{htmlescape var=$comment}}</p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Załączone linki: </p>
-                            <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;"><a href="{{htmlescape var=$confirm_url}}">Opublikuj bez uwag</a></p>
-                            <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;"><a href="{{htmlescape var=$modify_comment_url}}">Modyfikuj</a></p>
+                            {{block type="core/template" template="tim/recommendation/email/confirm_link.phtml" confirmLink=$confirm_url userModeration=$user_moderation modifyOpinionUrl=$modify_opinion_url}}
                         </td>
                     </tr>
                     <tr>

@@ -27,23 +27,30 @@
 <script type="text/javascript">
     /* settings for popup */
     function addNotePopup(recom_id = null) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("id", "tim-note-info");
         if (recom_id) {
             if (document.getElementById('recomId')) {
                 document.getElementById("recomId").remove();
             }
-            var input = document.createElement("input");
-            input.setAttribute("type", "hidden");
-            input.setAttribute("id", "recomId");
-            input.setAttribute("name", "recomId");
-            input.setAttribute("value", recom_id);
+            input.setAttribute("data-recomId", recom_id);
             //append to form element that you want .
             if (document.getElementById('tim_recommendation_opinion_grid_table')) {
+                input.setAttribute("data-objectName", 'tim_recommendation');
                 document.getElementById('tim_recommendation_opinion_grid_table').appendChild(input);
-            } else {
+            } else if (document.getElementById('tim_recommendation_comment_grid_table')) {
+                input.setAttribute("data-objectName", 'tim_recommendation');
                 document.getElementById('tim_recommendation_comment_grid_table').appendChild(input);
+            } else if (document.getElementById('tim_recommendation_malpractice_grid_table')) {
+                input.setAttribute("data-objectName", 'tim_recom_malpractice');
+                document.getElementById('tim_recommendation_malpractice_grid_table').appendChild(input);
             }
         } else {
             recom_id = document.getElementById('recomId').value;
+            input.setAttribute("data-recomId", recom_id);
+            input.setAttribute("data-objectName", 'tim_recommendation');
+            document.getElementById('tim_recommendation_info_page').appendChild(input);
         }
 
         var url = '<?php echo $this->getUrl("adminhtml/note/showNotePopup") ?>recom_id/' + recom_id;

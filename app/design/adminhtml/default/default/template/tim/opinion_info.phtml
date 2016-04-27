@@ -24,7 +24,7 @@ $video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this
         </tr>
     </table>
 </div>
-<div>
+<div id="tim_recommendation_info_page">
     <div class="tim-advantages">
         <b><?php echo $this->__('Advantages'); ?>:</b>
         <?php echo $opinion['advantages']; ?>
@@ -83,7 +83,7 @@ $video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this
     <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/commentsReport', array('commentId' => $opinion['recom_id'])) ?>">
         <span><?php echo $this->__('Display comments'); ?></span>
     </a><p>
-    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/noteReport', array('id' => $opinion['recom_id'])) ?>">
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/noteReport', array('recomId' => $opinion['recom_id'])) ?>">
         <span><?php echo $this->__('Display note'); ?></span>
     </a>
 </div>

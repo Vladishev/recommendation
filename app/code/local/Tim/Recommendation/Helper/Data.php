@@ -611,6 +611,17 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Prepare url for modification opinion
+     * @param int $recomId
+     * @return string
+     */
+    public function getModifyOpinionUrl($recomId)
+    {
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/modifyOpinion/opinionId/' . $recomId;
+        return $url;
+    }
+
+    /**
      * Prepare url for modification comment
      * @param int $recomId
      * @return string
