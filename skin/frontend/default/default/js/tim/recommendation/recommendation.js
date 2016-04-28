@@ -13,6 +13,7 @@ jQuery(document).ready(function () {
     displayYesNoChoice();
     addExtraValidation();
     countOpinionChars();
+    deleteFile();
 });
 //------------------------------------------- product view start -------------------------------------------//
 /**
@@ -531,18 +532,88 @@ function displayAjaxCommentPopupResponse(response) {
 function displayFilename(id) {
     var images = '';
     var maxSize = parseInt(jQuery('#recommendation-img').attr('max-size'), 10);
-    jQuery.each(jQuery('#' + id).prop('files'), function (idx, file) {
-        if (checkImgSize(file['size'], maxSize)) {
-            if (checkImgType(file)) {
-                images += ' ' + file['name'] + '<br>';
+    var fileInput = jQuery('#' + id);
+    var fileList = fileInput.prop('files');
+    var filesQty = fileList.length;
+    var maxFilesQty = 5;
+    vex.defaultOptions.className = 'vex-theme-default';
+
+    var fileArray = fileListToArray(fileList);
+    var deletedImgs = jQuery('#deleted-imgs');
+
+    if (filesQty <= maxFilesQty) {
+        jQuery.each(fileList, function (idx, file) {
+            if (checkImgSize(file['size'], maxSize)) {
+                if (checkImgType(file)) {
+                    images += '<div id="div-img-del-' + idx + '"><span class="delete-image" id="' + idx + '">X</span>' + file['name'] + '</div>';
+                } else {
+                    if (deletedImgs.val() == "") {
+                        var deleteFile = [];
+                        deleteFile.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
+                        deletedImgs.val(JSON.stringify(deleteFile))
+                    } else {
+                        var deletedFiles = JSON.parse(deletedImgs.val());
+                        deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
+                        deletedImgs.val(JSON.stringify(deletedFiles));
+                    }
+                    vex.dialog.alert('Nie można przesłać pliku: ' + file['name'] + '. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
+                }
             } else {
-                alert('Nie można przesłać pliku: ' + file['name'] + '. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
+                if (deletedImgs.val() == '') {
+                    var deleteFile = [];
+                    deleteFile.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
+                    deletedImgs.val(JSON.stringify(deleteFile))
+                } else {
+                    var deletedFiles = JSON.parse(deletedImgs.val());
+                    deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
+                    deletedImgs.val(JSON.stringify(deletedFiles));
+                }
+                vex.dialog.alert("Nie można przesłać pliku: " + file['name'] + ". Maksymalny rozmiar to " + maxFilesQty + " mb.");
             }
+        });
+    } else {
+        fileInput.val('');
+        deletedImgs.val('');
+        vex.dialog.alert('Nie można przesłać plików. Maksymalna ilość przesyłanych plików to ' + maxFilesQty + '.');
+    }
+    jQuery('#downloaded-imgs').html(images);
+}
+
+/**
+ * Delete file from div and prepare new div with deleted files
+ */
+function deleteFile() {
+    jQuery('#downloaded-imgs').on('click', '.delete-image', function () {
+        var spanId = jQuery(this).attr('id');
+        jQuery('#downloaded-imgs').find('#div-img-del-' + spanId).remove();
+
+        var fileList = jQuery('#recommendation-img').prop('files');
+        var fileArray = fileListToArray(fileList);
+
+        var deletedImgs = jQuery('#deleted-imgs');
+        if (deletedImgs.val() == '') {
+            var deleteFile = [];
+            deleteFile.push({id: spanId, name: fileArray[spanId].name, size: fileArray[spanId].size});
+            deletedImgs.val(JSON.stringify(deleteFile))
         } else {
-            alert("Nie można przesłać pliku: " + file['name'] + ". Maksymalny rozmiar to 5 mb.");
+            var deletedFiles = JSON.parse(deletedImgs.val());
+            deletedFiles.push({id: spanId, name: fileArray[spanId].name, size: fileArray[spanId].size});
+            deletedImgs.val(JSON.stringify(deletedFiles));
         }
     });
-    jQuery('#downloaded-imgs').html(images);
+}
+
+/**
+ * Convert fileList to array
+ * @param fileList
+ * @returns {Array}
+ */
+function fileListToArray(fileList) {
+    var fileArray = [];
+    for (var i = 0, file; file = fileList[i]; i++) {
+        fileArray.push(file);
+    }
+    return fileArray;
 }
 /**
  * Check image size
