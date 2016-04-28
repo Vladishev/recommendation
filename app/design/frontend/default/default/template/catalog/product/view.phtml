@@ -77,7 +77,7 @@
                     <?php echo $this->getChildHtml('addto') ?>
                 </div>
             <?php endif; ?>
-            <?php echo $this->getLayout()->createBlock('tim_recommendation/rating')->setTemplate('tim/recommendation/rating/product_view.phtml')->toHtml(); ?>
+            <?php echo $this->getChildHtml('rating.product.view'); ?>
             <?php if ($_product->getShortDescription()):?>
                 <div class="short-description">
                     <h2><?php echo $this->__('Quick Overview') ?></h2>

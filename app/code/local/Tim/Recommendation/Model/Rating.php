@@ -18,19 +18,20 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     public function getOpinionsInfo($productId)
     {
         $productData = array();
-        $productData['opinions_count'] = $this->_getOpinionCount($productId);
-        $productData['rating'] = $this->_getProductRating($productId);
+        $opinionCollection = $this->_getOpinionCollection($productId);
+        $productData['opinions_count'] = $this->_getOpinionCount($opinionCollection);
+        $productData['rating'] = $this->_getProductRating($opinionCollection);
         return $productData;
     }
 
     /**
      * Returns count of opinions for product
-     * @param (int)$productId
+     *
+     * @param  object $opinionCollection
      * @return int
      */
-    protected function _getOpinionCount($productId)
+    protected function _getOpinionCount($opinionCollection)
     {
-        $opinionCollection = $this->_getOpinionCollection($productId);
         $opinionCollection->addFieldToSelect('recom_id');
         $count = count($opinionCollection->getData());
         return $count;
@@ -38,14 +39,15 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
 
     /**
      * Returns average product rating based on product's opinions
-     * @param (int)$productId
-     * @return float))
+     *
+     * @param object $opinionCollection
+     * @return float
      */
-    protected function _getProductRating($productId)
+    protected function _getProductRating($opinionCollection)
     {
-        $opinionCollection = $this->_getOpinionCollection($productId);
-        $opinionCount = $this->_getOpinionCount($productId);
+        $opinionCount = $this->_getOpinionCount($opinionCollection);
         $average = 0;
+        $rating = 0;
         foreach ($opinionCollection as $row) {
             $ratings = array();
             $ratings[] = $row->getData('rating_price');
@@ -54,7 +56,10 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
             $ratings[] = $row->getData('rating_service');
             $average += round(array_sum($ratings) / count($ratings), 1);
         }
-        $rating = round($average / $opinionCount, 1);
+        if ((bool) $opinionCount !== false) {
+            $rating = round($average / $opinionCount, 1);
+        }
+
         return $rating;
     }
 
