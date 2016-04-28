@@ -9,11 +9,11 @@ jQuery(document).ready(function () {
     closePopup();
     checkProfile();
     displayRatingStars();
-    scrollToOpinions();
     scrollToAddOpinion();
     displayYesNoChoice();
     addExtraValidation();
     countOpinionChars();
+    openAddOpinionByHash();
 });
 //------------------------------------------- product view start -------------------------------------------//
 /**
@@ -596,19 +596,6 @@ function displayRatingStars() {
 }
 
 /**
- * Scrolling from product info to opinion list
- */
-function scrollToOpinions() {
-    // Scroll to opinions for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
-    jQuery('#tim-scroll').click(function () {
-        jQuery('html, body').animate({
-            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
-        }, 500);
-        return false;
-    });
-}
-
-/**
  * Scrolling from product info to add opinion form
  */
 function scrollToAddOpinion() {
@@ -680,6 +667,29 @@ function lightRatings() {
     });
 }
 
+/**
+ * Get last element from url
+ * @return {string}
+ */
+function getLastElementFromUrl(){
+    var url = window.location.href;
+    var urlsplit = url.split("/");
+    return urlsplit.last();
+}
+
+/**
+ * Open add opinion form by expected hash in url
+ * @returns {boolean}
+ */
+function openAddOpinionByHash(){
+    if(getLastElementFromUrl() == '#add-opinion'){
+        showAddOpinionForm();
+        jQuery('html, body').animate({
+            scrollTop: jQuery('#tim-add-opinion-layout').offset().top
+        }, 500);
+        return false;
+    }
+}
 /**
  * Add extra validation to forms
  */
