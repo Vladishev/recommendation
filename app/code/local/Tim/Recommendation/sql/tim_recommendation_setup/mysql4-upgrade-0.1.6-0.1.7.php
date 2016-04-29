@@ -1,12 +1,11 @@
 <?php
-
 /**
 * Tim
 *
 * @category   Tim
 * @package    Tim_Recommendation
 * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
-* @author     Vlad Verbitskiy <vladmsu@ukr.net>
+* @author     Vladislav Verbitskiy <vladomsu@gmail.com>
 */
 
 $installer = $this;

@@ -5,7 +5,14 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vlad Verbitskiy <vladmsu@ukr.net>
+ */
+
+/**
+ * Class Tim_Recommendation_Model_Malpractice
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Model_Malpractice extends Mage_Core_Model_Abstract
 {

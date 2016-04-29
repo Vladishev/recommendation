@@ -1,18 +1,25 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy
+ */
+
+/**
+ * Class Tim_Recommendation_Model_Email. Adds possibility to add attachment to email and send Cc and Bcc.
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Model_Email extends Aschroder_SMTPPro_Model_Email
 {
     /**
-     * Customized for sending Cc and Bcc email
-     * and adding attachment to letter
+     * Customized for sending Cc and Bcc email and adding attachment to letter
+     *
+     * @param null $templateVar
      * @return $this
      */
     public function send($templateVar = null)

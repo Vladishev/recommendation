@@ -6,6 +6,14 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid
+ * Creates grid with notes
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
@@ -23,6 +31,12 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
         $this->setUseAjax(true);
     }
 
+    /**
+     * Prepare grid collection object
+     *
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareCollection()
     {
         //check on malpractice or recommendation
@@ -48,7 +62,9 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
 
     /**
      * Prepare grid columns
-     * @return Tim_Recommendation_Block_Adminhtml_NoteReport_Grid
+     *
+     * @return $this
+     * @throws Exception
      */
     protected function _prepareColumns()
     {

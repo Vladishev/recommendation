@@ -5,12 +5,20 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy (vladomsu@gmail.com)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_Render_RenderTitle
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Vladislav Verbitskiy (vladomsu@gmail.com)
  */
 class Tim_Recommendation_Block_Adminhtml_Render_RenderTitle extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
     /**
-     * Render type of content
+     * Renders grid column. Render type of content
+     *
      * @param Varien_Object $row
      * @return string
      */

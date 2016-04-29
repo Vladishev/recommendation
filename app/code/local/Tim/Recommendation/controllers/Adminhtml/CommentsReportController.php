@@ -6,10 +6,20 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy
+ */
+
+/**
+ * Class Tim_Recommendation_Adminhtml_CommentsReportController. Actions for comment grid.
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * Set general data
+     */
     public function indexAction()
     {
         $this->_title(Mage::helper('tim_recommendation')->__('Comments'));
@@ -28,8 +38,6 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
 
     /**
      * Grid action
-     *
-     * @return null
      */
     public function gridAction()
     {
@@ -40,7 +48,8 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     }
 
     /**
-     * Changed data in acceptance field to 1
+     * Changed data in acceptance field to 1(accepted)
+     *
      * @throws Exception
      */
     public function massAcceptanceYesAction()
@@ -65,7 +74,8 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
     }
 
     /**
-     * Changed data in acceptance field to 0
+     * Changed data in acceptance field to 0(not accepted)
+     *
      * @throws Exception
      */
     public function massAcceptanceNoAction()
@@ -114,8 +124,9 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
 
     /**
      * Added alert to user
-     * @param (string)$status
-     * @param (int)$id
+     *
+     * @param string $status Key word for alert
+     * @param array $id Array with comments recom_id(tim_recommendation table)
      */
     protected function _addAlert($status, $id)
     {
@@ -125,6 +136,11 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
             ));
     }
 
+    /**
+     * Check is allowed access to action
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('report/tim/tim_comments');

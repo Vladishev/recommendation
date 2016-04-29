@@ -5,7 +5,7 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Vladislav Verbitskiy
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 
 $installer = $this;

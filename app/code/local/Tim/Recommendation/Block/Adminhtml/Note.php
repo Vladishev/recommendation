@@ -1,7 +1,24 @@
 <?php
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
 
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_Note
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
 class Tim_Recommendation_Block_Adminhtml_Note extends Mage_Adminhtml_Block_Widget_Form_Container
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         /* sets data for popup */
@@ -51,11 +68,19 @@ class Tim_Recommendation_Block_Adminhtml_Note extends Mage_Adminhtml_Block_Widge
         }";
     }
 
+    /**
+     * Sets child block Tim_Recommendation_Block_Adminhtml_Note_Form
+     */
     protected function _prepareLayout()
     {
         $this->setChild('form', $this->getLayout()->createBlock('tim_recommendation/adminhtml_note_form'));
     }
 
+    /**
+     * Prepare html output
+     *
+     * @return string
+     */
     protected function _toHtml()
     {
         $css = file_get_contents(Mage::getBaseDir('skin') . '/adminhtml/default/default/css/tim/recommendation/style.css');

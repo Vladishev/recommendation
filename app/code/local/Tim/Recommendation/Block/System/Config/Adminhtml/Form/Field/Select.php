@@ -5,6 +5,13 @@
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select extends Mage_Core_Block_Html_Select
@@ -26,6 +33,10 @@ class Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select extends
         return parent::_toHtml();
     }
 
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
     public function setInputName($value)
     {
         return $this->setName($value);

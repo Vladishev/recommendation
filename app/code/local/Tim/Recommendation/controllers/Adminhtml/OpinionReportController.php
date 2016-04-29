@@ -1,15 +1,24 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_Adminhtml_OpinionReportController. Actions for opinion grid.
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * Set general data
+     */
     public function indexAction()
     {
         $this->_title($this->__('Opinions'));
@@ -19,6 +28,9 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $this->renderLayout();
     }
 
+    /**
+     * Opinion info action
+     */
     public function opinionInfoAction()
     {
         $this->_title($this->__('Opinion info'));
@@ -28,8 +40,6 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
 
     /**
      * Grid action
-     *
-     * @return null
      */
     public function gridAction()
     {
@@ -39,7 +49,9 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         );
     }
 
-    /**Changed data in acceptance field to 1
+    /**
+     * Changed data in acceptance field to 1(accepted)
+     *
      * @throws Exception
      */
     public function massAcceptanceYesAction()
@@ -63,7 +75,9 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $this->_redirect('*/*/index');
     }
 
-    /**Changed data in acceptance field to 0
+    /**
+     * Changed data in acceptance field to 0(not accepted)
+     *
      * @throws Exception
      */
     public function massAcceptanceNoAction()
@@ -111,8 +125,9 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
 
     /**
      * Added alert to user
-     * @param (string)$status
-     * @param (int)$id
+     *
+     * @param string $status Key word for alert
+     * @param array $id Array with opinions recom_id(tim_recommendation table)
      */
     protected function _addAlert($status, $id)
     {
@@ -142,6 +157,11 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
 
+    /**
+     * Check is allowed access to action
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('report/tim/tim_recommendation');

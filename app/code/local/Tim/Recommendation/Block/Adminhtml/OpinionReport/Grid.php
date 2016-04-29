@@ -1,11 +1,18 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid
+ * Creates grid with opinions
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
@@ -23,6 +30,12 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $this->setUseAjax(true);
     }
 
+    /**
+     * Prepare grid collection object
+     *
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
@@ -55,7 +68,8 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     /**
      * Prepare grid columns
      *
-     * @return Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid
+     * @return $this
+     * @throws Exception
      */
     protected function _prepareColumns()
     {
@@ -207,8 +221,9 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
 
     /**
      * Custom filter for media field
-     * @param (obj)$collection
-     * @param (obj)$column
+     *
+     * @param object $collection
+     * @param object $column
      * @return $this
      */
     protected function _mediaFilter($collection, $column)
@@ -231,6 +246,11 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         }
     }
 
+    /**
+     * Prepare grid massaction actions
+     *
+     * @return $this
+     */
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('recom_id');

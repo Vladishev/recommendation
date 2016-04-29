@@ -1,18 +1,25 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Model_Rating
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
  */
 class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
 {
     /**
      * Returns opinions info for product
-     * @param (int)$productId
+     *
+     * @param int $productId Native Magento product ID
      * @return array
      */
     public function getOpinionsInfo($productId)
@@ -25,7 +32,8 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
 
     /**
      * Returns count of opinions for product
-     * @param (int)$productId
+     *
+     * @param int $productId Native Magento product ID
      * @return int
      */
     protected function _getOpinionCount($productId)
@@ -38,8 +46,9 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
 
     /**
      * Returns average product rating based on product's opinions
-     * @param (int)$productId
-     * @return float))
+     *
+     * @param int $productId Native Magento product ID
+     * @return float
      */
     protected function _getProductRating($productId)
     {
@@ -60,7 +69,8 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
 
     /**
      * Returns right collection
-     * @param (int)$productId
+     *
+     * @param int $productId Native Magento product ID
      * @return object
      */
     protected function _getOpinionCollection($productId)

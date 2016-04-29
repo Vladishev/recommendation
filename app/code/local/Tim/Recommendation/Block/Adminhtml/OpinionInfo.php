@@ -4,13 +4,21 @@
  *
  * @category   Tim
  * @package    Tim_Recommendation
- * @copyright  Copyright (c) 2016 Tim (http://tim.pl)
+ * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
+ */
+
+/**
+ * Class Tim_Recommendation_Block_Adminhtml_OpinionInfo
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
  * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
-class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Block_Template
+class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     /**
      * Get array with opinion data
+     *
      * @return array
      */
     public function getOpinionData()

@@ -1,17 +1,26 @@
 <?php
-
 /**
  * Tim
  *
  * @category   Tim
  * @package    Tim_Recommendation
  * @copyright  Copyright (c) 2015 Tim (http://tim.pl)
- * @author     Bogdan Bakalov <bakalov.bogdan@gmail.com>
+ */
+
+/**
+ * Class Tim_Recommendation_Adminhtml_CommentsToOpinionController. Actions for comment to opinion grid.
+ *
+ * @category  Tim
+ * @package   Tim_Recommendation
+ * @author    Bogdan Bakalov <bakalov.bogdan@gmail.com>
  */
 class Tim_Recommendation_Adminhtml_CommentsToOpinionController extends Mage_Adminhtml_Controller_Action
 {
     /**
      * TODO remove this grid till 01/02/2016. Reason: useless. The same functionality in grid @see Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid
+     */
+    /**
+     * Set general data
      */
     public function indexAction()
     {
@@ -22,6 +31,9 @@ class Tim_Recommendation_Adminhtml_CommentsToOpinionController extends Mage_Admi
         $this->renderLayout();
     }
 
+    /**
+     * Render layout
+     */
     public function opinionInfoAction()
     {
         $this->_title($this->__('All comments to opinion'));
@@ -31,8 +43,6 @@ class Tim_Recommendation_Adminhtml_CommentsToOpinionController extends Mage_Admi
 
     /**
      * Grid action
-     *
-     * @return null
      */
     public function gridAction()
     {
@@ -42,6 +52,11 @@ class Tim_Recommendation_Adminhtml_CommentsToOpinionController extends Mage_Admi
         );
     }
 
+    /**
+     * Check is allowed access to action
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return true;
