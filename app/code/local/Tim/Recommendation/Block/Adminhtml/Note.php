@@ -57,10 +57,10 @@ class Tim_Recommendation_Block_Adminhtml_Note extends Mage_Adminhtml_Block_Widge
 
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     if(xmlhttp.responseText == true){
-                        alert('Note was successfully added.');
+                        alert('Notka została dodana.');
                         parent.closePopup();
                     }else{
-                        alert('Note wasn\'t added. Please check log and try again.');
+                        alert('Uwaga nie została dodana. Proszę sprawdzić rejestr i spróbuj ponownie.');
                     }
                 }
             }
