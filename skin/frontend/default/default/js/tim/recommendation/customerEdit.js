@@ -79,7 +79,7 @@ function cropperFunctionality() {
             });
 
             //Checking file size and type
-            if (checkFile.size > 419430) {
+            if (checkFile.size > 409600) {
                 alert('Nie można przesłać pliku. Maksymalny rozmiar to 400 kb.');
                 return;
             }
@@ -156,7 +156,8 @@ function cropperFunctionality() {
                     try {
                         data.option = JSON.parse($target.val());
                     } catch (e) {
-                        console.log(e.message);
+                        //uncomment for debug
+                        //console.log(e.message);
                     }
                 }
             }

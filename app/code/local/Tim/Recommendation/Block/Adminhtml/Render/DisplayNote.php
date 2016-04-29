@@ -26,11 +26,11 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
     {
         $return = '';
         if ($row->getMalpracticeId()) {
-            $id = $row->getMalpracticeId();
+            $id = (int) $row->getMalpracticeId();
             $note = $this->getMalpracticeNote($id);
             $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('malpracticeId' => $id));
         } else {
-            $id = $row->getRecomId();
+            $id = (int) $row->getRecomId();
             $note = $this->getRecommendationNote($id);
             $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('recomId' => $id));
         }

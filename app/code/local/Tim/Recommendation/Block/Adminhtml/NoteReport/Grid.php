@@ -41,10 +41,10 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
     {
         //check on malpractice or recommendation
         if ($this->getRequest()->getParam('malpracticeId')) {
-            $id = $this->getRequest()->getParam('malpracticeId');
+            $id = (int) $this->getRequest()->getParam('malpracticeId');
             $objectName = 'tim_recom_malpractice';
         } elseif($this->getRequest()->getParam('recomId')) {
-            $id = $this->getRequest()->getParam('recomId');
+            $id = (int) $this->getRequest()->getParam('recomId');
             $objectName = 'tim_recommendation';
         }
 

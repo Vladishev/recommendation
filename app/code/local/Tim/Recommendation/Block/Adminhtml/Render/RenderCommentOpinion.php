@@ -28,7 +28,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mag
      */
     public function render(Varien_Object $row)
     {
-        $recomId = $row->getRecomId();
+        $recomId = (int) $row->getRecomId();
         $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
         if ($advantages = $recomRow->getAdvantages()) {
             if (strlen($advantages) > 100) {

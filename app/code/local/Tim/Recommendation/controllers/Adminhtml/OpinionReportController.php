@@ -62,7 +62,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         }
         if (!empty($opinionIds)) {
             foreach ($opinionIds as $id) {
-                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$id, 'recom_id');
+                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((int) $id, 'recom_id');
                 //add points for opinion by customer
                 Mage::helper('tim_recommendation')->savePointsForCustomer($recommendationModel);
                 $recommendationModel->setAcceptance(1);
@@ -88,7 +88,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
         }
         if (!empty($opinionIds)) {
             foreach ($opinionIds as $id) {
-                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((integer)$id, 'recom_id');
+                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((int) $id, 'recom_id');
                 $recommendationModel->setAcceptance(0);
                 $recommendationModel->save();
             }

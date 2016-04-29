@@ -22,8 +22,8 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
     public function sortUserPageAction()
     {
         $params = $this->getRequest()->getParams();
-        $limit = $params['countPerPage'];
-        $curPage = $params['pageNumber'];
+        $limit = (int) $params['countPerPage'];
+        $curPage = (int) $params['pageNumber'];
         switch ($params['sortBy']) {
             case 'topRated':
                 $order = 'DESC';
@@ -43,11 +43,11 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         }
 
         $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
-        $opinionData = $recommendationBlock->getUserOpinionData($params['userId'], $limit, $curPage, $order, $field);
-        $opinionsCount = $recommendationBlock->getUserOpinionCount($params['userId']);
+        $opinionData = $recommendationBlock->getUserOpinionData((int) $params['userId'], $limit, $curPage, $order, $field);
+        $opinionsCount = $recommendationBlock->getUserOpinionCount((int) $params['userId']);
         $opinionData[0]['pagesCount'] = ceil($opinionsCount / $limit);
         $opinionData[0]['curPage'] = $curPage;
-        die(json_encode($opinionData));
+        echo json_encode($opinionData);
     }
 
     /**
@@ -56,8 +56,8 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
     public function showAction()
     {
         $params = $this->getRequest()->getParams();
-        $limit = $params['countPerPage'];
-        $curPage = $params['pageNumber'];
+        $limit = (int) $params['countPerPage'];
+        $curPage = (int) $params['pageNumber'];
         switch ($params['sortBy']) {
             case 'topRated':
                 $order = 'DESC';
@@ -75,12 +75,12 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
                 $order = 'DESC';
                 $field = 'date_add';
         }
-        $recomIdSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct($params['productId'], $limit, $curPage, $order, $field);
+        $recomIdSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct((int) $params['productId'], $limit, $curPage, $order, $field);
         $opinionsArray = $this->_getOpinionsArray($recomIdSet);
-        $opinionsCount = Mage::getModel('tim_recommendation/index')->getOpinionCount($params['productId']);
+        $opinionsCount = Mage::getModel('tim_recommendation/index')->getOpinionCount((int) $params['productId']);
         $opinionsArray[0]['pagesCount'] = ceil($opinionsCount / $limit);
         $opinionsArray[0]['curPage'] = $curPage;
-        die(json_encode($opinionsArray));
+        echo json_encode($opinionsArray);
     }
 
     /**
@@ -89,8 +89,8 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
     public function sortUserCommentsAction()
     {
         $params = $this->getRequest()->getParams();
-        $limit = $params['countPerPage'];
-        $curPage = $params['pageNumber'];
+        $limit = (int) $params['countPerPage'];
+        $curPage = (int) $params['pageNumber'];
 
         if ($params['sortBy'] == 'oldest') {
             $order = 'ASC';
@@ -99,9 +99,9 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         }
 
         $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
-        $commentData = $recommendationBlock->getOpinionComment($params['userId'], $limit, $curPage, $order);
+        $commentData = $recommendationBlock->getOpinionComment((int) $params['userId'], $limit, $curPage, $order);
 
-        die(json_encode($commentData));
+        echo json_encode($commentData);
     }
 
     /**
@@ -115,7 +115,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $i = 0;
         foreach ($recomIdSet as $opinion) {
             $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
-            $recomIdSet[$i]['opinionData'] = $recommendationBlock->getOpinionData($opinion['recom_id']);
+            $recomIdSet[$i]['opinionData'] = $recommendationBlock->getOpinionData((int) $opinion['recom_id']);
             if(isset($recomIdSet[$i]['opinionData']['movie_url'])){
                 $recomIdSet[$i]['opinionData']['youtubeVideoId'] = $recommendationBlock->getYoutubeVideoId($recomIdSet[$i]['opinionData']['movie_url']);
             }

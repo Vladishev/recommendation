@@ -1,6 +1,6 @@
 <?php
-$product_id = Mage::registry('current_product')->getId();
-$productData = $this->getProductOpinionInfo($product_id);
+$productId = Mage::registry('current_product')->getId();
+$productData = $this->getProductOpinionInfo($productId);
 ?>
 <?php if ($productData['opinions_count']): ?>
     <div>

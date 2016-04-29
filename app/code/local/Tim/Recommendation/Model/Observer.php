@@ -147,8 +147,8 @@ class Tim_Recommendation_Model_Observer
     {
         $opinionData = $observer->getEvent()->getOpinionData();
         $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_enabled');
-        $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_opinion_inform');
+        $status = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_enabled');
+        $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_opinion_inform');
         if ($status == 1 and !empty($email)) {
             $this->sendEmail($email, $opinionData, 'Opinion');
         }
@@ -164,8 +164,8 @@ class Tim_Recommendation_Model_Observer
      */
     public function sendAcceptConfirmationEmail($observer)
     {
-        $opinionId = $observer->getEvent()->getOpinionId();
-        $customerId = Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getUserId();
+        $opinionId = (int) $observer->getEvent()->getOpinionId();
+        $customerId = (int) Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getUserId();
         $customerInfo = Mage::getModel('customer/customer')->load($customerId)->getData();
         $customerEmail = $customerInfo['email'];
         $type = Mage::helper('tim_recommendation')->checkOpinionOrComment($opinionId);
@@ -179,7 +179,7 @@ class Tim_Recommendation_Model_Observer
             $customerInfo['type'] = Mage::helper('tim_recommendation')->__('comment');
         }
 
-        $sendConfirmationToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_send_confirmation_' . $type);
+        $sendConfirmationToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_send_confirmation_' . $type);
         if ($sendConfirmationToUser == 1) {
             $this->sendEmail($customerEmail, $customerInfo, $customerSubject);
         }
@@ -195,9 +195,9 @@ class Tim_Recommendation_Model_Observer
         $commentData = $observer->getEvent()->getCommentData();
         Mage::log($commentData, null, 'tim_recommendation.log');
         $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_enabled');
-        $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_inform');
-        if ($status == 1 and !empty($email)) {
+        $status = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_enabled');
+        $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_inform');
+        if (($status == 1) and (!empty($email))) {
             $this->sendEmail($email, $commentData, 'Comment');
         }
         if ($statusToUser == 1) {
@@ -214,9 +214,9 @@ class Tim_Recommendation_Model_Observer
     {
         $malpracticeData = $observer->getEvent()->getMalpracticeData();
         $emailToAdmin = Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_email_to');
-        $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
-        $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_inform');
-        if ($status == 1 and !empty($emailToAdmin)) {
+        $status = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
+        $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_inform');
+        if (($status == 1) and (!empty($emailToAdmin))) {
             $this->sendEmail($emailToAdmin, $malpracticeData, 'Malpractice');
         }
         if ($statusToUser == 1) {
@@ -302,7 +302,7 @@ class Tim_Recommendation_Model_Observer
     public function sendEmailToUser($userId, $userSubject)
     {
         $_helper = Mage::helper('tim_recommendation');
-        $userInformation = Mage::getModel('customer/customer')->load($userId)->getData();
+        $userInformation = Mage::getModel('customer/customer')->load((int) $userId)->getData();
         $userEmail = $userInformation['email'];
         $userInformation['subject'] = $_helper->__($userSubject);
 

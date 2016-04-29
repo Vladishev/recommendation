@@ -13,43 +13,34 @@ $commentLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacter
 $commentTextareaPlaceholder = $this->getCommentPlaceholder($commentLimitCharacters);
 $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($commentLimitCharacters);
 ?>
-<div id="tim-scroll-ancor" class="tim-opinion"> <!-- main container for opinion -->
+<div id="tim-scroll-ancor" class="tim-opinion">
     <div class="tim-opinion-date">
-        <!-- place for date when opinion was added -->
         <?php echo $this->__("Opinion on: <span>%s</span>", $opinionData['date_add']); ?>
     </div>
     <div class="tim-opinion-content-subtitle tim-icon-good"><?php echo $this->__('Product highlights'); ?>:</div>
     <div class="tim-opinion-content">
-        <!-- place for text from textarea (user input) -->
         <span class="tim-opinion-advantages-toolbar"><?php echo $opinionData['advantages'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
-        <!-- place for read more if necessary -->
     </div>
     <div class="tim-opinion-content-subtitle tim-icon-bad"><?php echo $this->__('Product defects'); ?>:</div>
     <div class="tim-opinion-content">
-        <!-- place for text from textarea (user input) -->
         <span class="tim-opinion-defects-toolbar"><?php echo $opinionData['defects'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
-        <!-- place for read more if necessary -->
     </div>
     <div class="tim-opinion-content-subtitle tim-icon-summary"><?php echo $this->__('Summary'); ?>:</div>
     <div class="tim-opinion-content">
-        <!-- place for text from textarea (user input) -->
         <span class="tim-opinion-conclusion-toolbar"><?php echo $opinionData['conclusion'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
-        <!-- place for read more if necessary -->
     </div>
     <div class="tim-opinion-media">
         <?php if (!empty($opinionData['images'])): ?>
             <div class="tim-opinion-photo">
                 <div class="tim-readmore tim-opinion-photo-link" id="<?php echo $recomId?>"><?php echo $this->__('See photos'); ?></div>
-                <!-- button for displaying user added photos in overlay -->
             </div>
         <?php endif; ?>
         <?php if (!empty($opinionData['movie_url'])): ?>
             <div class="tim-opinion-movie">
                 <div class="tim-readmore" id="<?php echo $recomId?>"><?php echo $this->__('See footage'); ?></div>
-                <!-- button for displaying movie in overlay (movie source: YouTube)  -->
             </div>
         <?php endif; ?>
     </div>
@@ -68,7 +59,6 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
     </div>
 </div>
 <div class="tim-comment">
-    <!-- for each comment (start) -->
     <?php $i = 1; ?>
     <?php foreach ($opinionData['comments'] as $comment): ?>
         <div class="tim-comment-container <?php if($i > 5) echo 'tim-comment-display-none-'. $recomId ?>" <?php if($i > 5) echo 'style="display:none;"' ?>>
@@ -79,26 +69,21 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
                 </button>
             </div>
             <div class="tim-comment-container-content">
-                <!-- content of comment -->
                 <?php echo $comment['comment'] ?>
             </div>
         </div>
         <?php $i++; ?>
     <?php endforeach; ?>
-    <!-- for each comment (end) -->
 </div>
 <?php if ($qtyComments > 5) : ?>
-    <!-- if opinion has more than 5 comments then next div will be visible -->
     <div class="tim-comment-seemore tim-comment-link-<?php echo $recomId ?>">
         <?php echo $this->__("Opinion has <span>%d</span> comments.", $qtyComments); ?>
         <a class="tim-readmore" href="#!" onclick="seeAllComments(<?php echo $recomId ?>)"><?php echo $this->__('see them all'); ?></a>
-        <!-- link to reveal all comments -->
     </div>
     <div class="tim-comment-seemore tim-comment-hide-link-<?php echo $recomId ?>" style="display: none">
         <a class="tim-readmore" href="#!" onclick="hideComments(<?php echo $recomId ?>)"><?php echo $this->__('Hide these comments'); ?></a>
     </div>
 <?php endif; ?>
-<!-- next div/button always visible -->
 <div class="tim-comment-add tim-comment-add-main">
     <button type="button" class="tim-comment-button-add " id="tim-comment-add-show-<?php echo $recomId ?>"
             onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">

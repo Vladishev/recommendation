@@ -29,7 +29,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     public function getOpinionsForProduct($productId, $limit = 10, $curPage = 1, $order = 'DESC', $field = 'date_add')
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('product_id', (int) $productId);
         $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NULL');
         $collection->addFieldToSelect('recom_id');
@@ -37,8 +37,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection->addFieldToSelect('tim_host');
         $collection->addFieldToSelect('user_id');
         $collection->setOrder($field, $order);
-        $collection->setPageSize($limit);
-        $collection->setCurPage($curPage);
+        $collection->setPageSize((int) $limit);
+        $collection->setCurPage((int) $curPage);
         $data = $collection->getData();
         if (empty($data)) {
             return false;
@@ -55,7 +55,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     public function getUserOpinionCount($userId)
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $collection->addFieldToFilter('user_id', $userId);
+        $collection->addFieldToFilter('user_id', (int) $userId);
         $collection->addFieldToFilter('parent', array('null' => true));
         $collection->addFieldToFilter('acceptance', 1);
         $collection->addFieldToSelect('recom_id');
@@ -78,23 +78,23 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->addFieldToSelect(array('product_id','recom_id','average_rating'));
-        $opinionCollection->addFieldToFilter('user_id', $userId);
+        $opinionCollection->addFieldToFilter('user_id', (int) $userId);
         $opinionCollection->addFieldToFilter('parent', array('null' => true));
         $opinionCollection->addFieldToFilter('acceptance', 1);
         $opinionCollection->setOrder($field, $order);
-        $opinionCollection->setPageSize($limit);
-        $opinionCollection->setCurPage($curPage);
+        $opinionCollection->setPageSize((int) $limit);
+        $opinionCollection->setCurPage((int) $curPage);
         $opinionData = $opinionCollection->getData();
 
         $userOpinionData = array();
         $i = 0;
         foreach ($opinionData as $item) {
-            $productId = $item['product_id'];
+            $productId = (int) $item['product_id'];
             $product = Mage::getModel('catalog/product')->load($productId);
             $userOpinionData[$i]['image'] = $product->getImageUrl();
             $userOpinionData[$i]['url'] = $product->getProductUrl();
             $userOpinionData[$i]['name'] = $product->getName();
-            $userOpinionData[$i]['recom_id'] = $item['recom_id'];
+            $userOpinionData[$i]['recom_id'] = (int) $item['recom_id'];
             $userOpinionData[$i]['rating'] = $item['average_rating'];
 
             $i++;
@@ -115,18 +115,18 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     {
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $recommendationCollection->addFieldToFilter('acceptance', 1);
-        $recommendationCollection->addFieldToFilter('user_id', $userId);
+        $recommendationCollection->addFieldToFilter('user_id', (int) $userId);
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
         $recommendationCollection->addFieldToSelect(array('comment', 'date_add', 'product_id'));
         $recommendationCollection->setOrder('date_add', $order);
-        $recommendationCollection->setPageSize($limit);
-        $recommendationCollection->setCurPage($curPage);
+        $recommendationCollection->setPageSize((int) $limit);
+        $recommendationCollection->setCurPage((int) $curPage);
         $comments = $recommendationCollection->getData();
         $dateModel = Mage::getModel('core/date');
 
         $i = 0;
         foreach ($comments as $comment) {
-            $productId = $comment['product_id'];
+            $productId = (int) $comment['product_id'];
             $product = Mage::getModel('catalog/product')->load($productId);
             $comments[$i]['name'] = $product->getName();
             $comments[$i]['url'] = $product->getProductUrl();
@@ -134,9 +134,9 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
             $i++;
         }
 
-        $count = $this->getCommentsCount($userId);
+        $count = $this->getCommentsCount((int) $userId);
         $comments[0]['pagesCount'] = ceil($count / $limit);
-        $comments[0]['curPage'] = $curPage;
+        $comments[0]['curPage'] = (int) $curPage;
 
         return $comments;
     }
@@ -151,7 +151,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     {
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $recommendationCollection->addFieldToFilter('acceptance', 1);
-        $recommendationCollection->addFieldToFilter('user_id', $userId);
+        $recommendationCollection->addFieldToFilter('user_id', (int) $userId);
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
         $count = $recommendationCollection->getSize();
 
@@ -167,7 +167,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     public function getOpinionCount($productId)
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $collection->addFieldToFilter('product_id', $productId);
+        $collection->addFieldToFilter('product_id', (int) $productId);
         $collection->addFieldToFilter('acceptance', 1);
         $collection->getSelect()->where('parent IS NULL');
         $collection->addFieldToSelect('recom_id');
