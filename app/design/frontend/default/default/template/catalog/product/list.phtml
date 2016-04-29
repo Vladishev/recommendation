@@ -76,7 +76,10 @@
                     </ul>
                 </div>
             </div>
-            <?php echo $this->getLayout()->createBlock('tim_recommendation/rating')->setTemplate('tim/recommendation/rating/product_list.phtml')->setData('product', $_product)->toHtml(); ?>
+            <?php
+            $this->getChild("rating.category.layered")->setData('product', $_product);
+            echo $this->getChildHtml('rating.category.layered', false);
+            ?>
         </li>
     <?php endforeach; ?>
     </ol>
@@ -114,7 +117,10 @@
                         <?php endif; ?>
                     </ul>
                 </div>
-                <?php echo $this->getLayout()->createBlock('tim_recommendation/rating')->setTemplate('tim/recommendation/rating/product_list.phtml')->setData('product', $_product)->toHtml(); ?>
+                <?php
+                $this->getChild("rating.category.layered")->setData('product', $_product);
+                echo $this->getChildHtml('rating.category.layered', false);
+                ?>
             </li>
         <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
         </ul>

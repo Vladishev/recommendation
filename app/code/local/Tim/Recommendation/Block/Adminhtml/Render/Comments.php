@@ -24,6 +24,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_Comments extends Mage_Adminhtml_
      */
     public function render(Varien_Object $row)
     {
+        $advantages = '';
         $recommendationId = (int) $row->getRecomId();
         $opinion = Mage::getModel('tim_recommendation/recommendation')->load($recommendationId);
         if (!$opinion->getParent()) {
@@ -31,7 +32,8 @@ class Tim_Recommendation_Block_Adminhtml_Render_Comments extends Mage_Adminhtml_
             if (strlen($advantages) > 100) {
                 $advantages = substr($advantages, 0, 99) . '...';
             }
-            return $advantages;
         }
+
+        return $advantages;
     }
 }

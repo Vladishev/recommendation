@@ -25,7 +25,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_CustomerNameNickname extends Mag
     public function render(Varien_Object $row)
     {
         $customerId = (int) $row->getData($this->getColumn()->getIndex());
-        if ($customerId == 0) {
+        if (empty($customerId)) {
             $name = $row->getEmail();
             $name .= '<br>(' . Mage::helper('tim_recommendation')->__('Not logged') . ')';
         } else {

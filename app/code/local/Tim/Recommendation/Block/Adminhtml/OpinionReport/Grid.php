@@ -107,7 +107,6 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'header' => Mage::helper('tim_recommendation')->__('Date Added'),
             'index' => 'date_add',
             'type' => 'datetime',
-//            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_DateFormat',
             'width' => '200',
             'filter_time' => true,
         ));

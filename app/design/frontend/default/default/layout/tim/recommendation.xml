@@ -9,6 +9,7 @@
             <action method="addItem"><type>skin_css</type><name>css/tim/recommendation/styles.css</name></action>
         </reference>
         <reference name="product.info">
+            <block type="tim_recommendation/rating" name="rating.product.view" template="tim/recommendation/rating/product_view.phtml" />
             <block type="tim_recommendation/recommendation" name="recommendation.add" template="tim/recommendation/add.phtml">
                 <block type="tim_recommendation/recommendation" name="header.recommendation.add" template="tim/recommendation/add/header.phtml" />
                 <block type="tim_recommendation/recommendation" name="left.recommendation.add" template="tim/recommendation/add/left.phtml" />
@@ -23,6 +24,11 @@
             </block>
         </reference>
     </catalog_product_view>
+    <catalog_category_layered>
+        <reference name="product_list">
+            <block type="tim_recommendation/rating" name="rating.category.layered" template="tim/recommendation/rating/product_list.phtml" />
+        </reference>
+    </catalog_category_layered>
     <recommendation_user_profile>
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
