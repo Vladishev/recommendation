@@ -13,6 +13,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
 <form action="<?php echo $this->getUrl('recommendation/index/add') ?>" method="post" id="form-validate-opinion"
       autocomplete="off" enctype="multipart/form-data">
     <input type="hidden" id="tim-profile-status" value="<?php echo $profileStatus; ?>"/>
+    <input type="hidden" id="isLoggedIn" value="<?php echo $isLoggedIn ?>"/>
     <fieldset>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <div class="tim-opinion">
@@ -208,7 +209,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                             <label class="required"><em>*</em></label>
                         <?php endif; ?>
                     </p>
-                    <input type="text" name="link_to_youtube" id="link_to_youtube"
+                    <input name="link_to_youtube" id="link_to_youtube"
                            class="validate-url-link check-tim-profile-status input-text <?php echo $requiredFields['add_video']? 'required-entry' : '' ?>"
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
                         <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : ''?>

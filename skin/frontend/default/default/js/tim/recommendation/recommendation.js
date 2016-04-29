@@ -573,12 +573,14 @@ function closePopup() {
  * Display selected qty of stars on add opinion view
  */
 function displayRatingStars() {
-    jQuery('.tim-rating-input-span').on('change', function () {
-        var inputChangeName = jQuery(this).attr('name');
-        var inputChangeValue = jQuery(this).val();
-        var inputChangeNameSpan = 'span.' + inputChangeName;
-        jQuery(inputChangeNameSpan).html(inputChangeValue);
-    });
+    if(!jQuery('#tim-profile-status').val() || jQuery('#isLoggedIn').val()){
+        jQuery('.tim-rating-input-span').on('change', function () {
+            var inputChangeName = jQuery(this).attr('name');
+            var inputChangeValue = jQuery(this).val();
+            var inputChangeNameSpan = 'span.' + inputChangeName;
+            jQuery(inputChangeNameSpan).html(inputChangeValue);
+        });
+    }
 }
 
 /**

@@ -663,14 +663,14 @@ display: none;
 	margin-top:3px;
 }
 
-.tim-rating-input-url input[type=text] {
+.tim-rating-input-url input {
     width: 69%;
     line-height: 200%;
     padding-left: 5px;
 }
 
 .tim-rating-input-url input[type=text]:focus {
-	background-color:#eee;	
+	background-color:#eee;
 	border:1px solid #656565;
     line-height: 200%;
 	padding: 1px 1px 1px 6px;
