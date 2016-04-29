@@ -28,7 +28,7 @@ class Tim_Recommendation_Block_Rating extends Mage_Core_Block_Template
      */
     public function getProductUrlPath($product)
     {
-        $anchor = '#tim-scroll-anchor';
+        $anchor = '#tim-general-add-opinion-button';
         $productUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getRequestPath() . DS . $anchor;
         return $productUrl;
     }
