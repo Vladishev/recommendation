@@ -9,6 +9,20 @@
  */
 class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
+    /**
+     * First name attribute id
+     *
+     * @var int
+     */
+    protected $_firstNameId;
+
+    /**
+     * Last name attribute id
+     *
+     * @var int
+     */
+    protected $_lastNameId;
+
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +31,10 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
+        $this->_firstNameId = Mage::getResourceModel('eav/entity_attribute')
+            ->getIdByCode('customer', 'firstname');
+        $this->_lastNameId = Mage::getResourceModel('eav/entity_attribute')
+            ->getIdByCode('customer', 'lastname');
     }
 
     protected function _prepareCollection()
@@ -24,9 +42,9 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         $collection = Mage::getModel('tim_recommendation/malpractice')->getCollection();
         $collection->getSelect()->joinLeft(array('tru' => 'tim_recom_user'), 'main_table.user_id = tru.customer_id', array('nick'));
         $collection->getSelect()->joinLeft(array('cev' => 'customer_entity_varchar'),
-            "cev.entity_id = main_table.user_id AND cev.attribute_id = 5", array('customer_firstname' => 'value'));
+            "cev.entity_id = main_table.user_id AND cev.attribute_id = " . $this->_firstNameId, array('customer_firstname' => 'value'));
         $collection->getSelect()->joinLeft(array('cev1' => 'customer_entity_varchar'),
-            "cev1.entity_id = main_table.user_id AND cev1.attribute_id = 7", array('customer_lastname' => 'value'));
+            "cev1.entity_id = main_table.user_id AND cev1.attribute_id = " . $this->_lastNameId, array('customer_lastname' => 'value'));
         $collection->getSelect()->joinLeft(array('tr' => 'tim_recommendation'), 'main_table.recom_id= tr.recom_id', array('parent'));
         $this->setCollection($collection);
 
@@ -126,15 +144,13 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         if ($value = $column->getFilter()->getValue()) {
             if ($value == 'Opinion') {
                 $collection->getSelect()->where('tr.parent IS NULL');
-                return $collection;
             }
             if ($value == 'Comment') {
                 $collection->getSelect()->where('tr.parent IS NOT NULL');
-                return $collection;
             }
-        } else {
-            return $collection;
         }
+
+        return $collection;
     }
 
     public function getGridUrl()

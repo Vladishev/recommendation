@@ -11,6 +11,34 @@
 class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     /**
+     * First name attribute id
+     *
+     * @var int
+     */
+    protected $_firstNameId;
+
+    /**
+     * Last name attribute id
+     *
+     * @var int
+     */
+    protected $_lastNameId;
+
+    /**
+     * Name attribute id
+     *
+     * @var int
+     */
+    protected $_nameAttributeId;
+
+    /**
+     * Manufacturer attribute id
+     *
+     * @var int
+     */
+    protected $_manufacturerAttributeId;
+
+    /**
      * Init grid
      */
     public function __construct()
@@ -21,6 +49,14 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
         $this->setUseAjax(true);
+        $this->_nameAttributeId = Mage::getResourceModel('eav/entity_attribute')
+            ->getIdByCode('catalog_product', 'name');
+        $this->_manufacturerAttributeId = Mage::getResourceModel('eav/entity_attribute')
+            ->getIdByCode('catalog_product', 'manufacturer');
+        $this->_firstNameId = Mage::getResourceModel('eav/entity_attribute')
+            ->getIdByCode('customer', 'firstname');
+        $this->_lastNameId = Mage::getResourceModel('eav/entity_attribute')
+            ->getIdByCode('customer', 'lastname');
     }
 
     protected function _prepareCollection()
@@ -29,7 +65,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $collection->getSelect()->joinLeft(array('cpe' => 'catalog_product_entity'), 'main_table.product_id = cpe.entity_id',
             array('sku'));
         $collection->getSelect()->joinLeft(array('cpef' => 'catalog_product_entity_varchar'),
-            'main_table.product_id = cpef.entity_id AND cpef.attribute_id = 71',//71 = name
+            'main_table.product_id = cpef.entity_id AND cpef.attribute_id = ' . $this->_nameAttributeId,
             array('product_name' => 'value'));
         $collection->getSelect()->joinLeft(array('tru' => 'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
@@ -38,14 +74,16 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'tru.user_type = tut.user_type_id',
             array('user_type_name' => 'name'));
         $collection->getSelect()->joinLeft(array('cpei' => 'catalog_product_entity_int'),
-            'main_table.product_id = cpei.entity_id AND cpei.attribute_id = 81',//81 = manufacturer
+            'main_table.product_id = cpei.entity_id AND cpei.attribute_id = ' . $this->_manufacturerAttributeId,
             array('manufacturer_id' => 'value'));
         $collection->getSelect()->joinLeft(array('eaov' => 'eav_attribute_option_value'), 'cpei.value = eaov.option_id',
             array('manufacturer_name' => 'value'));
         $collection->getSelect()->joinLeft(array('cev' => 'customer_entity_varchar'),
-            "cev.entity_id = main_table.user_id AND cev.attribute_id = 5", array('customer_firstname' => 'value'));
+            "cev.entity_id = main_table.user_id AND cev.attribute_id = " . $this->_firstNameId, array('customer_firstname' => 'value'));
         $collection->getSelect()->joinLeft(array('cev1' => 'customer_entity_varchar'),
-            "cev1.entity_id = main_table.user_id AND cev1.attribute_id = 7", array('customer_lastname' => 'value'));
+            "cev1.entity_id = main_table.user_id AND cev1.attribute_id = " . $this->_lastNameId, array('customer_lastname' => 'value'));
+        $collection->getSelect()->joinLeft(array('trn' => 'tim_recom_note'),
+            "trn.object_id = main_table.recom_id", array('note'));
         $collection->getSelect()->where('main_table.parent IS NULL');
         $this->setCollection($collection);
 
@@ -93,7 +131,6 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'header' => Mage::helper('tim_recommendation')->__('Date Added'),
             'index' => 'date_add',
             'type' => 'datetime',
-//            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_DateFormat',
             'width' => '200',
             'filter_time' => true,
         ));
@@ -214,22 +251,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
      */
     protected function _mediaFilter($collection, $column)
     {
-        if ($value = $column->getFilter()->getValue()) {
-            if ($value == 'Yes') {
-                $collection->getSelect()->joinInner(array('trm' => 'tim_recom_media'), 'main_table.recom_id= trm.recom_id',
-                    array('media_recom_id' => 'recom_id'));
-                $collection->getSelect()->group('trm.recom_id');
-                return $collection;
-            }
-            if ($value == 'No') {
-                $collection->getSelect()->joinLeft(array('trm' => 'tim_recom_media'), 'main_table.recom_id = trm.recom_id',
-                    array('media_recom_id' => 'recom_id'));
-                $collection->getSelect()->where('trm.recom_id IS NULL');
-                return $collection;
-            }
-        } else {
-            return $collection;
-        }
+        return Mage::getModel('tim_recommendation/mediaFilter')->filterMedia($collection, $column);
     }
 
     protected function _prepareMassaction()

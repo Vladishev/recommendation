@@ -13,10 +13,10 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
     public function render(Varien_Object $row)
     {
         $return = '';
-        $recomId = $row->getRecomId();
+        $recomId = (int) $row->getRecomId();
         $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('id' => $recomId));
         $title = Mage::helper('tim_recommendation')->__('Display note');
-        $note = $this->getNote($recomId);
+        $note = $row->getNote();
         if (!empty($note)) {
             $return .= $note;
             $return .= '</br>';
@@ -24,21 +24,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
         $return .= <<<HTML
 <a target="_blank" href="{$url}">{$title}</a>
 HTML;
-        return $return;
-    }
 
-    /**
-     * Gets last added note to recommendation
-     * @param $recomId
-     * @return mixed
-     */
-    private function getNote($recomId)
-    {
-        $note = Mage::getModel('tim_recommendation/note')->getCollection()
-            ->addFieldToFilter('object_id', array('eq' => $recomId))
-            ->setOrder('date_add', 'ASC')
-            ->getLastItem()
-            ->getNote();
-        return $note;
+        return $return;
     }
 }

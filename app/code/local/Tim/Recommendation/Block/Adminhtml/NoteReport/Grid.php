@@ -26,7 +26,7 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
     {
         $id = $this->getRequest()->getParam('id');
         $collection = Mage::getModel('tim_recommendation/note')->getCollection();
-        $collection->addFieldToFilter('object_id',$id);
+        $collection->addFieldToFilter('object_id', $id);
         $collection->getSelect()->joinLeft(array('au' => 'admin_user'), 'main_table.admin_id = au.user_id',
             array('username'));
         $this->setCollection($collection);
