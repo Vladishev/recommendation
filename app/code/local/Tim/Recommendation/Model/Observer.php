@@ -181,6 +181,7 @@ class Tim_Recommendation_Model_Observer
     public function sendCommentEmail($observer)
     {
         $commentData = $observer->getEvent()->getCommentData();
+        Mage::log($commentData, null, 'tim_recommendation.log');
         $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
         $status = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_enabled');
         $statusToUser = (integer)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_inform');

@@ -32,6 +32,7 @@ class Tim_Recommendation_Adminhtml_NoteController extends Mage_Adminhtml_Control
             ->setObjectName($objectName)
             ->setObjectId($recomId)
             ->setNote($noteText)
+            ->setDateAdd(date('Y-m-d H:i:s'))
             ->setAdminId($adminId);
         try {
             $noteModel->save();

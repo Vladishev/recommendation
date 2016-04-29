@@ -21,7 +21,7 @@
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;"><strong>Komentarz:</strong></p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">{{htmlescape var=$comment}}</p>
                             <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Załączone linki: </p>
-                            {{block type="core/template" template="tim/recommendation/email/confirm_link.phtml" confirmLink=$confirm_url userModeration=$user_moderation modifyOpinionUrl=$modify_opinion_url}}
+                            {{block type="core/template" template="tim/recommendation/email/confirm_comment_link.phtml" confirmLink=$confirm_url userModeration=$user_moderation modifyCommentUrl=$modify_comment_url }}
                         </td>
                     </tr>
                     <tr>

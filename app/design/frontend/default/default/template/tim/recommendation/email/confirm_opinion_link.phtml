@@ -2,7 +2,7 @@
     <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">
         <a href="<?php echo $this->getConfirmLink(); ?>"><?php echo Mage::helper('tim_recommendation')->__('Publish') ?></a>
     </p>
-    <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">
-        <a href="<?php echo $this->modifyOpinionUrl(); ?>"><?php echo Mage::helper('tim_recommendation')->__('Modify') ?></a>
-    </p>
 <?php endif; ?>
+<p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">
+    <a href="<?php echo $this->getModifyOpinionUrl(); ?>"><?php echo Mage::helper('tim_recommendation')->__('Modify') ?></a>
+</p>
