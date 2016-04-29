@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -26,5 +27,29 @@ class Tim_Recommendation_Block_Rating extends Mage_Core_Block_Template
     {
         $productData = Mage::getModel('tim_recommendation/rating')->getOpinionsInfo((int) $productId);
         return $productData;
+    }
+
+    /**
+     * Returns product url with scroll anchor
+     * @param object $product
+     * @return string
+     */
+    public function getProductUrlPath($product)
+    {
+        $anchor = '#tim-general-add-opinion-button';
+        $productUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getRequestPath() . DS . $anchor;
+        return $productUrl;
+    }
+
+    /**
+     * Returns product url with add opinion anchor
+     * @param object $product
+     * @return string
+     */
+    public function getAddOpinionUrl($product)
+    {
+        $anchor = '#add-opinion';
+        $productUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getRequestPath() . DS . $anchor;
+        return $productUrl;
     }
 }

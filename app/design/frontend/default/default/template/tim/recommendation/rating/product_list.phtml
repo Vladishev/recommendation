@@ -1,9 +1,19 @@
 <?php
 $product = $this->getProduct();
 $productData = $this->getProductOpinionInfo($product->getEntityId());
+$productUrl = $this->getProductUrlPath($product);
+$addOpinionUrl = $this->getAddOpinionUrl($product);
 ?>
 <?php if ($productData['opinions_count']): ?>
-<div>
-    <span><?php echo $this->__('Opinions about the product: ') . $productData['opinions_count'] . ' | ' . $this->__('Rating: ') . $productData['rating'] . '/5'; ?></span>
-</div>
-<?php endif ?>
+    <div>
+        <span><?php echo $this->__('Opinions about the product: ') . $productData['opinions_count'] ?> | </span>
+        <span><?php echo $this->__('Rating') ?>:
+            <a href="<?php echo $productUrl ?>"><?php echo $productData['rating'] . '/5'; ?></a>
+        </span>
+    </div>
+<?php else: ?>
+    <div>
+        <span><?php echo $this->__('Opinions about the product: '); ?></span>
+        <span><a href="<?php echo $addOpinionUrl ?>"><?php echo $this->__('add opinion'); ?></a></span>
+    </div>
+<?php endif; ?>
