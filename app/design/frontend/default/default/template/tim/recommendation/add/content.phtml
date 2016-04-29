@@ -193,6 +193,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                         onchange="displayFilename(this.id)"/>
                     <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Load photos') ?></label>
                     <div id="downloaded-imgs"></div>
+                    <input type="hidden" name="deleted_imgs" id="deleted-imgs"/>
                 </div>
                 <div class="tim-rating-input-url">
                     <p>
@@ -206,7 +207,6 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                            placeholder="<?php echo $this->__('Add link from Youtube') ?>" style="color:#949090;"
                         <?php echo !$isLoggedIn ? 'onfocus="checkIfUserIsLoggedIn()" onclick="checkIfUserIsLoggedIn()"' : 'onfocus="checkProfileInputField()" onclick="checkProfileInputField()"'?>/>
                 </div>
-
             </div>
         </div>
         <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>

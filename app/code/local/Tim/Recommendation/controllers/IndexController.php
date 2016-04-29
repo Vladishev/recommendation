@@ -25,7 +25,13 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $params = $this->getRequest()->getParams();
             $response = array();
             if (isset($_FILES['tim-recommendation-img'])) {
-                $files = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
+                $deletedImagesObj = json_decode($params['deleted_imgs']);
+                $deletedImages = array();
+                foreach ($deletedImagesObj as $item) {
+                    $deletedImages[] = get_object_vars($item);
+                }
+                $allFiles = $this->reArrangeFiles($_FILES['tim-recommendation-img']);
+                $files = $this->filesForSave($allFiles, $deletedImages);
             }
             $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
             $averageRating = $this->_getAverageRating($params);
@@ -75,22 +81,24 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     ->save();
             }
             if (isset($files)) {
-                foreach ((array)$files as $file) {
-                    if ($file['error'] == 0) {
-                        $file['name'] = str_replace(' ', '_', $file['name']);
-                        $fileName = time() . $file['name'];
-                        $mediaModel = Mage::getModel('tim_recommendation/media')
-                            ->setRecomId($recomId)
-                            ->setName('/media/tim/recommendation/' . $fileName)
-                            ->setType($file['type']);
-                        try {
-                            $saveMedia = $mediaModel->save();
-                        } catch (Exception $e) {
-                            Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                            $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
-                        }
-                        if (isset($saveMedia)) {
-                            $this->saveImage($fileName, $folderForFiles, $file);
+                if (!empty($files)) {
+                    foreach ((array)$files as $file) {
+                        if ($file['error'] == 0) {
+                            $file['name'] = str_replace(' ', '_', $file['name']);
+                            $fileName = time() . $file['name'];
+                            $mediaModel = Mage::getModel('tim_recommendation/media')
+                                ->setRecomId($recomId)
+                                ->setName('/media/tim/recommendation/' . $fileName)
+                                ->setType($file['type']);
+                            try {
+                                $saveMedia = $mediaModel->save();
+                            } catch (Exception $e) {
+                                Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+                                $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
+                            }
+                            if (isset($saveMedia)) {
+                                $this->saveImage($fileName, $folderForFiles, $file);
+                            }
                         }
                     }
                 }
@@ -429,6 +437,24 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             }
         }
         return $newFileArray;
+    }
+
+    /**
+     * Remove files from array that was delete on frontend
+     * @param array $filesArray
+     * @param array $deletedImagesArray
+     * @return array
+     */
+    public function filesForSave($filesArray, $deletedImagesArray)
+    {
+        foreach ($deletedImagesArray as $image) {
+            if ($element = $filesArray[$image['id']]) {
+                if ($element['name'] == $image['name'] && $element['size'] == $image['size']) {
+                    unset($filesArray[$image['id']]);
+                }
+            }
+        }
+        return $filesArray;
     }
 
     /**
