@@ -25,9 +25,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderDetailActions extends Mage
     public function render(Varien_Object $row)
     {
         $recomId = (int) $row->getRecomId();
-        $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
-
-        if ($recomRow->getParent()) {
+        if ($row->getParent()) {
             $string = '<a href="' . Mage::helper('adminhtml')->getUrl('*/commentsReport/commentInfo', array('id' => $recomId)) . '">' . Mage::helper('tim_recommendation')->__('Display comment') . '</a>';
         } else {
             $string = '<a href="' . Mage::helper('adminhtml')->getUrl('*/opinionReport/opinionInfo', array('id' => $recomId)) . '">' . Mage::helper('tim_recommendation')->__('Display opinion') . '</a>';
