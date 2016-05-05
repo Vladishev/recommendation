@@ -50,6 +50,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             } catch (Exception $e) {
                 Mage::log($e->getMessage(), null, 'tim_recommendation.log');
                 $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
+                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+                return;
             }
 
             if (!empty($params['link_to_youtube'])) {
@@ -87,7 +89,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 Mage::dispatchEvent('controller_index_add_opinion_data', $event);
             }
 
-            echo json_encode($response);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
         } else {
             $this->_redirectReferer();
             return;
@@ -292,7 +294,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 Mage::dispatchEvent('controller_index_add_comment_data', $event);
             }
 
-            echo json_encode($response);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
         } else {
             $this->_redirectReferer();
             return;

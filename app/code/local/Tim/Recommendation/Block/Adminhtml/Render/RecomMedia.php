@@ -13,7 +13,12 @@ class Tim_Recommendation_Block_Adminhtml_Render_RecomMedia extends Mage_Adminhtm
     public function render(Varien_Object $row)
     {
         $recomId = $row->getData($this->getColumn()->getIndex());
-        $recomMedia = Mage::getModel('tim_recommendation/media')->load($recomId, 'recom_id')->getData();
+        $recomMedia = Mage::getModel('tim_recommendation/media')
+            ->getCollection()
+            ->addFieldToFilter('recom_id', array( array('eq' => $recomId)))
+            ->addFieldToSelect('recom_id')
+            ->getFirstItem()
+            ->getData();
         if (empty($recomMedia)) {
             return Mage::helper('tim_recommendation')->__('No');
         } else {

@@ -19,7 +19,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_Comments extends Mage_Adminhtml_
     {
         $advantages = $row->getAdvantages();
         if (strlen($advantages) > self::LENGTH_COUNT) {
-            $advantages = substr($advantages, 0, 99) . '...';
+            $advantages = substr($advantages, 0, (self::LENGTH_COUNT - 1)) . '...';
         }
 
         return $advantages;

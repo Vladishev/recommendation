@@ -106,8 +106,8 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
     protected function _getOpinionsArray($recomIdSet)
     {
         $i = 0;
+        $recommendationBlock = $this->getLayout()->getBlockSingleton('tim_recommendation/recommendation');
         foreach ($recomIdSet as $opinion) {
-            $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
             $recomIdSet[$i]['opinionData'] = $recommendationBlock->getOpinionData($opinion['recom_id']);
             if(isset($recomIdSet[$i]['opinionData']['movie_url'])){
                 $recomIdSet[$i]['opinionData']['youtubeVideoId'] = $recommendationBlock->getYoutubeVideoId($recomIdSet[$i]['opinionData']['movie_url']);

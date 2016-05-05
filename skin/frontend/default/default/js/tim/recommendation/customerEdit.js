@@ -187,12 +187,10 @@ function cropperFunctionality() {
  */
 function addExtraValidation() {
     Validation.add('custom-url-validate', 'Prosimy o wprowadzenie poprawnego URL. Dla przykładu: http://www.strona.pl lub www.strona.pl', function () {
-        var url = document.getElementById("tim-form-url").value;
+        var url = jQuery("#tim-form-url").val();
         var pattern = /([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
-        if (pattern.test(url)) {
-            return true;
-        }
-        return false;
+
+        return pattern.test(url);
     });
 
     Validation.add('tim-avatar-validate', 'Prosimy o wybór jednej z powyższych opcji.', function () {

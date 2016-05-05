@@ -16,13 +16,14 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderTitle extends Mage_Adminht
      */
     public function render(Varien_Object $row)
     {
-        $recomId = $row->getRecomId();
-        $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
-        if ($recomRow->getParent()) {
+        $parentId = (int) $row->getParent();
+
+        if (!empty($parentId)) {
             $title = $this->__('Comment');
         } else {
             $title = $this->__('Opinion');
         }
+
         return $title;
     }
 }

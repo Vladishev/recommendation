@@ -11,21 +11,43 @@
 class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
 {
     /**
+     * Customer id
+     *
+     * @var int
+     */
+    protected $_customerId;
+
+    /**
+     * User's data array
+     *
+     * @var array
+     */
+    protected $_userData;
+
+    /**
      * Prepare array with user information
      * @param int $customerId
      * @return array
      */
     public function getUserData($customerId)
     {
-        $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
-        $userData = $user->getData();
-        $userData['user_type_name'] = $this->getRecomHelper()->getUserTypeName($user['user_type']);
-        $userData['customer_name'] = $this->getRecomHelper()->getCustomerNameOrNick($customerId);
-        $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick($customerId);
-        $userData['opinion_qty'] = $this->getRecomHelper()->getOpinionQty($customerId);
-        $userData['user_score'] = $this->getRecomHelper()->getUserScore($customerId);
+        if ((int) $customerId !== $this->_customerId) {
+            $user = Mage::getModel('tim_recommendation/user')
+                ->getCollection()
+                ->addFieldToFilter('customer_id', array( array('eq' => $customerId)))
+                ->addFieldToSelect(array('www', 'avatar', 'description', 'ad', 'engage', 'user_type', 'customer_id'))
+                ->getFirstItem();
+            $userData = $user->getData();
+            $userData['user_type_name'] = $this->getRecomHelper()->getUserTypeName($user['user_type']);
+            $userData['customer_name'] = $this->getRecomHelper()->getCustomerNameOrNick((int) $customerId);
+            $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick((int) $customerId);
+            $userData['opinion_qty'] = $this->getRecomHelper()->getOpinionQty((int) $customerId);
+            $userData['user_score'] = $this->getRecomHelper()->getUserScore((int) $customerId);
+            $this->_userData = $userData;
+            $this->_customerId = (int) $customerId;
+        }
 
-        return $userData;
+        return $this->_userData;
     }
 
     /**
@@ -163,7 +185,8 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $productId = $opinionModel->load($value)->getProductId();
             $product = $productModel->load($productId);
             $productData[$i]['name'] = $product->getName();
-            $productData[$i]['image'] = $product->getImageUrl();
+            $productData[$i]['image'] = Mage::getModel('catalog/product_media_config')
+                ->getMediaUrl($product->getImage());
             $productData[$i]['product_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getUrlPath();
             $productData[$i]['average'] = $this->getAverage($value);
             $i++;
@@ -342,7 +365,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $customerInfo['customerName'] = $_helper->getCustomerNickname($customerId);
             $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
             $customerInfo['customerTypeName'] = $_helper->getUserTypeName($customerTypeId);
-            $customerInfo['avatar'] = $_helper->getCustomerAvatar($customerId);
+            $customerInfo['avatar'] = $_helper->getCustomerAvatar();
             $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation' . DS . 'user' . DS . 'edit';
             $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
             $customerInfo['engage'] = $user->getEngage();

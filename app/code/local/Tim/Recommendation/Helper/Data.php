@@ -456,7 +456,11 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getUserScore($customerId)
     {
-        $customer = Mage::getModel('customer/customer')->load($customerId);
+        $customerEmail = Mage::getModel('customer/customer')
+            ->getCollection()
+            ->addFieldToFilter('entity_id', array( array('eq' => $customerId)))
+            ->getFirstItem()
+            ->getEmail();
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $customerPoints = $user->getPoints();
         $customerLevel = $user->getLevel();
@@ -464,7 +468,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $userLevelsExpert = $this->getUserLevelExpert();
         $point = '';
         foreach ($userLevelsExpert as $userLevel) {
-            if (in_array($customer->getEmail(), $userLevel['email_addresses'])) {
+            if (in_array($customerEmail, $userLevel['email_addresses'])) {
                 $point = $userLevel['point'];
             }
         }

@@ -17,13 +17,14 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderDetailActions extends Mage
     public function render(Varien_Object $row)
     {
         $recomId = $row->getRecomId();
-        $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
+        $parentId = (int) $row->getParent();
 
-        if ($recomRow->getParent()) {
+        if (!empty($parentId)) {
             $string = '<a href="' . Mage::helper("adminhtml")->getUrl("*/commentsReport", array("recomId" => $recomId)) . '" target="_blank">' . Mage::helper('tim_recommendation')->__('Display comment') . '</a>';
         } else {
             $string = '<a href="' . Mage::helper("adminhtml")->getUrl("*/opinionReport/opinionInfo", array("id" => $recomId)) . '"  target="_blank">' . Mage::helper('tim_recommendation')->__('Display opinion') . '</a>';
         }
+
         return $string;
     }
 }

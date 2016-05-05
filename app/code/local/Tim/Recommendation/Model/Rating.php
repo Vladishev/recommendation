@@ -11,6 +11,11 @@
 class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
 {
     /**
+     * Value for acceptance yes
+     */
+    const ACCEPTANCE_YES = 1;
+
+    /**
      * Returns opinions info for product
      * @param (int)$productId
      * @return array
@@ -67,7 +72,7 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     {
         $opinionCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $opinionCollection->addFieldToFilter('product_id', $productId);
-        $opinionCollection->addFieldToFilter('acceptance', 1);
+        $opinionCollection->addFieldToFilter('acceptance', self::ACCEPTANCE_YES);
         $opinionCollection->addFieldToFilter('parent', array('null' => true));
         $opinionCollection->addFieldToSelect(array(
             'rating_price',

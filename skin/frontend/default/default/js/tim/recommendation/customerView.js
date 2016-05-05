@@ -44,7 +44,7 @@ function getDataOnEnterEvent() {
  * @param el
  */
 function changeCountAndPager(el) {
-    if (typeof el != 'undefined') {
+    if (typeof el !== 'undefined') {
         var classList = jQuery(el).attr('class').split(/\s+/);
         var $increaseButton = jQuery('.tim-pager-increase-button');
         var $decreaseButton = jQuery('.tim-pager-decrease-button');
@@ -247,7 +247,7 @@ function getCommentDataOnEnterEvent() {
  * @param el
  */
 function changeCountAndPagerComments(el) {
-    if (typeof el != 'undefined') {
+    if (typeof el !== 'undefined') {
         var classList = jQuery(el).attr('class').split(/\s+/);
         var $increaseButton = jQuery('.tim-pager-comment-increase-button');
         var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');

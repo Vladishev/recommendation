@@ -69,7 +69,7 @@ function renderOpinionsList(response) {
         $parentContent.find('.tim-video-popup-container').empty();
         $parentContent.find('.tim-all-photo-popup').attr('id', '');
         $parentContent.find('.tim-video-popup').attr('id', '');
-        if ((typeof opinionData['images'][0] != 'undefined') && (typeof opinionData['movie_url'] != 'undefined')) {
+        if ((typeof opinionData['images'][0] !== 'undefined') && (typeof opinionData['movie_url'] !== 'undefined')) {
             //preparing links
             $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><div class="tim-readmore tim-opinion-photo-link" id="' + recomId + '">Zobacz zdjęcia</div></div><div class="tim-opinion-movie"><div class="tim-readmore" id="' + recomId + '">Zobacz materiał filmowy</div></div>');
             //preparing popups - set id
@@ -88,7 +88,7 @@ function renderOpinionsList(response) {
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
-        } else if (typeof opinionData['movie_url'] != 'undefined') {
+        } else if (typeof opinionData['movie_url'] !== 'undefined') {
             //preparing link
             $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><div class="tim-readmore" id="' + recomId + '">Zobacz materiał filmowy</div></div>');
             //preparing popup - set id
@@ -99,7 +99,7 @@ function renderOpinionsList(response) {
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
-        } else if (typeof opinionData['images'][0] != 'undefined') {
+        } else if (typeof opinionData['images'][0] !== 'undefined') {
             //preparing link
             $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><div class="tim-readmore tim-opinion-photo-link" id="' + recomId + '">Zobacz zdjęcia</div></div>');
             //preparing popup - set id
@@ -202,7 +202,7 @@ function renderOpinionsList(response) {
         //setting purchased result
         $parentRight.find('.byIt-yes-' + recomId).attr('class', 'byIt-yes-' + recomId);
         $parentRight.find('.byIt-no-' + recomId).attr('class', 'byIt-no-' + recomId);
-        if (opinionData['by_it'] != null) {
+        if (opinionData['by_it'] !== null) {
             $parentRight.find('.byIt-yes-' + recomId).addClass('tim-chart-boolean-active');
         } else {
             $parentRight.find('.byIt-no-' + recomId).addClass('tim-chart-boolean-active');
@@ -322,7 +322,7 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
             })
         ],
         callback: function (data) {
-            if (data != false) {
+            if (data !== false) {
                 var abuseComment = jQuery('#abusecontent').val();
                 var abuseEmail = jQuery('#abuseemail').val();
                 var param = {
@@ -671,7 +671,7 @@ function lightRatings() {
 function addExtraValidation() {
     Validation.add('validate-url-link', 'Podany link nie prowadzi do filmu z serwisu YouTube', function (v) {
         var url = v;
-        if (url != '') {
+        if (url !== '') {
             var regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
             var match = url.match(regExp);
             if (!match) {
@@ -744,7 +744,7 @@ function getDataOnEnterEvent() {
  * @param el
  */
 function changeCountAndPager(el) {
-    if (typeof el != 'undefined') {
+    if (typeof el !== 'undefined') {
         var classList = jQuery(el).attr('class').split(/\s+/);
         var $increaseButton = jQuery('.tim-pager-increase-button');
         var $decreaseButton = jQuery('.tim-pager-decrease-button');
@@ -949,7 +949,7 @@ function showVideo() {
         var youtubeVideoId = jQuery('#tim-youtube-data-' + recomId).val();
         var $popup = jQuery('#tim-video-popup-' + recomId);
         var isset = $popup.find('.iframe-video-popup');
-        if (typeof youtubeVideoId != 'undefined') {
+        if (typeof youtubeVideoId !== 'undefined') {
             if (isset.length == 0) {
                 $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + youtubeVideoId + '"></iframe>');
             } else {

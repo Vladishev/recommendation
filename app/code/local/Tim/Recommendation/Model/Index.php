@@ -81,7 +81,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         foreach ($opinionData as $item) {
             $productId = $item['product_id'];
             $product = Mage::getModel('catalog/product')->load($productId);
-            $userOpinionData[$i]['image'] = $product->getImageUrl();
+            $userOpinionData[$i]['image'] = Mage::getModel('catalog/product_media_config')
+                ->getMediaUrl($product->getImage());
             $userOpinionData[$i]['url'] = $product->getProductUrl();
             $userOpinionData[$i]['name'] = $product->getName();
             $userOpinionData[$i]['recom_id'] = $item['recom_id'];
