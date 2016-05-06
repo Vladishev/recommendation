@@ -22,7 +22,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $averageRating = $this->_getAverageRating($params);
 
             if (!is_dir($folderForFiles)) {
-                mkdir($folderForFiles, 0777, true);
+                mkdir($folderForFiles, 0700, true);
             }
 
             $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
@@ -62,25 +62,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     ->save();
             }
             if (isset($files)) {
-                foreach ((array)$files as $file) {
-                    if ($file['error'] == 0) {
-                        $file['name'] = str_replace(' ', '_', $file['name']);
-                        $fileName = time() . $file['name'];
-                        $mediaModel = Mage::getModel('tim_recommendation/media')
-                            ->setRecomId($recomId)
-                            ->setName('/media/tim/recommendation/' . $fileName)
-                            ->setType($file['type']);
-                        try {
-                            $saveMedia = $mediaModel->save();
-                        } catch (Exception $e) {
-                            Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                            $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
-                        }
-                        if (isset($saveMedia)) {
-                            $this->saveImage($fileName, $folderForFiles, $file);
-                        }
-                    }
-                }
+                $this->_saveOpinionImages($files, $recomId, $folderForFiles);
             }
             if (!empty($recomId)) {
                 $this->saveMd5($recomId);
@@ -93,6 +75,36 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         } else {
             $this->_redirectReferer();
             return;
+        }
+    }
+
+    /**
+     * Saves opinion images
+     *
+     * @param array $files
+     * @param int $recomId
+     * @param $folderForFiles
+     */
+    protected function _saveOpinionImages($files, $recomId, $folderForFiles)
+    {
+        foreach ((array)$files as $file) {
+            if ($file['error'] == 0) {
+                $file['name'] = str_replace(' ', '_', $file['name']);
+                $fileName = time() . $file['name'];
+                $mediaModel = Mage::getModel('tim_recommendation/media')
+                    ->setRecomId($recomId)
+                    ->setName('/media/tim/recommendation/' . $fileName)
+                    ->setType($file['type']);
+                try {
+                    $saveMedia = $mediaModel->save();
+                } catch (Exception $e) {
+                    Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+                    $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $file['name']);
+                }
+                if (isset($saveMedia)) {
+                    $this->saveImage($fileName, $folderForFiles, $file);
+                }
+            }
         }
     }
 

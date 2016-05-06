@@ -85,21 +85,21 @@ $site = $this->getFormatSiteLink($userData['www']);
                 <p><?php echo $this->__('from ') ?></p><!-- go to page X from all -->
                 <span class="tim-pager-total"><?php echo $opinionPagesCount; ?></span>
                 <?php if ($opinionPagesCount > 1): ?>
-                <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)">< </button>
-                <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
+                <button class="tim-pager-decrease-button tim-sort-action-class">< </button>
+                <button class="tim-pager-increase-button tim-sort-action-class"> ></button>
                 <?php endif ?>
             </div>
             <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
                 <p><?php echo $this->__('Display:') ?></p>
                 <ul>
                     <li>
-                        <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">10</span>
+                        <span class="tim-toolbar-count tim-sort-action-class count-active">10</span>
                     </li>
                     <li>
-                        <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">20</span>
+                        <span class="tim-toolbar-count tim-sort-action-class">20</span>
                     </li>
                     <li>
-                        <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">30</span>
+                        <span class="tim-toolbar-count tim-sort-action-class">30</span>
                     </li>
                 </ul>
                 <p><?php echo $this->__('opinion(s):') ?></p>
@@ -160,21 +160,21 @@ $site = $this->getFormatSiteLink($userData['www']);
             <p><?php echo $this->__('from ') ?></p><!-- go to page X from all -->
             <span class="tim-comment-pager-total"><?php echo $commentsPagesCount ?></span>
             <?php if ($commentsPagesCount > 1): ?>
-                <button class="tim-pager-comment-decrease-button" onclick="changeCountAndPagerComments(this)">< </button>
-                <button class="tim-pager-comment-increase-button" onclick="changeCountAndPagerComments(this)"> ></button>
+                <button class="tim-pager-comment-decrease-button tim-comment-sort-action-class">< </button>
+                <button class="tim-pager-comment-increase-button tim-comment-sort-action-class"> ></button>
             <?php endif ?>
         </div>
         <div class="tim-opinion-list-header-howmuchshow"> <!-- how many opinion show on one page -->
             <p><?php echo $this->__('Display:') ?></p>
             <ul>
                 <li>
-                    <span class="tim-toolbar-count-comment count-active-comment" onclick="changeCountAndPagerComments(this)">10</span>
+                    <span class="tim-toolbar-count-comment tim-comment-sort-action-class count-active-comment">10</span>
                 </li>
                 <li>
-                    <span class="tim-toolbar-count-comment" onclick="changeCountAndPagerComments(this)">20</span>
+                    <span class="tim-toolbar-count-comment tim-comment-sort-action-class">20</span>
                 </li>
                 <li>
-                    <span class="tim-toolbar-count-comment" onclick="changeCountAndPagerComments(this)">30</span>
+                    <span class="tim-toolbar-count-comment tim-comment-sort-action-class">30</span>
                 </li>
             </ul>
             <p><?php echo $this->__('opinion(s):') ?></p>

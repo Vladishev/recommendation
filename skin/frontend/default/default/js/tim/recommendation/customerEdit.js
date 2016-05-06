@@ -1,6 +1,7 @@
 jQuery(document).ready(function () {
     addExtraValidation();
     cropperFunctionality();
+    closePopup();
 });
 /**
  * Cropper functionality
@@ -44,7 +45,7 @@ function cropperFunctionality() {
                         'left': '37%',
                         'padding': '20px 20px 50px'
                     });
-                    $info.html('Cropped image have to be not more then cropper window');
+                    $info.html(Translator.translate('Cropped image have to be not more then cropper window'));
                     //set banner file name
                     jQuery('.tim-banner-file-name').html(checkFile.name);
                     break;
@@ -60,7 +61,7 @@ function cropperFunctionality() {
                         'left': '58%',
                         'padding': '20px 20px 50px'
                     });
-                    $info.html('Cropped image have to be not more then cropper window');
+                    $info.html(Translator.translate('Cropped image have to be not more then cropper window'));
                     //set avatar file name
                     jQuery('.tim-avatar-file-name').html(checkFile.name);
                     break;
@@ -80,7 +81,7 @@ function cropperFunctionality() {
 
             //Checking file size and type
             if (checkFile.size > 419430) {
-                alert('Nie można przesłać pliku. Maksymalny rozmiar to 400 kb.');
+                alert(Translator.translate('You can not upload a file. The maximum size is 400 kb.'));
                 return;
             }
             switch (checkFile.type) {
@@ -88,7 +89,7 @@ function cropperFunctionality() {
                 case 'image/jpeg':
                     break;
                 default:
-                    alert('Nie można przesłać pliku. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
+                    alert(Translator.translate('You can not upload a file. They are acceptable image files in jpg or png.'));
                     return false;
             }
 
@@ -186,14 +187,14 @@ function cropperFunctionality() {
  * Add extra validation to forms
  */
 function addExtraValidation() {
-    Validation.add('custom-url-validate', 'Prosimy o wprowadzenie poprawnego URL. Dla przykładu: http://www.strona.pl lub www.strona.pl', function () {
+    Validation.add('custom-url-validate', Translator.translate('Please enter the correct URL. For example http://www.strona.pl or www.strona.pl'), function () {
         var url = jQuery("#tim-form-url").val();
         var pattern = /([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
 
         return pattern.test(url);
     });
 
-    Validation.add('tim-avatar-validate', 'Prosimy o wybór jednej z powyższych opcji.', function () {
+    Validation.add('tim-avatar-validate', Translator.translate('Please choose one of the options above.'), function () {
         var defaultAvatars = jQuery('input[name=selected_avatar]:checked').val();
         var avatarContainer = jQuery('#tim-avatar-container');
         var customAvatar = avatarContainer.has('img').length;
@@ -204,5 +205,15 @@ function addExtraValidation() {
             return false;
         }
         return true;
+    });
+}
+
+/**
+ * Close popup action
+ */
+function closePopup() {
+    jQuery('.tim-popup-close').on('click', function () {
+        var popupClass = '.' + jQuery(this).parents().get(1).className;
+        jQuery(popupClass).hide();
     });
 }

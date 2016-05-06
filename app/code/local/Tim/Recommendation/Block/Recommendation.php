@@ -79,7 +79,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $opinion = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id')->getData();
         $opinionMedia = $this->getRecomHelper()->getOpinionMediaPath($recomId);
-        $opinion['date_add'] = date('d-m-Y', strtotime($opinion['date_add']));
+        $opinion['date_add'] = Mage::getModel('core/date')->date('d-m-Y', strtotime($opinion['date_add']));
         if (!empty($opinionMedia['url/youtube'])) {
             $opinion['movie_url'] = $opinionMedia['url/youtube'];
         }
@@ -572,5 +572,17 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $commentsPagesCount = ceil($commentsCount / $limitPerPage);
         return $commentsPagesCount;
+    }
+
+    /**
+     * Returns user data using id from request
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function getUserDataByRequest()
+    {
+        $userId = $this->getRequest()->getParam('id');
+        return $this->getUserData($userId);
     }
 }

@@ -14,9 +14,8 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
     public function profileAction()
     {
         $userId = $this->getRequest()->getParam('id');
-        $model = Mage::getModel('customer/customer');
-        if ($model->load($userId)->getEntityId() != null) {
-            $userData = $model->load($userId);
+        $userData = Mage::getModel('customer/customer')->load($userId);
+        if ($userData->getEntityId()) {
             Mage::register('user_data', $userData);
             $this->loadLayout();
             $this->renderLayout();
@@ -73,7 +72,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();
         if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+            mkdir($path, 0700, true);
         }
 
         if (isset($postData['banner-checkbox'])) {
@@ -252,13 +251,13 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp';
 
         if (!is_dir($folderForImage)) {
-            mkdir($folderForImage, 0777, true);
+            mkdir($folderForImage, 0700, true);
         }
 
         try {
             $this->_cleanDirectory($folderForImage);
             file_put_contents($folderForImage . DS . $imageName, $imageData);
-            echo json_encode($imagePath);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($imagePath));
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             return false;

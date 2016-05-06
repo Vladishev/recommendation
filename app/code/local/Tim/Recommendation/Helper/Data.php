@@ -560,7 +560,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      * @param $recomId
      * @return string
      */
-    function checkOpinionOrComment($recomId)
+    public function checkOpinionOrComment($recomId)
     {
         $parent = Mage::getModel('tim_recommendation/recommendation')->load($recomId)->getParent();
         if ($parent) {

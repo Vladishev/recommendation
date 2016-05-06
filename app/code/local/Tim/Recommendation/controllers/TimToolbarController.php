@@ -11,6 +11,13 @@
 class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front_Action
 {
     /**
+     * Describe type of sorting
+     */
+    const TOP_RATED = 'topRated';
+    const LOW_RATED = 'lowRated';
+    const OLDEST = 'oldest';
+
+    /**
      * Collects data for sorted list
      */
     public function sortUserPageAction()
@@ -19,15 +26,15 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $limit = $params['countPerPage'];
         $curPage = $params['pageNumber'];
         switch ($params['sortBy']) {
-            case 'topRated':
+            case self::TOP_RATED:
                 $order = 'DESC';
                 $field = 'average_rating';
                 break;
-            case 'lowRated':
+            case self::LOW_RATED:
                 $order = 'ASC';
                 $field = 'average_rating';
                 break;
-            case 'oldest':
+            case self::OLDEST:
                 $order = 'ASC';
                 $field = 'date_add';
                 break;
@@ -41,7 +48,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $opinionsCount = $recommendationBlock->getUserOpinionCount($params['userId']);
         $opinionData[0]['pagesCount'] = ceil($opinionsCount / $limit);
         $opinionData[0]['curPage'] = $curPage;
-        die(json_encode($opinionData));
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($opinionData));
     }
 
     /**
@@ -53,15 +60,15 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $limit = $params['countPerPage'];
         $curPage = $params['pageNumber'];
         switch ($params['sortBy']) {
-            case 'topRated':
+            case self::TOP_RATED:
                 $order = 'DESC';
                 $field = 'average_rating';
                 break;
-            case 'lowRated':
+            case self::LOW_RATED:
                 $order = 'ASC';
                 $field = 'average_rating';
                 break;
-            case 'oldest':
+            case self::OLDEST:
                 $order = 'ASC';
                 $field = 'date_add';
                 break;
@@ -74,7 +81,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $opinionsCount = Mage::getModel('tim_recommendation/index')->getOpinionCount($params['productId']);
         $opinionsArray[0]['pagesCount'] = ceil($opinionsCount / $limit);
         $opinionsArray[0]['curPage'] = $curPage;
-        die(json_encode($opinionsArray));
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($opinionsArray));
     }
 
     /**
@@ -86,7 +93,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $limit = $params['countPerPage'];
         $curPage = $params['pageNumber'];
 
-        if ($params['sortBy'] == 'oldest') {
+        if ($params['sortBy'] == self::OLDEST) {
             $order = 'ASC';
         } else {
             $order = 'DESC';
@@ -95,7 +102,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
         $recommendationBlock = $this->getLayout()->createBlock('tim_recommendation/recommendation');
         $commentData = $recommendationBlock->getOpinionComment($params['userId'], $limit, $curPage, $order);
 
-        die(json_encode($commentData));
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($commentData));
     }
 
     /**

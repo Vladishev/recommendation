@@ -18,4 +18,11 @@ $installer->getConnection()
         'parent'
     );
 
+$installer->getConnection()
+    ->addIndex(
+        $installer->getTable('tim_recommendation/media'),
+        'IDX_RECOM_MEDIA_TYPE',
+        'type'
+    );
+
 $installer->endSetup();

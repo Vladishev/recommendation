@@ -5,6 +5,7 @@ jQuery(document).ready(function () {
     changeSortConditionComments();
     getCommentDataOnEnterEvent();
     changeCountAndPager();
+    changeCountAndPagerComments();
 });
 //-------------------- Tim Toolbar start --------------------------//
 /**
@@ -41,52 +42,50 @@ function getDataOnEnterEvent() {
 
 /**
  * Gets 'number per page' and 'current page' data
- * @param el
  */
-function changeCountAndPager(el) {
-    if (typeof el !== 'undefined') {
-        var classList = jQuery(el).attr('class').split(/\s+/);
-        var $increaseButton = jQuery('.tim-pager-increase-button');
-        var $decreaseButton = jQuery('.tim-pager-decrease-button');
-        var $pageBox = jQuery('.tim-pager-box');
-        var maxPage = parseInt(jQuery('.tim-pager-total').text());
-        var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function (index, item) {
-            switch (item) {
-                case 'tim-toolbar-count':
-                    jQuery('.' + item).attr('class', 'tim-toolbar-count');
-                    jQuery(el).addClass('count-active');
-                    break;
-                case 'tim-pager-increase-button':
-                    currentPage = currentPage + 1;
-                    if (currentPage >= maxPage) {
-                        currentPage = maxPage;
-                        $increaseButton.hide();
-                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 2;
-                    } else {
-                        $increaseButton.show();
-                    }
-                    $decreaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-                case 'tim-pager-decrease-button':
-                    currentPage = currentPage - 1;
-                    if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 1;
-                        $decreaseButton.hide();
-                    } else if (currentPage > maxPage) {
-                        currentPage = maxPage;
-                    } else {
-                        $decreaseButton.show();
-                    }
-                    $increaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
+function changeCountAndPager() {
+    jQuery('.tim-sort-action-class').on('click', function (){
+        if (typeof this !== 'undefined') {
+            var el = jQuery(this);
+            var $increaseButton = jQuery('.tim-pager-increase-button');
+            var $decreaseButton = jQuery('.tim-pager-decrease-button');
+            var $pageBox = jQuery('.tim-pager-box');
+            var maxPage = parseInt(jQuery('.tim-pager-total').text());
+            var currentPage = parseInt($pageBox.val());
+
+            if (el.hasClass('tim-toolbar-count')) {
+                jQuery('.tim-toolbar-count').attr('class', 'tim-toolbar-count tim-sort-action-class');
+                jQuery(el).addClass('count-active');
             }
-        });
-        getTimToolbarData();
-    }
+            if (el.hasClass('tim-pager-increase-button')) {
+                currentPage = currentPage + 1;
+                if (currentPage >= maxPage) {
+                    currentPage = maxPage;
+                    $increaseButton.hide();
+                } else if ((currentPage <= 1) || (!$pageBox.val())) {
+                    currentPage = 2;
+                } else {
+                    $increaseButton.show();
+                }
+                $decreaseButton.show();
+                $pageBox.val(currentPage);
+            }
+            if (el.hasClass('tim-pager-decrease-button')) {
+                currentPage = currentPage - 1;
+                if ((currentPage <= 1) || (!$pageBox.val())) {
+                    currentPage = 1;
+                    $decreaseButton.hide();
+                } else if (currentPage > maxPage) {
+                    currentPage = maxPage;
+                } else {
+                    $decreaseButton.show();
+                }
+                $increaseButton.show();
+                $pageBox.val(currentPage);
+            }
+            getTimToolbarData();
+        }
+    });
 }
 
 /**
@@ -173,6 +172,8 @@ function getTimToolbarData() {
  */
 function renderProductOpinionList(response) {
     var $mainContainer = jQuery('#tim-list-container');
+    var nodeNumber = 3;
+
     response.forEach(function (item, i) {
         //cloning blocks
         var $parentList = jQuery('.tim-products-opinion-list-0').clone();
@@ -186,9 +187,9 @@ function renderProductOpinionList(response) {
         $mainContainer.append($parentList);
 
         //filling row
-        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name']);
+        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="' + Translator.translate('Product image') + '"/>' + item['name']);
         $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function () {
-            return this.nodeType == 3;
+            return this.nodeType == nodeNumber;
         })[0].nodeValue = item['rating'];
     });
     lightRatings();
@@ -198,11 +199,16 @@ function renderProductOpinionList(response) {
  * Lighted rating boxes
  */
 function lightRatings() {
+    var nodeNumber = 3;
+    //width in percents for one star
+    var oneStar = 19.2;
+    //width in percents for five stars
+    var totalWidth = 100;
     jQuery('.tim-comm-list-bulk-rating-barinner').each(function () {
         var ratingValue = jQuery(this).contents().filter(function () {
-            return this.nodeType == 3;
+            return this.nodeType == nodeNumber;
         }).text();
-        var ratingValuePercent = ((ratingValue * 19.2) / 100) * 100;
+        var ratingValuePercent = ((ratingValue * oneStar) / totalWidth) * 100;
         jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
         jQuery(this).animate({opacity: '1'}, 1000);
     });
@@ -244,52 +250,49 @@ function getCommentDataOnEnterEvent() {
 
 /**
  * Gets 'number per page' and 'current page' data for Comments Toolbar
- * @param el
  */
-function changeCountAndPagerComments(el) {
-    if (typeof el !== 'undefined') {
-        var classList = jQuery(el).attr('class').split(/\s+/);
-        var $increaseButton = jQuery('.tim-pager-comment-increase-button');
-        var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
-        var $pageBox = jQuery('.tim-comment-pager-box');
-        var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
-        var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function (index, item) {
-            switch (item) {
-                case 'tim-toolbar-count-comment':
-                    jQuery('.' + item).attr('class', 'tim-toolbar-count-comment');
-                    jQuery(el).addClass('count-active-comment');
-                    break;
-                case 'tim-pager-comment-increase-button':
-                    currentPage = currentPage + 1;
-                    if (currentPage >= maxPage) {
-                        currentPage = maxPage;
-                        $increaseButton.hide();
-                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 2;
-                    } else {
-                        $increaseButton.show();
-                    }
-                    $decreaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-                case 'tim-pager-comment-decrease-button':
-                    currentPage = currentPage - 1;
-                    if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 1;
-                        $decreaseButton.hide();
-                    } else if (currentPage > maxPage) {
-                        currentPage = maxPage;
-                    } else {
-                        $decreaseButton.show();
-                    }
-                    $increaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
+function changeCountAndPagerComments() {
+    jQuery('.tim-comment-sort-action-class').on('click', function () {
+        if (typeof this !== 'undefined') {
+            var el = jQuery(this);
+            var $increaseButton = jQuery('.tim-pager-comment-increase-button');
+            var $decreaseButton = jQuery('.tim-pager-comment-decrease-button');
+            var $pageBox = jQuery('.tim-comment-pager-box');
+            var maxPage = parseInt(jQuery('.tim-comment-pager-total').text());
+            var currentPage = parseInt($pageBox.val());
+            if (el.hasClass('tim-toolbar-count-comment')) {
+                jQuery('.tim-toolbar-count-comment').attr('class', 'tim-toolbar-count-comment tim-comment-sort-action-class');
+                jQuery(el).addClass('count-active-comment');
             }
-        });
-        getCommentsToolbarData();
-    }
+            if (el.hasClass('tim-pager-comment-increase-button')) {
+                currentPage = currentPage + 1;
+                if (currentPage >= maxPage) {
+                    currentPage = maxPage;
+                    $increaseButton.hide();
+                } else if ((currentPage <= 1) || (!$pageBox.val())) {
+                    currentPage = 2;
+                } else {
+                    $increaseButton.show();
+                }
+                $decreaseButton.show();
+                $pageBox.val(currentPage);
+            }
+            if (el.hasClass('tim-pager-comment-decrease-button')) {
+                currentPage = currentPage - 1;
+                if ((currentPage <= 1) || (!$pageBox.val())) {
+                    currentPage = 1;
+                    $decreaseButton.hide();
+                } else if (currentPage > maxPage) {
+                    currentPage = maxPage;
+                } else {
+                    $decreaseButton.show();
+                }
+                $increaseButton.show();
+                $pageBox.val(currentPage);
+            }
+            getCommentsToolbarData();
+        }
+    });
 }
 
 /**
