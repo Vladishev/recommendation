@@ -211,6 +211,16 @@ class Tim_Recommendation_Model_Observer
     }
 
     /**
+     * Send email with confirmation for abuse
+     * @param $observer
+     */
+    public function sendMalpracticeAcceptanceEmail($observer)
+    {
+        $malpracticeData = $observer->getEvent()->getMalpracticeData();
+        $this->sendEmailToUser(null, 'malpractice', $malpracticeData['email']);
+    }
+
+    /**
      * Sending email
      * @param (str)$toEmail
      * @param (arr)$templateVar
@@ -282,12 +292,15 @@ class Tim_Recommendation_Model_Observer
      * Sends email to user
      * @param (int)$userId
      * @param (str)$userSubject
+     * @param string | null $userEmail
      */
-    public function sendEmailToUser($userId, $userSubject)
+    public function sendEmailToUser($userId, $userSubject, $userEmail = null)
     {
         $_helper = Mage::helper('tim_recommendation');
-        $userInformation = Mage::getModel('customer/customer')->load($userId)->getData();
-        $userEmail = $userInformation['email'];
+        if(!empty($userId)){
+            $userInformation = Mage::getModel('customer/customer')->load($userId)->getData();
+            $userEmail = $userInformation['email'];
+        }
         $userInformation['subject'] = $_helper->__($userSubject);
 
         $this->sendEmail($userEmail, $userInformation, 'User');

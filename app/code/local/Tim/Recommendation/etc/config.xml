@@ -143,6 +143,15 @@
                     </send_malpractice_email>
                 </observers>
             </controller_index_add_malpractice_data>
+            <controller_index_add_acceptance_malpractice_data>
+                <observers>
+                    <send_malpractice_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendMalpracticeAcceptanceEmail</method>
+                    </send_malpractice_email>
+                </observers>
+            </controller_index_add_acceptance_malpractice_data>
         </events>
         <template>
             <email>

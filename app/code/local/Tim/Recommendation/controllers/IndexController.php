@@ -347,9 +347,42 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     }
 
     /**
-     * Add abuse to tim_recom_malpractice table
+     * Saves user data to tim_recom_malpractice table without confirmation for logged in customer
      */
-    public function saveAbuseAction()
+    public function saveMalpracticeAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $params = $this->getRequest()->getParams();
+            $model = Mage::getModel('tim_recommendation/malpractice');
+            $model->setDateAdd(date('Y-m-d H:i:s'));
+            $model->setRecomId($params['recom_id']);
+            $model->setUserId($params['userId']);
+            $model->setComment($params['comment']);
+            $model->setTimIp($params['customerIp']);
+            $model->setTimHost($params['customerHostName']);
+            if (!empty($params['email'])) {
+                $model->setEmail($params['email']);
+            }
+            try {
+                $model->save();
+                $eventData = $params;
+                $event = array('malpractice_data' => $eventData);
+                Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
+                echo json_encode(array('status' => 'true'));
+            } catch (Exception $e) {
+                Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                echo json_encode(array('status' => 'false'));
+            }
+        } else {
+            $this->_redirectReferer();
+            return;
+        }
+    }
+
+    /**
+     * Add abuse to tim_recom_malpractice table with confirmation for not logged in customer
+     */
+    public function saveAbuseConfirmationAction()
     {
         $status = false;
         if ($request = $this->getRequest()->getParam('request')) {
@@ -369,7 +402,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                         $model->save();
                         $eventData = $requestData;
                         $event = array('malpractice_data' => $eventData);
-                        Mage::dispatchEvent('controller_index_add_malpractice_data', $event);
+                        Mage::dispatchEvent('controller_index_add_acceptance_malpractice_data', $event);
                         $status = true;
                     } catch (Exception $e) {
                         Mage::log($e->getMessage(), null, 'tim_recommendation.log');
@@ -394,7 +427,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $params = $this->getRequest()->getParams();
             $customerEmail = !empty($params['email']) ? $params['email'] : Mage::getModel('customer/customer')->load($params['userId'])->getEmail();
             $encodedSalt = sha1($this->getRecomHelper()->getSalt());
-            $saveAbuseAction = Mage::getUrl('recommendation/index/saveAbuse');
+            $saveAbuseAction = Mage::getUrl('recommendation/index/saveAbuseConfirmation');
             $params['date_add'] = date('Y-m-d H:i:s');
             $params['email'] = $customerEmail;
             $params['salt'] = $encodedSalt;

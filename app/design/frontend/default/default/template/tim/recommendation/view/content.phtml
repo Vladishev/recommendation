@@ -9,6 +9,8 @@ $opinionData = $this->getOpinionData($recomId);
 $youtubeVideoId = !empty($opinionData['movie_url']) ? $this->getYoutubeVideoId($opinionData['movie_url']) : false;
 $qtyComments = count($opinionData['comments']);
 $confirmAbuseUrl = $this->getUrl('recommendation/index/confirmAbuse');
+$saveAbuseUrl = $this->getUrl('recommendation/index/saveMalpractice');
+$abuseUrl = $isLoggedIn ? $saveAbuseUrl : $confirmAbuseUrl;
 $commentLimitCharacters = Mage::helper('tim_recommendation')->getMaxMinCharacters('comment');
 $commentTextareaPlaceholder = $this->getCommentPlaceholder($commentLimitCharacters);
 $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($commentLimitCharacters);
@@ -57,12 +59,12 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
         class="tim-user-log-info"
         type="hidden"
         data-log="<?php echo ($isLoggedIn)? 1 : 0; ?>"
-        data-abusecontroller="<?php echo $confirmAbuseUrl ?>"
+        data-abusecontroller="<?php echo $abuseUrl; ?>"
         data-id="<?php echo $customerId ?>"
         data-ip="<?php echo $customerIp ?>"
         data-host="<?php echo $customerHostName ?>"/>
     <div class="tim-abuse-button-position-opinion">
-        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $recomId ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $confirmAbuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $recomId ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $abuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
             <?php echo $this->__('Report abuse') ?>
         </button>
     </div>
@@ -74,7 +76,7 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
         <div class="tim-comment-container <?php if($i > 5) echo 'tim-comment-display-none-'. $recomId ?>" <?php if($i > 5) echo 'style="display:none;"' ?>>
             <div class="tim-comment-container-title">
                 <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
-                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $comment['recom_id'] ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $confirmAbuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $comment['recom_id'] ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $abuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
                     <?php echo $this->__('Report abuse') ?>
                 </button>
             </div>
