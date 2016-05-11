@@ -43,7 +43,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Bloc
 
     protected function _prepareLayout()
     {
-        $this->setChild('back_button',
+        $this->setChild('tim_back_button',
             $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setData(
                     array(
@@ -102,7 +102,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionInfo extends Mage_Adminhtml_Bloc
      */
     public function getBackButtonHtml()
     {
-        return $this->getChildHtml('back_button');
+        return $this->getChildHtml('tim_back_button');
     }
 
     /**
