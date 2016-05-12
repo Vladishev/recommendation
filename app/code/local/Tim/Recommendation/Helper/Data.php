@@ -496,11 +496,18 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getUserLevelAccess($customerId){
         $userLevels = $this->getUserLevelClient();
         $currentUserLevel = $this->getUserScore($customerId);
+        $userLevelExpert = $this->getUserLevelExpert();
         $accesses = array();
-        foreach($userLevels as $level){
-            if($level['point'] == $currentUserLevel){
-                $accesses['moderation'] = $level['moderation'];
-                $accesses['update_present_visit_card'] = $level['update_present_visit_card'];
+        //if user is expert, give all access to him
+        if($currentUserLevel >= $userLevelExpert[0]['point']){
+            $accesses['moderation'] = 1;
+            $accesses['update_present_visit_card'] = 1;
+        }else{
+            foreach($userLevels as $level){
+                if($level['point'] == $currentUserLevel){
+                    $accesses['moderation'] = $level['moderation'];
+                    $accesses['update_present_visit_card'] = $level['update_present_visit_card'];
+                }
             }
         }
         return $accesses;
