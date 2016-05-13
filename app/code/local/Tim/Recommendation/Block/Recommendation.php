@@ -389,7 +389,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $customerInfo['customerName'] = $_helper->getCustomerNickname($customerId);
             $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
             $customerInfo['customerTypeName'] = $_helper->getUserTypeName($customerTypeId);
-            $customerInfo['avatar'] = $_helper->getCustomerAvatar($customerId);
+            $customerInfo['avatar'] = $_helper->getCustomerAvatar();
             $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation' . DS . 'user' . DS . 'edit';
             $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
             $customerInfo['engage'] = $user->getEngage();
