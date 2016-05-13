@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tim
  *
@@ -16,21 +17,15 @@
  */
 class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
-    /**
-     * Renders grid column
-     *
-     * @param Varien_Object $row
-     * @return string
-     */
     public function render(Varien_Object $row)
     {
         $return = '';
         if ($row->getMalpracticeId()) {
-            $id = (int) $row->getMalpracticeId();
+            $id = $row->getMalpracticeId();
             $note = $this->getMalpracticeNote($id);
             $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('malpracticeId' => $id));
         } else {
-            $id = (int) $row->getRecomId();
+            $id = $row->getRecomId();
             $note = $this->getRecommendationNote($id);
             $url = Mage::helper("adminhtml")->getUrl("adminhtml/noteReport", array('recomId' => $id));
         }
@@ -43,7 +38,6 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
         $return .= <<<HTML
 <a href="{$url}">{$title}</a>
 HTML;
-
         return $return;
     }
 

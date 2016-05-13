@@ -81,8 +81,6 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         $collection->getSelect()->joinLeft(array('tru' => 'tim_recom_user'),
             'main_table.user_id = tru.customer_id',
             array('nick'));
-        $collection->getSelect()->joinLeft(array('trn' => 'tim_recom_note'),
-            "trn.object_id = main_table.recom_id", array('note'));
         $collection->getSelect()->where('main_table.parent IS NOT NULL');
         $this->setCollection($collection);
 

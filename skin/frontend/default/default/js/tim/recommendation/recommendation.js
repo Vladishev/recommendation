@@ -549,7 +549,7 @@ function displayFilename(id) {
                         deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
                         deletedImgs.val(JSON.stringify(deletedFiles));
                     }
-                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + file['name'] + Translator.translate('. They are acceptable image files in jpg or png.');
+                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + file['name'] + Translator.translate('. They are acceptable image files in jpg or png.'));
                 }
             } else {
                 if (deletedImgs.val() == '') {
