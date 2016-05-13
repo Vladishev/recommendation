@@ -88,6 +88,14 @@
             <block type="tim_recommendation/recommendation" name="content.recommendation.confirm" template="tim/recommendation/confirm/confirm.phtml" />
         </reference>
     </recommendation_index_confirm>
+    <recommendation_index_saveabuseconfirmation>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="tim_recommendation/recommendation" name="content.recommendation.saveAbuse" template="tim/recommendation/email/save_abuse.phtml" />
+        </reference>
+    </recommendation_index_saveabuseconfirmation>
     <recommendation_index_modifyopinion>
         <reference name="root">
             <action method="setTemplate"><template>page/empty.phtml</template></action>

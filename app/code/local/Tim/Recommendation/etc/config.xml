@@ -143,6 +143,15 @@
                     </send_malpractice_email>
                 </observers>
             </controller_index_add_malpractice_data>
+            <controller_index_add_acceptance_malpractice_data>
+                <observers>
+                    <send_malpractice_email>
+                        <type>singleton</type>
+                        <class>tim_recommendation/observer</class>
+                        <method>sendMalpracticeAcceptanceEmail</method>
+                    </send_malpractice_email>
+                </observers>
+            </controller_index_add_acceptance_malpractice_data>
         </events>
         <template>
             <email>
@@ -181,6 +190,11 @@
                     <file>modifyComment.html</file>
                     <type>html</type>
                 </modify_comment_template>
+                <confirm_abuse_customer_template>
+                    <label>Confirm abuse for customer</label>
+                    <file>confirmAbuseCustomer.html</file>
+                    <type>html</type>
+                </confirm_abuse_customer_template>
             </email>
         </template>
     </global>
@@ -279,6 +293,9 @@
                 <movie_to_opinion>1</movie_to_opinion>
                 <add_comment>1</add_comment>
             </customer_points>
+            <expired_time>
+                <abuse>1</abuse>
+            </expired_time>
         </tim_settings>
     </default>
 </config>

@@ -49,7 +49,7 @@ function renderOpinionsList(response) {
         var opinionData = item['opinionData'];
         var abuseData = jQuery('.tim-user-log-info').data();
         var isLoggedIn = abuseData.log;
-        var abuseController = abuseData.malpractice;
+        var abuseController = abuseData.abusecontroller;
         var userId = abuseData.id;
         var userIp = abuseData.ip;
         var userHost = abuseData.host;
@@ -325,10 +325,15 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
                 jQuery.ajax({
                     url: siteUrl,
                     data: param,
+                    dataType: 'json',
                     type: 'post',
                     success: function (response) {
                         vex.defaultOptions.className = 'vex-theme-default';
-                        vex.dialog.alert(Translator.translate('Thank you for information about the abuse. Your application has been submitted for review by the administrator.'));
+                        if(response.status == 'true'){
+                            vex.dialog.alert(Translator.translate('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora.'));
+                        }else{
+                            vex.dialog.alert(Translator.translate('Abuse wasn\'t added.'));
+                        }
                     }
                 });
             }
