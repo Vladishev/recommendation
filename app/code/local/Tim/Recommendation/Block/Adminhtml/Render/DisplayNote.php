@@ -43,6 +43,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_DisplayNote extends Mage_Adminht
         $return .= <<<HTML
 <a href="{$url}">{$title}</a>
 HTML;
+
         return $return;
     }
 

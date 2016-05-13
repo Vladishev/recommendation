@@ -52,4 +52,14 @@ class Tim_Recommendation_Block_Rating extends Mage_Core_Block_Template
         $productUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getRequestPath() . DS . $anchor;
         return $productUrl;
     }
+
+    /**
+     * Returns current product id
+     *
+     * @return mixed
+     */
+    public function getCurrentProductId()
+    {
+        return Mage::registry('current_product')->getId();
+    }
 }

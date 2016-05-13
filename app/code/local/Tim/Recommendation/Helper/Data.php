@@ -531,15 +531,19 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getUserScore($customerId)
     {
-        $customer = Mage::getModel('customer/customer')->load((int) $customerId);
-        $user = Mage::getModel('tim_recommendation/user')->load((int) $customerId, 'customer_id');
+        $customerEmail = Mage::getModel('customer/customer')
+            ->getCollection()
+            ->addFieldToFilter('entity_id', array( array('eq' => $customerId)))
+            ->getFirstItem()
+            ->getEmail();
+        $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $customerPoints = $user->getPoints();
         $customerLevel = $user->getLevel();
         $userLevelsClient = $this->getUserLevelClient();
         $userLevelsExpert = $this->getUserLevelExpert();
         $point = '';
         foreach ($userLevelsExpert as $userLevel) {
-            if (in_array($customer->getEmail(), $userLevel['email_addresses'])) {
+            if (in_array($customerEmail, $userLevel['email_addresses'])) {
                 $point = $userLevel['point'];
             }
         }
@@ -634,7 +638,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      * @param int $recomId ID from tim_recommendation table(recom_id)
      * @return string
      */
-    function checkOpinionOrComment($recomId)
+    public function checkOpinionOrComment($recomId)
     {
         $parent = Mage::getModel('tim_recommendation/recommendation')->load((int) $recomId)->getParent();
         if ($parent) {

@@ -22,21 +22,21 @@ $opinionPagesCount = $this->getOpinionPagesCount($opinionCount, 10);
             <?php echo $this->__(' from') ?>
             <span class="tim-pager-total"><?php echo $opinionPagesCount ?></span>
             <?php if ($opinionPagesCount > 1): ?>
-            <button class="tim-pager-decrease-button" onclick="changeCountAndPager(this)"> <</button>
-            <button class="tim-pager-increase-button" onclick="changeCountAndPager(this)"> ></button>
+            <button class="tim-pager-decrease-button tim-sort-action-class"> <</button>
+            <button class="tim-pager-increase-button tim-sort-action-class"> ></button>
             <?php endif ?>
         </div>
         <div class="tim-count-per-page">
             <span><?php echo $this->__('Display'); ?>:</span>
             <ul>
                 <li>
-                    <span class="tim-toolbar-count count-active" onclick="changeCountAndPager(this)">10</span>
+                    <span class="tim-toolbar-count tim-sort-action-class count-active">10</span>
                 </li>
                 <li>
-                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">20</span>
+                    <span class="tim-toolbar-count tim-sort-action-class">20</span>
                 </li>
                 <li>
-                    <span class="tim-toolbar-count" onclick="changeCountAndPager(this)">30</span>
+                    <span class="tim-toolbar-count tim-sort-action-class">30</span>
                 </li>
             </ul>
             <span><?php echo $this->__('products'); ?></span>

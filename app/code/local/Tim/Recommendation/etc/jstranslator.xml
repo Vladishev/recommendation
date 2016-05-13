@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tim
+ *
+ * @category   Tim
+ * @package    Tim_Recommendation
+ * @copyright  Copyright (c) 2016 Tim (http://tim.pl)
+ * @author     Vladislav Verbitskiy <vladomsu@gmail.com>
+ */
+-->
+<jstranslator>
+    <tim_not_logged_user translate="message" module="tim_recommendation">
+        <message>Warning! You are not logged to add a review or comment you must log in or create an account on our site.</message>
+    </tim_not_logged_user>
+    <tim_alt_product_image translate="message" module="tim_recommendation">
+        <message>Product image</message>
+    </tim_alt_product_image>
+    <tim_validate_url_link translate="message" module="tim_recommendation">
+        <message>Given the link does not lead to the film from YouTube</message>
+    </tim_validate_url_link>
+    <tim_validate_file_type_one translate="message" module="tim_recommendation">
+        <message>You can not upload a file: </message>
+    </tim_validate_file_type_one>
+    <tim_validate_file_type_two translate="message" module="tim_recommendation">
+        <message>. They are acceptable image files in jpg or png.</message>
+    </tim_validate_file_type_two>
+    <tim_validate_file_size translate="message" module="tim_recommendation">
+        <message>. The maximum size is 5 m.</message>
+    </tim_validate_file_size>
+    <tim_validate_avatar translate="message" module="tim_recommendation">
+        <message>Please choose one of the options above.</message>
+    </tim_validate_avatar>
+    <tim_validate_custom_url translate="message" module="tim_recommendation">
+        <message>Please enter the correct URL. For example http://www.strona.pl or www.strona.pl</message>
+    </tim_validate_custom_url>
+    <tim_validate_cropper_file_type translate="message" module="tim_recommendation">
+        <message>You can not upload a file. They are acceptable image files in jpg or png.</message>
+    </tim_validate_cropper_file_type>
+    <tim_validate_cropper_file_size translate="message" module="tim_recommendation">
+        <message>You can not upload a file. The maximum size is 400 kb.</message>
+    </tim_validate_cropper_file_size>
+    <tim_validate_cropper_window_info translate="message" module="tim_recommendation">
+        <message>Cropped image have to be not more then cropper window</message>
+    </tim_validate_cropper_window_info>
+    <tim_vex_window_info translate="message" module="tim_recommendation">
+        <message>If you have any comments regarding violations of the Rules of the page, as to the form, content or the content of this post, write us about it using the text field to describe the application.</message>
+    </tim_vex_window_info>
+    <tim_vex_send_button translate="message" module="tim_recommendation">
+        <message>Send report</message>
+    </tim_vex_send_button>
+    <tim_vex_close_button translate="message" module="tim_recommendation">
+        <message>Close the window</message>
+    </tim_vex_close_button>
+    <tim_vex_thank translate="message" module="tim_recommendation">
+        <message>Thank you for information about the abuse. Your application has been submitted for review by the administrator.</message>
+    </tim_vex_thank>
+    <tim_validate_min_characters translate="message" module="tim_recommendation">
+        <message>The minimum number of characters is </message>
+    </tim_validate_min_characters>
+    <tim_validate_max_characters translate="message" module="tim_recommendation">
+        <message>The maximum number of characters is </message>
+    </tim_validate_max_characters>
+</jstranslator>

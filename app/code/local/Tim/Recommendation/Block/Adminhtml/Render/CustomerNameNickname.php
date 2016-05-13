@@ -24,18 +24,18 @@ class Tim_Recommendation_Block_Adminhtml_Render_CustomerNameNickname extends Mag
      */
     public function render(Varien_Object $row)
     {
-        $customerId = (int) $row->getData($this->getColumn()->getIndex());
+        $customerId =(int) $row->getData($this->getColumn()->getIndex());
         if (empty($customerId)) {
             $name = $row->getEmail();
             $name .= '<br>(' . Mage::helper('tim_recommendation')->__('Not logged') . ')';
         } else {
-            $customerNickname = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getNick();
-            $customer = Mage::getModel('customer/customer')->load($customerId);
-            $name = $customer->getName();
+            $customerNickname = $row->getNick();
+            $name = $row->getCustomerFirstname() . ' ' . $row->getCustomerLastname();
             if ($customerNickname) {
                 $name .= ' (' . $customerNickname . ')';
             }
         }
+
         return $name;
     }
 }

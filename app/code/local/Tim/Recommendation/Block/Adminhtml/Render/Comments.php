@@ -17,6 +17,11 @@
 class Tim_Recommendation_Block_Adminhtml_Render_Comments extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
     /**
+     * Count of characters which can be shown
+     */
+    const LENGTH_COUNT = 100;
+
+    /**
      * Renders grid column
      *
      * @param Varien_Object $row
@@ -24,14 +29,9 @@ class Tim_Recommendation_Block_Adminhtml_Render_Comments extends Mage_Adminhtml_
      */
     public function render(Varien_Object $row)
     {
-        $advantages = '';
-        $recommendationId = (int) $row->getRecomId();
-        $opinion = Mage::getModel('tim_recommendation/recommendation')->load($recommendationId);
-        if (!$opinion->getParent()) {
-            $advantages = $opinion->getAdvantages();
-            if (strlen($advantages) > 100) {
-                $advantages = substr($advantages, 0, 99) . '...';
-            }
+        $advantages = $row->getAdvantages();
+        if (strlen($advantages) > self::LENGTH_COUNT) {
+            $advantages = substr($advantages, 0, (self::LENGTH_COUNT - 1)) . '...';
         }
 
         return $advantages;

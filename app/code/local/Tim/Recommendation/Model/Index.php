@@ -17,6 +17,11 @@
 class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 {
     /**
+     * Accepted value
+     */
+    const ACCEPTED = 1;
+
+    /**
      * Returns recom_id list of opinions
      *
      * @param int $productId Native Magento product ID
@@ -30,7 +35,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('product_id', (int) $productId);
-        $collection->addFieldToFilter('acceptance', 1);
+        $collection->addFieldToFilter('acceptance', self::ACCEPTED);
         $collection->getSelect()->where('parent IS NULL');
         $collection->addFieldToSelect('recom_id');
         $collection->addFieldToSelect('tim_ip');
@@ -57,7 +62,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('user_id', (int) $userId);
         $collection->addFieldToFilter('parent', array('null' => true));
-        $collection->addFieldToFilter('acceptance', 1);
+        $collection->addFieldToFilter('acceptance', self::ACCEPTED);
         $collection->addFieldToSelect('recom_id');
         $count = $collection->getSize();
 
@@ -80,7 +85,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         $opinionCollection->addFieldToSelect(array('product_id','recom_id','average_rating'));
         $opinionCollection->addFieldToFilter('user_id', (int) $userId);
         $opinionCollection->addFieldToFilter('parent', array('null' => true));
-        $opinionCollection->addFieldToFilter('acceptance', 1);
+        $opinionCollection->addFieldToFilter('acceptance', self::ACCEPTED);
         $opinionCollection->setOrder($field, $order);
         $opinionCollection->setPageSize((int) $limit);
         $opinionCollection->setCurPage((int) $curPage);
@@ -91,7 +96,8 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
         foreach ($opinionData as $item) {
             $productId = (int) $item['product_id'];
             $product = Mage::getModel('catalog/product')->load($productId);
-            $userOpinionData[$i]['image'] = $product->getImageUrl();
+            $userOpinionData[$i]['image'] = Mage::getModel('catalog/product_media_config')
+                ->getMediaUrl($product->getImage());
             $userOpinionData[$i]['url'] = $product->getProductUrl();
             $userOpinionData[$i]['name'] = $product->getName();
             $userOpinionData[$i]['recom_id'] = (int) $item['recom_id'];
@@ -114,7 +120,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     public function getOpinionComment($userId, $limit, $curPage, $order)
     {
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $recommendationCollection->addFieldToFilter('acceptance', 1);
+        $recommendationCollection->addFieldToFilter('acceptance', self::ACCEPTED);
         $recommendationCollection->addFieldToFilter('user_id', (int) $userId);
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
         $recommendationCollection->addFieldToSelect(array('comment', 'date_add', 'product_id'));
@@ -150,7 +156,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     public function getCommentsCount($userId)
     {
         $recommendationCollection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
-        $recommendationCollection->addFieldToFilter('acceptance', 1);
+        $recommendationCollection->addFieldToFilter('acceptance', self::ACCEPTED);
         $recommendationCollection->addFieldToFilter('user_id', (int) $userId);
         $recommendationCollection->addFieldToFilter('parent', array('neq' => 'NULL'));
         $count = $recommendationCollection->getSize();
@@ -168,7 +174,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
     {
         $collection = Mage::getModel('tim_recommendation/recommendation')->getCollection();
         $collection->addFieldToFilter('product_id', (int) $productId);
-        $collection->addFieldToFilter('acceptance', 1);
+        $collection->addFieldToFilter('acceptance', self::ACCEPTED);
         $collection->getSelect()->where('parent IS NULL');
         $collection->addFieldToSelect('recom_id');
         $count = $collection->getSize();

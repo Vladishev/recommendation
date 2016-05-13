@@ -17,6 +17,11 @@
 class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
     /**
+     * Count of characters which can be shown
+     */
+    const LENGTH_COUNT = 100;
+
+    /**
      * Renders grid column
      *
      * Accept recom_id and check what is it: comment or opinion
@@ -29,21 +34,35 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mag
     public function render(Varien_Object $row)
     {
         $recomId = (int) $row->getRecomId();
-        $recomRow = Mage::getModel('tim_recommendation/recommendation')->load($recomId, 'recom_id');
+        $recomRow = Mage::getModel('tim_recommendation/recommendation')
+            ->getCollection()
+            ->addFieldToFilter('recom_id', array( array('eq' => $recomId)))
+            ->addFieldToSelect(array('advantages', 'comment'))
+            ->getFirstItem();
         if ($advantages = $recomRow->getAdvantages()) {
-            if (strlen($advantages) > 100) {
-                $string = '<p align="center"><b>' . $recomId . '</b></p>' . substr($advantages, 0, 99) . '...';
-            } else {
-                $string = '<p align="center"><b>' . $recomId . '</b></p>' . $advantages;
-            }
+            $string = $this->_getString($advantages, $recomId);
         } else {
             $comment = $recomRow->getComment();
-            if (strlen($comment) > 100) {
-                $string = '<p align="center"><b>' . $recomId . '</b></p>' . substr($comment, 0, 99) . '...';
-            } else {
-                $string = '<p align="center"><b>' . $recomId . '</b></p>' . $comment;
-            }
+            $string = $this->_getString($comment, $recomId);
         }
+        return $string;
+    }
+
+    /**
+     * Returns formed html string
+     *
+     * @param string $content
+     * @param int $recomId Id from tim_recommendation table(recom_id)
+     * @return string
+     */
+    protected function _getString($content, $recomId)
+    {
+        if (strlen($content) > self::LENGTH_COUNT) {
+            $string = '<p align="center"><b>' . $recomId . '</b></p>' . substr($content, 0, (self::LENGTH_COUNT - 1)) . '...';
+        } else {
+            $string = '<p align="center"><b>' . $recomId . '</b></p>' . $content;
+        }
+
         return $string;
     }
 }

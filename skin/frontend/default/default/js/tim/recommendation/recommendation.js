@@ -71,7 +71,7 @@ function renderOpinionsList(response) {
         $parentContent.find('.tim-video-popup-container').empty();
         $parentContent.find('.tim-all-photo-popup').attr('id', '');
         $parentContent.find('.tim-video-popup').attr('id', '');
-        if ((typeof opinionData['images'][0] != 'undefined') && (typeof opinionData['movie_url'] != 'undefined')) {
+        if ((typeof opinionData['images'][0] !== 'undefined') && (typeof opinionData['movie_url'] !== 'undefined')) {
             //preparing links
             $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><div class="tim-readmore tim-opinion-photo-link" id="' + recomId + '">Zobacz zdjęcia</div></div><div class="tim-opinion-movie"><div class="tim-readmore" id="' + recomId + '">Zobacz materiał filmowy</div></div>');
             //preparing popups - set id
@@ -90,7 +90,7 @@ function renderOpinionsList(response) {
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
-        } else if (typeof opinionData['movie_url'] != 'undefined') {
+        } else if (typeof opinionData['movie_url'] !== 'undefined') {
             //preparing link
             $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-movie"><div class="tim-readmore" id="' + recomId + '">Zobacz materiał filmowy</div></div>');
             //preparing popup - set id
@@ -101,7 +101,7 @@ function renderOpinionsList(response) {
             } else {
                 $parentContent.find('.tim-video-popup-container').append('User have added video not from the youtube.');
             }
-        } else if (typeof opinionData['images'][0] != 'undefined') {
+        } else if (typeof opinionData['images'][0] !== 'undefined') {
             //preparing link
             $parentContent.find('.tim-opinion-media').html('<div class="tim-opinion-photo"><div class="tim-readmore tim-opinion-photo-link" id="' + recomId + '">Zobacz zdjęcia</div></div>');
             //preparing popup - set id
@@ -204,7 +204,7 @@ function renderOpinionsList(response) {
         //setting purchased result
         $parentRight.find('.byIt-yes-' + recomId).attr('class', 'byIt-yes-' + recomId);
         $parentRight.find('.byIt-no-' + recomId).attr('class', 'byIt-no-' + recomId);
-        if (opinionData['by_it'] != null) {
+        if (opinionData['by_it'] !== null) {
             $parentRight.find('.byIt-yes-' + recomId).addClass('tim-chart-boolean-active');
         } else {
             $parentRight.find('.byIt-no-' + recomId).addClass('tim-chart-boolean-active');
@@ -302,16 +302,16 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
             return jQuery('.vex-dialog-input').append($el);
         },
         className: 'vex-theme-default',
-        message: 'Jeżeli masz uwagi dotyczące naruszenia regulaminu strony, co do formy, treści lub zawartości niniejszego wpisu, napisz nam o tym korzystając z poniżeszego pola do opisu zgłoszenia.',
+        message: Translator.translate('If you have any comments regarding violations of the Rules of the page, as to the form, content or the content of this post, write us about it using the text field to describe the application.'),
         buttons: [
             jQuery.extend({}, vex.dialog.buttons.YES, {
-                text: 'Wyślij zgłoszenie'
+                text: Translator.translate('Send report')
             }), jQuery.extend({}, vex.dialog.buttons.NO, {
-                text: 'Zamknij okno'
+                text: Translator.translate('Close the window')
             })
         ],
         callback: function (data) {
-            if (data != false) {
+            if (data !== false) {
                 var abuseComment = jQuery('#abusecontent').val();
                 var abuseEmail = jQuery('#abuseemail').val();
                 var param = {
@@ -328,7 +328,7 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
                     type: 'post',
                     success: function (response) {
                         vex.defaultOptions.className = 'vex-theme-default';
-                        vex.dialog.alert('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora.');
+                        vex.dialog.alert(Translator.translate('Thank you for information about the abuse. Your application has been submitted for review by the administrator.'));
                     }
                 });
             }
@@ -544,7 +544,7 @@ function displayFilename(id) {
                         deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
                         deletedImgs.val(JSON.stringify(deletedFiles));
                     }
-                    vex.dialog.alert('Nie można przesłać pliku: ' + file['name'] + '. Dopuszczalne są pliki graficzne w formacie jpg lub png.');
+                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + file['name'] + Translator.translate('. They are acceptable image files in jpg or png.');
                 }
             } else {
                 if (deletedImgs.val() == '') {
@@ -556,7 +556,7 @@ function displayFilename(id) {
                     deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
                     deletedImgs.val(JSON.stringify(deletedFiles));
                 }
-                vex.dialog.alert("Nie można przesłać pliku: " + file['name'] + ". Maksymalny rozmiar to " + maxFilesQty + " mb.");
+                vex.dialog.alert(Translator.translate('You can not upload a file: ') + file['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + "mb.");
             }
         });
     } else {
@@ -741,11 +741,16 @@ function countOpinionChars() {
  * Lighted rating boxes
  */
 function lightRatings() {
+    var nodeNumber = 3;
+    //width in percents for one star
+    var oneStar = 19.2;
+    //width in percents for five stars
+    var totalWidth = 100;
     jQuery('.tim-comm-list-bulk-rating-barinner').each(function () {
         var ratingValue = jQuery(this).contents().filter(function () {
-            return this.nodeType == 3;
+            return this.nodeType == nodeNumber;
         }).text();
-        var ratingValuePercent = ((ratingValue * 19.2) / 100) * 100;
+        var ratingValuePercent = ((ratingValue * oneStar) / totalWidth) * 100;
         jQuery(this).parent().animate({'width': ratingValuePercent + '%'});
         jQuery(this).animate({opacity: '1'}, 1000);
     });
@@ -755,9 +760,9 @@ function lightRatings() {
  * Add extra validation to forms
  */
 function addExtraValidation() {
-    Validation.add('validate-url-link', 'Podany link nie prowadzi do filmu z serwisu YouTube', function (v) {
+    Validation.add('validate-url-link', Translator.translate('Given the link does not lead to the film from YouTube'), function (v) {
         var url = v;
-        if (url != '') {
+        if (/([^\s])/.test(url)) {
             var regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
             var match = url.match(regExp);
             if (!match) {
@@ -772,7 +777,7 @@ function addExtraValidation() {
         var opinionLimitCharsMin = limitCharsData.min;
         var opinionLimitCharsMax = limitCharsData.max;
 
-        Validation.add('min-length-opinion', 'Minimalna liczba znaków to ' + opinionLimitCharsMin, function (v) {
+        Validation.add('min-length-opinion', Translator.translate('The minimum number of characters is ') + opinionLimitCharsMin, function (v) {
             var min = (opinionLimitCharsMin ? opinionLimitCharsMin : 0);
             if (min) {
                 if (v.length < min) {
@@ -781,7 +786,7 @@ function addExtraValidation() {
             }
             return true;
         });
-        Validation.add('max-length-opinion', 'Maksymalna liczba znaków to ' + opinionLimitCharsMax, function (v) {
+        Validation.add('max-length-opinion', Translator.translate('The maximum number of characters is ') + opinionLimitCharsMax, function (v) {
             var max = (opinionLimitCharsMax ? opinionLimitCharsMax : 0);
             if (max) {
                 if (v.length > max) {
@@ -827,52 +832,50 @@ function getDataOnEnterEvent() {
 
 /**
  * Gets 'number per page' and 'current page' data
- * @param el
  */
-function changeCountAndPager(el) {
-    if (typeof el != 'undefined') {
-        var classList = jQuery(el).attr('class').split(/\s+/);
-        var $increaseButton = jQuery('.tim-pager-increase-button');
-        var $decreaseButton = jQuery('.tim-pager-decrease-button');
-        var $pageBox = jQuery('.tim-pager-box');
-        var maxPage = parseInt(jQuery('.tim-pager-total').text());
-        var currentPage = parseInt($pageBox.val());
-        jQuery.each(classList, function (index, item) {
-            switch (item) {
-                case 'tim-toolbar-count':
-                    jQuery('.' + item).attr('class', 'tim-toolbar-count');
-                    jQuery(el).addClass('count-active');
-                    break;
-                case 'tim-pager-increase-button':
-                    currentPage = currentPage + 1;
-                    if (currentPage >= maxPage) {
-                        currentPage = maxPage;
-                        $increaseButton.hide();
-                    } else if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 2;
-                    } else {
-                        $increaseButton.show();
-                    }
-                    $decreaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
-                case 'tim-pager-decrease-button':
-                    currentPage = currentPage - 1;
-                    if ((currentPage <= 1) || (!$pageBox.val())) {
-                        currentPage = 1;
-                        $decreaseButton.hide();
-                    } else if (currentPage > maxPage) {
-                        currentPage = maxPage;
-                    } else {
-                        $decreaseButton.show();
-                    }
-                    $increaseButton.show();
-                    $pageBox.val(currentPage);
-                    break;
+function changeCountAndPager() {
+    jQuery('.tim-sort-action-class').on('click', function () {
+        if (typeof this !== 'undefined') {
+            var el = jQuery(this);
+            var $increaseButton = jQuery('.tim-pager-increase-button');
+            var $decreaseButton = jQuery('.tim-pager-decrease-button');
+            var $pageBox = jQuery('.tim-pager-box');
+            var maxPage = parseInt(jQuery('.tim-pager-total').text());
+            var currentPage = parseInt($pageBox.val());
+
+            if (el.hasClass('tim-toolbar-count')) {
+                jQuery('.tim-toolbar-count').attr('class', 'tim-toolbar-count tim-sort-action-class');
+                jQuery(el).addClass('count-active');
             }
-        });
-        getTimToolbarData();
-    }
+            if (el.hasClass('tim-pager-increase-button')) {
+                currentPage = currentPage + 1;
+                if (currentPage >= maxPage) {
+                    currentPage = maxPage;
+                    $increaseButton.hide();
+                } else if ((currentPage <= 1) || (!$pageBox.val())) {
+                    currentPage = 2;
+                } else {
+                    $increaseButton.show();
+                }
+                $decreaseButton.show();
+                $pageBox.val(currentPage);
+            }
+            if (el.hasClass('tim-pager-decrease-button')) {
+                currentPage = currentPage - 1;
+                if ((currentPage <= 1) || (!$pageBox.val())) {
+                    currentPage = 1;
+                    $decreaseButton.hide();
+                } else if (currentPage > maxPage) {
+                    currentPage = maxPage;
+                } else {
+                    $decreaseButton.show();
+                }
+                $increaseButton.show();
+                $pageBox.val(currentPage);
+            }
+            getTimToolbarData();
+        }
+    });
 }
 
 /**
@@ -966,6 +969,7 @@ function getTimToolbarData() {
  */
 function renderProductOpinionList(response) {
     var $mainContainer = jQuery('#tim-list-container');
+    var nodeNumber = 3;
 
     response.forEach(function (item, i) {
         //cloning blocks
@@ -980,9 +984,9 @@ function renderProductOpinionList(response) {
         $mainContainer.append($parentList);
 
         //filling row
-        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="Zdjęcie produktu"/>' + item['name']);
+        $parentList.find('.tim-a-tag').attr('href', item['url']).html('<img src="' + item['image'] + '" alt="' + Translator.translate('Product image') + '"/>' + item['name']);
         $parentList.find('.tim-comm-list-bulk-rating-barinner').contents().filter(function () {
-            return this.nodeType == 3;
+            return this.nodeType == nodeNumber;
         })[0].nodeValue = item['rating'];
     });
     lightRatings();
@@ -1005,9 +1009,11 @@ function checkIfUserIsLoggedIn() {
  * Shows popup if user's profile not fill
  */
 function checkProfile() {
-    jQuery(document).on('click', '.check-tim-profile-status', function () {
+    jQuery('.check-tim-profile-status').on('click', function () {
         var status = jQuery('#tim-profile-status').val();
-        if (status == '0') {
+        var fillProfile = 0;
+
+        if (status == fillProfile) {
             vex.open({
                 content: jQuery('.check-tim-profile-status-popup').html(),
                 className: 'vex-theme-default'
@@ -1039,7 +1045,7 @@ function showVideo() {
         var youtubeVideoId = jQuery('#tim-youtube-data-' + recomId).val();
         var $popup = jQuery('#tim-video-popup-' + recomId);
         var isset = $popup.find('.iframe-video-popup');
-        if (typeof youtubeVideoId != 'undefined') {
+        if (typeof youtubeVideoId !== 'undefined') {
             if (isset.length == 0) {
                 $popup.find('.tim-video-popup-container').append('<iframe class="iframe-video-popup" src="https://www.youtube.com/embed/' + youtubeVideoId + '"></iframe>');
             } else {
