@@ -95,8 +95,6 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             "cev.entity_id = main_table.user_id AND cev.attribute_id = " . $this->_firstNameId, array('customer_firstname' => 'value'));
         $collection->getSelect()->joinLeft(array('cev1' => 'customer_entity_varchar'),
             "cev1.entity_id = main_table.user_id AND cev1.attribute_id = " . $this->_lastNameId, array('customer_lastname' => 'value'));
-        $collection->getSelect()->joinLeft(array('trn' => 'tim_recom_note'),
-            "trn.object_id = main_table.recom_id", array('note'));
         $collection->getSelect()->where('main_table.parent IS NULL');
         $this->setCollection($collection);
 

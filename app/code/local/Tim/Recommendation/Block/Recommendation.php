@@ -201,8 +201,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $productId = $opinionModel->load($value)->getProductId();
             $product = $productModel->load($productId);
             $productData[$i]['name'] = $product->getName();
-            $productData[$i]['image'] = Mage::getModel('catalog/product_media_config')
-                ->getMediaUrl($product->getImage());
+            $productData[$i]['image'] = $product->getImageUrl();
             $productData[$i]['product_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $product->getUrlPath();
             $productData[$i]['average'] = $this->getAverage($value);
             $i++;
