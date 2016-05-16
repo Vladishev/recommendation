@@ -213,8 +213,8 @@ class Tim_Recommendation_Model_Observer
     public function sendMalpracticeEmail($observer)
     {
         $malpracticeData = $observer->getEvent()->getMalpracticeData();
-        $emailToAdmin = Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_email_to');
-        $status = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
+        $emailToAdmin = Mage::helper('tim_recommendation')->getMalpracticeEmailTo();
+        $status = Mage::helper('tim_recommendation')->getMalpracticeEmailTo();
         $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_inform');
         if (($status == 1) and (!empty($emailToAdmin))) {
             $this->sendEmail($emailToAdmin, $malpracticeData, 'Malpractice');
@@ -231,6 +231,12 @@ class Tim_Recommendation_Model_Observer
     public function sendMalpracticeAcceptanceEmail($observer)
     {
         $malpracticeData = $observer->getEvent()->getMalpracticeData();
+        $emailToAdmin = Mage::helper('tim_recommendation')->getMalpracticeEmailTo();
+        $status = Mage::helper('tim_recommendation')->getMalpracticeEnabled();
+
+        if (($status == 1) and (!empty($emailToAdmin))) {
+            $this->sendEmail($emailToAdmin, $malpracticeData, 'Malpractice');
+        }
         $this->sendEmailToUser(null, 'malpractice', $malpracticeData['email']);
     }
 

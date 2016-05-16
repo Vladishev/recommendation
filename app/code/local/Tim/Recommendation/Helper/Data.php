@@ -297,6 +297,28 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Get email of admin for malpractice from system configuration
+     *
+     * @return string
+     */
+    public function getMalpracticeEmailTo()
+    {
+        $emailTo = Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_email_to');
+        return $emailTo;
+    }
+
+    /**
+     * Get malpractice mail status from system configuration
+     *
+     * @return int
+     */
+    public function getMalpracticeEnabled()
+    {
+        $emailStatus = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
+        return $emailStatus;
+    }
+
+    /**
      * Checking for wrong data in GET method
      *
      * @param array $requestArray Request from url
