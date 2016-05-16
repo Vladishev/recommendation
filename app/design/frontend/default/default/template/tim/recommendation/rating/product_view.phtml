@@ -4,7 +4,7 @@ $productData = $this->getProductOpinionInfo($product_id);
 ?>
 <?php if ($productData['opinions_count']): ?>
     <div>
-        <span><?php echo $this->__('Product rating') . ': ' . $productData['rating'] . '/5'; ?></span>
+        <span><?php echo $this->__('Product rating: %s/5', $productData['rating']) ?></span>
     </div>
     <div>
         <a href="#tim-general-add-opinion-button"><?php echo $this->__('see more') . ' >' ?></a>
