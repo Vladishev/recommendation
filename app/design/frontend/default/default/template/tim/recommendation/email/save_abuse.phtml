@@ -1,5 +1,7 @@
-<?php if ($this->getStatus()): ?>
+<?php if ($this->getStatus() == 1): ?>
     <h1><?php echo Mage::helper('tim_recommendation')->__('Thank you for reporting abuse') ?></h1>
+<?php elseif($this->getStatus() == 2): ?>
+    <h1><?php echo Mage::helper('tim_recommendation')->__('Application has already been confirmed') ?></h1>
 <?php else: ?>
     <h1><?php echo Mage::helper('tim_recommendation')->__('Your entry has expired') ?></h1>
 <?php endif; ?>

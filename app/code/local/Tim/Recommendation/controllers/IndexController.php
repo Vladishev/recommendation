@@ -508,31 +508,39 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      */
     public function saveAbuseConfirmationAction()
     {
+        //$status has three conditions : false = time has expired / 1 = add abuse / 2 = abuse already exist
         $status = false;
         if ($request = $this->getRequest()->getParam('request')) {
             $requestData = unserialize(base64_decode($request));
-            $abuseExpiredStatus = $this->getRecomHelper()->checkAbuseExpiredDate($this->getRecomHelper()->getAbuseExpiredTime(), $requestData['date_add']);
-            if ($requestData['salt'] && $this->getRecomHelper()->checkRecommendationSalt($requestData['salt'])) {
-                if ($abuseExpiredStatus) {
-                    $model = Mage::getModel('tim_recommendation/malpractice');
-                    $model->setDateAdd($requestData['date_add']);
-                    $model->setRecomId($requestData['recom_id']);
-                    $model->setUserId($requestData['userId']);
-                    $model->setComment($requestData['comment']);
-                    $model->setTimIp($requestData['customerIp']);
-                    $model->setTimHost($requestData['customerHostName']);
-                    $model->setEmail($requestData['email']);
-                    try {
-                        $model->save();
-                        $eventData = $requestData;
-                        $event = array('malpractice_data' => $eventData);
-                        Mage::dispatchEvent('controller_index_add_acceptance_malpractice_data', $event);
-                        $status = true;
-                    } catch (Exception $e) {
-                        Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+            $abuseExist = $this->checkAbuseForExisting($requestData);
+
+            if (!$abuseExist) {
+                $abuseExpiredStatus = $this->getRecomHelper()->checkAbuseExpiredDate($this->getRecomHelper()->getAbuseExpiredTime(), $requestData['date_add']);
+                if ($requestData['salt'] && $this->getRecomHelper()->checkRecommendationSalt($requestData['salt'])) {
+                    if ($abuseExpiredStatus) {
+                        $malpracticeModel = Mage::getModel('tim_recommendation/malpractice');
+                        $malpracticeModel->setDateAdd($requestData['date_add']);
+                        $malpracticeModel->setRecomId($requestData['recom_id']);
+                        $malpracticeModel->setUserId($requestData['userId']);
+                        $malpracticeModel->setComment($requestData['comment']);
+                        $malpracticeModel->setTimIp($requestData['customerIp']);
+                        $malpracticeModel->setTimHost($requestData['customerHostName']);
+                        $malpracticeModel->setEmail($requestData['email']);
+                        try {
+                            $malpracticeModel->save();
+                            $eventData = $requestData;
+                            $event = array('malpractice_data' => $eventData);
+                            Mage::dispatchEvent('controller_index_add_acceptance_malpractice_data', $event);
+                            $status = 1;
+                        } catch (Exception $e) {
+                            Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                        }
                     }
                 }
+            } else {
+                $status = 2;
             }
+
             $this->loadLayout();
             $this->getLayout()->getBlock('content.recommendation.saveAbuse')->setStatus($status);
             $this->renderLayout();
@@ -561,6 +569,26 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             echo json_encode(array('status' => 'true'));
         } else {
             echo json_encode(array('status' => 'false'));
+        }
+    }
+
+    /**
+     * Check abuse already exist or not, based on data that customer add
+     * @param array $data
+     * @return bool
+     */
+    private function checkAbuseForExisting($data)
+    {
+        $malpracticeModel = Mage::getModel('tim_recommendation/malpractice')->getCollection();
+        $malpracticeModel->addFieldToFilter('date_add', $data['date_add']);
+        $malpracticeModel->addFieldToFilter('user_id', $data['userId']);
+        $malpracticeModel->addFieldToFilter('recom_id', $data['recom_id']);
+        $malpracticeModel->addFieldToFilter('comment', $data['comment']);
+        $malpracticeModel->addFieldToFilter('email', $data['email']);
+        if ($malpracticeModel->getData()) {
+            return true;
+        } else {
+            return false;
         }
     }
 
