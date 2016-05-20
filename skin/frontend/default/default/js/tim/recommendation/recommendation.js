@@ -14,7 +14,6 @@ jQuery(document).ready(function () {
     addExtraValidation();
     countOpinionChars();
     openAddOpinionByHash();
-    deleteFile();
 });
 //------------------------------------------- product view start -------------------------------------------//
 /**
@@ -329,9 +328,9 @@ function markUserAbuse(id, customerId, ip, url, hostName) {
                     type: 'post',
                     success: function (response) {
                         vex.defaultOptions.className = 'vex-theme-default';
-                        if(response.status == 'true'){
+                        if (response.status == 'true') {
                             vex.dialog.alert(Translator.translate('Dziękujemy za informację o nadużyciu. Twoje zgłoszenie zostało przesłane do weryfikacji przez administratora.'));
-                        }else{
+                        } else {
                             vex.dialog.alert(Translator.translate('Abuse wasn\'t added.'));
                         }
                     }
@@ -519,95 +518,119 @@ function displayAjaxCommentPopupResponse(response) {
 }
 
 /**
- * Display filename and check on image rules
- * @param id
+ * Add files to opinion
+ * @returns {boolean}
  */
-function displayFilename(id) {
-    var images = '';
-    var maxSize = parseInt(jQuery('#recommendation-img').attr('max-size'), 10);
-    var fileInput = jQuery('#' + id);
-    var fileList = fileInput.prop('files');
-    var filesQty = fileList.length;
+function addFilesToOpinion() {
+    var fileArray = [];
+    var recommendationImg = jQuery('#recommendation-img');
+    var fileInput = recommendationImg[0];
+    var inputFilesQty = fileInput.files.length;
     var maxFilesQty = 5;
+    var downloadedImgsSize = jQuery("#downloaded-imgs div").length;
+    var maxSize = parseInt(recommendationImg.attr('max-size'), 10);
     vex.defaultOptions.className = 'vex-theme-default';
 
-    var fileArray = fileListToArray(fileList);
-    var deletedImgs = jQuery('#deleted-imgs');
-
-    if (filesQty <= maxFilesQty) {
-        jQuery.each(fileList, function (idx, file) {
-            if (checkImgSize(file['size'], maxSize)) {
-                if (checkImgType(file)) {
-                    images += '<div id="div-img-del-' + idx + '"><span class="delete-image" id="' + idx + '">X</span>' + file['name'] + '</div>';
-                } else {
-                    if (deletedImgs.val() == "") {
-                        var deleteFile = [];
-                        deleteFile.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
-                        deletedImgs.val(JSON.stringify(deleteFile))
+    //check on max allowed qty of images
+    if (inputFilesQty <= maxFilesQty) {
+        //check on max allowed qty of images together with already added images
+        if ((downloadedImgsSize + inputFilesQty) <= maxFilesQty) {
+            var data = new FormData();
+            var url = jQuery('input[name=saveTmpImgUrl]').val();
+            var userId = jQuery('input[name=customer_id]').val();
+            data.append('userId', userId);
+            for (var i = 0; i < inputFilesQty; ++i) {
+                //check allowed image size
+                if (checkImgSize(fileInput.files[i]['size'], maxSize)) {
+                    //check allowed image type
+                    if (checkImgType(fileInput.files[i])) {
+                        data.append('tim-recommendation-img[]', fileInput.files[i]);
+                        fileArray.push(fileInput.files[i]);
                     } else {
-                        var deletedFiles = JSON.parse(deletedImgs.val());
-                        deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
-                        deletedImgs.val(JSON.stringify(deletedFiles));
+                        vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. They are acceptable image files in jpg or png.'));
                     }
-                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + file['name'] + Translator.translate('. They are acceptable image files in jpg or png.'));
-                }
-            } else {
-                if (deletedImgs.val() == '') {
-                    var deleteFile = [];
-                    deleteFile.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
-                    deletedImgs.val(JSON.stringify(deleteFile))
                 } else {
-                    var deletedFiles = JSON.parse(deletedImgs.val());
-                    deletedFiles.push({id: idx, name: fileArray[idx].name, size: fileArray[idx].size});
-                    deletedImgs.val(JSON.stringify(deletedFiles));
+                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + "mb.");
                 }
-                vex.dialog.alert(Translator.translate('You can not upload a file: ') + file['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + "mb.");
             }
-        });
+            data.append('userId', userId);
+            //upload images to tmp directory for next saving to opinion
+            uploadImgToTmpDirAjax(url, data, fileArray);
+        } else {
+            vex.dialog.alert(Translator.translate('You can not transfer files. Maximum number of files to be transferred to ') + maxFilesQty + '.');
+            return false;
+        }
     } else {
-        fileInput.val('');
-        deletedImgs.val('');
-        vex.dialog.alert('Nie można przesłać plików. Maksymalna ilość przesyłanych plików to ' + maxFilesQty + '.');
+        vex.dialog.alert(Translator.translate('You can not transfer files. Maximum number of files to be transferred to ') + maxFilesQty + '.');
+        return false;
     }
-    jQuery('#downloaded-imgs').html(images);
+    //clear input with files
+    jQuery('#recommendation-img').val('');
 }
 
 /**
- * Delete file from div and prepare new div with deleted files
+ * Upload images that customer add to opinion to tmp directory
+ * @param url
+ * @param data
+ * @param fileArray
  */
-function deleteFile() {
-    jQuery('#downloaded-imgs').on('click', '.delete-image', function () {
-        var spanId = jQuery(this).attr('id');
-        jQuery('#downloaded-imgs').find('#div-img-del-' + spanId).remove();
-
-        var fileList = jQuery('#recommendation-img').prop('files');
-        var fileArray = fileListToArray(fileList);
-
-        var deletedImgs = jQuery('#deleted-imgs');
-        if (deletedImgs.val() == '') {
-            var deleteFile = [];
-            deleteFile.push({id: spanId, name: fileArray[spanId].name, size: fileArray[spanId].size});
-            deletedImgs.val(JSON.stringify(deleteFile))
-        } else {
-            var deletedFiles = JSON.parse(deletedImgs.val());
-            deletedFiles.push({id: spanId, name: fileArray[spanId].name, size: fileArray[spanId].size});
-            deletedImgs.val(JSON.stringify(deletedFiles));
+function uploadImgToTmpDirAjax(url, data, fileArray) {
+    jQuery.ajax({
+        type: 'POST',
+        url: url,
+        headers: {'Cache-Control': 'no-cache'},
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function () {
+            displayFilesName(fileArray);
+        },
+        error: function () {
+            vex.dialog.alert(Translator.translate('Something went wrong. Please add again last images.'));
         }
     });
 }
 
 /**
- * Convert fileList to array
- * @param fileList
- * @returns {Array}
+ * Display file names in add opinion form
+ * @param fileArray
  */
-function fileListToArray(fileList) {
-    var fileArray = [];
-    for (var i = 0, file; file = fileList[i]; i++) {
-        fileArray.push(file);
+function displayFilesName(fileArray) {
+    var images = '';
+    jQuery.each(fileArray, function (idx, file) {
+        images += '<div id="div-img-del-' + idx + '"><span class="delete-image" id="' + idx + '" onclick="deleteFile(this)"">X</span>' + file['name'] + '</div>';
+    });
+    if (jQuery("#downloaded-imgs div").length) {
+        jQuery('#imageExist').val(true);
     }
-    return fileArray;
+    jQuery('#downloaded-imgs').append(images);
 }
+
+/**
+ * Delete file from div and prepare new div with deleted files
+ */
+function deleteFile(element) {
+    var elementParent = jQuery(element).parent();
+    //remove first char(X) from beginning of file name and replace all spaces on underscore
+    var fileName = elementParent.text().substring(1, elementParent.text().length).replace(/ /g, '_');
+    var deletedImgs = jQuery('#deleted-imgs');
+    if (deletedImgs.val() == '') {
+        var deleteFile = [];
+        deleteFile.push(fileName);
+        deletedImgs.val(JSON.stringify(deleteFile))
+    } else {
+        var deletedFiles = JSON.parse(deletedImgs.val());
+        deletedFiles.push(fileName);
+        deletedImgs.val(JSON.stringify(deletedFiles));
+    }
+    if (jQuery("#downloaded-imgs div").length) {
+        jQuery('#imageExist').val(true);
+    } else {
+        jQuery('#imageExist').val('');
+    }
+    elementParent.remove();
+}
+
 /**
  * Check image size
  * @param fileSize
@@ -650,7 +673,7 @@ function closePopup() {
  * Display selected qty of stars on add opinion view
  */
 function displayRatingStars() {
-    if(!jQuery('#tim-profile-status').val() || jQuery('#isLoggedIn').val()){
+    if (!jQuery('#tim-profile-status').val() || jQuery('#isLoggedIn').val()) {
         jQuery('.tim-rating-input-span').on('change', function () {
             var inputChangeName = jQuery(this).attr('name');
             var inputChangeValue = jQuery(this).val();
@@ -678,7 +701,7 @@ function scrollToAddOpinion() {
  * Get last element from url
  * @return {string}
  */
-function getLastElementFromUrl(){
+function getLastElementFromUrl() {
     var url = window.location.href;
     var urlsplit = url.split("/");
     return urlsplit.last();
@@ -688,8 +711,8 @@ function getLastElementFromUrl(){
  * Open add opinion form by expected hash in url
  * @returns {boolean}
  */
-function openAddOpinionByHash(){
-    if(getLastElementFromUrl() == '#add-opinion'){
+function openAddOpinionByHash() {
+    if (getLastElementFromUrl() == '#add-opinion') {
         showAddOpinionForm();
         jQuery('html, body').animate({
             scrollTop: jQuery('#tim-add-opinion-layout').offset().top

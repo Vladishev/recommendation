@@ -61,4 +61,10 @@
     <tim_validate_max_characters translate="message" module="tim_recommendation">
         <message>The maximum number of characters is </message>
     </tim_validate_max_characters>
+    <tim_add_images_to_opinion_by_ajax_error translate="message" module="tim_recommendation">
+        <message>Something went wrong. Please add again last images.</message>
+    </tim_add_images_to_opinion_by_ajax_error>
+    <tim_add_images_to_opinion_by_ajax_error_max_files_size translate="message" module="tim_recommendation">
+        <message>You can not transfer files. Maximum number of files to be transferred to </message>
+    </tim_add_images_to_opinion_by_ajax_error_max_files_size>
 </jstranslator>
