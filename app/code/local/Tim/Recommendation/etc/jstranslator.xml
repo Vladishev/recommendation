@@ -26,7 +26,7 @@
         <message>. They are acceptable image files in jpg or png.</message>
     </tim_validate_file_type_two>
     <tim_validate_file_size translate="message" module="tim_recommendation">
-        <message>. The maximum size is 5 m.</message>
+        <message>. The maximum size is </message>
     </tim_validate_file_size>
     <tim_validate_avatar translate="message" module="tim_recommendation">
         <message>Please choose one of the options above.</message>

@@ -303,7 +303,7 @@ loginu, hasło oraz twój nick (czytelnicy będą znali Cię właśnie na jego p
 "Given the link does not lead to the film from YouTube","Podany link nie prowadzi do filmu z serwisu YouTube"
 "You can not upload a file: ","Nie można przesłać pliku: "
 ". They are acceptable image files in jpg or png.",". Dopuszczalne są pliki graficzne w formacie jpg lub png."
-". The maximum size is 5 m.",". Maksymalny rozmiar to 5 mb."
+". The maximum size is ",". Maksymalny rozmiar to "
 "Please choose one of the options above.","Prosimy o wybór jednej z powyższych opcji."
 "Please enter the correct URL. For example http://www.strona.pl or www.strona.pl","Prosimy o wprowadzenie poprawnego URL. Dla przykładu: http://www.strona.pl lub www.strona.pl"
 "You can not upload a file. They are acceptable image files in jpg or png.","Nie można przesłać pliku. Dopuszczalne są pliki graficzne w formacie jpg lub png."

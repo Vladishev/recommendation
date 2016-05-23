@@ -550,7 +550,7 @@ function addFilesToOpinion() {
                         vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. They are acceptable image files in jpg or png.'));
                     }
                 } else {
-                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + "mb.");
+                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + "MB");
                 }
             }
             data.append('userId', userId);
