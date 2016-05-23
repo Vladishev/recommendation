@@ -223,7 +223,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
         <input type="hidden" name="current_category_id" value="<?php echo $product->getCategoryId() ?>"/>
         <input type="hidden" name="add_method" value="<?php echo $customerId ? 'Użytkownik' : null ?>"/>
         <input type="hidden" name="saveTmpImgUrl" value="<?php echo $this->getUrl('recommendation/index/saveOpinionImgTmp') ?>"/>
-        <input type="hidden" name="imageExist" id="imageExist"/>
+        <input type="hidden" name="imageExist" id="imageExist" value="0"/>
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>

@@ -600,10 +600,11 @@ function displayFilesName(fileArray) {
     jQuery.each(fileArray, function (idx, file) {
         images += '<div id="div-img-del-' + idx + '"><span class="delete-image" id="' + idx + '" onclick="deleteFile(this)"">X</span>' + file['name'] + '</div>';
     });
+    jQuery('#downloaded-imgs').append(images);
+
     if (jQuery("#downloaded-imgs div").length) {
         jQuery('#imageExist').val(true);
     }
-    jQuery('#downloaded-imgs').append(images);
 }
 
 /**
@@ -623,12 +624,13 @@ function deleteFile(element) {
         deletedFiles.push(fileName);
         deletedImgs.val(JSON.stringify(deletedFiles));
     }
+    elementParent.remove();
+
     if (jQuery("#downloaded-imgs div").length) {
         jQuery('#imageExist').val(true);
     } else {
-        jQuery('#imageExist').val('');
+        jQuery('#imageExist').val('0');
     }
-    elementParent.remove();
 }
 
 /**
