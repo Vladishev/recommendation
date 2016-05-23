@@ -550,7 +550,7 @@ function addFilesToOpinion() {
                         vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. They are acceptable image files in jpg or png.'));
                     }
                 } else {
-                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + "MB");
+                    vex.dialog.alert(Translator.translate('You can not upload a file: ') + fileInput.files[i]['name'] + Translator.translate('. The maximum size is ') + maxFilesQty + " MB.");
                 }
             }
             data.append('userId', userId);
@@ -601,10 +601,27 @@ function displayFilesName(fileArray) {
         images += '<div id="div-img-del-' + idx + '"><span class="delete-image" id="' + idx + '" onclick="deleteFile(this)"">X</span>' + file['name'] + '</div>';
     });
     jQuery('#downloaded-imgs').append(images);
-
-    if (jQuery("#downloaded-imgs div").length) {
-        jQuery('#imageExist').val(true);
+    var downloadedImgsDivs = jQuery("#downloaded-imgs div");
+    if (downloadedImgsDivs.length) {
+        prepareImagesForSave(downloadedImgsDivs);
     }
+}
+
+function prepareImagesForSave(downloadedImgsDivs){
+    jQuery.each(downloadedImgsDivs, function(id, element){
+        //remove first char(X) from beginning of file name and replace all spaces on underscore
+        var fileName = jQuery(element).text().substring(1, jQuery(element).text().length).replace(/ /g, '_');
+        var imgsForSave = jQuery('#imagesForSave');
+        if (imgsForSave.val() == '') {
+            var imgs = [];
+            imgs.push(fileName);
+            imgsForSave.val(JSON.stringify(imgs))
+        } else {
+            var savedImgs = JSON.parse(imgsForSave.val());
+            savedImgs.push(fileName);
+            imgsForSave.val(JSON.stringify(savedImgs));
+        }
+    });
 }
 
 /**
@@ -624,13 +641,23 @@ function deleteFile(element) {
         deletedFiles.push(fileName);
         deletedImgs.val(JSON.stringify(deletedFiles));
     }
+
+    /** Remove element from list of files for saving*/
+    var imgsForSave = jQuery('#imagesForSave');
+    var savedImgs = JSON.parse(imgsForSave.val());
+    savedImgs = jQuery.grep(savedImgs, function(value) {
+        return value != fileName;
+    });
+    imgsForSave.val(JSON.stringify(savedImgs));
+
+    //remove element from div
     elementParent.remove();
 
-    if (jQuery("#downloaded-imgs div").length) {
-        jQuery('#imageExist').val(true);
-    } else {
-        jQuery('#imageExist').val('0');
-    }
+    //if (jQuery("#downloaded-imgs div").length) {
+    //    jQuery('#imageExist').val(true);
+    //} else {
+    //    jQuery('#imageExist').val('0');
+    //}
 }
 
 /**

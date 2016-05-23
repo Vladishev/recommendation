@@ -771,4 +771,21 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             return false;
         }
     }
+
+    /**
+     * Remove directory recursively
+     * @param $direction
+     * @return bool
+     */
+    public function rmDir($direction) {
+        $files = array_diff(scandir($direction), array('.','..'));
+        foreach ($files as $file) {
+            if(is_dir("$direction/$file")){
+                $this->delDir("$direction/$file");
+            }else{
+                unlink("$direction/$file");
+            }
+        }
+        return rmdir($direction);
+    }
 }

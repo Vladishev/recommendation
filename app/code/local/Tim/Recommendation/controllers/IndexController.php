@@ -24,9 +24,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         if ($this->getRequest()->isPost()) {
             $params = $this->getRequest()->getParams();
             $response = array();
-            if (!empty($params['imageExist'])) {
-                $tmpFolderForFiles = Mage::getBaseDir('media') . DS . 'tim_tmp' . DS . $params['customer_id'];
-                $fileNames = array_diff(scandir($tmpFolderForFiles), array('..', '.'));
+            if (!empty($params['imagesForSave'])) {
+                $imgsForSave = json_decode($params['imagesForSave']);
             }
             $averageRating = $this->_getAverageRating($params);
             $deletedImages = json_decode($params['deleted_imgs']);
@@ -78,9 +77,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     ->setType('url/youtube')
                     ->save();
             }
-            if (isset($fileNames)) {
-                if (!empty($fileNames)) {
-                    $this->_saveOpinionImages($fileNames, $deletedImages, $recomId, $params['customer_id']);
+            if (isset($imgsForSave)) {
+                if (!empty($imgsForSave)) {
+                    $this->_saveOpinionImages($imgsForSave, $deletedImages, $recomId, $params['customer_id']);
                 }
             }
             if (!empty($recomId) || $userAccess['moderation']) {
@@ -121,19 +120,17 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
 
     /**
      * Move opinion images from tmp folder to permanent and save path to images in DB
-     * @param array $allFiles
+     * @param array $filesForSave
      * @param array $deletedFiles
      * @param $recomId
      * @param $userId
      */
-    protected function _saveOpinionImages($allFiles, $deletedFiles, $recomId, $userId)
+    protected function _saveOpinionImages($filesForSave, $deletedFiles, $recomId, $userId)
     {
-        if (empty($deletedFiles)) {
-            $filesForSaving = $allFiles;
-        } else {
-            $filesForSaving = array_diff($allFiles, $deletedFiles);
+        if (!empty($deletedFiles)) {
+            $filesForSave = array_diff($filesForSave, $deletedFiles);
         }
-        foreach ((array)$filesForSaving as $fileName) {
+        foreach ((array)$filesForSave as $fileName) {
             $pathToTmpFile = Mage::getBaseDir('media') . DS . 'tim_tmp' . DS . $userId . DS . $fileName;
             $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
             $fileType = mime_content_type($pathToTmpFile);
@@ -155,7 +152,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             }
         }
         //remove temporary folder
-        rmdir(Mage::getBaseDir('media') . DS . 'tim_tmp' . DS . $userId . DS);
+        Mage::helper('tim_recommendation')->rmDir(Mage::getBaseDir('media') . DS . 'tim_tmp' . DS . $userId . DS);
     }
 
     /**

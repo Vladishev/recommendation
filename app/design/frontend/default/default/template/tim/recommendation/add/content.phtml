@@ -198,6 +198,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
                     <label for="recommendation-img" class="tim-comm-button-smal"><?php echo $this->__('Load photos') ?></label>
                     <div id="downloaded-imgs"></div>
                     <input type="hidden" name="deleted_imgs" id="deleted-imgs"/>
+                    <input type="hidden" name="imagesForSave" id="imagesForSave"/>
                 </div>
                 <div class="tim-rating-input-url">
                     <p>
@@ -223,7 +224,6 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
         <input type="hidden" name="current_category_id" value="<?php echo $product->getCategoryId() ?>"/>
         <input type="hidden" name="add_method" value="<?php echo $customerId ? 'Użytkownik' : null ?>"/>
         <input type="hidden" name="saveTmpImgUrl" value="<?php echo $this->getUrl('recommendation/index/saveOpinionImgTmp') ?>"/>
-        <input type="hidden" name="imageExist" id="imageExist" value="0"/>
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
