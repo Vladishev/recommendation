@@ -27,72 +27,72 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             if (!empty($params['imageExist'])) {
                 $tmpFolderForFiles = Mage::getBaseDir('media') . DS . 'tim_tmp' . DS . $params['customer_id'];
                 $fileNames = array_diff(scandir($tmpFolderForFiles), array('..', '.'));
-                $deletedImages = json_decode($params['deleted_imgs']);
-                $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
-                $averageRating = $this->_getAverageRating($params);
+            }
+            $averageRating = $this->_getAverageRating($params);
+            $deletedImages = json_decode($params['deleted_imgs']);
 
-                if (!is_dir($folderForFiles)) {
-                    mkdir($folderForFiles, 0700, true);
-                }
-                $userAccess = Mage::helper('tim_recommendation')->getUserLevelAccess($params['customer_id']);
+            $folderForFiles = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation';
+            if (!is_dir($folderForFiles)) {
+                mkdir($folderForFiles, 0700, true);
+            }
+            $userAccess = Mage::helper('tim_recommendation')->getUserLevelAccess($params['customer_id']);
 
-                $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
-                    ->setDateAdd(date('Y-m-d H:i:s'))
-                    ->setUserId($params['customer_id'])
-                    ->setProductId($params['product_id'])
-                    ->setAdvantages($params['opinion-advantages'])
-                    ->setDefects($params['opinion-disadvantages'])
-                    ->setConclusion($params['opinion-summary'])
-                    ->setRatingPrice($params['itemValuetomoney'])
-                    ->setRatingDurability($params['itemDurability'])
-                    ->setRatingFailure($params['itemFailure'])
-                    ->setRatingService($params['itemEaseofinstall'])
-                    ->setAverageRating($averageRating)
-                    ->setRecommend($params['itemDoyourecommend'])
-                    ->setTimIp($params['customer_ip_address'])
-                    ->setTimHost($params['customer_host_name'])
-                    ->setManufacturerId($params['manufacturer_id'])
-                    ->setCategoryId($params['current_category_id'])
-                    ->setAddMethod($params['add_method']);
-                //sets acceptance to opinion in case if admin give this opportunity for customer
-                if ($userAccess['moderation']) {
-                    $recommendationModel->setAcceptance($userAccess['moderation'])
-                        ->setPublicationDate(date('Y-m-d H:i:s'));
-                }
-                try {
-                    $recommendationModel->save();
-                    $recomId = $recommendationModel->getRecomId();
-                    $response['message'] = $this->getRecomHelper()->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
-                } catch (Exception $e) {
-                    Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-                    $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
-                    $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-                    return;
-                }
-
-                if (!empty($params['link_to_youtube'])) {
-                    Mage::getModel('tim_recommendation/media')
-                        ->setRecomId($recomId)
-                        ->setName($params['link_to_youtube'])
-                        ->setType('url/youtube')
-                        ->save();
-                }
-                if (isset($fileNames)) {
-                    if (!empty($fileNames)) {
-                        $this->_saveOpinionImages($fileNames, $deletedImages, $recomId, $params['customer_id']);
-                    }
-                }
-                if (!empty($recomId) || $userAccess['moderation']) {
-                    $this->saveMd5($recomId);
-                    $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
-                    $event = array('opinion_data' => $eventData);
-                    Mage::dispatchEvent('controller_index_add_opinion_data', $event);
-                }
+            $recommendationModel = Mage::getModel('tim_recommendation/recommendation')
+                ->setDateAdd(date('Y-m-d H:i:s'))
+                ->setUserId($params['customer_id'])
+                ->setProductId($params['product_id'])
+                ->setAdvantages($params['opinion-advantages'])
+                ->setDefects($params['opinion-disadvantages'])
+                ->setConclusion($params['opinion-summary'])
+                ->setRatingPrice($params['itemValuetomoney'])
+                ->setRatingDurability($params['itemDurability'])
+                ->setRatingFailure($params['itemFailure'])
+                ->setRatingService($params['itemEaseofinstall'])
+                ->setAverageRating($averageRating)
+                ->setRecommend($params['itemDoyourecommend'])
+                ->setTimIp($params['customer_ip_address'])
+                ->setTimHost($params['customer_host_name'])
+                ->setManufacturerId($params['manufacturer_id'])
+                ->setCategoryId($params['current_category_id'])
+                ->setAddMethod($params['add_method']);
+            //sets acceptance to opinion in case if admin give this opportunity for customer
+            if ($userAccess['moderation']) {
+                $recommendationModel->setAcceptance($userAccess['moderation'])
+                    ->setPublicationDate(date('Y-m-d H:i:s'));
+            }
+            try {
+                $recommendationModel->save();
+                $recomId = $recommendationModel->getRecomId();
+                $response['message'] = $this->getRecomHelper()->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
+            } catch (Exception $e) {
+                Mage::log($e->getMessage(), null, 'tim_recommendation.log');
+                $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-            } else {
-                $this->_redirectReferer();
                 return;
             }
+
+            if (!empty($params['link_to_youtube'])) {
+                Mage::getModel('tim_recommendation/media')
+                    ->setRecomId($recomId)
+                    ->setName($params['link_to_youtube'])
+                    ->setType('url/youtube')
+                    ->save();
+            }
+            if (isset($fileNames)) {
+                if (!empty($fileNames)) {
+                    $this->_saveOpinionImages($fileNames, $deletedImages, $recomId, $params['customer_id']);
+                }
+            }
+            if (!empty($recomId) || $userAccess['moderation']) {
+                $this->saveMd5($recomId);
+                $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
+                $event = array('opinion_data' => $eventData);
+                Mage::dispatchEvent('controller_index_add_opinion_data', $event);
+            }
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+        } else {
+            $this->_redirectReferer();
+            return;
         }
     }
 
