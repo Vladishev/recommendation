@@ -810,8 +810,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
 
         if (file_exists($imgFullPath) && !file_exists($resizePathFull)) {
             $imageObj = new Varien_Image($imgFullPath);
-            $imageObj->keepAspectRatio(TRUE);
-            $imageObj->keepFrame(TRUE);
+            $imageObj->keepAspectRatio(false);
+            $imageObj->keepFrame(false);
             $imageObj->keepTransparency(TRUE);
             $imageObj->constrainOnly(TRUE);
             $imageObj->quality(60);
