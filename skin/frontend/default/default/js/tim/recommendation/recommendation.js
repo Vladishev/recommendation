@@ -607,20 +607,15 @@ function displayFilesName(fileArray) {
     }
 }
 
-function prepareImagesForSave(downloadedImgsDivs){
-    jQuery.each(downloadedImgsDivs, function(id, element){
+function prepareImagesForSave(downloadedImgsDivs) {
+    var imgs = [];
+    jQuery.each(downloadedImgsDivs, function (id, element) {
         //remove first char(X) from beginning of file name and replace all spaces on underscore
         var fileName = jQuery(element).text().substring(1, jQuery(element).text().length).replace(/ /g, '_');
         var imgsForSave = jQuery('#imagesForSave');
-        if (imgsForSave.val() == '') {
-            var imgs = [];
-            imgs.push(fileName);
-            imgsForSave.val(JSON.stringify(imgs))
-        } else {
-            var savedImgs = JSON.parse(imgsForSave.val());
-            savedImgs.push(fileName);
-            imgsForSave.val(JSON.stringify(savedImgs));
-        }
+        //create array with images for a save
+        imgs.push(fileName);
+        imgsForSave.val(JSON.stringify(imgs));
     });
 }
 
@@ -645,7 +640,7 @@ function deleteFile(element) {
     /** Remove element from list of files for saving*/
     var imgsForSave = jQuery('#imagesForSave');
     var savedImgs = JSON.parse(imgsForSave.val());
-    savedImgs = jQuery.grep(savedImgs, function(value) {
+    savedImgs = jQuery.grep(savedImgs, function (value) {
         return value != fileName;
     });
     imgsForSave.val(JSON.stringify(savedImgs));
