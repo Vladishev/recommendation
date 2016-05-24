@@ -38,7 +38,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerUserTypeId($customerId)
     {
-        $user = Mage::getModel('tim_recommendation/user')->load((int) $customerId, 'customer_id');
+        $user = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id');
         $userTypeId = $user->getUserType();
 
         return $userTypeId;
@@ -63,7 +63,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getRecommendationMd5($recomId)
     {
-        $object = Mage::getModel('tim_recommendation/recommendation')->load((int) $recomId);
+        $object = Mage::getModel('tim_recommendation/recommendation')->load((int)$recomId);
         $md5hash = $object->getMd5();
 
         return $md5hash;
@@ -76,7 +76,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getSiteUrl()
     {
-        $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
+        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
         $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getWww();
         return $siteUrl;
     }
@@ -94,9 +94,9 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if (empty($customerId)) {
             $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
-            $nick = Mage::getModel('tim_recommendation/user')->load((int) $customerId, 'customer_id')->getNick();
+            $nick = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id')->getNick();
         } else {
-            $nick = Mage::getModel('tim_recommendation/user')->load((int) $customerId, 'customer_id')->getNick();
+            $nick = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id')->getNick();
         }
         return $nick;
     }
@@ -108,7 +108,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerBanner()
     {
-        $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
+        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
         $banner = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAd();
         if (!empty($banner)) {
             $banner = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $banner;
@@ -125,7 +125,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerAvatar()
     {
-        $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
+        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
         $avatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
         if (!empty($avatar)) {
             $avatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $avatar;
@@ -142,7 +142,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerDescription()
     {
-        $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
+        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
         $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getDescription();
         return $siteUrl;
     }
@@ -155,7 +155,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerName($customerId)
     {
-        $customer = Mage::getModel('customer/customer')->load((int) $customerId);
+        $customer = Mage::getModel('customer/customer')->load((int)$customerId);
         $name = $customer->getFirstname() . ' ' . $customer->getLastname();
 
         return $name;
@@ -169,7 +169,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerNickname($customerId)
     {
-        $recommendationUser = Mage::getModel('tim_recommendation/user')->load((int) $customerId, 'customer_id');
+        $recommendationUser = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id');
         $nickname = $recommendationUser->getNick();
 
         return $nickname;
@@ -183,9 +183,9 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerNameOrNick($customerId)
     {
-        $customerName = $this->getCustomerNickname((int) $customerId);
+        $customerName = $this->getCustomerNickname((int)$customerId);
         if (empty($customerName)) {
-            $customerName = $this->getCustomerName((int) $customerId);
+            $customerName = $this->getCustomerName((int)$customerId);
         }
 
         return $customerName;
@@ -199,7 +199,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getUserTypeName($userTypeId)
     {
-        $userType = Mage::getModel('tim_recommendation/userType')->load((int) $userTypeId, 'user_type_id');
+        $userType = Mage::getModel('tim_recommendation/userType')->load((int)$userTypeId, 'user_type_id');
         $userTypeName = $userType->getName();
 
         return $userTypeName;
@@ -214,7 +214,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getOpinionMediaPath($opinionId)
     {
         $collection = Mage::getModel('tim_recommendation/media')->getCollection();
-        $collection->addFieldToFilter('recom_id', (int) $opinionId);
+        $collection->addFieldToFilter('recom_id', (int)$opinionId);
         $data = $collection->getData();
         $mediaPaths = array();
         foreach ($data as $item) {
@@ -240,7 +240,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $opinionCollection->addFieldToSelect('user_id');
         $opinionCollection->addFieldToFilter('acceptance', 1);
         if ($customerId) {
-            $opinionCollection->addFieldToFilter('user_id', (int) $customerId);
+            $opinionCollection->addFieldToFilter('user_id', (int)$customerId);
         }
         $qty = count($opinionCollection->getData());
 
@@ -314,7 +314,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getMalpracticeEnabled()
     {
-        $emailStatus = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
+        $emailStatus = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_enabled');
         return $emailStatus;
     }
 
@@ -367,7 +367,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function checkForOpinionComment($recomId)
     {
-        $recommendationRow = Mage::getModel('tim_recommendation/recommendation')->load((int) $recomId);
+        $recommendationRow = Mage::getModel('tim_recommendation/recommendation')->load((int)$recomId);
         if ($parent = $recommendationRow->getParent()) {
             return $parent;
         } else {
@@ -462,7 +462,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getAddOpinionPoint()
     {
         $points = Mage::getStoreConfig('tim_settings/customer_points/add_opinion');
-        return (int) $points;
+        return (int)$points;
     }
 
     /**
@@ -473,7 +473,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getAddOpinionImagePoint()
     {
         $points = Mage::getStoreConfig('tim_settings/customer_points/image_to_opinion');
-        return (int) $points;
+        return (int)$points;
     }
 
     /**
@@ -484,7 +484,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getAddOpinionMoviePoint()
     {
         $points = Mage::getStoreConfig('tim_settings/customer_points/movie_to_opinion');
-        return (int) $points;
+        return (int)$points;
     }
 
     /**
@@ -495,7 +495,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function getAddComentPoint()
     {
         $points = Mage::getStoreConfig('tim_settings/customer_points/add_comment');
-        return (int) $points;
+        return (int)$points;
     }
 
     /**
@@ -543,18 +543,19 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      * @param $customerId
      * @return array
      */
-    public function getUserLevelAccess($customerId){
+    public function getUserLevelAccess($customerId)
+    {
         $userLevels = $this->getUserLevelClient();
         $currentUserLevel = $this->getUserScore($customerId);
         $userLevelExpert = $this->getUserLevelExpert();
         $accesses = array();
         //if user is expert, give all access to him
-        if($currentUserLevel >= $userLevelExpert[0]['point']){
+        if ($currentUserLevel >= $userLevelExpert[0]['point']) {
             $accesses['moderation'] = 1;
             $accesses['update_present_visit_card'] = 1;
-        }else{
-            foreach($userLevels as $level){
-                if($level['point'] == $currentUserLevel){
+        } else {
+            foreach ($userLevels as $level) {
+                if ($level['point'] == $currentUserLevel) {
                     $accesses['moderation'] = $level['moderation'];
                     $accesses['update_present_visit_card'] = $level['update_present_visit_card'];
                 }
@@ -562,6 +563,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $accesses;
     }
+
     /**
      * Gets info about user level for expert
      *
@@ -590,7 +592,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $customerEmail = Mage::getModel('customer/customer')
             ->getCollection()
-            ->addFieldToFilter('entity_id', array( array('eq' => $customerId)))
+            ->addFieldToFilter('entity_id', array(array('eq' => $customerId)))
             ->getFirstItem()
             ->getEmail();
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
@@ -640,7 +642,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getImages($recomId)
     {
-        $opinionMedia = $this->getOpinionMediaPath((int) $recomId);
+        $opinionMedia = $this->getOpinionMediaPath((int)$recomId);
         $images = array();
         foreach ($opinionMedia as $key => $value) {
             if ($key === 'url/youtube') {
@@ -660,8 +662,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         //check on acceptance for opinion or comment
         if (!$recommendationModel->getAcceptance()) {
-            $recomId = (int) $recommendationModel->getRecomId();
-            $userId = (int) $recommendationModel->getUserId();
+            $recomId = (int)$recommendationModel->getRecomId();
+            $userId = (int)$recommendationModel->getUserId();
             $userModel = Mage::getModel('tim_recommendation/user')->load($userId, 'customer_id');
             $mediaModel = Mage::getModel('tim_recommendation/media')->load($recomId, 'recom_id');
             $opinionOrComment = $this->checkOpinionOrComment($recomId);
@@ -697,7 +699,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function checkOpinionOrComment($recomId)
     {
-        $parent = Mage::getModel('tim_recommendation/recommendation')->load((int) $recomId)->getParent();
+        $parent = Mage::getModel('tim_recommendation/recommendation')->load((int)$recomId)->getParent();
         if ($parent) {
             return 'comment';
         } else {
@@ -777,15 +779,48 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      * @param $direction
      * @return bool
      */
-    public function rmDir($direction) {
-        $files = array_diff(scandir($direction), array('.','..'));
+    public function rmDir($direction)
+    {
+        $files = array_diff(scandir($direction), array('.', '..'));
         foreach ($files as $file) {
-            if(is_dir("$direction/$file")){
+            if (is_dir("$direction/$file")) {
                 $this->delDir("$direction/$file");
-            }else{
+            } else {
                 unlink("$direction/$file");
             }
         }
         return rmdir($direction);
+    }
+
+    /**
+     * Resize image and move it to selected directory
+     * @param string $imgFullPath
+     * @param string $folderForFiles
+     * @param string $fileName
+     * @param int $width
+     * @param null $height
+     */
+    public function moveAndResizeImage($imgFullPath, $folderForFiles, $fileName, $width, $height = null)
+    {
+        $imageWidth = getimagesize($imgFullPath)[0];
+        if($imageWidth <= $width){
+            $width = $imageWidth;
+        }
+        $resizePathFull = $folderForFiles . DS . $fileName;
+
+        if (file_exists($imgFullPath) && !file_exists($resizePathFull)) {
+            $imageObj = new Varien_Image($imgFullPath);
+            $imageObj->keepAspectRatio(TRUE);
+            $imageObj->keepFrame(TRUE);
+            $imageObj->keepTransparency(TRUE);
+            $imageObj->constrainOnly(TRUE);
+            $imageObj->quality(60);
+            $imageObj->resize($width, $height);
+            try {
+                $imageObj->save($resizePathFull);
+            } catch (Exception $e) {
+                Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
+            }
+        }
     }
 }

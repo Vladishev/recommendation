@@ -113,6 +113,8 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 if ($file['error'] == 0) {
                     $fileName = str_replace(' ', '_', $file['name']);
                     $this->saveImage($fileName, $tmpFolderForFiles, $file);
+                }else{
+                    Mage::log(Mage::helper('tim_recommendation')->__('File %s wasn\'t upload. Error code %s. Please check http://php.net/manual/en/features.file-upload.errors.php', $file['name'], $file['error']), NULL, 'tim_recommendation.log');
                 }
             }
         }
@@ -147,8 +149,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $fileName);
             }
             if (isset($saveMedia)) {
-                //move file from tmp directory to permanent
-                rename($pathToTmpFile, $folderForFiles . '/' . $fileName);
+                Mage::helper('tim_recommendation')->moveAndResizeImage($pathToTmpFile, $folderForFiles, $fileName, (int) 1000, null);
             }
         }
         //remove temporary folder
