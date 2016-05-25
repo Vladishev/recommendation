@@ -814,8 +814,8 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             $imageObj->keepFrame(false);
             $imageObj->keepTransparency(TRUE);
             $imageObj->constrainOnly(TRUE);
-            $imageObj->quality(60);
             $imageObj->resize($width, $height);
+            $imageObj->quality(60);
             try {
                 $imageObj->save($resizePathFull);
             } catch (Exception $e) {
