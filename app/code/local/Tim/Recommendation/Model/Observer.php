@@ -147,8 +147,8 @@ class Tim_Recommendation_Model_Observer
     {
         $opinionData = $observer->getEvent()->getOpinionData();
         $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
-        $status = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_enabled');
-        $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_opinion_inform');
+        $status = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_enabled');
+        $statusToUser = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_opinion_inform');
         if ($status == 1 and !empty($email)) {
             $this->sendEmail($email, $opinionData, 'Opinion');
         }
@@ -164,8 +164,8 @@ class Tim_Recommendation_Model_Observer
      */
     public function sendAcceptConfirmationEmail($observer)
     {
-        $opinionId = (int) $observer->getEvent()->getOpinionId();
-        $customerId = (int) Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getUserId();
+        $opinionId = (int)$observer->getEvent()->getOpinionId();
+        $customerId = (int)Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getUserId();
         $customerInfo = Mage::getModel('customer/customer')->load($customerId)->getData();
         $customerEmail = $customerInfo['email'];
         $type = Mage::helper('tim_recommendation')->checkOpinionOrComment($opinionId);
@@ -179,7 +179,7 @@ class Tim_Recommendation_Model_Observer
             $customerInfo['type'] = Mage::helper('tim_recommendation')->__('comment');
         }
 
-        $sendConfirmationToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_send_confirmation_' . $type);
+        $sendConfirmationToUser = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_send_confirmation_' . $type);
         if ($sendConfirmationToUser == 1) {
             $this->sendEmail($customerEmail, $customerInfo, $customerSubject);
         }
@@ -195,8 +195,8 @@ class Tim_Recommendation_Model_Observer
         $commentData = $observer->getEvent()->getCommentData();
         Mage::log($commentData, null, 'tim_recommendation.log');
         $email = Mage::getStoreConfig('tim_settings/confirm_set/tim_email_to');
-        $status = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_enabled');
-        $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_inform');
+        $status = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_enabled');
+        $statusToUser = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_comment_inform');
         if (($status == 1) and (!empty($email))) {
             $this->sendEmail($email, $commentData, 'Comment');
         }
@@ -214,9 +214,8 @@ class Tim_Recommendation_Model_Observer
     {
         $malpracticeData = $observer->getEvent()->getMalpracticeData();
         $emailToAdmin = Mage::helper('tim_recommendation')->getMalpracticeEmailTo();
-        $status = Mage::helper('tim_recommendation')->getMalpracticeEmailTo();
-        $statusToUser = (int) Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_inform');
-        if (($status == 1) and (!empty($emailToAdmin))) {
+        $statusToUser = (int)Mage::getStoreConfig('tim_settings/confirm_set/tim_malpractice_inform');
+        if (!empty($emailToAdmin)) {
             $this->sendEmail($emailToAdmin, $malpracticeData, 'Malpractice');
         }
         if ($statusToUser == 1) {
@@ -318,7 +317,7 @@ class Tim_Recommendation_Model_Observer
     public function sendEmailToUser($userId, $userSubject, $userEmail = null)
     {
         $_helper = Mage::helper('tim_recommendation');
-        if(!empty($userId)){
+        if (!empty($userId)) {
             $userInformation = Mage::getModel('customer/customer')->load($userId)->getData();
             $userEmail = $userInformation['email'];
         }
