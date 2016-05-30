@@ -24,12 +24,6 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-/**
- * This class was rewrite because didn't work corect with PNG file during resizing.
- * Extra code was added from 426 to 445
- * Class Varien_Image_Adapter_Gd2
- */
-
 class Varien_Image_Adapter_Gd2 extends Varien_Image_Adapter_Abstract
 {
     protected $_requiredExtensions = Array("gd");
@@ -48,95 +42,12 @@ class Varien_Image_Adapter_Gd2 extends Varien_Image_Adapter_Abstract
      */
     protected $_resized = false;
 
-    public function __construct()
-    {
-        // Initialize shutdown function
-        register_shutdown_function(array($this, 'destruct'));
-    }
-
-    /**
-     * Destroy object image on shutdown
-     */
-    public function destruct()
-    {
-        @imagedestroy($this->_imageHandler);
-    }
-
-    /**
-     * Opens image file.
-     *
-     * @param string $filename
-     * @throws Varien_Exception
-     */
     public function open($filename)
     {
         $this->_fileName = $filename;
         $this->getMimeType();
         $this->_getFileAttributes();
-        if ($this->_isMemoryLimitReached()) {
-            throw new Varien_Exception('Memory limit has been reached.');
-        }
         $this->_imageHandler = call_user_func($this->_getCallback('create'), $this->_fileName);
-    }
-
-    /**
-     * Checks whether memory limit is reached.
-     *
-     * @return bool
-     */
-    protected function _isMemoryLimitReached()
-    {
-        $limit = $this->_convertToByte(ini_get('memory_limit'));
-        /**
-         * In case if memory limit was converted to 0, treat it as unlimited
-         */
-        if ($limit === 0) {
-            return false;
-        }
-        $size = getimagesize($this->_fileName);
-        $requiredMemory = $size[0] * $size[1] * 3;
-
-        return (memory_get_usage(true) + $requiredMemory) > $limit;
-    }
-
-    /**
-     * Convert PHP memory limit value into bytes
-     * Notation in value is supported only for PHP
-     * Shorthand byte options are case insensitive
-     *
-     * @param string $memoryValue
-     *
-     * @throws Varien_Exception
-     * @see http://php.net/manual/en/faq.using.php#faq.using.shorthandbytes
-     *
-     * @return int
-     */
-    protected function _convertToByte($memoryValue)
-    {
-        $memoryValue = trim($memoryValue);
-        if (empty($memoryValue)) {
-            return 0;
-        }
-        if (preg_match('~^([1-9][0-9]*)[\s]*(k|m|g)b?$~i', $memoryValue, $matches)) {
-            $option = strtolower($matches[2]);
-            $memoryValue = $matches[1];
-            switch ($option) {
-                case 'g':
-                    $memoryValue *= 1024;
-                    // no break
-                case 'm':
-                    $memoryValue *= 1024;
-                    // no break
-                case 'k':
-                    $memoryValue *= 1024;
-                    break;
-                default:
-                    break;
-            }
-        }
-        $memoryValue = (int)$memoryValue;
-
-        return $memoryValue > 0 ? $memoryValue : 0;
     }
 
     public function save($destination=null, $newName=null)
@@ -194,13 +105,13 @@ class Varien_Image_Adapter_Gd2 extends Varien_Image_Adapter_Abstract
         $functionParameters[] = $fileName;
 
         // set quality param for JPG file type
-        if (!is_null($this->quality()) && $this->_fileType == IMAGETYPE_JPEG)
+        if (null !== ($this->quality()) && $this->_fileType == IMAGETYPE_JPEG)
         {
             $functionParameters[] = $this->quality();
         }
 
         // set quality param for PNG file type
-        if (!is_null($this->quality()) && $this->_fileType == IMAGETYPE_PNG)
+        if (null !== ($this->quality()) && $this->_fileType == IMAGETYPE_PNG)
         {
             $quality = round(($this->quality() / 100) * 10);
             if ($quality < 1) {
@@ -451,18 +362,18 @@ class Varien_Image_Adapter_Gd2 extends Varien_Image_Adapter_Abstract
 
     public function rotate($angle)
     {
-/*
-        $isAlpha = false;
-        $backgroundColor = $this->_getTransparency($this->_imageHandler, $this->_fileType, $isAlpha);
-        list($r, $g, $b) = $this->_backgroundColor;
-        if ($isAlpha) {
-            $backgroundColor = imagecolorallocatealpha($this->_imageHandler, 0, 0, 0, 127);
-        }
-        elseif (false === $backgroundColor) {
-            $backgroundColor = imagecolorallocate($this->_imageHandler, $r, $g, $b);
-        }
-        $this->_imageHandler = imagerotate($this->_imageHandler, $angle, $backgroundColor);
-//*/
+        /*
+                $isAlpha = false;
+                $backgroundColor = $this->_getTransparency($this->_imageHandler, $this->_fileType, $isAlpha);
+                list($r, $g, $b) = $this->_backgroundColor;
+                if ($isAlpha) {
+                    $backgroundColor = imagecolorallocatealpha($this->_imageHandler, 0, 0, 0, 127);
+                }
+                elseif (false === $backgroundColor) {
+                    $backgroundColor = imagecolorallocate($this->_imageHandler, $r, $g, $b);
+                }
+                $this->_imageHandler = imagerotate($this->_imageHandler, $angle, $backgroundColor);
+        //*/
         $this->_imageHandler = imagerotate($this->_imageHandler, $angle, $this->imageBackgroundColor);
         $this->refreshImageDimensions();
     }
@@ -648,6 +559,10 @@ class Varien_Image_Adapter_Gd2 extends Varien_Image_Adapter_Abstract
         $this->_imageSrcHeight = imagesy($this->_imageHandler);
     }
 
+    function __destruct()
+    {
+        @imagedestroy($this->_imageHandler);
+    }
 
     /*
      * Fixes saving PNG alpha channel
