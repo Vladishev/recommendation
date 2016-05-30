@@ -21,7 +21,7 @@ class Tim_Recommendation_Adminhtml_MalpracticeReportController extends Mage_Admi
      */
     public function indexAction()
     {
-        $this->_title($this->__('Malpractice'));
+        $this->_title($this->__('Abuse'));
         $this->loadLayout();
         $this->_setActiveMenu('report/tim');
         $this->_addContent($this->getLayout()->createBlock('tim_recommendation/adminhtml_malpracticeReport'));

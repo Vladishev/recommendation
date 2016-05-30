@@ -23,7 +23,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport extends Mage_Adminhtm
     {
         $this->_blockGroup = 'tim_recommendation';
         $this->_controller = 'adminhtml_malpracticeReport';
-        $this->_headerText = Mage::helper('tim_recommendation')->__('Malpractice');
+        $this->_headerText = Mage::helper('tim_recommendation')->__('Abuse');
 
         parent::__construct();
         $this->_removeButton('add');

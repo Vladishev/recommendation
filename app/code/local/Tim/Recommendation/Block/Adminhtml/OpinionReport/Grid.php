@@ -46,6 +46,13 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     protected $_manufacturerAttributeId;
 
     /**
+     * Current store id
+     *
+     * @var int
+     */
+    protected $_storeId;
+
+    /**
      * Init grid
      */
     public function __construct()
@@ -64,6 +71,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             ->getIdByCode('customer', 'firstname');
         $this->_lastNameId = Mage::getResourceModel('eav/entity_attribute')
             ->getIdByCode('customer', 'lastname');
+        $this->_storeId = $store = Mage::app()->getStore()->getId();
     }
 
     /**
@@ -89,7 +97,8 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         $collection->getSelect()->joinLeft(array('cpei' => 'catalog_product_entity_int'),
             'main_table.product_id = cpei.entity_id AND cpei.attribute_id = ' . $this->_manufacturerAttributeId,
             array('manufacturer_id' => 'value'));
-        $collection->getSelect()->joinLeft(array('eaov' => 'eav_attribute_option_value'), 'cpei.value = eaov.option_id',
+        $collection->getSelect()->joinLeft(array('eaov' => 'eav_attribute_option_value'), 'cpei.value = eaov.option_id
+        AND eaov.store_id = ' . $this->_storeId,
             array('manufacturer_name' => 'value'));
         $collection->getSelect()->joinLeft(array('cev' => 'customer_entity_varchar'),
             "cev.entity_id = main_table.user_id AND cev.attribute_id = " . $this->_firstNameId, array('customer_firstname' => 'value'));
