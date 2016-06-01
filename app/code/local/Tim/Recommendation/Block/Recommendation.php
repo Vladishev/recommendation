@@ -503,10 +503,10 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $placeholderText = '';
         if (!empty($opinionLimitCharacters['min'])) {
-            $placeholderText .= $this->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
+            $placeholderText .= $this->getRecomHelper()->__('The minimum number of characters is ') . $opinionLimitCharacters['min'] . '<br>';
         }
         if (!empty($opinionLimitCharacters['max'])) {
-            $placeholderText .= $this->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
+            $placeholderText .= $this->getRecomHelper()->__('The maximum number of characters is ') . $opinionLimitCharacters['max'];
         }
         return $placeholderText;
     }
@@ -539,10 +539,10 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $placeholderText = '';
         if (!empty($commentLimitCharacters['min'])) {
-            $placeholderText .= $this->__('The minimum number of characters is %s', $commentLimitCharacters['min']) . '<br>';
+            $placeholderText .= $this->getRecomHelper()->__('The minimum number of characters is %s', $commentLimitCharacters['min']) . '<br>';
         }
         if (!empty($commentLimitCharacters['max'])) {
-            $placeholderText .= $this->__('The maximum number of characters is %s', $commentLimitCharacters['max']);
+            $placeholderText .= $this->getRecomHelper()->__('The maximum number of characters is %s', $commentLimitCharacters['max']);
         }
         return $placeholderText;
     }

@@ -803,7 +803,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function moveAndResizeImage($imgFullPath, $folderForFiles, $fileName, $width, $height = null)
     {
         $imageWidth = getimagesize($imgFullPath)[0];
-        if($imageWidth <= $width){
+        if ($imageWidth <= $width) {
             $width = $imageWidth;
         }
         $resizePathFull = $folderForFiles . DS . $fileName;

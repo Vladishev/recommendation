@@ -25,6 +25,11 @@ class Tim_Recommendation_Block_Adminhtml_CommentInfo extends Mage_Adminhtml_Bloc
         return $comment;
     }
 
+    /**
+     * Preparing block layout
+     *
+     * @return Tim_Recommendation_Block_Adminhtml_CommentInfo
+     */
     protected function _prepareLayout()
     {
         $this->setChild('back_button',

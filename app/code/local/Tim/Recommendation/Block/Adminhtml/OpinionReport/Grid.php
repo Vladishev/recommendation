@@ -174,7 +174,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'index' => 'recom_id',
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RecomMedia',
             'type' => 'options',
-            'options' => array('No' => $this->__('No'), 'Yes' => $this->__('Yes')),
+            'options' => array('No' => Mage::helper('tim_recommendation')->__('No'), 'Yes' => Mage::helper('tim_recommendation')->__('Yes')),
             'filter_condition_callback' => array($this, '_mediaFilter'),
             'sortable' => false
         ));
@@ -183,7 +183,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'width' => '50',
             'index' => 'add_method',
             'type' => 'options',
-            'options' => array('Użytkownik' => $this->__('User'), 'Z pliku' => $this->__('From file')),
+            'options' => array('Użytkownik' => Mage::helper('tim_recommendation')->__('User'), 'Z pliku' => Mage::helper('tim_recommendation')->__('From file')),
         ));
         $this->addColumn('user_type', array(
             'header' => Mage::helper('tim_recommendation')->__('User type'),
@@ -217,7 +217,7 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
             'index' => 'acceptance',
             'filter_index' => 'main_table.acceptance',
             'type' => 'options',
-            'options' => array(0 => $this->__('No'), 1 => $this->__('Yes')),
+            'options' => array(0 => Mage::helper('tim_recommendation')->__('No'), 1 => Mage::helper('tim_recommendation')->__('Yes')),
         ));
         $this->addColumn('display_opinion',
             array(
@@ -303,6 +303,12 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
         return $this;
     }
 
+    /**
+     * Retrieve row click URL
+     *
+     * @param $row
+     * @return string
+     */
     public function getRowUrl($row)
     {
         return $this->getUrl('*/opinionReport/opinionInfo', array('id' => $row->getRecomId()));

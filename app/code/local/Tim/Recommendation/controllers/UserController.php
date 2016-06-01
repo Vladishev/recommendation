@@ -280,6 +280,5 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             return false;
         }
-
     }
 }

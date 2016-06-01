@@ -91,7 +91,7 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
             'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_RenderTitle',
             'type' => 'options',
             'align' => 'center',
-            'options' => array('Opinion' => $this->__('Opinion'), 'Comment' => $this->__('Comment')),
+            'options' => array('Opinion' => Mage::helper('tim_recommendation')->__('Opinion'), 'Comment' => Mage::helper('tim_recommendation')->__('Comment')),
             'filter_condition_callback' => array($this, '_opinionRecomFilter'),
         ));
         $this->addColumn('recom_id', array(
@@ -195,6 +195,12 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
         return $collection;
     }
 
+    /**
+     * Retrieve row click URL
+     *
+     * @param $row
+     * @return string
+     */
     public function getRowUrl($row)
     {
         if($row->getParent()){

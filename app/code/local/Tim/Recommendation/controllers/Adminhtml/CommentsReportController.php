@@ -29,6 +29,9 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
         $this->renderLayout();
     }
 
+    /**
+     * Comment info action
+     */
     public function commentInfoAction()
     {
         $this->_title(Mage::helper('tim_recommendation')->__('Comment info'));

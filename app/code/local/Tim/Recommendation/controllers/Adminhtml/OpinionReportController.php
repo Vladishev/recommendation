@@ -21,7 +21,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
      */
     public function indexAction()
     {
-        $this->_title($this->__('Opinions'));
+        $this->_title(Mage::helper('tim_recommendation')->__('Opinions'));
         $this->loadLayout();
         $this->_setActiveMenu('report/tim');
         $this->_addContent($this->getLayout()->createBlock('tim_recommendation/adminhtml_opinionReport'));
@@ -33,7 +33,7 @@ class Tim_Recommendation_Adminhtml_OpinionReportController extends Mage_Adminhtm
      */
     public function opinionInfoAction()
     {
-        $this->_title($this->__('Opinion info'));
+        $this->_title(Mage::helper('tim_recommendation')->__('Opinion info'));
         $this->loadLayout();
         $this->renderLayout();
     }
