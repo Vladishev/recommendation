@@ -647,12 +647,6 @@ function deleteFile(element) {
 
     //remove element from div
     elementParent.remove();
-
-    //if (jQuery("#downloaded-imgs div").length) {
-    //    jQuery('#imageExist').val(true);
-    //} else {
-    //    jQuery('#imageExist').val('0');
-    //}
 }
 
 /**
