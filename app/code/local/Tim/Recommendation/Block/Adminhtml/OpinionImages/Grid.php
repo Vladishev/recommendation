@@ -88,6 +88,8 @@ class Tim_Recommendation_Block_Adminhtml_OpinionImages_Grid extends Mage_Adminht
     }
 
     /**
+     * Retrieve row click URL
+     *
      * @param $row
      * @return string
      */

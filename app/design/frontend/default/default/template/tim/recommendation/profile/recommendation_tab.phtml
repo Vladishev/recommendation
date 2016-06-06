@@ -11,7 +11,7 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
 <div class="fieldset">
     <h2 class="legend"><?php echo $this->__('Account Settings opinion') ?></h2>
     <ul class="form-list">
-        <?php if($userLevelAccess['update_present_visit_card']): ?>
+        <?php if(!empty($userLevelAccess['update_present_visit_card'])): ?>
         <li>
             <label for="url"><?php echo $_helper->__('WWW') ?></label>
             <div class="input-box">
@@ -25,7 +25,7 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
                 <input type="text" name="nick" id="nick" class="input-text required-entry" value="<?php echo $_helper->getUserNick(); ?>" />
             </div>
         </li>
-        <?php if($userLevelAccess['update_present_visit_card']): ?>
+        <?php if(!empty($userLevelAccess['update_present_visit_card'])): ?>
         <li>
             <label for="banner"><?php echo $_helper->__('Banner') ?></label>
             <div class="input-box tim-rating-input">
@@ -76,7 +76,7 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
                 </div>
             </div>
         </li>
-        <?php if($userLevelAccess['update_present_visit_card']):?>
+        <?php if(!empty($userLevelAccess['update_present_visit_card'])):?>
             <li>
                 <label for="description"><?php echo $_helper->__('Description') ?></label>
                 <div class="input-box">

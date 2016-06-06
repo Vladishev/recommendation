@@ -50,7 +50,7 @@
                                     </tim_recommendation>
                                     <tim_avatar_settings module="tim_recommendation">
                                         <title>Avatar settings</title>
-                                    </tim_avatar_settings >
+                                    </tim_avatar_settings>
                                     <tim_salt module="tim_recommendation">
                                         <title>Salt</title>
                                     </tim_salt>

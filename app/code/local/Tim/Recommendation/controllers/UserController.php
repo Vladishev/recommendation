@@ -74,11 +74,11 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         if (!empty($postData['banner-hide'])) {
             $banner = explode('|', $postData['banner-hide']);
         }
-        $siteUrl = $postData['url'];
-        if (!is_null($postData['description'])) {
+        $siteUrl = !empty($postData['url']) ? $postData['url'] : '';
+        if (!empty($postData['description'])) {
             $description = $postData['description'];
         }
-        if (!is_null($postData['nick'])) {
+        if (!empty($postData['nick'])) {
             $nick = $postData['nick'];
         }
         $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
@@ -280,6 +280,5 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
             Mage::log($e->getMessage(), null, 'tim_recommendation.log');
             return false;
         }
-
     }
 }

@@ -41,10 +41,10 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
     {
         //check on malpractice or recommendation
         if ($this->getRequest()->getParam('malpracticeId')) {
-            $id = (int) $this->getRequest()->getParam('malpracticeId');
+            $id = (int)$this->getRequest()->getParam('malpracticeId');
             $objectName = 'tim_recom_malpractice';
-        } elseif($this->getRequest()->getParam('recomId')) {
-            $id = (int) $this->getRequest()->getParam('recomId');
+        } elseif ($this->getRequest()->getParam('recomId')) {
+            $id = (int)$this->getRequest()->getParam('recomId');
             $objectName = 'tim_recommendation';
         }
 
@@ -71,8 +71,7 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
         $this->addColumn('admin_username', array(
             'header' => Mage::helper('tim_recommendation')->__('Admin'),
             'width' => '30',
-            'index' => 'admin_id',
-            'renderer' => 'Tim_Recommendation_Block_Adminhtml_Render_AdminUsername',
+            'index' => 'username',
             'filter_index' => 'username',
         ));
         $this->addColumn('note', array(
@@ -80,7 +79,6 @@ class Tim_Recommendation_Block_Adminhtml_NoteReport_Grid extends Mage_Adminhtml_
             'width' => '200',
             'index' => 'note',
             'filter_index' => 'main_table.note',
-
         ));
         $this->addColumn('date_add', array(
             'header' => Mage::helper('tim_recommendation')->__('Date Added'),

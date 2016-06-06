@@ -27,9 +27,9 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderTitle extends Mage_Adminht
         $parentId = (int) $row->getParent();
 
         if (!empty($parentId)) {
-            $title = $this->__('Comment');
+            $title = Mage::helper('tim_recommendation')->__('Comment');
         } else {
-            $title = $this->__('Opinion');
+            $title = Mage::helper('tim_recommendation')->__('Opinion');
         }
 
         return $title;

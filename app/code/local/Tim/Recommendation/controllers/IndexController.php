@@ -55,7 +55,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setCategoryId($params['current_category_id'])
                 ->setAddMethod($params['add_method']);
             //sets acceptance to opinion in case if admin give this opportunity for customer
-            if ($userAccess['moderation']) {
+            if (!empty($userAccess['moderation'])) {
                 $recommendationModel->setAcceptance($userAccess['moderation'])
                     ->setPublicationDate(date('Y-m-d H:i:s'));
             }
@@ -65,7 +65,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $response['message'] = $this->getRecomHelper()->__('Thank you for adding opinion. Your opinion has been submitted for review by the administrator.');
             } catch (Exception $e) {
                 Mage::log($e->getMessage(), null, 'tim_recommendation.log');
-                $response['message'] = Mage::helper('tim_recommendation')->__('Can\'t add opinion. Please try again.');
+                $response['message'] = $this->getRecomHelper()->__('Can\'t add opinion. Please try again.');
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
                 return;
             }
@@ -82,7 +82,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     $this->_saveOpinionImages($imgsForSave, $deletedImages, $recomId, $params['customer_id']);
                 }
             }
-            if (!empty($recomId) || $userAccess['moderation']) {
+            if (!empty($recomId) || !empty($userAccess['moderation'])) {
                 $this->saveMd5($recomId);
                 $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'opinion');
                 $event = array('opinion_data' => $eventData);
@@ -114,7 +114,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                     $fileName = str_replace(' ', '_', $file['name']);
                     $this->saveImage($fileName, $tmpFolderForFiles, $file);
                 }else{
-                    Mage::log(Mage::helper('tim_recommendation')->__('File %s wasn\'t upload. Error code %s. Please check http://php.net/manual/en/features.file-upload.errors.php', $file['name'], $file['error']), NULL, 'tim_recommendation.log');
+                    Mage::log($this->getRecomHelper()->__('File %s wasn\'t upload. Error code %s. Please check http://php.net/manual/en/features.file-upload.errors.php', $file['name'], $file['error']), NULL, 'tim_recommendation.log');
                 }
             }
         }
@@ -146,7 +146,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 $saveMedia = $mediaModel->save();
             } catch (Exception $e) {
                 Mage::log($e->getMessage(), NULL, 'tim_recommendation.log');
-                $response['message'] = Mage::helper('tim_recommendation')->__('Didn\'t save %s file.', $fileName);
+                $response['message'] = $this->getRecomHelper()->__('Didn\'t save %s file.', $fileName);
             }
             if (isset($saveMedia)) {
                 Mage::helper('tim_recommendation')->moveAndResizeImage($pathToTmpFile, $folderForFiles, $fileName, (int) 1000, null);
@@ -206,7 +206,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
         $eventData['date_add'] = $recommendationData->getDateAdd();
         $eventData['user_id'] = $recommendationData->getUserId();
         $userAccess = Mage::helper('tim_recommendation')->getUserLevelAccess($eventData['user_id']);
-        $eventData['user_moderation'] = $userAccess['moderation'];
+        $eventData['user_moderation'] = !empty($userAccess['moderation']) ? $userAccess['moderation'] : '';
 
         if ($type === 'opinion') {
             $productId = $recommendationData->getProductId();
@@ -396,7 +396,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setTimHost($params['customer_host_name'])
                 ->setAddMethod($params['add_method']);
             //sets acceptance to comment in case if admin give this opportunity for customer
-            if ($userAccess['moderation']) {
+            if (!empty($userAccess['moderation'])) {
                 $recommendationModel->setAcceptance($userAccess['moderation'])
                     ->setPublicationDate(date('Y-m-d H:i:s'));
             }
@@ -409,7 +409,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 Mage::log($e->getMessage(), null, 'tim_recommendation.log');
                 $response['message'] = $this->getRecomHelper()->__('Can\'t add comment. Please try again.');
             }
-            if (!empty($recomId) || $userAccess['moderation']) {
+            if (!empty($recomId) || !empty($userAccess['moderation'])) {
                 $this->saveMd5($recomId);
                 $eventData = $this->_getDataForConfirmEmail($recomId, $recommendationModel, 'comment');
                 $event = array('comment_data' => $eventData);
@@ -470,6 +470,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      */
     public function reArrangeFiles($fileArray)
     {
+        $newFileArray = array();
         foreach ($fileArray as $key => $all) {
             foreach ($all as $i => $val) {
                 $newFileArray[$i][$key] = $val;

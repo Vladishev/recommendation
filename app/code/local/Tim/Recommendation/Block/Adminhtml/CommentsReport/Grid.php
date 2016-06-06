@@ -138,7 +138,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'width' => '50',
             'index' => 'add_method',
             'type' => 'options',
-            'options' => array('Użytkownik' => $this->__('User'), 'Z pliku' => $this->__('From file')),
+            'options' => array('Użytkownik' => Mage::helper('tim_recommendation')->__('User'), 'Z pliku' => Mage::helper('tim_recommendation')->__('From file')),
         ));
         $this->addColumn('acceptance', array(
             'header' => Mage::helper('tim_recommendation')->__('Acceptance'),
@@ -146,7 +146,7 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
             'index' => 'acceptance',
             'filter_index' => 'main_table.acceptance',
             'type' => 'options',
-            'options' => array(0 => $this->__('No'), 1 => $this->__('Yes')),
+            'options' => array(0 => Mage::helper('tim_recommendation')->__('No'), 1 => Mage::helper('tim_recommendation')->__('Yes')),
         ));
         $this->addColumn('display_comment',
             array(
@@ -189,6 +189,11 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         return parent::_prepareColumns();
     }
 
+    /**
+     * Prepare grid massaction actions
+     *
+     * @return $this
+     */
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('recom_id');
@@ -212,6 +217,12 @@ class Tim_Recommendation_Block_Adminhtml_CommentsReport_Grid extends Mage_Adminh
         return $this;
     }
 
+    /**
+     * Retrieve row click URL
+     *
+     * @param $row
+     * @return string
+     */
     public function getRowUrl($row)
     {
         return $this->getUrl('*/commentsReport/commentInfo', array('id' => $row->getRecomId()));
