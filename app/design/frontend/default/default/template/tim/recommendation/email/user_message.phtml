@@ -1,0 +1,7 @@
+<?php if ($this->getMessageType() == 'opinion'): ?>
+    <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Dziękujemy, za zgłoszenie opinii. Twoja opinia została przesłana do weryfikacji przez administratora.</p>
+<?php elseif ($this->getMessageType() == 'comment'): ?>
+    <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Dziękujemy, za zgłoszenie komentarza. Twój komentarz został przesłany do weryfikacji przez administratora.</p>
+<?php elseif ($this->getMessageType() == 'malpractice'): ?>
+    <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Dziękujemy, za zgłoszenie nadużycia. Twój wpis został przesłany do weryfikacji przez administratora.</p>
+<?php endif; ?>

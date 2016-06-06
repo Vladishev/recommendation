@@ -325,6 +325,7 @@ class Tim_Recommendation_Model_Observer
             $userEmail = $userInformation['email'];
         }
         $userInformation['subject'] = $_helper->__($userSubject);
+        $userInformation['type'] = $userSubject;
 
         $this->sendEmail($userEmail, $userInformation, 'User');
     }
