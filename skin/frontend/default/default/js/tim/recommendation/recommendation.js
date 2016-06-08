@@ -707,11 +707,32 @@ function displayRatingStars() {
 function scrollToAddOpinion() {
     // Scroll down for adding an opinion for app/design/frontend/default/default/template/tim/recommendation/rating/product_view.phtml
     jQuery('#tim-scroll-add-opinion').on('click', function () {
-        showAddOpinionForm();
-        jQuery('html, body').animate({
-            scrollTop: jQuery(jQuery(this).attr('href')).offset().top
-        }, 500);
-        return false;
+        if (jQuery('#tim-add-opinion-layout').is(":visible")) {
+            jQuery('html, body').animate({
+                scrollTop: jQuery('#tim-recom-add-header').offset().top
+            }, 500);
+            return false;
+        } else {
+            showAddOpinionForm();
+            jQuery('html, body').animate({
+                scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+            }, 500);
+            return false;
+        }
+    });
+    jQuery('#tim-see-more-button').on('click', function () {
+        if (jQuery('#tim-add-opinion-layout').is(":visible")) {
+            jQuery('html, body').animate({
+                scrollTop: jQuery('#tim-recom-add-header').offset().top
+            }, 500);
+            return false;
+        } else {
+            showAddOpinionForm();
+            jQuery('html, body').animate({
+                scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+            }, 500);
+            return false;
+        }
     });
 }
 
