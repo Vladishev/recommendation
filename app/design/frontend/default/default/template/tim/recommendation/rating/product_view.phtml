@@ -7,13 +7,13 @@ $productData = $this->getProductOpinionInfo($product_id);
         <span><?php echo $this->__('Product rating: %s/5', $productData['rating']) ?></span>
     </div>
     <div>
-        <a href="#add-opinion"><?php echo $this->__('see more') . ' >' ?></a>
+        <a href="#tim-add-opinion-layout" id="tim-see-more-button"><?php echo $this->__('see more') . ' >' ?></a>
     </div>
 <?php else: ?>
     <div>
         <span><?php echo $this->__('Product rating'); ?>:</span>
     </div>
     <div>
-        <a id="tim-scroll-add-opinion" href="#tim-add-opinion-layout"><?php echo $this->__('add opinion') ?></a>
+        <a href="#tim-add-opinion-layout" id="tim-scroll-add-opinion"><?php echo $this->__('add opinion') ?></a>
     </div>
 <?php endif; ?>

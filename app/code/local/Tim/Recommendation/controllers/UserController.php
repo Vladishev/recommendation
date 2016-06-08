@@ -21,7 +21,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
      */
     public function profileAction()
     {
-        $userId = (int) $this->getRequest()->getParam('id');
+        $userId = (int)$this->getRequest()->getParam('id');
         $userData = Mage::getModel('customer/customer')->load($userId);
         if ($userData->getEntityId()) {
             Mage::register('user_data', $userData);
@@ -47,6 +47,9 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
      */
     public function editAction()
     {
+        if (!Mage::getSingleton('customer/session')->isLoggedIn()) {
+            return $this->_redirect('customer/account/login', array('_secure' => true));
+        }
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -81,7 +84,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         if (!is_null($postData['nick'])) {
             $nick = $postData['nick'];
         }
-        $customerId = (int) Mage::helper('customer')->getCustomer()->getEntityId();
+        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
         $path = Mage::getBaseDir('media') . '/tim/recommendation';
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();
