@@ -4,15 +4,10 @@ $opinionData = $this->getOpinionData($recomId);
 $averageRating = $this->getProductEvaluation($recomId);
 ?>
 <div class="tim-rating">
-    <div class="tim-rating-title"><?php echo $this->__('EVALUATION OF PRODUCT'); ?>:</div>
-    <div class="tim-rating-score-main">
-        <?php echo $averageRating ?><span>/5<span>
-    </div>
     <div class="tim-rating-score-part">
         <?php echo $this->__('Value for money'); ?>:
         <div class="tim-chart tim-pricequality">
             <div class="tim-rating-price tim-chart-stars tim-stars-<?php echo $opinionData['rating_price'] ?>">
-                <?php echo $opinionData['rating_price'] ?>/5
             </div>
         </div>
     </div>
@@ -20,7 +15,6 @@ $averageRating = $this->getProductEvaluation($recomId);
         <?php echo $this->__('Production quality'); ?>:
         <div class="tim-chart tim-durability">
             <div class="tim-rating-durability tim-chart-stars tim-stars-<?php echo $opinionData['rating_durability'] ?>">
-                <?php echo $opinionData['rating_durability'] ?>/5
             </div>
         </div>
     </div>
@@ -28,7 +22,6 @@ $averageRating = $this->getProductEvaluation($recomId);
         <?php echo $this->__('Durability and reliability'); ?>:
         <div class="tim-chart tim-failure">
             <div class="tim-rating-failure tim-chart-stars tim-stars-<?php echo $opinionData['rating_failure'] ?>">
-                <?php echo $opinionData['rating_failure'] ?>/5
             </div>
         </div>
     </div>
@@ -36,22 +29,27 @@ $averageRating = $this->getProductEvaluation($recomId);
         <?php echo $this->__('Easy to install'); ?>:
         <div class="tim-chart tim-assembly">
             <div class="tim-rating-service tim-chart-stars tim-stars-<?php echo $opinionData['rating_service'] ?>">
-                <?php echo $opinionData['rating_service'] ?>/5
             </div>
         </div>
     </div>
-    <div class="tim-rating-score-part">
-        <?php echo $this->__("Do you purchased this product"); ?>:
+    <div class="tim-rating-score-part tim-rating-score-part-thin">
+        <?php echo $this->__("Do you purchased this product"); ?>
         <div class="tim-chart-boolean">
             <span class="byIt-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="byIt-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
         </div>
     </div>
-    <div class="tim-rating-score-part">
-        <?php echo $this->__('Do you recommend this product'); ?>:
+    <div class="tim-rating-score-part tim-rating-score-part-thin">
+        <?php echo $this->__('Do you recommend this product'); ?>
         <div class="tim-chart-boolean">
             <span class="recommend-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="recommend-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
         </div>
     </div>
+        <div class="tim-rating-score-part tim-rating-score-part-thin tim-rating-score-part-thin-last">
+        <?php echo $this->__('EVALUATION OF PRODUCT'); ?>:
+    <div class="tim-rating-score-main">
+        <?php echo $averageRating ?><span>/5<span>
+    </div>
+        </div>
     <input type="hidden" id="tim-user-choice-info"
            data-byIt="<?php echo $opinionData['by_it'] ? 1 : 0; ?>"
            data-recommend="<?php echo $opinionData['recommend'] ? 1 : 0; ?>"

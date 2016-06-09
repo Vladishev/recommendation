@@ -4,9 +4,6 @@ $opinionsSet = Mage::getModel('tim_recommendation/index')->getOpinionsForProduct
 $k = 0;
 $userData = $this->getPersonalUserData();
 ?>
-    <div class="tim-comm-addopinion" id="add-opinion">
-        <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button>
-    </div>
 <?php if ($opinionsSet): ?>
     <div>
         <div class="tim-comm-header">
@@ -18,13 +15,13 @@ $userData = $this->getPersonalUserData();
                 <?php $this->getChild('left.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('left.recommendation.view', false) ?>
             </div>
-            <div class="tim-comm-main-column tim-opinion-<?php echo $k ?>">
-                <?php $this->getChild('content.recommendation.view')->setData('opinion', $opinion) ?>
-                <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
-            </div>
             <div class="tim-comm-right-column tim-opinion-rating-block-<?php echo $k ?>">
                 <?php $this->getChild('right.recommendation.view')->setData('opinion', $opinion) ?>
                 <?php echo $this->getChildHtml('right.recommendation.view', false) ?>
+            </div>
+                           <div class="tim-comm-main-column tim-opinion-<?php echo $k ?>">
+                <?php $this->getChild('content.recommendation.view')->setData('opinion', $opinion) ?>
+                <?php echo $this->getChildHtml('content.recommendation.view', false) ?>
             </div>
         <?php $k++; endforeach ?>
         </div>
@@ -66,3 +63,6 @@ $userData = $this->getPersonalUserData();
             <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Edit your profile') ?></button>
         </a>
 </div>
+
+<button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button>
+

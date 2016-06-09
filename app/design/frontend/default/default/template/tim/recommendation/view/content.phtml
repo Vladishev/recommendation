@@ -17,19 +17,22 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
 ?>
 <div class="tim-opinion">
     <div class="tim-opinion-date">
-        <?php echo $this->__("Opinion on: <span>%s</span>", $opinionData['date_add']); ?>
+        <?php echo $this->__("Opinion on: <span>%s</span>", $opinionData['date_add']); ?> | 
+                <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $recomId ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $abuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+            <?php echo $this->__('Report abuse') ?>
+        </button>
     </div>
-    <div class="tim-opinion-content-subtitle tim-icon-good"><?php echo $this->__('Product highlights'); ?>:</div>
+    <div class="tim-opinion-content-subtitle"><span class="tim-opinion-content-subtitle-icon">+</span><?php echo $this->__('Product highlights'); ?>:</div>
     <div class="tim-opinion-content">
         <span class="tim-opinion-advantages-toolbar"><?php echo $opinionData['advantages'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
     </div>
-    <div class="tim-opinion-content-subtitle tim-icon-bad"><?php echo $this->__('Product defects'); ?>:</div>
+    <div class="tim-opinion-content-subtitle"><span class="tim-opinion-content-subtitle-icon">-</span><?php echo $this->__('Product defects'); ?>:</div>
     <div class="tim-opinion-content">
         <span class="tim-opinion-defects-toolbar"><?php echo $opinionData['defects'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
     </div>
-    <div class="tim-opinion-content-subtitle tim-icon-summary"><?php echo $this->__('Summary'); ?>:</div>
+    <div class="tim-opinion-content-subtitle"><span class="tim-opinion-content-subtitle-icon">?</span><?php echo $this->__('Summary'); ?>:</div>
     <div class="tim-opinion-content">
         <span class="tim-opinion-conclusion-toolbar"><?php echo $opinionData['conclusion'] ?></span>
         <a class="tim-readmore" href="#"><?php echo $this->__('read more'); ?></a>
@@ -54,11 +57,6 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
         data-id="<?php echo $customerId ?>"
         data-ip="<?php echo $customerIp ?>"
         data-host="<?php echo $customerHostName ?>"/>
-    <div class="tim-abuse-button-position-opinion">
-        <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(<?php echo $recomId ?> ,<?php echo ($customerId) ? $customerId: '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $abuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
-            <?php echo $this->__('Report abuse') ?>
-        </button>
-    </div>
 </div>
 <div class="tim-comment">
     <?php $i = 1; ?>
@@ -73,9 +71,12 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
             <div class="tim-comment-container-content">
                 <?php echo $comment['comment'] ?>
             </div>
-        </div>
+                </div>
         <?php $i++; ?>
     <?php endforeach; ?>
+<button type="button" class="tim-comment-button-add " id="tim-comment-add-show-<?php echo $recomId ?>"
+            onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">
+        <?php echo $this->__("Add your own comment"); ?></button>
 </div>
 <?php if ($qtyComments > 5) : ?>
     <div class="tim-comment-seemore tim-comment-link-<?php echo $recomId ?>">
@@ -86,11 +87,6 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
         <a class="tim-readmore" href="#!" onclick="hideComments(<?php echo $recomId ?>)"><?php echo $this->__('Hide these comments'); ?></a>
     </div>
 <?php endif; ?>
-<div class="tim-comment-add tim-comment-add-main">
-    <button type="button" class="tim-comment-button-add " id="tim-comment-add-show-<?php echo $recomId ?>"
-            onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()'?>">
-        <?php echo $this->__("Add your own comment"); ?></button>
-</div>
 <form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" class="comment-form" id="form-validate-comment-<?php echo $recomId ?>" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
     <input type="hidden" name="recom_id" class="form-recom-id" value="<?php echo $recomId ?>"/>
