@@ -89,7 +89,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
         $userData = $user->getData();
         if (!is_dir($path)) {
-            mkdir($path, 0700, true);
+            mkdir($path, 0755, true);
         }
 
         if (isset($postData['banner-checkbox'])) {
@@ -272,7 +272,7 @@ class Tim_Recommendation_UserController extends Mage_Core_Controller_Front_Actio
         $folderForImage = Mage::getBaseDir('media') . DS . 'tim' . DS . 'recommendation' . DS . $folderName . DS . $folderName . $customerId . DS . 'tmp';
 
         if (!is_dir($folderForImage)) {
-            mkdir($folderForImage, 0700, true);
+            mkdir($folderForImage, 0755, true);
         }
 
         try {

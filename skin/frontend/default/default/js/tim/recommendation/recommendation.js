@@ -727,7 +727,6 @@ function scrollToAddOpinion() {
             }, 500);
             return false;
         } else {
-            showAddOpinionForm();
             jQuery('html, body').animate({
                 scrollTop: jQuery(jQuery(this).attr('href')).offset().top
             }, 500);
