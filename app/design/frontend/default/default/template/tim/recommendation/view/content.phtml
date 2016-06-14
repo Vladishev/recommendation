@@ -88,16 +88,6 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
                 onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()' ?>">
             <?php echo $this->__("Add your own comment"); ?></button>
     </div>
-</div>
-<?php if ($qtyComments > 5) : ?>
-    <div class="tim-comment-seemore tim-comment-link-<?php echo $recomId ?>">
-        <?php echo $this->__("Opinion has <span>%d</span> comments.", $qtyComments); ?>
-        <a class="tim-readmore-comments" href="#!" onclick="seeAllComments(<?php echo $recomId ?>)"><?php echo $this->__('see them all'); ?></a>
-    </div>
-    <div class="tim-comment-seemore tim-comment-hide-link-<?php echo $recomId ?>" style="display: none">
-        <a class="tim-readmore-comments" href="#!" onclick="hideComments(<?php echo $recomId ?>)"><?php echo $this->__('Hide these comments'); ?></a>
-    </div>
-<?php endif; ?>
 <form action="<?php echo $this->getUrl('recommendation/index/addComment') ?>" method="post" class="comment-form" id="form-validate-comment-<?php echo $recomId ?>" autocomplete="off">
     <input type="hidden" name="customer_id" value="<?php echo $customerId ?>"/>
     <input type="hidden" name="recom_id" class="form-recom-id" value="<?php echo $recomId ?>"/>
@@ -146,6 +136,17 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
         </button>
     </div>
 </form>
+</div>
+<?php if ($qtyComments > 5) : ?>
+    <div class="tim-comment-seemore tim-comment-link-<?php echo $recomId ?>">
+        <?php echo $this->__("Opinion has <span>%d</span> comments.", $qtyComments); ?>
+        <a class="tim-readmore-comments" href="#!" onclick="seeAllComments(<?php echo $recomId ?>)"><?php echo $this->__('see them all'); ?></a>
+    </div>
+    <div class="tim-comment-seemore tim-comment-hide-link-<?php echo $recomId ?>" style="display: none">
+        <a class="tim-readmore-comments" href="#!" onclick="hideComments(<?php echo $recomId ?>)"><?php echo $this->__('Hide these comments'); ?></a>
+    </div>
+<?php endif; ?>
+
 
 <div class="tim-popup-hide tim-all-photo-popup" id="tim-all-photo-popup-<?php echo $recomId ?>"
      data-imgurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>">

@@ -18,7 +18,8 @@ $userData = $this->getUserData($userId);
     </div>
     <div class="tim-user-involvement">
         <?php echo $this->__('User involvement'); ?>
-            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>"></div>
+            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
+            </div>
     </div>
     <div class="tim-user-about">
         <a class="tim-user-about-link" data-baseurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $userId; ?>">

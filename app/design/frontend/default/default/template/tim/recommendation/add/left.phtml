@@ -1,30 +1,28 @@
 <?php $userData = $this->getPersonalUserData(); ?>
 <?php if ($userData): ?>
-    <div class="tim-user">
-        <div class="tim-user-photo">
-            <img src="<?php echo $userData['avatar']; ?>" width="269" height="168" alt="user-photo"/>
-        </div>
-        <div class="tim-user-name">
-            <?php echo $this->__('User'); ?>
-            <p><?php echo $userData['customerName']; ?></p>
-        </div>
-        <div class="tim-user-type">
-            <div class="tim-user-type-icon">
-                <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status"/>
-            </div>
-            <?php echo $this->__('User type'); ?>
-            <p><?php echo $userData['customerTypeName']; ?></p>
-        </div>
-        <div class="tim-user-involvement">
-            <?php echo $this->__('User involvement'); ?>
-            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
-                <?php echo $this->__('%s post(s)', $userData['opinionQty']); ?>
-            </div>
-        </div>
-        <div class="tim-user-editprofile">
-            <a href="<?php echo $userData['editUrl']; ?>">
-                <button type="button" class="tim-comm-button-smal"><?php echo $this->__('Edit your profile') ?></button>
-            </a>
-        </div>
+<div class="tim-user">
+    <div class="tim-user-name">
+        <span class="tim-user-name-title"><?php echo $this->__('User'); ?></span>
+        <span><?php echo $userData['customerName']; ?></span>
+        <span class="tim-user-opinion-qty">( <?php echo $this->__('%s post(s)', $userData['opinionQty']); ?>)</span>
+        <span class="tim-user-separator">|</span>
     </div>
+    <div class="tim-user-type">
+        <?php echo $this->__('User type'); ?>
+            <span class="tim-user-type-name"><?php echo $userData['customerTypeName']; ?></span>
+            <span class="tim-user-separator">|</span>
+    </div>
+    <div class="tim-user-involvement">
+        <?php echo $this->__('User involvement'); ?>
+            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
+            </div>
+    </div>
+    <div class="tim-user-editprofile">
+        <a href="<?php echo $userData['editUrl']; ?>">
+            <button type="button" class="tim-comm-button-smal">
+                <?php echo $this->__('Edit your profile') ?>
+            </button>
+        </a>
+    </div>
+</div>
 <?php endif ?>

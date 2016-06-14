@@ -227,15 +227,15 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
 
         <div class="tim-comment-add">
             <?php if ($isLoggedIn): ?>
-                <input type="submit" title="<?php echo $this->__('Add opinion') ?>" class="tim-comment-button-add check-tim-profile-status" id="add-ajax-opinion"
+                <input type="submit" title="<?php echo $this->__('Add opinion') ?>" class="tim-comm-button-addopinion check-tim-profile-status" id="add-ajax-opinion"
                 value="<?php echo $this->__('Add opinion') ?>"/>
             <?php else: ?>
-                <button type="button" title="<?php echo $this->__('Add opinion') ?>" class="tim-comment-button-add" onclick="checkIfUserIsLoggedIn()">
+                <button type="button" title="<?php echo $this->__('Add opinion') ?>" class="tim-comm-button-addopinion" onclick="checkIfUserIsLoggedIn()">
                     <span><span><?php echo $this->__('Add opinion') ?></span></span>
                 </button>
             <?php endif; ?>
         </div>
-        <button type="button" title="<?php echo $this->__('Close form') ?>" class="tim-comment-button-add tim-comment-close-form" onclick="hideAddOpinionForm()">
+        <button type="button" title="<?php echo $this->__('Close form') ?>" class="tim-comm-button-addopinion tim-comment-close-form" onclick="hideAddOpinionForm()">
             <span><span><?php echo $this->__('Close form') ?></span></span>
         </button>
     </fieldset>

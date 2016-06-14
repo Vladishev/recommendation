@@ -1,37 +1,6 @@
 /* common styles for all */
 
 
-.tim-comment-close-form {
-    background: rgba(173, 173, 173, 1);
-    background: -moz-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(173, 173, 173, 1)), color-stop(52%, rgba(163, 163, 163, 1)), color-stop(100%, rgba(173, 173, 173, 1)));
-    background: -webkit-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
-    background: -o-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
-    background: -ms-linear-gradient(top, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
-    background: linear-gradient(to bottom, rgba(173, 173, 173, 1) 0%, rgba(163, 163, 163, 1) 52%, rgba(173, 173, 173, 1) 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#adadad', endColorstr='#adadad', GradientType=0);
-}
-
-.tim-comm-button-smal {
-	background: -moz-linear-gradient(#3F81D1 0%, #216CC9 50%, #0158C1 100%);
-	background: -webkit-linear-gradient(#3F81D1 0%, #216CC9 50%, #0158C1 100%);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#3F81D1), color-stop(0.5, #216CC9), to(#0158C1));
-	background: -o-linear-gradient(#3F81D1 0%, #216CC9 50%, #0158C1 100%);
-	background: linear-gradient(#3F81D1 0%, #216CC9 50%, #0158C1 100%);
-	border: 0px none;
-	color: #ECECED;
-	font-size: 12px;
-	line-height: 28px;
-	text-align: left;
-	border-radius: 3px;
-	text-align:center;
-	width:180px;
-}
-
-.tim-comment-button-add:hover, .tim-comm-button-smal:hover {
-	color:#fff;
-	cursor:pointer;
-}
 
 
 .tim-secondary-title {
@@ -121,26 +90,7 @@
 	color:#000;
 }
 
-.tim-comment-add-window {
-	clear:both;	
-	padding-left:35px;
-    margin-top: 10px;
-	position:relative;
-	top:10px;
-	display:none;
-}
 
-.tim-comment-add-info {
-	color:#656565;
-	margin-bottom:10px;
-	padding-top:10px;
-	border-top:1px solid #eee;
-	font-weight:bold;
-}
-
-.tim-comment-add-window .tim-comment-add {
-	margin-bottom:8px;
-}
 
 /* right collumn for opinion page */
 
@@ -224,9 +174,7 @@
 	background-color:#eee;
 }
 
-.tim-rating-input-container {
-	padding-left:20px;
-}
+
 
 .tim-rating-input {
 	margin-bottom:6px;
@@ -242,16 +190,11 @@ display: none;
 
 .tim-rating-input input[type=file] + label {
 	position:relative;
-	top:2px;
-	color:#ECECED;
-	padding: 8px 25px;
- }
- 
- .tim-rating-input input[type=file] + label:hover {
+	top:7px;
 	color:#fff;
  }
-
-
+ 
+ 
 .tim-rating-input-url {
 	width:100%;
 	min-height: 35px;
@@ -903,24 +846,39 @@ a.tim-readmore:hover, .tim-readmore:hover {
 }
 
 
+.tim-comm-button-smal {
+    background-color: #2196f3;
+        color: #fff;
+    padding: 10px 15px 10px 15px;
+    font-size: 12px;
+    text-align: left;
+    border-radius: 2px;
+    border:none;
+}
+
+.tim-comm-button-smal:hover {
+    background-color:#1565c0;
+    cursor:pointer;
+}
+
 .tim-comm-button-addopinion {
 	background-color: #2196f3;			
 		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAWCAYAAAAxSueLAAABUklEQVRIib2Vuy5EURSGvzkOkRGFN6AVhURCO41SNDqNUHkAGgqV0UhUChQaovEGIpFQoVRJiEJEqMR1TOZTOJIxOTK3Pf5kFfuS9e1/7bPORkWdUi9tja7VWZUYmAA2gDxwAhQIp3ZgBFgFSqgX6nLisFUxp15FQD9wHNBNmo6AvjgZvJYtzABjTSaPgD1gNxkXAOKUjTfANZBpEnhXOZEGO0giuNJgWWA4QO4L4KEabBpYAYpNgGJgDVj8NZs0Xq7Fn/6gatTE6RuyW6k5YLKOHCVgC1hvBHYIfNYBAzitZVMa7DyJ4PrXO/uBtf8HJwIe+f4Zt1IDwD3qgvqojqudgfurSx1Vb9U8apu6phbUZzWr9qg76lv1h7iqiuqm2pFRf6wOAWdADtgG3oEl4P6P0rxQW4tcAU8A5ZZ7k5N8qPtqd+CS/oJ1JLWdVzOhQSpfPxyXMnW0gUwAAAAASUVORK5CYII=);
 background-repeat: no-repeat;
-    background-position: 172px center;
+    background-position: 90% center;
     color: #fff;
-    padding: 0px 0px 0px 15px;
-    font-size: 16px;
-    line-height: 38px;
+    padding: 10px 15px 10px 15px;
+    font-size: 12px;
     text-align: left;
     border-radius: 2px;
-    width: 220px;
     float: right;
     border: none;
+    padding-right: 50px;
 }
 
 .tim-comm-button-addopinion:hover {
 	background-color: #1565c0;	
+    cursor: pointer;
 }
 
 .tim-comm-button-addopinion-bellow {
@@ -1233,7 +1191,7 @@ margin-bottom: 15px;
 
 .tim-opinion-content {
 	width:100%;	
-	margin-bottom:15px;
+	margin-bottom:5px;
 	    overflow: hidden;
 }
 
@@ -1321,7 +1279,7 @@ margin-bottom: 15px;
 
 .tim-comment-button-add {
 	background-color: #2196f3;
-    	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABcElEQVQ4jaXUz4vOURTH8de3+RqpmcYUNVulZjELK0tRFlYWwkZkZalY2dooC9lJbBRJEp5iFkopPxLFfyAxKT8WsyMyPhbf71PfZp6Z5z49nzp1Oufe972de8+pkhzDWXxRrhk8xYU1mSSvk0wkMaLdTzK3Ol7jO1ZwGAcLbvcGV7GEOXztJmuk9Z/gXQFweaNk3fH34lQB8DkulwAXWxtLXeAJTR0HaQmnRwXeam0s1dg0xv4VXMECNuOiJC+S7BjxD84meZlkqhObTPK2SrKA67iEo5jF7yE3+4tr+Njuu4kHeNSnn0zyOcn+9qT5zqlbC2yyXd+rksB2VJqu2YVDOI8z2FdQy3u4jV7/lX90klXHv4FeAfBb36k3WoXj2F0AvKNp3aHAx3i1Tm4Zn1YHBwF/Ylvr78HOdYAfrG2Emf6jdDWBZ7hr+ND9pxlnvzStOT8ICFM4gOkhwC2aOr/HH5wbdUoPsukkD5McSeI/OzY8B6u5Mo8AAAAASUVORK5CYII=);
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAABEVBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8hlvM8nvRIpPVSpvXD4fzI3/vU5vzX6Pzy9/72+f7////QSXe5AAAAUHRSTlMAAwQGCQwNDg8QFRYXGB8gISYrLzBDR0tMTk9QUVJTVFpbXF1fYGlrb3uAhI2Qk5SVmKCipq2vsLGztbe9vr/AwsPFx8jJysvb4ufr8vT1+9hS7rwAAADgSURBVHgBXdD5NsNAFMfxX0XtGkvs1FJKi1qEsRCRRBBLMBbu+z+IOyOTOaef/+Z77jkzd7ByJ6ygBS2uwMLxKJRT1A+NJnY9KAJV1xiwcUaw5DGn/H62jMo2/bs1scFzZGzZySs+fr0RS6Gcgz2V8Xn/Op7HzRgAok8pX6X8JQKcFBPRon+R88zPB7EXsYQzYP1hylEXfb8TCwcdCGBoGJM+GYlYVZF5bfPOjuv2lhEHGW+UXfIHTNtY87SaXXJ8D2ttrQEWQKmEmwuFuZH+1hG0an2j0Iw6Oz3o1neyjD9N0jpmCtF/xQAAAABJRU5ErkJggg==);
 background-repeat: no-repeat;
     background-position: 158px center;
     color: #fff;
@@ -1334,7 +1292,35 @@ background-repeat: no-repeat;
     padding-right: 40px;
 }
 
-.tim-comment-button-add:hover {
-	background-color: #1565c0;
+.tim-comment-close-form {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAGFBMVEX///////////////////////////////8pK8DIAAAAB3RSTlMAdXiipPr7OgbbtQAAAFJJREFUeNqF0DESwCAIRFFRYe9/45A0P3F2JhQCrxBl+FgZ7zZy9ZnSxKaUnUK3YoqnQF2J0WAohgpDMY8Y6gdh7pn/f/MLqfP66rTru+Taw8YFe/EDC/guZrcAAAAASUVORK5CYII=);
+    margin-right:20px;
 }
 
+.tim-comment-button-add:hover {
+	background-color: #1565c0;
+    cursor:pointer;
+}
+
+/* add comment to opinion */
+
+.tim-comment-add-window {
+	padding-left:5px;
+	position:relative;
+	display:none;
+}
+
+.tim-comment-add-info {
+	color:#656565;
+	margin-bottom:10px;
+	font-weight:bold;
+    position: absolute;
+}
+
+
+/* opinon add */
+
+.tim-rating-input-container {
+	padding-left:20px;
+    margin-top:20px;
+}
