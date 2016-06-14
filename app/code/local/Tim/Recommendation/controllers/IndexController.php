@@ -49,6 +49,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
                 ->setRatingService($params['itemEaseofinstall'])
                 ->setAverageRating($averageRating)
                 ->setRecommend($params['itemDoyourecommend'])
+                ->setUseIt($params['itemDoyouuseitem'])
                 ->setTimIp($params['customer_ip_address'])
                 ->setTimHost($params['customer_host_name'])
                 ->setManufacturerId($params['manufacturer_id'])
@@ -223,9 +224,9 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             $eventData['modify_opinion_url'] = Mage::helper('tim_recommendation')->getModifyOpinionUrl($recomId);
 
             if ($recommendationData->getByIt() == 1) {
-                $eventData['by_it'] = $this->getRecomHelper()->__('TAK');
+                $eventData['use_it'] = $this->getRecomHelper()->__('TAK');
             } else {
-                $eventData['by_it'] = $this->getRecomHelper()->__('NIE');
+                $eventData['use_it'] = $this->getRecomHelper()->__('NIE');
             }
             if ($recommendationData->getRecommend() == 1) {
                 $eventData['recommend'] = $this->getRecomHelper()->__('TAK');

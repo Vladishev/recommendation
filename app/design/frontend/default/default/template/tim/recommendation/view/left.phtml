@@ -6,20 +6,22 @@ $userData = $this->getUserData($userId);
 ?>
 <div class="tim-user">
     <div class="tim-user-name">
-        <?php echo $this->__('User'); ?>:
-        <a data-baseurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $userId; ?>"><span><?php echo $userData['customer_name'] ?></span></a> (
-                <?php echo $this->__('%s post(s)', $userData['opinion_qty']); ?>)<span class="tim-user-separator">|</span>
+        <span class="tim-user-name-title"><?php echo $this->__('User'); ?>:</span>
+        <a class="tim-user-name-about-link" data-baseurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>"
+           href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $userId; ?>">
+            <span><?php echo $userData['customer_name'] ?></span></a>
+                <span class="tim-user-opinion-qty">(<?php echo $this->__('%s post(s)', $userData['opinion_qty']); ?>)</span><span class="tim-user-separator">|</span>
     </div>
     <div class="tim-user-type">
         <?php echo $this->__('User type'); ?>:
-            <span><?php echo $userData['user_type_name']; ?></span><span class="tim-user-separator">|</span>
+            <span class="tim-user-type-name"><?php echo $userData['user_type_name']; ?></span><span class="tim-user-separator">|</span>
     </div>
     <div class="tim-user-involvement">
         <?php echo $this->__('User involvement'); ?>
-            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>"</div></div>
+            <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>"></div>
     </div>
     <div class="tim-user-about">
-        <a data-baseurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $userId; ?>">
+        <a class="tim-user-about-link" data-baseurl="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $userId; ?>">
             <?php echo $this->__("View user's profile"); ?>
         </a>
     </div>

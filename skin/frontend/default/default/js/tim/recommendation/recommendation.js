@@ -35,11 +35,11 @@ function renderOpinionsList(response) {
 
         //assigning right classes for cloned blocks and appending it to main div
         $parentLeft.attr('class', 'tim-comm-left-column tim-opinion-user-block-' + i);
-        $parentContent.attr('class', 'tim-comm-main-column tim-opinion-' + i);
         $parentRight.attr('class', 'tim-comm-right-column tim-opinion-rating-block-' + i);
+        $parentContent.attr('class', 'tim-comm-main-column tim-opinion-' + i);
         $mainContainer.append($parentLeft);
-        $mainContainer.append($parentContent);
         $mainContainer.append($parentRight);
+        $mainContainer.append($parentContent);
 
         //Hide open comments forms if they exist
         jQuery('.tim-comment-add-window').hide();
@@ -55,8 +55,14 @@ function renderOpinionsList(response) {
 
         //Render middle part - view/content.phtml
         //Change date
-
-        $parentContent.find('.tim-opinion-date').html('Opinia z dnia: <span>' + opinionData['date_add'] + '</span>');
+        var abuseButtonHtml;
+        if (isLoggedIn == '1') {
+            abuseButtonHtml = '<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>'
+        } else {
+            abuseButtonHtml = '<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',0 ,\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>'
+        }
+        $parentContent.find('.tim-opinion-date-value').html('Opinia z dnia: <span>' + opinionData['date_add'] + '</span> | ');
+        $parentContent.find('.tim-opinion-date-value').append(abuseButtonHtml);
         //Change advantages
         $parentContent.find('.tim-opinion-advantages-toolbar').html(opinionData['advantages']);
         //Change defects
@@ -113,12 +119,6 @@ function renderOpinionsList(response) {
             });
             $parentContent.find('.tim-all-photo-popup-container').append(photoContent);
         }
-        //render abuse button for opinion
-        if (isLoggedIn == '1') {
-            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
-        } else {
-            $parentContent.find('.tim-abuse-button-position-opinion').html('<button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + recomId + ',0 ,\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
-        }
         //render comments
         $parentContent.find('.tim-comment-container').remove();
         opinionData['comments'].forEach(function (item, i) {
@@ -128,12 +128,12 @@ function renderOpinionsList(response) {
                 $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-number-' + i + '"></div>');
             }
             $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-title tim-comment-title-number-' + i + '"></div>');
-            $parentContent.find('.tim-comment-title-number-' + i).append('Comment added <span>' + item['date_add'] + '</span>, user: <span class="tim-last-span' + i + '">' + item['name'] + '</span>');
+            $parentContent.find('.tim-comment-title-number-' + i).append('<div class="tim-comment-container-added-' + i + '">Komentarz dodany <span>' + item['date_add'] + '</span> przez użytkownika: <span class="tim-last-span' + i + '">' + item['name'] + '</span></div>');
             //render abuse button for comment
             if (isLoggedIn == '1') {
-                $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
+                $parentContent.find('.tim-comment-container-added-' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',' + userId + ',\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
             } else {
-                $parentContent.find('.tim-last-span' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',0 ,\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
+                $parentContent.find('.tim-comment-container-added-' + i).append(' | <button type="button" class="tim-markabuse-button" onclick="markUserAbuse(' + item['recom_id'] + ',0 ,\'' + userIp + '\',\'' + abuseController + '\',\'' + userHost + '\')">Zgłoś nadużycie</button>');
             }
             //render comment text
             $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-content">' + item['comment'] + '</div>');
@@ -141,10 +141,11 @@ function renderOpinionsList(response) {
         //render links 'See more comments' and 'Hide comments'
         $parentContent.find('.tim-comment-seemore').remove();
         if (opinionData['comments'].size() > 5) {
-            $parentContent.find('.tim-comment').after('<div class="tim-comment-seemore tim-comment-link-' + recomId + '">Opinia posiada <span>' + opinionData['comments'].size() + '</span> komentarzy. <a class="tim-readmore" href="#!" onclick="seeAllComments(' + recomId + ')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-' + recomId + '" style="display: none"><a class="tim-readmore" href="#!" onclick="hideComments(' + recomId + ')">Ukryj te komentarze</a></div>');
+            $parentContent.find('.tim-comment').after('<div class="tim-comment-seemore tim-comment-link-' + recomId + '">Opinia posiada <span>' + opinionData['comments'].size() + '</span> komentarzy. <a class="tim-readmore-comments" href="#!" onclick="seeAllComments(' + recomId + ')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-' + recomId + '" style="display: none"><a class="tim-readmore-comments" href="#!" onclick="hideComments(' + recomId + ')">Ukryj te komentarze</a></div>');
         }
         //render 'Add comment' button
-        $parentContent.find('.tim-comment-add-main').html('<button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Dodaj własny komentarz</button>');
+        $parentContent.find('.tim-comment-add-main').remove();
+        $parentContent.find('.tim-comment').append('<div class="tim-comment-add-main"><button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Dodaj własny komentarz</button></div>');
         if (isLoggedIn == '1') {
             $parentContent.find('#tim-comment-add-show-' + recomId).attr('onclick', 'showAddComment(' + recomId + ')');
         } else {
@@ -172,38 +173,42 @@ function renderOpinionsList(response) {
 
         //Render left part - view/left.phtml
         var userData = item['userData'];
+        var baseUrl = $parentLeft.find('.tim-user-about-link').data().baseurl;
         //getting magento url
-        var imgPath = $parentLeft.find('.tim-user-photo-tag').data().imgurl;
+        //var imgPath = $parentLeft.find('.tim-user-photo-tag').data().imgurl;
         //setting avatar
-        $parentLeft.find('.tim-user-photo-tag').attr('src', imgPath + userData['avatar']);
+        //$parentLeft.find('.tim-user-photo-tag').attr('src', imgPath + userData['avatar']);
         //setting customer name
-        $parentLeft.find('.tim-user-name').empty().html('<p>Użytkownik</p><p>' + userData['customer_name'] + '</p>');
+        $parentLeft.find('.tim-user-name-title').html('Użytkownik:');
+        $parentLeft.find('.tim-user-name-about-link').html('<span>' + userData['customer_name'] + '</span>');
+        $parentLeft.find('.tim-user-opinion-qty').html('(' + userData['opinion_qty'] + ' wpisów)');
+
         //setting user icon
-        var skinUrl = $parentLeft.find('.tim-user-type-icon-tag').data().skinurl;
-        $parentLeft.find('.tim-user-type-icon-tag').attr('src', skinUrl + 'media/userstatus_icon_timworker.png');
+        //var skinUrl = $parentLeft.find('.tim-user-type-icon-tag').data().skinurl;
+        //$parentLeft.find('.tim-user-type-icon-tag').attr('src', skinUrl + 'media/userstatus_icon_timworker.png');
         //setting user type
         $parentLeft.find('.tim-user-type-name').html(userData['user_type_name']);
         //setting opinion quantity
-        $parentLeft.find('.tim-user-scoregraph').attr('class', 'tim-user-scoregraph tim-score-' + userData['user_score']).html(userData['opinion_qty'] + ' opinii');
+        $parentLeft.find('.tim-user-scoregraph').attr('class', 'tim-user-scoregraph tim-score-' + userData['user_score']);
         //setting link to user page
-        var baseUrl = $parentLeft.find('.tim-user-about-link').data().baseurl;
+        //var baseUrl = $parentLeft.find('.tim-user-about-link').data().baseurl;
         $parentLeft.find('.tim-user-about-link').attr('href', baseUrl + 'recommendation/user/profile/id/' + userData['customer_id']);
 
         //Render right part - view/right.phtml
         //setting average rating
         $parentRight.find('.tim-rating-score-main').html(opinionData['average_rating'] + '<span>/5<span>');
         //setting price rating
-        $parentRight.find('.tim-rating-price').attr('class', 'tim-rating-price tim-chart-stars tim-stars-' + opinionData['rating_price']).html(opinionData['rating_price'] + '<span>/5<span>');
+        $parentRight.find('.tim-rating-price').attr('class', 'tim-rating-price tim-chart-stars tim-stars-' + opinionData['rating_price']);
         //setting durability rating
-        $parentRight.find('.tim-rating-durability').attr('class', 'tim-rating-durability tim-chart-stars tim-stars-' + opinionData['rating_durability']).html(opinionData['rating_durability'] + '<span>/5<span>');
+        $parentRight.find('.tim-rating-durability').attr('class', 'tim-rating-durability tim-chart-stars tim-stars-' + opinionData['rating_durability']);
         //setting failure rating
-        $parentRight.find('.tim-rating-failure').attr('class', 'tim-rating-failure tim-chart-stars tim-stars-' + opinionData['rating_failure']).html(opinionData['rating_failure'] + '<span>/5<span>');
+        $parentRight.find('.tim-rating-failure').attr('class', 'tim-rating-failure tim-chart-stars tim-stars-' + opinionData['rating_failure']);
         //setting service rating
-        $parentRight.find('.tim-rating-service').attr('class', 'tim-rating-service tim-chart-stars tim-stars-' + opinionData['rating_service']).html(opinionData['rating_service'] + '<span>/5<span>');
+        $parentRight.find('.tim-rating-service').attr('class', 'tim-rating-service tim-chart-stars tim-stars-' + opinionData['rating_service']);
         //setting purchased result
         $parentRight.find('.byIt-yes-' + recomId).attr('class', 'byIt-yes-' + recomId);
         $parentRight.find('.byIt-no-' + recomId).attr('class', 'byIt-no-' + recomId);
-        if (opinionData['by_it'] !== null) {
+        if (opinionData['use_it'] !== null) {
             $parentRight.find('.byIt-yes-' + recomId).addClass('tim-chart-boolean-active');
         } else {
             $parentRight.find('.byIt-no-' + recomId).addClass('tim-chart-boolean-active');

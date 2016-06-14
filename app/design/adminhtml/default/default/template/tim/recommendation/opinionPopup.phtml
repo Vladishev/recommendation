@@ -1,7 +1,7 @@
 <?php
 $opinion = $this->getOpinionData();
 $recommend = $opinion['recommend'] ? $this->__('Yes') : $this->__('No');
-$byIt = $opinion['by_it'] ? $this->__('Yes') : $this->__('No');
+$byIt = $opinion['use_it'] ? $this->__('Yes') : $this->__('No');
 $images = $opinion['images'] ? $this->__('Yes') : $this->__('No');
 $movieUrl = $opinion['movie_url'];
 $video = $movieUrl ? "<a href='$movieUrl' target='_blank'>$movieUrl</a>" : $this->__('No');

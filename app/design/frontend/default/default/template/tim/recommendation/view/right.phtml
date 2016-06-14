@@ -35,23 +35,31 @@ $averageRating = $this->getProductEvaluation($recomId);
     <div class="tim-rating-score-part tim-rating-score-part-thin">
         <?php echo $this->__("Do you purchased this product"); ?>
         <div class="tim-chart-boolean">
-            <span class="byIt-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="byIt-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
+            <?php if($opinionData['use_it'] == 1): ?>
+                <span class="byIt-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span>
+            <?php else: ?>
+                <span class="byIt-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="tim-rating-score-part tim-rating-score-part-thin">
         <?php echo $this->__('Do you recommend this product'); ?>
         <div class="tim-chart-boolean">
-            <span class="recommend-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span><span class="recommend-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
+            <?php if($opinionData['recommend'] == 1): ?>
+                <span class="recommend-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span>
+            <?php else: ?>
+                <span class="recommend-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
+            <?php endif; ?>
         </div>
     </div>
-        <div class="tim-rating-score-part tim-rating-score-part-thin tim-rating-score-part-thin-last">
+    <div class="tim-rating-score-part tim-rating-score-part-thin tim-rating-score-part-thin-last">
         <?php echo $this->__('EVALUATION OF PRODUCT'); ?>:
-    <div class="tim-rating-score-main">
-        <?php echo $averageRating ?><span>/5<span>
-    </div>
+        <div class="tim-rating-score-main">
+            <?php echo $averageRating ?><span>/5<span>
         </div>
+    </div>
     <input type="hidden" id="tim-user-choice-info"
-           data-byIt="<?php echo $opinionData['by_it'] ? 1 : 0; ?>"
+           data-byIt="<?php echo $opinionData['use_it'] ? 1 : 0; ?>"
            data-recommend="<?php echo $opinionData['recommend'] ? 1 : 0; ?>"
            data-recomId="<?php echo $recomId ?>"/>
 </div>

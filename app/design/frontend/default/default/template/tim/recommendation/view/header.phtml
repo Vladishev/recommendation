@@ -5,11 +5,10 @@ $opinionPagesCount = $this->getOpinionPagesCount($opinionCount, 10);
 <div class="tim-comm-header">
         <div class="tim-comm-header-title"><?php echo $this->__("Product's opinion"); ?>
                 <button type="button" class="tim-comm-button-addopinion" id="tim-general-add-opinion-button" onclick="showAddOpinionForm()"><?php echo $this->__("Add your own opinion"); ?></button>
-
         </div>
     <div class="tim-comm-header-bellow">
           <div class="tim-comm-header-opinion-count">
-          <?php echo $this->__('Ilość opinii'); ?>: <?php echo $opinionCount ?>
+          <?php echo $this->__('Number of opinions:'); ?> <?php echo $opinionCount ?>
            </div>
            <input
             type="hidden"
@@ -19,7 +18,7 @@ $opinionPagesCount = $this->getOpinionPagesCount($opinionCount, 10);
             data-userid="0"
             data-page="productList"/>
         <div class="tim-pager">
-            <?php echo $this->__('Strona:') ?>
+            <?php echo $this->__('Page:') ?>
                <input
                 type="text"
                 class="tim-pager-box"
