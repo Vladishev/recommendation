@@ -34,21 +34,21 @@ $averageRating = $this->getProductEvaluation($recomId);
     </div>
     <div class="tim-rating-score-part tim-rating-score-part-thin">
         <?php echo $this->__("Do you purchased this product"); ?>
-        <div class="tim-chart-boolean">
+        <div class="tim-use-it-yes-no">
             <?php if($opinionData['use_it'] == 1): ?>
-                <span class="byIt-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span>
+                <span class="use-it-yes>"><?php echo $this->__('Yes'); ?></span>
             <?php else: ?>
-                <span class="byIt-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
+                <span class="use-it-no"><?php echo $this->__('No'); ?></span>
             <?php endif; ?>
         </div>
     </div>
     <div class="tim-rating-score-part tim-rating-score-part-thin">
         <?php echo $this->__('Do you recommend this product'); ?>
-        <div class="tim-chart-boolean">
+        <div class="tim-recommend-yes-no">
             <?php if($opinionData['recommend'] == 1): ?>
-                <span class="recommend-yes-<?php echo $recomId ?>"><?php echo $this->__('Yes'); ?></span>
+                <span class="recommend-yes"><?php echo $this->__('Yes'); ?></span>
             <?php else: ?>
-                <span class="recommend-no-<?php echo $recomId ?>"><?php echo $this->__('No'); ?></span>
+                <span class="recommend-no"><?php echo $this->__('No'); ?></span>
             <?php endif; ?>
         </div>
     </div>

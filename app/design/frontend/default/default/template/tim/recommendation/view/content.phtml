@@ -67,22 +67,24 @@ $commentTextareaValidationClass = $this->getCommentTextareaValidationClass($comm
         data-host="<?php echo $customerHostName ?>"/>
 </div>
 <div class="tim-comment">
-    <?php $i = 1; ?>
-    <?php foreach ($opinionData['comments'] as $comment): ?>
-        <div class="tim-comment-container <?php if ($i > 5) echo 'tim-comment-display-none-' . $recomId ?>" <?php if ($i > 5) echo 'style="display:none;"' ?>>
-            <div class="tim-comment-container-title">
+    <div class="tim-comments-to-opinion">
+        <?php $i = 1; ?>
+        <?php foreach ($opinionData['comments'] as $comment): ?>
+            <div class="tim-comment-container <?php if ($i > 5) echo 'tim-comment-display-none-' . $recomId ?>" <?php if ($i > 5) echo 'style="display:none;"' ?>>
+                <div class="tim-comment-container-title">
                     <?php echo $this->__('Comment added <span>%s</span>, user: <span>%s</span>', $comment['date_add'], $comment['name']); ?> |
-                <button type="button" class="tim-markabuse-button"
-                        onclick="markUserAbuse(<?php echo $comment['recom_id'] ?> ,<?php echo ($customerId) ? $customerId : '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $abuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
-                    <?php echo $this->__('Report abuse') ?>
-                </button>
+                    <button type="button" class="tim-markabuse-button"
+                            onclick="markUserAbuse(<?php echo $comment['recom_id'] ?> ,<?php echo ($customerId) ? $customerId : '0' ?> ,<?php echo "'" . $customerIp . "'" . "," . "'" . $abuseUrl . "'" . "," . "'" . $customerHostName . "'"; ?>)">
+                        <?php echo $this->__('Report abuse') ?>
+                    </button>
+                </div>
+                <div class="tim-comment-container-content">
+                    <?php echo $comment['comment'] ?>
+                </div>
             </div>
-            <div class="tim-comment-container-content">
-                <?php echo $comment['comment'] ?>
-            </div>
-        </div>
-        <?php $i++; ?>
-    <?php endforeach; ?>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+    </div>
     <div class="tim-comment-add-main">
         <button type="button" class="tim-comment-button-add " id="tim-comment-add-show-<?php echo $recomId ?>"
                 onclick="<?php echo $isLoggedIn ? 'showAddComment(' . $recomId . ')' : 'checkIfUserIsLoggedIn()' ?>">

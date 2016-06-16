@@ -1106,25 +1106,8 @@ background-color:#eee;
     background-position: -15px -125px;
 }
 
-.tim-chart-boolean {
+.tim-recommend-yes-no .tim-use-it-yes-no {
     margin-top: 5px;
-}
-
-.tim-chart-boolean span {
-    display: inline-block;
-    text-align: center;
-    padding: 3px 0 3px 0;
-    color: #bbb;
-    box-sizing: border-box;
-    display:none;
-}
-
-span.tim-chart-boolean-active {
-    color: #000;
-    display:inline;
-    font-weight: bold;
-        font-size: 14px;
-    line-height: 10px;
 }
 
 .tim-rating-score-main {

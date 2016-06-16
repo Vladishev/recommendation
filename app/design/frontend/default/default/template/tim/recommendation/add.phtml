@@ -1,10 +1,14 @@
+<?php $userData = $this->getPersonalUserData(); ?>
 <div id="tim-add-opinion-layout">
     <div class="tim-comm-header">
         <?php echo $this->getChildHtml('header.recommendation.add') ?>
     </div>
-    <div class="tim-comm-left-column">
-        <?php echo $this->getChildHtml('left.recommendation.add') ?>
-    </div>
+    <?php if ($userData): ?>
+        <div class="tim-comm-left-column">
+            <?php $this->getChild('left.recommendation.add')->setData('userData', $userData) ?>
+            <?php echo $this->getChildHtml('left.recommendation.add', false) ?>
+        </div>
+    <?php endif; ?>
     <div class="tim-comm-main-column">
         <?php echo $this->getChildHtml('content.recommendation.add') ?>
     </div>

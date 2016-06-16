@@ -10,7 +10,6 @@ jQuery(document).ready(function () {
     checkProfile();
     displayRatingStars();
     scrollToAddOpinion();
-    displayYesNoChoice();
     addExtraValidation();
     countOpinionChars();
     openAddOpinionByHash();
@@ -123,9 +122,9 @@ function renderOpinionsList(response) {
         $parentContent.find('.tim-comment-container').remove();
         opinionData['comments'].forEach(function (item, i) {
             if (i > 4) {
-                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-display-none-' + recomId + ' tim-comment-number-' + i + '" style="display:none;"></div>');
+                $parentContent.find('.tim-comments-to-opinion').append('<div class="tim-comment-container tim-comment-display-none-' + recomId + ' tim-comment-number-' + i + '" style="display:none;"></div>');
             } else {
-                $parentContent.find('.tim-comment').append('<div class="tim-comment-container tim-comment-number-' + i + '"></div>');
+                $parentContent.find('.tim-comments-to-opinion').append('<div class="tim-comment-container tim-comment-number-' + i + '"></div>');
             }
             $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-title tim-comment-title-number-' + i + '"></div>');
             $parentContent.find('.tim-comment-title-number-' + i).append('<div class="tim-comment-container-added-' + i + '">Komentarz dodany <span>' + item['date_add'] + '</span> przez użytkownika: <span class="tim-last-span' + i + '">' + item['name'] + '</span></div>');
@@ -145,15 +144,15 @@ function renderOpinionsList(response) {
         }
         //render 'Add comment' button
         $parentContent.find('.tim-comment-add-main').remove();
-        $parentContent.find('.tim-comment').append('<div class="tim-comment-add-main"><button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Dodaj własny komentarz</button></div>');
+        $parentContent.find('.tim-comments-to-opinion').append('<div class="tim-comment-add-main"><button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Dodaj własny komentarz</button></div>');
         if (isLoggedIn == '1') {
             $parentContent.find('#tim-comment-add-show-' + recomId).attr('onclick', 'showAddComment(' + recomId + ')');
         } else {
             $parentContent.find('#tim-comment-add-show-' + recomId).attr('onclick', 'checkIfUserIsLoggedIn()');
         }
         //change data in .comment-form
-        var $commentForm = jQuery($parentContent.find('.comment-form'));
-        $commentForm.attr('id', 'form-validate-comment-' + recomId);
+        var $commentForm = jQuery($parentContent.find('.tim-comment'));
+        $commentForm.find('.comment-form').attr('id', 'form-validate-comment-' + recomId);
         $commentForm.find('.tim-validate-comment-button').attr('id', '#add-ajax-comment-' + recomId);
         $commentForm.find('.tim-validate-comment-button').attr('data-formid', 'form-validate-comment-' + recomId);
 
@@ -206,20 +205,18 @@ function renderOpinionsList(response) {
         //setting service rating
         $parentRight.find('.tim-rating-service').attr('class', 'tim-rating-service tim-chart-stars tim-stars-' + opinionData['rating_service']);
         //setting purchased result
-        $parentRight.find('.byIt-yes-' + recomId).attr('class', 'byIt-yes-' + recomId);
-        $parentRight.find('.byIt-no-' + recomId).attr('class', 'byIt-no-' + recomId);
-        if (opinionData['use_it'] !== null) {
-            $parentRight.find('.byIt-yes-' + recomId).addClass('tim-chart-boolean-active');
+        $parentRight.find('.tim-use-it-yes-no').attr('id', 'tim-use-it-' + recomId);
+        if (opinionData['use_it'] == 1) {
+            $parentRight.find('#tim-use-it-' + recomId).html('<span class="byIt-yes">Tak</span>');
         } else {
-            $parentRight.find('.byIt-no-' + recomId).addClass('tim-chart-boolean-active');
+            $parentRight.find('#tim-use-it-' + recomId).html('<span class="use-it-yes">Nie</span>');
         }
         //setting recommend result
-        $parentRight.find('.recommend-yes-' + recomId).attr('class', 'recommend-yes-' + recomId);
-        $parentRight.find('.recommend-no-' + recomId).attr('class', 'recommend-no-' + recomId);
+        $parentRight.find('.tim-recommend-yes-no').attr('id', 'tim-recommend-' + recomId);
         if (opinionData['recommend'] == 1) {
-            $parentRight.find('.recommend-yes-' + recomId).addClass('tim-chart-boolean-active');
+            $parentRight.find('#tim-recommend-' + recomId).html('<span class="recommend-yes">Tak</span>');
         } else {
-            $parentRight.find('.recommend-no-' + recomId).addClass('tim-chart-boolean-active');
+            $parentRight.find('#tim-recommend-' + recomId).html('<span class="recommend-no">Nie</span>');
         }
     });
 }
@@ -378,6 +375,10 @@ function placeholderAction(elem) {
 function showAddOpinionForm() {
     jQuery('#tim-add-opinion-layout').show(500);
     jQuery('#tim-general-add-opinion-button').hide();
+    jQuery('.tim-add-opinion-button').hide();
+    jQuery('html, body').animate({
+        scrollTop: jQuery('#tim-add-opinion-layout').offset().top
+    }, 500);
 }
 
 /**
@@ -403,6 +404,7 @@ function hideAddOpinionForm() {
     jQuery('#downloaded-imgs').empty();
     //hide form and show general button
     jQuery('#tim-general-add-opinion-button').show();
+    jQuery('.tim-add-opinion-button').show();
     jQuery('#tim-add-opinion-layout').hide();
 }
 
@@ -772,28 +774,6 @@ function countCommentChar(commentId) {
     var text = jQuery('#tim-opinion-comment-' + commentId).val();
     var charCount = text.length;
     jQuery('#char-count-comment-' + commentId).children('span').text(charCount);
-}
-
-/**
- * Display choice of user about current product
- */
-function displayYesNoChoice() {
-    jQuery('.tim-rating').each(function (index, item) {
-        var userChoiseInfo = jQuery(this).find('#tim-user-choice-info');
-        var byIt = userChoiseInfo.data().byit;
-        var recommend = userChoiseInfo.data().recommend;
-        var recomId = userChoiseInfo.data().recomid;
-        if (byIt) {
-            jQuery(this).find('.byIt-yes-' + recomId).addClass('tim-chart-boolean-active');
-        } else {
-            jQuery(this).find('.byIt-no-' + recomId).addClass('tim-chart-boolean-active');
-        }
-        if (recommend) {
-            jQuery(this).find('.recommend-yes-' + recomId).addClass('tim-chart-boolean-active');
-        } else {
-            jQuery(this).find('.recommend-no-' + recomId).addClass('tim-chart-boolean-active');
-        }
-    });
 }
 
 /**
