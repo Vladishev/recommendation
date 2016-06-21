@@ -387,7 +387,7 @@ function renderCommentsList(response) {
             $mainContainer.empty();
         }
 
-        $parentList.attr('class', 'tim-comment-container-' + i);
+        $parentList.attr('class', 'tim-comment-container tim-comment-container-' + i);
         $mainContainer.append($parentList);
         //filling row
         $parentList.find('.comment-date-add').html(item['date_add']);

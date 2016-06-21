@@ -10,27 +10,22 @@ $opinionPagesCount = $this->getOpinionPagesCount($opinionCount, $limitPerPage);
 $commentsPagesCount = $this->getCommentsPagesCount($commentsCount, $limitPerPage);
 $site = $this->getFormatSiteLink($userData['www']);
 ?>
-<div class="tim-comm-left-column tim-comm-left-column-landing tim-comm-border-right">
-    <div class="tim-user">
-        <div class="tim-user-photo">
-            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $userData['avatar'] ?>" width="269" height="168"
-                 alt="user-photo"/>
-        </div>
+<div class="tim-comm-left-column tim-margin-bottom">
+    <div class="tim-user tim-user-profile">
         <div class="tim-user-name">
-            <p><?php echo $this->__('User'); ?></p>
-            <p><?php echo $userData['customer_nick']; ?></p>
+            <span class="tim-user-name-title"><?php echo $this->__('User'); ?></span>
+            <span><?php echo $userData['customer_nick']; ?></span>
+            <span class="tim-user-opinion-qty">(<?php echo $this->__('%s post(s)', $userData['opinion_qty']); ?>)</span>
+            <span class="tim-user-separator">|</span>
         </div>
         <div class="tim-user-type">
-            <div class="tim-user-type-icon">
-                <img src="<?php echo $this->getSkinUrl('images/media/userstatus_icon_timworker.png'); ?>" alt="user-status"/>
-            </div>
             <?php echo $this->__('User type'); ?>
-            <p><?php echo $userData['user_type_name']; ?></p>
+            <span class="tim-user-type-name"><?php echo $userData['user_type_name']; ?></span>
+            <span class="tim-user-separator">|</span>
         </div>
         <div class="tim-user-involvement">
             <?php echo $this->__('User involvement'); ?>
             <div class="tim-user-scoregraph tim-score-<?php echo $userData['user_score'] ?>">
-                <?php echo $this->__('%s post(s)', $userData['opinion_qty']); ?>
             </div>
         </div>
         <div class="tim-user-email">
@@ -39,7 +34,7 @@ $site = $this->getFormatSiteLink($userData['www']);
     </div>
 </div>
 
-<div class="tim-comm-main-column-wide tim-col-noborder">
+<div class="tim-comm-main-column">
     <?php if ($userData['user_access']['update_present_visit_card']): ?>
         <div class="tim-opinion">
             <div
@@ -65,7 +60,7 @@ $site = $this->getFormatSiteLink($userData['www']);
     <?php if (!empty($userOpinionData)): ?>
     <div class="tim-opinion-list">
         <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__('OPINIONS ADDED BY CUSTOMER'); ?></div>
-        <div class="tim-opinion-list-header">
+        <div class="tim-comm-header-bellow">
             <input
                 type="hidden"
                 id="tim-controller"
@@ -73,17 +68,17 @@ $site = $this->getFormatSiteLink($userData['www']);
                 data-product="0"
                 data-userid="<?php echo $userId; ?>"
                 data-page="userPage"/>
-            <div class="tim-opinion-list-header-pagecount">
+            <div class="tim-pager">
                 <input class="tim-pager-box" value="1" type="text">
-                <p><?php echo $this->__('from ') ?></p>
+                <span><?php echo $this->__('from ') ?></span>
                 <span class="tim-pager-total"><?php echo $opinionPagesCount; ?></span>
                 <?php if ($opinionPagesCount > 1): ?>
-                <button class="tim-pager-decrease-button tim-sort-action-class">< </button>
-                <button class="tim-pager-increase-button tim-sort-action-class"> ></button>
+                <button class="tim-sort-action-class tim-pager-decrease-button">< </button>
+                <button class="tim-sort-action-class tim-pager-increase-button"> ></button>
                 <?php endif ?>
             </div>
-            <div class="tim-opinion-list-header-howmuchshow">
-                <p><?php echo $this->__('Display:') ?></p>
+            <div class="tim-count-per-page">
+                <span><?php echo $this->__('Display:') ?></span>
                 <ul>
                     <li>
                         <span class="tim-toolbar-count tim-sort-action-class count-active">10</span>
@@ -95,10 +90,10 @@ $site = $this->getFormatSiteLink($userData['www']);
                         <span class="tim-toolbar-count tim-sort-action-class">30</span>
                     </li>
                 </ul>
-                <p><?php echo $this->__('opinion(s):') ?></p>
+                <span><?php echo $this->__('opinion(s):') ?></span>
             </div>
             <div class="tim-comm-sorting">
-                <p><?php echo $this->__("Criterion sorting"); ?></p>
+                <span><?php echo $this->__("Criterion sorting"); ?></span>
                 <select class="tim-comm-sortingselect tim-toolbar-select">
                     <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
                     <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
@@ -137,23 +132,23 @@ $site = $this->getFormatSiteLink($userData['www']);
     <?php endif ?>
     <?php if (isset($opinionComments[0]['product_id'])): ?>
     <div class="tim-opinion-content-subtitle tim-triangle-background"><?php echo $this->__('COMMENTS ADDED BY CUSTOMER'); ?></div>
-    <div class="tim-opinion-list-header">
+    <div class="tim-comm-header-bellow tim-margin-bottom">
         <input
             type="hidden"
             id="comments-controller"
             data-url="<?php echo $this->getUrl('recommendation/timToolbar/sortUserComments') ?>"
             data-userid="<?php echo $userId; ?>"/>
-        <div class="tim-opinion-list-header-pagecount">
+        <div class="tim-pager">
             <input class="tim-comment-pager-box" value="1" type="text">
-            <p><?php echo $this->__('from ') ?></p>
+            <span><?php echo $this->__('from ') ?></span>
             <span class="tim-comment-pager-total"><?php echo $commentsPagesCount ?></span>
             <?php if ($commentsPagesCount > 1): ?>
                 <button class="tim-pager-comment-decrease-button tim-comment-sort-action-class">< </button>
                 <button class="tim-pager-comment-increase-button tim-comment-sort-action-class"> ></button>
             <?php endif ?>
         </div>
-        <div class="tim-opinion-list-header-howmuchshow">
-            <p><?php echo $this->__('Display:') ?></p>
+        <div class="tim-count-per-page">
+            <span><?php echo $this->__('Display:') ?></span>
             <ul>
                 <li>
                     <span class="tim-toolbar-count-comment tim-comment-sort-action-class count-active-comment">10</span>
@@ -165,10 +160,10 @@ $site = $this->getFormatSiteLink($userData['www']);
                     <span class="tim-toolbar-count-comment tim-comment-sort-action-class">30</span>
                 </li>
             </ul>
-            <p><?php echo $this->__('opinion(s):') ?></p>
+            <span><?php echo $this->__('opinion(s):') ?></span>
         </div>
         <div class="tim-comm-sorting">
-            <p><?php echo $this->__("Criterion sorting"); ?></p>
+            <span><?php echo $this->__("Criterion sorting"); ?></span>
             <select class="tim-comm-sortingselect tim-toolbar-comment-select">
                 <option value="latest" selected="selected"><?php echo $this->__("Latest"); ?></option>
                 <option value="oldest"><?php echo $this->__("Oldest"); ?></option>
@@ -178,7 +173,7 @@ $site = $this->getFormatSiteLink($userData['www']);
     <div class="tim-comment">
         <?php $k = 0 ?>
         <?php foreach ($opinionComments as $comment): ?>
-            <div class="tim-comment-container-<?php echo $k ?>">
+            <div class="tim-comment-container tim-comment-container-<?php echo $k ?>">
                 <div class="tim-comment-container-title">
                     <?php echo $this->__("Comment added"); ?>
                     <span class="comment-date-add"><?php echo $comment['date_add']; ?></span>

@@ -86,80 +86,81 @@
                 </user_level>
             </groups>
         </tim_recommendation>
-        <tim_avatar_settings translate="label">
-            <label>Avatar settings</label>
-            <tab>tim_tab</tab>
-            <sort_order>30</sort_order>
-            <show_in_default>1</show_in_default>
-            <show_in_website>1</show_in_website>
-            <show_in_store>1</show_in_store>
-            <groups>
-                <default_avatars translate="label">
-                    <label>Default avatars</label>
-                    <sort_order>5</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>
-                    <fields>
-                        <avatar1 translate="label comment" module="tim_recommendation">
-                            <label>Avatar 1</label>
-                            <frontend_type>image</frontend_type>
-                            <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
-                            <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
-                            <base_url type="media">tim/recommendation</base_url>
-                            <sort_order>5</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </avatar1>
-                        <avatar2 translate="label comment" module="tim_recommendation">
-                            <label>Avatar 2</label>
-                            <frontend_type>image</frontend_type>
-                            <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
-                            <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
-                            <base_url type="media">tim/recommendation</base_url>
-                            <sort_order>10</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </avatar2>
-                        <avatar3 translate="label comment" module="tim_recommendation">
-                            <label>Avatar 3</label>
-                            <frontend_type>image</frontend_type>
-                            <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
-                            <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
-                            <base_url type="media">tim/recommendation</base_url>
-                            <sort_order>15</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </avatar3>
-                        <avatar4 translate="label comment" module="tim_recommendation">
-                            <label>Avatar 4</label>
-                            <frontend_type>image</frontend_type>
-                            <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
-                            <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
-                            <base_url type="media">tim/recommendation</base_url>
-                            <sort_order>20</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </avatar4>
-                        <avatar5 translate="label comment" module="tim_recommendation">
-                            <label>Avatar 5</label>
-                            <frontend_type>image</frontend_type>
-                            <backend_model>tim_recommendation/system_config_backend_avatar</backend_model>
-                            <upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>
-                            <base_url type="media">tim/recommendation</base_url>
-                            <sort_order>25</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </avatar5>
-                    </fields>
-                </default_avatars>
-            </groups>
-        </tim_avatar_settings>
+        <!--Temporary disable add avatar functionality-->
+        <!--<tim_avatar_settings translate="label">-->
+            <!--<label>Avatar settings</label>-->
+            <!--<tab>tim_tab</tab>-->
+            <!--<sort_order>30</sort_order>-->
+            <!--<show_in_default>1</show_in_default>-->
+            <!--<show_in_website>1</show_in_website>-->
+            <!--<show_in_store>1</show_in_store>-->
+            <!--<groups>-->
+                <!--<default_avatars translate="label">-->
+                    <!--<label>Default avatars</label>-->
+                    <!--<sort_order>5</sort_order>-->
+                    <!--<show_in_default>1</show_in_default>-->
+                    <!--<show_in_website>1</show_in_website>-->
+                    <!--<show_in_store>1</show_in_store>-->
+                    <!--<fields>-->
+                        <!--<avatar1 translate="label comment" module="tim_recommendation">-->
+                            <!--<label>Avatar 1</label>-->
+                            <!--<frontend_type>image</frontend_type>-->
+                            <!--<backend_model>tim_recommendation/system_config_backend_avatar</backend_model>-->
+                            <!--<upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>-->
+                            <!--<base_url type="media">tim/recommendation</base_url>-->
+                            <!--<sort_order>5</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</avatar1>-->
+                        <!--<avatar2 translate="label comment" module="tim_recommendation">-->
+                            <!--<label>Avatar 2</label>-->
+                            <!--<frontend_type>image</frontend_type>-->
+                            <!--<backend_model>tim_recommendation/system_config_backend_avatar</backend_model>-->
+                            <!--<upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>-->
+                            <!--<base_url type="media">tim/recommendation</base_url>-->
+                            <!--<sort_order>10</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</avatar2>-->
+                        <!--<avatar3 translate="label comment" module="tim_recommendation">-->
+                            <!--<label>Avatar 3</label>-->
+                            <!--<frontend_type>image</frontend_type>-->
+                            <!--<backend_model>tim_recommendation/system_config_backend_avatar</backend_model>-->
+                            <!--<upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>-->
+                            <!--<base_url type="media">tim/recommendation</base_url>-->
+                            <!--<sort_order>15</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</avatar3>-->
+                        <!--<avatar4 translate="label comment" module="tim_recommendation">-->
+                            <!--<label>Avatar 4</label>-->
+                            <!--<frontend_type>image</frontend_type>-->
+                            <!--<backend_model>tim_recommendation/system_config_backend_avatar</backend_model>-->
+                            <!--<upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>-->
+                            <!--<base_url type="media">tim/recommendation</base_url>-->
+                            <!--<sort_order>20</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</avatar4>-->
+                        <!--<avatar5 translate="label comment" module="tim_recommendation">-->
+                            <!--<label>Avatar 5</label>-->
+                            <!--<frontend_type>image</frontend_type>-->
+                            <!--<backend_model>tim_recommendation/system_config_backend_avatar</backend_model>-->
+                            <!--<upload_dir config="system/filesystem/media">tim/recommendation</upload_dir>-->
+                            <!--<base_url type="media">tim/recommendation</base_url>-->
+                            <!--<sort_order>25</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</avatar5>-->
+                    <!--</fields>-->
+                <!--</default_avatars>-->
+            <!--</groups>-->
+        <!--</tim_avatar_settings>-->
         <tim_salt translate="label">
             <label>Salt</label>
             <tab>tim_tab</tab>
