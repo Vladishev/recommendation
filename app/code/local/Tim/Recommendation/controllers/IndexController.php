@@ -272,7 +272,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
     public function getConfirmUrl($recomId, $status)
     {
         $salt = $this->getRecomHelper()->getSalt();
-        $md5 = $this->getRecomHelper()->getRecommendationMd5($recomId);
+        $md5 = Mage::getModel('tim_recommendation/recommendation')->getRecommendationMd5($recomId);
         $request = sha1($salt . $status . $md5);
         $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/index/confirm/request/' . $request . '/id/' . $recomId;
         return $url;
@@ -362,7 +362,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
             } else {
                 $opinion = Mage::getModel('tim_recommendation/recommendation')->load((int)$requestArray['id']);
                 //add points for adding comment or opinion by customer
-                $this->getRecomHelper()->savePointsForCustomer($opinion);
+                Mage::getModel('tim_recommendation/index')->savePointsForCustomer($opinion);
                 $opinion->setAcceptance('1')
                     ->setPublicationDate(date('Y-m-d H:i:s'));
                 try {

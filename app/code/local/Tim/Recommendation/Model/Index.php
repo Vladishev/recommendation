@@ -180,4 +180,102 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
 
         return $count;
     }
+
+    /**
+     * Save points to user for adding opinion or comment
+     *
+     * @param object $recommendationModel
+     */
+    public function savePointsForCustomer($recommendationModel)
+    {
+        //check on acceptance for opinion or comment
+        if (!$recommendationModel->getAcceptance()) {
+            $recomId = (int)$recommendationModel->getRecomId();
+            $userId = (int)$recommendationModel->getUserId();
+            $userModel = Mage::getModel('tim_recommendation/user')->load($userId, 'customer_id');
+            $mediaModel = Mage::getModel('tim_recommendation/media')->load($recomId, 'recom_id');
+            $opinionOrComment = $this->checkOpinionOrComment($recomId);
+            //check is it opinion or comment
+            if ($opinionOrComment == 'opinion') {
+                $userModel->setPoints($userModel->getPoints() + $this->getAddOpinionPoint());
+            } elseif ($opinionOrComment == 'comment') {
+                $userModel->setPoints($userModel->getPoints() + $this->getAddComentPoint());
+            }
+            //check on media files
+            if ($mediaData = $mediaModel->getData()) {
+                $mediaFiles = Mage::helper('tim_recommendation')->getOpinionMediaPath($recomId);
+                if (array_key_exists('url/youtube', $mediaFiles)) {
+                    $userModel->setPoints($userModel->getPoints() + $this->getAddOpinionMoviePoint());
+                }
+                if (isset($mediaFiles[0])) {
+                    $userModel->setPoints($userModel->getPoints() + $this->getAddOpinionImagePoint());
+                }
+            }
+            try {
+                $userModel->save();
+            } catch (Exception $i) {
+                Mage::log($i->getMessage(), null, 'tim_recommendation.log');
+            }
+        }
+    }
+
+    /**
+     * Check opinion or comment by recom_id
+     *
+     * @param int $recomId ID from tim_recommendation table(recom_id)
+     * @return string
+     */
+    public function checkOpinionOrComment($recomId)
+    {
+        $parent = Mage::getModel('tim_recommendation/recommendation')->load((int)$recomId)->getParent();
+        if ($parent) {
+            return 'comment';
+        } else {
+            return 'opinion';
+        }
+    }
+
+    /**
+     * Gets points for adding opinion
+     *
+     * @return int
+     */
+    public function getAddOpinionPoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/add_opinion');
+        return (int)$points;
+    }
+
+    /**
+     * Gets points for adding comment to the opinion
+     *
+     * @return int
+     */
+    public function getAddComentPoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/add_comment');
+        return (int)$points;
+    }
+
+    /**
+     * Gets points for adding movie to the opinion
+     *
+     * @return int
+     */
+    public function getAddOpinionMoviePoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/movie_to_opinion');
+        return (int)$points;
+    }
+
+    /**
+     * Gets points for adding image to the opinion
+     *
+     * @return int
+     */
+    public function getAddOpinionImagePoint()
+    {
+        $points = Mage::getStoreConfig('tim_settings/customer_points/image_to_opinion');
+        return (int)$points;
+    }
 }

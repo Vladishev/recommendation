@@ -168,7 +168,7 @@ class Tim_Recommendation_Model_Observer
         $customerId = (int)Mage::getModel('tim_recommendation/recommendation')->load($opinionId)->getUserId();
         $customerInfo = Mage::getModel('customer/customer')->load($customerId)->getData();
         $customerEmail = $customerInfo['email'];
-        $type = Mage::helper('tim_recommendation')->checkOpinionOrComment($opinionId);
+        $type = Mage::getModel('tim_recommendation/index')->checkOpinionOrComment($opinionId);
         if ($type == 'opinion') {
             $customerSubject = 'Opinion accepted';
             $customerInfo['subject'] = Mage::helper('tim_recommendation')->__($customerSubject);

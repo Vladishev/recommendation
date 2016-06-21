@@ -65,7 +65,7 @@ class Tim_Recommendation_Adminhtml_CommentsReportController extends Mage_Adminht
             foreach ($commentsIds as $id) {
                 $recommendationModel = Mage::getModel('tim_recommendation/recommendation')->load((int) $id, 'recom_id');
                 //add points for comment by customer
-                Mage::helper('tim_recommendation')->savePointsForCustomer($recommendationModel);
+                Mage::getModel('tim_recommendation/index')->savePointsForCustomer($recommendationModel);
                 $recommendationModel->setAcceptance(1);
                 $recommendationModel->setPublicationDate(date('Y-m-d H:i:s'));
                 $recommendationModel->save();

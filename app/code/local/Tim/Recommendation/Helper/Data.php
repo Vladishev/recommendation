@@ -19,29 +19,11 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Return all user types except admin type
      *
-     * @return array
+     * @return object Tim_Recommendation_Model_UserType
      */
     public function getNonAdminUserTypes()
     {
-        $collection = Mage::getModel('tim_recommendation/userType')->getCollection();
-        $collection->addFieldToFilter('admin', 0);
-        $data = $collection->getData();
-
-        return $data;
-    }
-
-    /**
-     * Return user type ID
-     *
-     * @param string|int $customerId Native Magento customer ID
-     * @return string
-     */
-    public function getCustomerUserTypeId($customerId)
-    {
-        $user = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id');
-        $userTypeId = $user->getUserType();
-
-        return $userTypeId;
+        return Mage::getModel('tim_recommendation/userType')->getNonAdminUserTypes();
     }
 
     /**
@@ -53,156 +35,6 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $url = "recommendation/user/data";
         return $url;
-    }
-
-    /**
-     * Gets md5 hash from tim_recommendation table
-     *
-     * @param int $recomId ID from tim_recommendation table(recom_id)
-     * @return string
-     */
-    public function getRecommendationMd5($recomId)
-    {
-        $object = Mage::getModel('tim_recommendation/recommendation')->load((int)$recomId);
-        $md5hash = $object->getMd5();
-
-        return $md5hash;
-    }
-
-    /**
-     * Returns user site url
-     *
-     * @return mixed
-     */
-    public function getSiteUrl()
-    {
-        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
-        $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getWww();
-        return $siteUrl;
-    }
-
-    /**
-     * Returns user nick
-     *
-     * If passed $customerId - returns nick for passed id
-     * If $customerId not passed - returns current customer nick
-     *
-     * @param null $customerId Native Magento customer ID
-     * @return mixed
-     */
-    public function getUserNick($customerId = null)
-    {
-        if (empty($customerId)) {
-            $customerId = Mage::helper('customer')->getCustomer()->getEntityId();
-            $nick = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id')->getNick();
-        } else {
-            $nick = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id')->getNick();
-        }
-        return $nick;
-    }
-
-    /**
-     * Returns user banner
-     *
-     * @return bool|string
-     */
-    public function getCustomerBanner()
-    {
-        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
-        $banner = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAd();
-        if (!empty($banner)) {
-            $banner = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $banner;
-            return $banner;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Returns user avatar
-     *
-     * @return bool|string
-     */
-    public function getCustomerAvatar()
-    {
-        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
-        $avatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
-        if (!empty($avatar)) {
-            $avatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $avatar;
-            return $avatar;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Returns user description
-     *
-     * @return mixed
-     */
-    public function getCustomerDescription()
-    {
-        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
-        $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getDescription();
-        return $siteUrl;
-    }
-
-    /**
-     * Concatenates customer first name and last name
-     *
-     * @param int $customerId Native Magento customer ID
-     * @return string
-     */
-    public function getCustomerName($customerId)
-    {
-        $customer = Mage::getModel('customer/customer')->load((int)$customerId);
-        $name = $customer->getFirstname() . ' ' . $customer->getLastname();
-
-        return $name;
-    }
-
-    /**
-     * Get customer nickname
-     *
-     * @param int $customerId Native Magento customer ID
-     * @return string
-     */
-    public function getCustomerNickname($customerId)
-    {
-        $recommendationUser = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id');
-        $nickname = $recommendationUser->getNick();
-
-        return $nickname;
-    }
-
-    /**
-     * Get customer name or nickname
-     *
-     * @param int $customerId Native Magento customer ID
-     * @return string
-     */
-    public function getCustomerNameOrNick($customerId)
-    {
-        $customerName = $this->getCustomerNickname((int)$customerId);
-        if (empty($customerName)) {
-            $customerName = $this->getCustomerName((int)$customerId);
-        }
-
-        return $customerName;
-    }
-
-    /**
-     * Get name of user type
-     *
-     * @param int $userTypeId
-     * @return string
-     */
-    public function getUserTypeName($userTypeId)
-    {
-        $userType = Mage::getModel('tim_recommendation/userType')->load((int)$userTypeId, 'user_type_id');
-        $userTypeName = $userType->getName();
-
-        return $userTypeName;
     }
 
     /**
@@ -327,7 +159,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     public function checkForNoRoute($requestArray)
     {
         $salt = $this->getSalt();
-        $md5 = $this->getRecommendationMd5($requestArray['id']);
+        $md5 = Mage::getModel('tim_recommendation/recommendation')->getRecommendationMd5($requestArray['id']);
         $request0 = sha1($salt . '0' . $md5);
         $request1 = sha1($salt . '1' . $md5);
         if ($requestArray['request'] == $request0) {
@@ -452,50 +284,6 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
         $limit['min'] = Mage::getStoreConfig('tim_settings/max_min_length/tim_' . $type . '_min');
 
         return $limit;
-    }
-
-    /**
-     * Gets points for adding opinion
-     *
-     * @return int
-     */
-    public function getAddOpinionPoint()
-    {
-        $points = Mage::getStoreConfig('tim_settings/customer_points/add_opinion');
-        return (int)$points;
-    }
-
-    /**
-     * Gets points for adding image to the opinion
-     *
-     * @return int
-     */
-    public function getAddOpinionImagePoint()
-    {
-        $points = Mage::getStoreConfig('tim_settings/customer_points/image_to_opinion');
-        return (int)$points;
-    }
-
-    /**
-     * Gets points for adding movie to the opinion
-     *
-     * @return int
-     */
-    public function getAddOpinionMoviePoint()
-    {
-        $points = Mage::getStoreConfig('tim_settings/customer_points/movie_to_opinion');
-        return (int)$points;
-    }
-
-    /**
-     * Gets points for adding comment to the opinion
-     *
-     * @return int
-     */
-    public function getAddComentPoint()
-    {
-        $points = Mage::getStoreConfig('tim_settings/customer_points/add_comment');
-        return (int)$points;
     }
 
     /**
@@ -651,60 +439,6 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
             $images[] .= $value;
         }
         return $images;
-    }
-
-    /**
-     * Save points to user for adding opinion or comment
-     *
-     * @param object $recommendationModel
-     */
-    public function savePointsForCustomer($recommendationModel)
-    {
-        //check on acceptance for opinion or comment
-        if (!$recommendationModel->getAcceptance()) {
-            $recomId = (int)$recommendationModel->getRecomId();
-            $userId = (int)$recommendationModel->getUserId();
-            $userModel = Mage::getModel('tim_recommendation/user')->load($userId, 'customer_id');
-            $mediaModel = Mage::getModel('tim_recommendation/media')->load($recomId, 'recom_id');
-            $opinionOrComment = $this->checkOpinionOrComment($recomId);
-            //check is it opinion or comment
-            if ($opinionOrComment == 'opinion') {
-                $userModel->setPoints($userModel->getPoints() + $this->getAddOpinionPoint());
-            } elseif ($opinionOrComment == 'comment') {
-                $userModel->setPoints($userModel->getPoints() + $this->getAddComentPoint());
-            }
-            //check on media files
-            if ($mediaData = $mediaModel->getData()) {
-                $mediaFiles = $this->getOpinionMediaPath($recomId);
-                if (array_key_exists('url/youtube', $mediaFiles)) {
-                    $userModel->setPoints($userModel->getPoints() + $this->getAddOpinionMoviePoint());
-                }
-                if (isset($mediaFiles[0])) {
-                    $userModel->setPoints($userModel->getPoints() + $this->getAddOpinionImagePoint());
-                }
-            }
-            try {
-                $userModel->save();
-            } catch (Exception $i) {
-                Mage::log($i->getMessage(), null, 'tim_recommendation.log');
-            }
-        }
-    }
-
-    /**
-     * Check opinion or comment by recom_id
-     *
-     * @param int $recomId ID from tim_recommendation table(recom_id)
-     * @return string
-     */
-    public function checkOpinionOrComment($recomId)
-    {
-        $parent = Mage::getModel('tim_recommendation/recommendation')->load((int)$recomId)->getParent();
-        if ($parent) {
-            return 'comment';
-        } else {
-            return 'opinion';
-        }
     }
 
     /**

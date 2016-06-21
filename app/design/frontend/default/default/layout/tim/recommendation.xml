@@ -133,7 +133,8 @@
         </reference>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper"> <!-- target parent block -->
-            <block type="customer/form_edit" name="customer_edit" template="tim/recommendation/profile/recommendation_tab.phtml"/>
+            <!--<block type="customer/form_edit" name="customer_edit" template="tim/recommendation/profile/recommendation_tab.phtml"/>-->
+            <block type="tim_recommendation/form_edit" name="customer_edit" template="tim/recommendation/profile/recommendation_tab.phtml"/>
             <!--<block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml" /> &lt;!&ndash; add a back link &ndash;&gt;-->
         </reference>
     </recommendation_user_edit>

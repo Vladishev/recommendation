@@ -46,9 +46,9 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
                 ->addFieldToSelect(array('www', 'avatar', 'description', 'ad', 'engage', 'user_type', 'customer_id'))
                 ->getFirstItem();
             $userData = $user->getData();
-            $userData['user_type_name'] = $this->getRecomHelper()->getUserTypeName($user['user_type']);
-            $userData['customer_name'] = $this->getRecomHelper()->getCustomerNameOrNick((int) $customerId);
-            $userData['customer_nick'] = Mage::helper('tim_recommendation')->getUserNick((int) $customerId);
+            $userData['user_type_name'] = $this->getUserTypeName($user['user_type']);
+            $userData['customer_name'] = $this->getCustomerNameOrNick((int) $customerId);
+            $userData['customer_nick'] = $this->_getUserNick((int) $customerId);
             $userData['opinion_qty'] = $this->getRecomHelper()->getOpinionQty((int) $customerId);
             $userData['user_score'] = $this->getRecomHelper()->getUserScore((int) $customerId);
             $userData['user_access'] = $this->getRecomHelper()->getUserLevelAccess((int) $customerId);
@@ -57,6 +57,17 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         }
 
         return $this->_userData;
+    }
+
+    /**
+     * Returns customer nick
+     *
+     * @param int|null $customerId
+     * @return string
+     */
+    protected function _getUserNick($customerId = null)
+    {
+        return Mage::getModel('tim_recommendation/user')->getUserNick($customerId);
     }
 
     /**
@@ -96,7 +107,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         }
         $opinion['images'] = $this->getRecomHelper()->getImages((int) $opinion['recom_id']);
         $opinion['comments'] = $this->getOpinionComments((int) $opinion['recom_id']);
-        $opinion['name'] = $this->getRecomHelper()->getCustomerNameOrNick((int) $opinion['user_id']);
+        $opinion['name'] = $this->getCustomerNameOrNick((int) $opinion['user_id']);
 
         return $opinion;
     }
@@ -151,7 +162,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         $dateModel = Mage::getModel('core/date');
         foreach ($data as $comment) {
             $comments[] = array(
-                'name' => $this->getRecomHelper()->getCustomerNameOrNick((int) $comment['user_id']),
+                'name' => $this->getCustomerNameOrNick((int) $comment['user_id']),
                 'comment' => $comment['comment'],
                 'date_add' => date('Y-m-d H:i:s', $dateModel->timestamp($comment['date_add'])),
                 'recom_id' => (int) $comment['recom_id'],
@@ -264,7 +275,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $data = $collection->getData();
             $userData[$i]['avatar'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $data[0]['avatar'];
             $userData[$i]['customer_view_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation/user/profile/id/' . $key;
-            $userData[$i]['name'] = $this->getRecomHelper()->getCustomerName($key);
+            $userData[$i]['name'] = $this->getCustomerName($key);
 
             $i++;
         }
@@ -358,7 +369,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     {
         $requestArray = $this->getRequest()->getParams();//['request'],['id']
         $salt = $this->getRecomHelper()->getSalt();
-        $md5 = $this->getRecomHelper()->getRecommendationMd5($requestArray['id']);
+        $md5 = Mage::getModel('tim_recommendation/recommendation')->getRecommendationMd5($requestArray['id']);
         $request0 = sha1($salt . '0' . $md5);
         $request1 = sha1($salt . '1' . $md5);
         $resultData = array();
@@ -385,10 +396,10 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
             $_helper = $this->getRecomHelper();
             $customerId = $customer->getId();
             $customerInfo['opinionQty'] = $_helper->getOpinionQty($customerId);
-            $customerInfo['customerName'] = $_helper->getCustomerNickname($customerId);
-            $customerTypeId = $_helper->getCustomerUserTypeId($customerId);
-            $customerInfo['customerTypeName'] = $_helper->getUserTypeName($customerTypeId);
-            $customerInfo['avatar'] = $_helper->getCustomerAvatar();
+            $customerInfo['customerName'] = $this->getCustomerNickname($customerId);
+            $customerTypeId = Mage::getModel('tim_recommendation/user')->getCustomerUserTypeId($customerId);
+            $customerInfo['customerTypeName'] = $this->getUserTypeName($customerTypeId);
+            $customerInfo['avatar'] = $this->getCustomerAvatar();
             $customerInfo['editUrl'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'recommendation' . DS . 'user' . DS . 'edit';
             $user = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id');
             $customerInfo['engage'] = $user->getEngage();
@@ -397,6 +408,64 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         } else {
             return false;
         }
+    }
+
+    /**
+     * Concatenates customer first name and last name
+     *
+     * @param int $customerId Native Magento customer ID
+     * @return string
+     */
+    public function getCustomerName($customerId)
+    {
+        $customer = Mage::getModel('customer/customer')->load((int)$customerId);
+        $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+
+        return $name;
+    }
+
+    /**
+     * Get customer name or nickname
+     *
+     * @param int $customerId Native Magento customer ID
+     * @return string
+     */
+    public function getCustomerNameOrNick($customerId)
+    {
+        $customerName = $this->getCustomerNickname((int)$customerId);
+        if (empty($customerName)) {
+            $customerName = $this->getCustomerName((int)$customerId);
+        }
+
+        return $customerName;
+    }
+
+    /**
+     * Get customer nickname
+     *
+     * @param int $customerId Native Magento customer ID
+     * @return string
+     */
+    public function getCustomerNickname($customerId)
+    {
+        $recommendationUser = Mage::getModel('tim_recommendation/user')->load((int)$customerId, 'customer_id');
+        $nickname = $recommendationUser->getNick();
+
+        return $nickname;
+    }
+
+    /**
+     * Get name of user type
+     *
+     * @param int $userTypeId
+     * @return string
+     */
+    public function getUserTypeName($userTypeId)
+    {
+        $userType = Mage::getModel('tim_recommendation/userType')->load((int)$userTypeId, 'user_type_id');
+        $userTypeName = $userType->getName();
+
+        return $userTypeName;
     }
 
     /**
@@ -470,12 +539,12 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         if ($customerId) {
             $user = Mage::getModel('tim_recommendation/user')->load((int) $customerId, 'customer_id');
             $fields = array();
-            $userTypes = Mage::helper('tim_recommendation')->getNonAdminUserTypes();
+            $userTypes = $this->_getNonAdminUserTypes();
 
             if ($user) {
                 $fields[] = $user->getNick();
                 $fields[] = $user->getAvatar();
-                if (!empty($userTypes)) {
+                if (!$this->_isEmpty($userTypes)) {
                     $fields[] = $user->getUserType();
                 }
 
@@ -490,6 +559,53 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
         } else {
             //for preventing show popup "edit you profile"
             return 2;
+        }
+    }
+
+    /**
+     * Check if object empty
+     *
+     * @param $obj
+     * @return bool
+     */
+    protected function _isEmpty($obj)
+    {
+        $result = true;
+        foreach ($obj as $item) {
+            $name = $item->getName();
+            if (!empty($name)) {
+                $result = false;
+            }
+            break;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return all user types except admin type
+     *
+     * @return object Tim_Recommendation_Model_UserType
+     */
+    protected function _getNonAdminUserTypes()
+    {
+        return Mage::getModel('tim_recommendation/userType')->getNonAdminUserTypes();
+    }
+
+    /**
+     * Returns user avatar
+     *
+     * @return bool|string
+     */
+    public function getCustomerAvatar()
+    {
+        $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
+        $avatar = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getAvatar();
+        if (!empty($avatar)) {
+            $avatar = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $avatar;
+            return $avatar;
+        } else {
+            return false;
         }
     }
 

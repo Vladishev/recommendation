@@ -5,7 +5,7 @@ $avatarsPath = $_helper->getDefaultAvatarsPath();
 $avatarFiles = $_helper->getDefaultAvatarsFile();
 $userLevelAccess = $_helper->getUserLevelAccess($customerId);
 $userTypes = $_helper->getNonAdminUserTypes();
-$customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
+$customerUserTypeId = $this->getCustomerUserTypeId($customerId);
 ?>
 <form action="<?php echo $this->getUrl('recommendation/user/saveCustomer') ?>" method="post" id="form-validate-user-profile" autocomplete="off" enctype="multipart/form-data">
 <div class="fieldset">
@@ -15,14 +15,14 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
         <li>
             <label for="url"><?php echo $_helper->__('WWW') ?></label>
             <div class="input-box">
-                <input type="text" name="url" id="tim-form-url" class="input-text custom-url-validate" value="<?php echo $_helper->getSiteUrl(); ?>" />
+                <input type="text" name="url" id="tim-form-url" class="input-text custom-url-validate" value="<?php echo Mage::getModel('tim_recommendation/user')->getSiteUrl(); ?>" />
             </div>
         </li>
         <?php endif; ?>
         <li>
             <label class="required" for="nick"><em>*</em><?php echo $_helper->__('Nick') ?></label>
             <div class="input-box">
-                <input type="text" name="nick" id="nick" class="input-text required-entry" value="<?php echo $_helper->getUserNick(); ?>" />
+                <input type="text" name="nick" id="nick" class="input-text required-entry" value="<?php echo $this->getUserNick(); ?>" />
             </div>
         </li>
         <?php if(!empty($userLevelAccess['update_present_visit_card'])): ?>
@@ -34,13 +34,13 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
                 <input type="file" name="banner" id="banner" class="upload-buttons" title="<?php echo $_helper->__('Allowed file types: jpeg, png.') ?>" accept="image/jpeg,image/png" />
                 <input type="hidden" name="banner-hide" id="banner-hide"  value="" />
             </div>
-            <?php if($_helper->getCustomerBanner()): ?>
+            <?php if($this->getCustomerBanner()): ?>
                 <label for="banner-checkbox"><?php echo $_helper->__('Delete') ?></label>
                 <input type="checkbox" name="banner-checkbox" id="banner-checkbox" title="<?php echo $_helper->__('Choose it if you want to delete image.') ?>">
             <?php endif ?>
             <div class="recommendation-image" id="tim-banner-container">
-                <?php if ($_helper->getCustomerBanner()): ?>
-                <img src="<?php echo $_helper->getCustomerBanner(); ?>" id="tim-banner-image" alt="banner" />
+                <?php if ($this->getCustomerBanner()): ?>
+                <img src="<?php echo $this->getCustomerBanner(); ?>" id="tim-banner-image" alt="banner" />
                 <?php endif ?>
             </div>
         </li>
@@ -70,8 +70,8 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
 <!--                    <input type="checkbox" name="avatar-checkbox" id="avatar-checkbox" title="--><?php //echo $_helper->__('Choose it if you want to delete image.') ?><!--">-->
 <!--                --><?php //endif ?>
                 <div class="recommendation-image" id="tim-avatar-container">
-                    <?php if ($_helper->getCustomerAvatar()): ?>
-                    <img src="<?php echo $_helper->getCustomerAvatar(); ?>" id="tim-avatar-image" alt="avatar" />
+                    <?php if ($this->getCustomerAvatar()): ?>
+                    <img src="<?php echo $this->getCustomerAvatar(); ?>" id="tim-avatar-image" alt="avatar" />
                     <?php endif ?>
                 </div>
             </div>
@@ -80,7 +80,7 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
             <li>
                 <label for="description"><?php echo $_helper->__('Description') ?></label>
                 <div class="input-box">
-                    <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo $_helper->getCustomerDescription(); ?></textarea>
+                    <textarea name="description" id="tim-form-description" class="input-textarea"><?php echo $this->getCustomerDescription(); ?></textarea>
                 </div>
             </li>
         <?php endif; ?>
@@ -91,7 +91,7 @@ $customerUserTypeId = $_helper->getCustomerUserTypeId($customerId);
                     <select id="tim-form-user-type" name="user_type" class="user-type-select required-entry">
                         <option value=""><?php echo $_helper->__('--Select user type--') ?></option>
                         <?php foreach ($userTypes as $type): ?>
-                            <option value="<?php echo $type['user_type_id'];?>" <?php if($type['user_type_id'] == $customerUserTypeId): ?>selected="selected"<?php endif ?>><?php echo $type['name'];?></option>
+                            <option value="<?php echo $type->getUserTypeId();?>" <?php if($type->getUserTypeId() == $customerUserTypeId): ?>selected="selected"<?php endif ?>><?php echo $type->getName();?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
