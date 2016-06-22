@@ -15,7 +15,7 @@ $customerUserTypeId = $this->getCustomerUserTypeId($customerId);
         <li>
             <label for="url"><?php echo $_helper->__('WWW') ?></label>
             <div class="input-box">
-                <input type="text" name="url" id="tim-form-url" class="input-text custom-url-validate" value="<?php echo Mage::getModel('tim_recommendation/user')->getSiteUrl(); ?>" />
+                <input type="text" name="url" id="tim-form-url" class="input-text custom-url-validate" value="<?php echo $this->getSiteUrl(); ?>" />
             </div>
         </li>
         <?php endif; ?>

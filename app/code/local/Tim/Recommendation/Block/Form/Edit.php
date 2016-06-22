@@ -72,4 +72,14 @@ class Tim_Recommendation_Block_Form_Edit extends Mage_Customer_Block_Form_Edit
         $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getDescription();
         return $siteUrl;
     }
+
+    /**
+     * Returns user site url
+     *
+     * @return string
+     */
+    public function getSiteUrl()
+    {
+        return Mage::getModel('tim_recommendation/user')->getSiteUrl();
+    }
 }

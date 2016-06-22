@@ -59,7 +59,7 @@ class Tim_Recommendation_Model_User extends Mage_Core_Model_Abstract
     /**
      * Returns user site url
      *
-     * @return mixed
+     * @return string
      */
     public function getSiteUrl()
     {
