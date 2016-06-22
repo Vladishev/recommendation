@@ -266,11 +266,11 @@ class Tim_Recommendation_Block_Adminhtml_OpinionReport_Grid extends Mage_Adminht
     /**
      * Custom filter for media field
      *
-     * @param object $collection
-     * @param object $column
-     * @return $this
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Tim_Recommendation_Model_Resource_Recommendation_Collection
+     * @param Mage_Core_Block_Abstract $column Mage_Adminhtml_Block_Widget_Grid_Column
+     * @return Tim_Recommendation_Model_Resource_Recommendation_Collection
      */
-    protected function _mediaFilter($collection, $column)
+    protected function _mediaFilter(Mage_Core_Model_Resource_Db_Collection_Abstract $collection, Mage_Core_Block_Abstract $column)
     {
         return Mage::getModel('tim_recommendation/mediaFilter')->filterMedia($collection, $column);
     }

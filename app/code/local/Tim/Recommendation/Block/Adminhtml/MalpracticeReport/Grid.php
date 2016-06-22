@@ -177,11 +177,11 @@ class Tim_Recommendation_Block_Adminhtml_MalpracticeReport_Grid extends Mage_Adm
     /**
      * Custom filter for media field
      *
-     * @param object $collection
-     * @param object $column
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Tim_Recommendation_Model_Resource_Malpractice_Collection
+     * @param Mage_Core_Block_Abstract $column Mage_Adminhtml_Block_Widget_Grid_Column
      * @return $this
      */
-    protected function _opinionRecomFilter($collection, $column)
+    protected function _opinionRecomFilter(Mage_Core_Model_Resource_Db_Collection_Abstract $collection, Mage_Core_Block_Abstract $column)
     {
         if ($value = $column->getFilter()->getValue()) {
             if ($value == 'Opinion') {

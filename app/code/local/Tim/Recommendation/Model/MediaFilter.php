@@ -13,11 +13,11 @@ class Tim_Recommendation_Model_MediaFilter extends Mage_Core_Model_Abstract
     /**
      * Filter collection by media
      *
-     * @param $collection Tim_Recommendation_Model_Resource_Recommendation_Collection
-     * @param $column Mage_Adminhtml_Block_Widget_Grid_Column
-     * @return mixed
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Tim_Recommendation_Model_Resource_Recommendation_Collection
+     * @param Mage_Core_Block_Abstract $column
+     * @return Tim_Recommendation_Model_Resource_Recommendation_Collection
      */
-    public function filterMedia($collection, $column)
+    public function filterMedia(Mage_Core_Model_Resource_Db_Collection_Abstract $collection, Mage_Core_Block_Abstract $column)
     {
         if ($value = $column->getFilter()->getValue()) {
             if ($value == 'Yes') {

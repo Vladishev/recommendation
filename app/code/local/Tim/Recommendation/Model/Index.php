@@ -114,7 +114,7 @@ class Tim_Recommendation_Model_Index extends Mage_Core_Model_Abstract
      * @param int $limit Records limit
      * @param int $curPage Current page
      * @param string $order Sort order
-     * @return mixed
+     * @return array
      */
     public function getOpinionComment($userId, $limit, $curPage, $order)
     {

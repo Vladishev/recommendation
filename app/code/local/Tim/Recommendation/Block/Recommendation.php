@@ -312,7 +312,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * @param int $limit Limit records per page
      * @param int $curPage Current page
      * @param string $order Sort order
-     * @return mixed
+     * @return array
      */
     public function getOpinionComment($userId, $limit = 10, $curPage = 1, $order = 'DESC')
     {
@@ -323,7 +323,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
     /**
      * Returns count of accepted opinions for current product
      *
-     * @return mixed
+     * @return int
      */
     public function getOpinionCount()
     {
@@ -439,7 +439,7 @@ class Tim_Recommendation_Block_Recommendation extends Mage_Core_Block_Template
      * Returns count of user's opinions
      *
      * @param int $userId Native Magento customer ID
-     * @return mixed
+     * @return int
      */
     public function getUserOpinionCount($userId)
     {

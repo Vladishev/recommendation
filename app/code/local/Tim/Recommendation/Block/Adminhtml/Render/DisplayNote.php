@@ -50,7 +50,7 @@ HTML;
     /**
      * Gets last added note to recommendation
      * @param $recomId
-     * @return mixed
+     * @return string|null
      */
     private function getRecommendationNote($recomId)
     {
@@ -66,7 +66,7 @@ HTML;
     /**
      * Gets last added note to malpractice
      * @param $malpracticeId
-     * @return mixed
+     * @return string|null
      */
     private function getMalpracticeNote($malpracticeId)
     {

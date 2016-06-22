@@ -39,10 +39,10 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     /**
      * Returns count of opinions for product
      *
-     * @param  object $opinionCollection
+     * @param  Mage_Core_Model_Resource_Db_Collection_Abstract $opinionCollection Tim_Recommendation_Model_Resource_Recommendation_Collection
      * @return int
      */
-    protected function _getOpinionCount($opinionCollection)
+    protected function _getOpinionCount(Mage_Core_Model_Resource_Db_Collection_Abstract $opinionCollection)
     {
         $opinionCollection->addFieldToSelect('recom_id');
         $count = count($opinionCollection->getData());
@@ -52,10 +52,10 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
     /**
      * Returns average product rating based on product's opinions
      *
-     * @param object $opinionCollection
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract $opinionCollection Tim_Recommendation_Model_Resource_Recommendation_Collection
      * @return float
      */
-    protected function _getProductRating($opinionCollection)
+    protected function _getProductRating(Mage_Core_Model_Resource_Db_Collection_Abstract $opinionCollection)
     {
         $opinionCount = $this->_getOpinionCount($opinionCollection);
         $average = 0;
@@ -79,7 +79,7 @@ class Tim_Recommendation_Model_Rating extends Mage_Core_Model_Abstract
      * Returns right collection
      *
      * @param  int $productId Native Magento product ID
-     * @return object
+     * @return Tim_Recommendation_Model_Resource_Recommendation_Collection
      */
     protected function _getOpinionCollection($productId)
     {

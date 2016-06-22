@@ -115,7 +115,7 @@ class Tim_Recommendation_TimToolbarController extends Mage_Core_Controller_Front
      * Collect array of opinions
      *
      * @param array $recomIdSet Array with recom_id(tim_recommendation table)
-     * @return array|mixed
+     * @return array
      */
     protected function _getOpinionsArray($recomIdSet)
     {

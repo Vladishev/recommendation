@@ -33,7 +33,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Return user type ID
      *
-     * @param string|int $customerId Native Magento customer ID
+     * @param int $customerId Native Magento customer ID
      * @return string
      */
     public function getCustomerUserTypeId($customerId)
@@ -72,7 +72,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Returns user site url
      *
-     * @return mixed
+     * @return string
      */
     public function getSiteUrl()
     {
@@ -88,7 +88,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
      * If $customerId not passed - returns current customer nick
      *
      * @param null $customerId Native Magento customer ID
-     * @return mixed
+     * @return string
      */
     public function getUserNick($customerId = null)
     {
@@ -138,13 +138,13 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Returns user description
      *
-     * @return mixed
+     * @return string
      */
     public function getCustomerDescription()
     {
         $customerId = (int)Mage::helper('customer')->getCustomer()->getEntityId();
-        $siteUrl = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getDescription();
-        return $siteUrl;
+        $description = Mage::getModel('tim_recommendation/user')->load($customerId, 'customer_id')->getDescription();
+        return $description;
     }
 
     /**
@@ -656,7 +656,7 @@ class Tim_Recommendation_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Save points to user for adding opinion or comment
      *
-     * @param object $recommendationModel
+     * @param Tim_Recommendation_Model_Recommendation $recommendationModel
      */
     public function savePointsForCustomer($recommendationModel)
     {

@@ -29,7 +29,7 @@ class Tim_Recommendation_Block_Adminhtml_Render_RenderCommentOpinion extends Mag
      * If it's comment - returns data from 'comment' field and recom_id
      *
      * @param Varien_Object $row
-     * @return mixed
+     * @return string
      */
     public function render(Varien_Object $row)
     {

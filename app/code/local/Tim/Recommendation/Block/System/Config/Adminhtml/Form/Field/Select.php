@@ -34,8 +34,8 @@ class Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select extends
     }
 
     /**
-     * @param mixed $value
-     * @return mixed
+     * @param string $value
+     * @return Tim_Recommendation_Block_System_Config_Adminhtml_Form_Field_Select
      */
     public function setInputName($value)
     {

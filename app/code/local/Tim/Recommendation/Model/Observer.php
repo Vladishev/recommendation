@@ -141,7 +141,7 @@ class Tim_Recommendation_Model_Observer
     /**
      * Send email with information about person who added opinion | sends email to user
      *
-     * @param object $observer
+     * @param Varien_Event_Observer $observer
      */
     public function sendOpinionEmail($observer)
     {
@@ -160,7 +160,7 @@ class Tim_Recommendation_Model_Observer
     /**
      * Send email with information about acceptance opinion | comment
      *
-     * @param object $observer
+     * @param Varien_Event_Observer $observer
      */
     public function sendAcceptConfirmationEmail($observer)
     {
@@ -188,7 +188,7 @@ class Tim_Recommendation_Model_Observer
     /**
      * Send email with information about person who added comment | sends email to user
      *
-     * @param object $observer
+     * @param Varien_Event_Observer $observer
      */
     public function sendCommentEmail($observer)
     {
@@ -208,7 +208,7 @@ class Tim_Recommendation_Model_Observer
     /**
      * Sends email to admin | sends email to user
      *
-     * @param object $observer
+     * @param Varien_Event_Observer $observer
      */
     public function sendMalpracticeEmail($observer)
     {

@@ -195,7 +195,7 @@ class Tim_Recommendation_IndexController extends Mage_Core_Controller_Front_Acti
      * Returns array whith custom data for event
      *
      * @param int $recomId ID from tim_recommendation table(recom_id)
-     * @param object $recommendationModel 'tim_recommendation/recommendation'
+     * @param Tim_Recommendation_Model_Recommendation $recommendationModel
      * @param string $type Can be 'opinion' and 'comment' - types of confirm email
      * @return array
      */
