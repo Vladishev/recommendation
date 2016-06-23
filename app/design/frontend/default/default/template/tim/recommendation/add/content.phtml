@@ -16,7 +16,7 @@ $opinionTextareaValidationClass = $this->getOpinionTextareaValidationClass($opin
     <input type="hidden" id="isLoggedIn" value="<?php echo $isLoggedIn ?>"/>
     <fieldset>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-        <div class="tim-opinion">
+        <div class="tim-opinion tim-opinion-add">
             <label for="tim-opinion-advantages" class="tim-opinion-content-subtitle tim-icon-good <?php echo $requiredFields['advantages']? 'required' : '' ?>">
                 <?php echo $requiredFields['advantages']? '<em>*</em>' : '' ?>
                 <?php echo $this->__('Describe the advantages of the product:') ?>

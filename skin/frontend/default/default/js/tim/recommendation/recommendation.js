@@ -137,14 +137,15 @@ function renderOpinionsList(response) {
             //render comment text
             $parentContent.find('.tim-comment-number-' + i).append('<div class="tim-comment-container-content">' + item['comment'] + '</div>');
         });
-        //render links 'See more comments' and 'Hide comments'
-        $parentContent.find('.tim-comment-seemore').remove();
-        if (opinionData['comments'].size() > 5) {
-            $parentContent.find('.tim-comment').after('<div class="tim-comment-seemore tim-comment-link-' + recomId + '">Opinia posiada <span>' + opinionData['comments'].size() + '</span> komentarzy. <a class="tim-readmore-comments" href="#!" onclick="seeAllComments(' + recomId + ')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-' + recomId + '" style="display: none"><a class="tim-readmore-comments" href="#!" onclick="hideComments(' + recomId + ')">Ukryj te komentarze</a></div>');
-        }
         //render 'Add comment' button
         $parentContent.find('.tim-comment-add-main').remove();
-        $parentContent.find('.tim-comments-to-opinion').append('<div class="tim-comment-add-main"><button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Dodaj własny komentarz</button></div>');
+        //render links 'See more comments' and 'Hide comments'
+        $parentContent.find('.tim-comment-seemore').remove();
+        $parentContent.find('.tim-comments-to-opinion').after('<div class="tim-comment-add-main"></div>');
+        if (opinionData['comments'].size() > 5) {
+            $parentContent.find('.tim-comment-add-main').append('<div class="tim-comment-seemore tim-comment-link-' + recomId + '">Opinia posiada <span>' + opinionData['comments'].size() + '</span> komentarzy. <a class="tim-readmore-comments" href="#!" onclick="seeAllComments(' + recomId + ')">zobacz je wszystkie</a></div><div class="tim-comment-seemore tim-comment-hide-link-' + recomId + '" style="display: none"><a class="tim-readmore-comments" href="#!" onclick="hideComments(' + recomId + ')">Ukryj te komentarze</a></div>');
+        }
+        $parentContent.find('.tim-comment-add-main').append('<button type="button" class="tim-comment-button-add" id="tim-comment-add-show-' + recomId + '" onclick="">Dodaj własny komentarz</button>');
         if (isLoggedIn == '1') {
             $parentContent.find('#tim-comment-add-show-' + recomId).attr('onclick', 'showAddComment(' + recomId + ')');
         } else {
